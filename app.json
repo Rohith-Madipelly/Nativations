@@ -21,10 +21,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.madipellyrohith.Navigations",
+      "config": {
+        "usesCleartextTraffic": true
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7c804e7a-7842-4219-9ab3-fb5aca0c2563"
+      }
     }
   }
 }
