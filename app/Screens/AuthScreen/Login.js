@@ -137,7 +137,8 @@ export default function Login() {
                                 <Formik
                                     // enableReinitialize
                                     validateOnMount={true}
-                                    initialValues={{ email: "madipellyrohith@gmail.com", password: "Rohith@7" }}
+                                    // initialValues={{ email: "madipellyrohith@gmail.com", password: "Rohith@7" }}
+                                    initialValues={{ email: "", password: "" }}
                                     onSubmit={submitHandler}
                                     validator={() => ({})}
                                     validationSchema={loginSchema}
@@ -159,9 +160,9 @@ export default function Login() {
 
                                             <CustomTextInput
                                             boxWidth={'80%'}
-                                                placeholder={'Enter First Name '}
-                                                label={'First Name'}
-                                                name='first'
+                                                placeholder={'Enter Email '}
+                                                label={'Email'}
+                                                name='email'
                                                 value={values.email}
                                                 leftIcon={<FontAwesome name="user" size={20} color="black" />}
                                                 // bgColor='#e1f3f8'

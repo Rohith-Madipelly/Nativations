@@ -13,6 +13,9 @@ const CustomDateInput = ({
   onChangeText,
   boxWidth,
   borderColor,
+  asterisksymbol,
+  minimumDate,
+  maximumDate,
   errorMessage,
   errorColor = 'red',
   bgColor = 'white',
@@ -36,7 +39,7 @@ const CustomDateInput = ({
 
   return (
     <TouchableOpacity style={[{ padding: 0, width: boxWidth }]} onPress={() => showMode("date")}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={styles.label}>{label} {asterisksymbol?<Text style={{color:'red'}}>*</Text>:""}</Text>
       <View style={[styles.container, containerBorder, { borderColor: borderColor }, { backgroundColor: bgColor }]}>
         {leftIcon ? <View style={{ paddingRight: 8 }}>{leftIcon}</View> : null}
         <TextInput
@@ -54,8 +57,8 @@ const CustomDateInput = ({
             mode={mode}
             display={"spinner"}
             is24Hour={true}
-            minimumDate={new Date()}
-            maximumDate={new Date(2090, 10, 20)}
+            minimumDate={minimumDate}
+            maximumDate={maximumDate}
             onChange={onChange}
           />
         )}

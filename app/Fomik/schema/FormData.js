@@ -28,7 +28,7 @@ const FormData = Yup.object().shape({
     userAge: Yup.string()
         .trim()
         .required("Enter age")
-        // .matches(/^[0-9]$/, "Age must be a number")
+    // .matches(/^[0-9]$/, "Age must be a number")
 
     // .positive("User Age must be a positive number")
     // .integer("User Age must be an integer")
@@ -64,16 +64,15 @@ const FormData = Yup.object().shape({
     RegularMedicine: Yup.string()
         .required("Password is a Required Field")
         .oneOf(["Yes", "No"], "Invalid gender"),
- 
+
 
     briefData: Yup.string()
+
         .min(15, "Length is short")
         // .max(225, "ReferenceFrom Length is too Long")
         .required("Information is a Required Field."),
     ReferenceFrom: Yup.string()
-        // .min(6, "ReferenceFrom Length is short")
-        // .max(225, "ReferenceFrom Length is too Long")
-        .required("ReferenceFrom is a Required Field"),
+        .required("ReferenceFrom is a Required Field").oneOf(["Friend", "News-Paper","TV","Lectures","Others"], "Invalid Reference "),
 
 });
 export { FormData }

@@ -13,6 +13,7 @@ const CustomPicker = ({
     pickerStyle,
     rightIcon,
     borderColor,
+    asterisksymbol,
     leftIcon,
     error,
     errorMessage,
@@ -24,7 +25,7 @@ const CustomPicker = ({
     const containerBorder = outlined ? styles.outlined : styles.standard;
     return (
         <View style={{ padding: 0, width: boxWidth }}>
-            <Text style={styles.label}>{label}</Text>
+            <Text style={styles.label}>{label} {asterisksymbol?<Text style={{color:'red'}}>*</Text>:""}</Text>
             <View style={[styles.container, containerBorder, { borderColor: borderColor }, { backgroundColor: bgColor }]}>
                 {leftIcon ? <View style={{ paddingRight: 8 }}>
                     {leftIcon}

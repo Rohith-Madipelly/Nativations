@@ -1,4 +1,4 @@
-import { SafeAreaView, View, ScrollView, RefreshControl } from 'react-native'
+import { SafeAreaView, View, ScrollView, RefreshControl, Text, Button } from 'react-native'
 // import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 
@@ -12,7 +12,8 @@ import Snap_Carousel6 from '../../Components2/Snap_Carousel6';
 import { HomePageData } from '../../utils/API_Calls';
 import { useSelector } from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
-
+import NetInfo from '@react-native-community/netinfo';
+import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
@@ -23,6 +24,19 @@ const Home = () => {
   const [previousEvents, setPreviousEvents] = useState()
   const [bhanaja, setBhanaja] = useState()
   const [upComingEvents, setUpComingEvents] = useState()
+
+  const [isConnected, setIsConnected] = useState(true);
+  const navigation = useNavigation();
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
 
 
   let tokenn = useSelector((state) => state.token);
@@ -141,24 +155,34 @@ const Home = () => {
           }
         >
 
-
-          {isData ? <View>
-
-            <Snap_Carousel1 BannerData={Banners} />
-
-            <Snap_Carousel2 BannerData2={meditationTracks} />
+          {isConnected ? <View>
 
 
-            <Snap_Carousel3 BannerDataPravachan={pravachan} />
+            {isData ? <View>
+
+              <Snap_Carousel1 BannerData={Banners} />
+
+              <Snap_Carousel2 BannerData2={meditationTracks} />
 
 
-            <Snap_Carousel4 PreviousEventsData={previousEvents} />
+              <Snap_Carousel3 BannerDataPravachan={pravachan} />
 
-            <Snap_Carousel5 BannerDataBajana={bhanaja} />
 
-            <Snap_Carousel6 Up_Coming_EventsData={upComingEvents} />
+              <Snap_Carousel4 PreviousEventsData={previousEvents} />
 
-          </View> : ""}
+              <Snap_Carousel5 BannerDataBajana={bhanaja} />
+
+              <Snap_Carousel6 Up_Coming_EventsData={upComingEvents} />
+
+            </View> : ""}
+          </View> : (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 150 }} >
+              <Text>No network found</Text>
+              <Text>Please check your internet connection</Text>
+              <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
+            </View>
+          )}
+
         </ScrollView>
 
       </View>

@@ -152,8 +152,8 @@ export default function Register() {
                             <Formik
                                 // enableReinitialize
                                 validateOnMount={true}
-                                // initialValues={{ Name: "", Mobile_Number: "", email: "", password: "" }}
-                                initialValues={{ Name: "Rohith", Mobile_Number: "9951072005", email: "madipellyrohith143@gmail.com", password: "Rohith@123" }}
+                                initialValues={{ Name: "", Mobile_Number: "", email: "", password: "" }}
+                                // initialValues={{ Name: "Rohith", Mobile_Number: "9951072005", email: "madipellyrohith143@gmail.com", password: "Rohith@123" }}
                                 onSubmit={submitHandler}
                                 validator={() => ({})}
                                 validationSchema={signupSchema}

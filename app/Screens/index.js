@@ -32,6 +32,8 @@ import DeleteAccount from "./MainScreen/OtherPages/DeleteAccount";
 import PrivacyPolicy from "./MainScreen/OtherPages/PrivacyPolicy";
 import About from "./MainScreen/OtherPages/About";
 import Help from "./MainScreen/OtherPages/Help";
+import FormScreen123 from "./MainScreen/OtherPages/FormScreen123";
+import TestingPage from "./MainScreen/OtherPages/TestingPage";
 
 
 // import * as SplashScreen from 'expo-splash-screen';
@@ -97,6 +99,8 @@ export default function Screens() {
               <Stack.Screen name="Home" component={BottomTabScreen} />
               <Stack.Screen name="VideoScreen" component={VideoScreen} />
               <Stack.Screen name="FormScreen" component={FormScreen} />
+              {/* <Stack.Screen name="FormScreen123" component={TestingPage} /> */}
+              <Stack.Screen name="FormScreen123" component={FormScreen123} />
               <Stack.Screen name="FullProfile" component={UpdateProfile} />
               <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
               <Stack.Screen name="ProfilePassword" component={ChangePassword} />

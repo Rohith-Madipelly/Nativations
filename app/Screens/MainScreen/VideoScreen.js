@@ -22,6 +22,7 @@ import { HomePageData, VideoPageData } from '../../utils/API_Calls.js';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getIdFromUrl } from '../../utils/getIdFromUrl.js';
+import Snap_Carousel7 from '../../Components2/Snap_Carousel7.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -86,6 +87,11 @@ const VideoScreen = ({ route }) => {
     HomeData()
   }, [])
 
+  useEffect(() => {
+    HomeData()
+  }, [id])
+
+
   const HomeData = async () => {
     setSpinnerbool(true)
 
@@ -94,6 +100,7 @@ const VideoScreen = ({ route }) => {
 
       if (res) {
         setDataPage(res.data.postDetails)
+        setRelatedPosts(res.data.relatedPosts)
 
         setVideoID(getIdFromUrl(res.data.postDetails.videoUrl))
         // console.log(getIdFromUrl(res.data.postDetails.videoUrl))
@@ -114,10 +121,10 @@ const VideoScreen = ({ route }) => {
     }
     finally {
       setSpinnerbool(false)
-
+      setRefreshing(false);
     }
   }
-
+console.log("dabska>>>",VideoID)
 
   if (spinnerBool) {
     return (
@@ -149,6 +156,7 @@ const VideoScreen = ({ route }) => {
 
 
         <View style={{ width: '100%' }}>
+
           <YoutubePlayer
             height={222}
             play={playing}
@@ -185,7 +193,10 @@ const VideoScreen = ({ route }) => {
         </View> : ""}
 
 
-        {/* {relatedPosts ? <View><Text>related Posts</Text></View> : <View><Text>No Related Posts</Text></View>} */}
+        {relatedPosts ? <View><Snap_Carousel7 relatedPostsData={relatedPosts} /></View> : <View><Text>No Related Posts</Text></View>}
+      <View style={{height:20}}>
+
+      </View>
       </SafeAreaView>
     </ScrollView>
   )

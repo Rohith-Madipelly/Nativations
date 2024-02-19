@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { LivePageData } from '../../utils/API_Calls';
@@ -7,12 +7,22 @@ import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { getIdFromUrl } from '../../utils/getIdFromUrl';
 import CustomButton from '../../Components/UI/Button/ButtonC1Cricle';
-
+import NetInfo from '@react-native-community/netinfo';
 const LiveScreen = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
   let tokenn = useSelector((state) => state.token);
 
+  const [isConnected, setIsConnected] = useState(true);
 
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const [livePage, setLivePage] = useState()
   const [VideoID, setVideoID] = useState()
@@ -112,6 +122,18 @@ const LiveScreen = () => {
     );
   } else {
   }
+
+  if (!isConnected) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} >
+      <Text>No network found</Text>
+      <Text>Please check your internet connection</Text>
+      <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
+    </View>
+    );
+  } else {
+  }
+
 
 
   return (

@@ -64,12 +64,22 @@ export default function FormScreen() {
     { label: 'Select', value: '' },
     { label: 'Single', value: 'Single' }, // Changed 'male' to 'single'
     { label: 'Married', value: 'Married' }, // Changed 'female' to 'married'
-];
+  ];
 
   const RegularMedicineData = [
     { label: 'Select', value: '' },
     { label: 'Yes', value: 'Yes' },
     { label: 'No', value: 'No' },
+  ];
+
+
+  const ReferenceFromData = [
+    { label: 'Select', value: '' },
+    { label: 'Friend', value: 'Friend' },
+    { label: 'News-Paper', value: 'News-Paper' },
+    { label: 'TV', value: 'TV' },
+    { label: 'Lectures', value: 'Lectures' },
+    { label: 'Others', value: 'Others' },
   ];
   // >>>>
   const dispatch = useDispatch();
@@ -97,15 +107,15 @@ export default function FormScreen() {
 
     seterrorFormAPI()
     try {
-      const {FromDate, toDate, fName, lName,Gender,userAge,Education,MartialStatus,GuardianName,MotherTongue,Mobile_Number,email,Address,RegularMedicine,briefData,ReferenceFrom} = user;
-      
-      const dataEngin ={FromDate, toDate, fName, lName,Gender,userAge,Education,MartialStatus,GuardianName,MotherTongue,Mobile_Number,email,Address,RegularMedicine,briefData,ReferenceFrom}
+      const { FromDate, toDate, fName, lName, Gender, userAge, Education, MartialStatus, GuardianName, MotherTongue, Mobile_Number, email, Address, RegularMedicine, briefData, ReferenceFrom } = user;
+
+      const dataEngin = { FromDate, toDate, fName, lName, Gender, userAge, Education, MartialStatus, GuardianName, MotherTongue, Mobile_Number, email, Address, RegularMedicine, briefData, ReferenceFrom }
       setSpinnerbool(true)
-      const res = await FormDataApi(dataEngin,tokenn)
+      const res = await FormDataApi(dataEngin, tokenn)
       console.log(res)
       if (res) {
         const Message = res.data.message
-        console.log("messagee >>",Message)
+        console.log("messagee >>", Message)
 
         showAlertAndNavigate(Message)
 
@@ -133,7 +143,7 @@ export default function FormScreen() {
           console.log("Internal Server Error", error.message)
         }
         else {
-          console.log("An error occurred response.",error.response.status)
+          console.log("An error occurred response.", error.response.status)
         }
       }
       else if (error.request) {
@@ -204,15 +214,15 @@ export default function FormScreen() {
                   <>
 
                     <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: '90%' }}>
-                    <CustomDateInput
+                      <CustomDateInput
                         placeholder={'From'}
-                        label={'From'}
+                        label={'From '}
                         name='From'
                         value={values.FromDate}
                         leftIcon={<MaterialIcons name="date-range" size={20} color="black" />}
                         // bgColor='#e1f3f8'
                         // bgColor="#B1B1B0"
-
+                        asterisksymbol={true}
                         // onChangeText={onChangeText}
                         onChangeText={(e) => { handleChange("FromDate")(e); seterrorFormAPI(); }}
                         onBlur={handleBlur("FromDate")}
@@ -221,15 +231,18 @@ export default function FormScreen() {
                         outlined
                         borderColor={`${(errors.FromDate && touched.FromDate) || (errorFormAPI && errorFormAPI.FromDateForm) ? "red" : "#ccc"}`}
                         errorMessage={`${(errors.FromDate && touched.FromDate) ? `${errors.FromDate}` : (errorFormAPI && errorFormAPI.FromDateForm) ? `${errorFormAPI.FromDateForm}` : ``}`}
-                      // errorColor='magenta'
+                        // errorColor='magenta'
+                        minimumDate={new Date()}
+                        maximumDate={new Date(2090, 10, 20)}
                       />
 
 
                       <CustomDateInput
                         placeholder={'to'}
-                        label={'to'}
+                        label={'to '}
                         name='From'
                         value={values.toDate}
+                        asterisksymbol={true}
                         leftIcon={<MaterialIcons name="date-range" size={20} color="black" />}
                         // bgColor='#e1f3f8'
                         // bgColor="#B1B1B0"
@@ -247,15 +260,18 @@ export default function FormScreen() {
                         errorMessage={`${(errors.toDate && touched.toDate) ? `${errors.toDate}` : (errorFormAPI && errorFormAPI.toDateForm) ? `${errorFormAPI.toDateForm}` : ``}`}
                         // errorColor='magenta'
                         boxWidth={"40%"}
-                      // boxWidth={"auto"}
+                        // boxWidth={"auto"}
+                        minimumDate={new Date()}
+                        maximumDate={new Date(2090, 10, 20)}
                       />
 
                     </View>
 
                     <CustomTextInput
                       boxWidth={'80%'}
+                      asterisksymbol={true}
                       placeholder={'Enter Your First Name'}
-                      label={'First Name'}
+                      label={'First Name '}
                       name='First Name'
                       value={values.fName}
                       leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -273,6 +289,7 @@ export default function FormScreen() {
 
                     <CustomTextInput
                       boxWidth={'80%'}
+                      asterisksymbol={true}
                       placeholder={'Enter Your Last Name'}
                       label={'Last Name'}
                       name='Last Name'
@@ -293,6 +310,7 @@ export default function FormScreen() {
 
                       <CustomPicker
                         placeholder={'Enter Your Gender'}
+                        asterisksymbol={true}
                         boxWidth={'60%'}
                         label={'Gender'}
                         name='Gender'
@@ -320,6 +338,7 @@ export default function FormScreen() {
                       <CustomTextInput
                         boxWidth={'30%'}
                         placeholder={'Age'}
+                        asterisksymbol={true}
                         label={'Your Age'}
                         name='Age'
                         value={values.userAge}
@@ -337,6 +356,7 @@ export default function FormScreen() {
 
                     <CustomTextInput
                       placeholder={'Enter Your Education'}
+                      asterisksymbol={true}
                       boxWidth={'80%'}
                       label={'Education'}
                       name='Education'
@@ -356,6 +376,7 @@ export default function FormScreen() {
 
                     <CustomPicker
                       placeholder={'Martial Status'}
+                      asterisksymbol={true}
                       boxWidth={'80%'}
                       label={'Martial Status'}
                       name='MartialStatus'
@@ -383,6 +404,7 @@ export default function FormScreen() {
                     />
                     <CustomTextInput
                       placeholder={'Enter Your Guardian Name'}
+                      asterisksymbol={true}
                       boxWidth={'80%'}
                       label={'Guardian Name'}
                       name='Guardian Name'
@@ -401,6 +423,7 @@ export default function FormScreen() {
                     />
                     <CustomTextInput
                       placeholder={'Enter Your Mother Tongue'}
+                      asterisksymbol={true}
                       boxWidth={'80%'}
                       label={'Mother Tongue'}
                       name='MotherTongue'
@@ -430,6 +453,7 @@ export default function FormScreen() {
 
                     <CustomTextInput
                       placeholder={'Mobile Number'}
+                      asterisksymbol={true}
                       boxWidth={'80%'}
                       label={'Mobile Number'}
                       name='Mobile_Number'
@@ -447,6 +471,7 @@ export default function FormScreen() {
 
                     <CustomTextInput
                       placeholder={'Enter Your Email'}
+                      asterisksymbol={true}
                       boxWidth={'80%'}
                       label={'Email'}
                       name='Email'
@@ -468,6 +493,7 @@ export default function FormScreen() {
 
                     <CustomTextInput
                       placeholder={'Enter Your Address'}
+                      asterisksymbol={true}
                       boxWidth={'80%'}
                       label={'Address'}
                       name='Address'
@@ -486,11 +512,12 @@ export default function FormScreen() {
                       numLines={4}
                     />
 
-                  
+
 
                     {/* regularMedicine */}
                     <CustomPicker
                       placeholder={'Regular Medicine'}
+                      asterisksymbol={true}
                       boxWidth={'80%'}
                       label={'Any Medicine issues'}
                       name='RegularMedicine'
@@ -518,6 +545,7 @@ export default function FormScreen() {
 
                     <CustomTextInput
                       placeholder={'Enter More Information Data'}
+                      asterisksymbol={true}
                       boxWidth={'80%'}
                       label={'More Information'}
                       name='brief'
@@ -536,26 +564,29 @@ export default function FormScreen() {
                       numLines={4}
                     />
 
-                    <CustomTextInput
-                      placeholder={'Reference From'}
+                    <CustomPicker
+                      placeholder={'Refered By'}
+                      asterisksymbol={true}
                       boxWidth={'80%'}
-                      label={'Refered by'}
-                      name='ReferenceFrom'
-                      value={values.ReferenceFrom}
-                      leftIcon={<FontAwesome name="user" size={20} color="black" />}
-                      // bgColor='#e1f3f8'
-                      // bgColor="#B1B1B0"
+                      label={'Refered By'}
+                      name='Refered By'
+
                       onChangeText={(e) => { handleChange("ReferenceFrom")(e); seterrorFormAPI(); }}
                       onBlur={handleBlur("ReferenceFrom")}
 
                       validate={handleBlur("ReferenceFrom")}
                       outlined
-                      borderColor={`${(errors.ReferenceFrom && touched.ReferenceFrom) || (errorFormAPI && errorFormAPI.ReferenceFrom) ? "red" : "#ccc"}`}
+                      borderColor={`${(errors.ReferenceFrom && touched.ReferenceFrom) || (errorFormAPI && errorFormAPI.ReferenceFromForm) ? "red" : "#ccc"}`}
                       errorMessage={`${(errors.ReferenceFrom && touched.ReferenceFrom) ? `${errors.ReferenceFrom}` : (errorFormAPI && errorFormAPI.ReferenceFromForm) ? `${errorFormAPI.ReferenceFromForm}` : ``}`}
                       // errorColor='magenta'
-                      numLines={4}
+                      value={values.ReferenceFrom}
+                      items={ReferenceFromData}
+                      onValueChange={(itemValue) => handleChange("ReferenceFrom")(itemValue)}
+                      containerStyle={{ width: 200 }}
+                      labelStyle={{ color: 'blue' }}
+                    // pickerStyle={{ backgroundColor: '#f0f0f0' }}
+                    // error="Please select a ReferenceFrom"
                     />
-
 
                     <CustomButton
                       onPress={handleSubmit}

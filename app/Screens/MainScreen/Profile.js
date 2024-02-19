@@ -15,7 +15,7 @@ import { OpenStore } from '../../utils/OpenStore';
 import onShare from '../../utils/ShareBtn';
 import { AppLinkAndroid } from '../../Enviornment';
 import { AppLinkIOS } from '../../Enviornment';
-
+import NetInfo from '@react-native-community/netinfo';
 
 
 const Profile = () => {
@@ -28,6 +28,7 @@ const Profile = () => {
   let tokenn = useSelector((state) => state.token);
 
 
+  const [isConnected, setIsConnected] = useState(true);
 
   const PlatformChecker = () => {
     if (Platform.OS !== 'ios') {
@@ -39,6 +40,16 @@ const Profile = () => {
   }
 
 
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   try {
     if (tokenn != null) {
@@ -122,6 +133,17 @@ const Profile = () => {
 
   }
   const navigation = useNavigation();
+
+  if (!isConnected) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} >
+      <Text>No network found</Text>
+      <Text>Please check your internet connection</Text>
+      <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
+    </View>
+    );
+  } else {
+  }
 
   return (
     <View>
@@ -505,6 +527,35 @@ const Profile = () => {
 
                       <View style={{ marginLeft: 14 }}>
                         <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Delete Account</Text>
+                      </View>
+                    </View>
+
+                    <View style={{ marginTop: 0 }}>
+                      <Image style={{ width: 22, height: 22 }}
+                        source={require("../../../assets/InternalImages/right.png")}
+                        resizeMode={"contain"} />
+                    </View>
+
+                  </View>
+                </TouchableOpacity>
+              </View>
+
+
+              <View style={{ marginBottom: 10 }}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("FormScreen123") }}>
+
+                  <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
+
+                    <View style={{ display: '', flexDirection: 'row', justifyContent: 'flex-start' }}>
+
+                      <View>
+                        <Image style={{ width: 24, height: 24, }}
+                          source={require("../../../assets/InternalImages/ProfileLogos/help-circle-outline.png")}
+                          resizeMode={"contain"} />
+                      </View>
+
+                      <View style={{ marginLeft: 14 }}>
+                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Form Demo for Dev Update</Text>
                       </View>
                     </View>
 
