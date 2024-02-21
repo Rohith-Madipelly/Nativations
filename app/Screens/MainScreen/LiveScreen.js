@@ -1,4 +1,4 @@
-import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Button, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { LivePageData } from '../../utils/API_Calls';
@@ -26,14 +26,28 @@ const LiveScreen = () => {
 
   const [livePage, setLivePage] = useState()
   const [VideoID, setVideoID] = useState()
-
+ 
   const [relatedPosts, setRelatedPosts] = useState()
 
 
   const navigation = useNavigation();
   const [playing, setPlaying] = useState(false);
 
+  // >>>>>>>>>>>>>>>>>
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    HomeData()
+
+  }, []);
+
+
+  // >>>>>>>>>>>>>>>>>>
 
 
 
@@ -80,6 +94,7 @@ const LiveScreen = () => {
       const res = await LivePageData(tokenn)
 
       if (res) {
+
         setLivePage(res.data)
         console.log("Data", res.data)
         console.log("Data", res.data.description)
@@ -106,6 +121,7 @@ const LiveScreen = () => {
     }
     finally {
       // setSpinnerbool(false)
+      setRefreshing(false)
 
     }
   }
@@ -137,7 +153,14 @@ const LiveScreen = () => {
 
 
   return (
-    <View >
+    <ScrollView        
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        >
       {!livePage ? <View style={{ backgroundColor: 'black', height: 202, justifyContent: 'center', alignItems: 'center', margin: 5, marginTop: 10 }}>
         <Text style={{ color: 'white', fontSize: 25 }}>Live Screen</Text>
         <Text style={{ color: 'white' }}>Currently live was ended or not avaliable </Text>
@@ -164,7 +187,7 @@ const LiveScreen = () => {
         </View>
 
       </View>}
-    </View>
+    </ScrollView>
   )
 }
 

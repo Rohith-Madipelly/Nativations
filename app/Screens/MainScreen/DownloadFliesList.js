@@ -1,7 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button, FlatList, Linking, TouchableOpacity, ScrollView, Platform, Image } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, Text, Button, FlatList, Linking, TouchableOpacity, ScrollView, Platform, Image, RefreshControl } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 
+import {
+    Entypo,
+    Feather,
+    AntDesign,
+    MaterialIcons,
+    Ionicons, FontAwesome,
+    MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 import { Video } from 'expo-av';
 
@@ -36,7 +44,24 @@ const DownloadFliesList = () => {
 
         fetchFileList().then(files => setFileList(files));
 
+        setRefreshing(false);
     }
+
+    // >>>>>>>>>>>>>>>>>
+    const wait = (timeout) => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+    }
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        data()
+
+    }, []);
+
+
+    // >>>>>>>>>>>>>>>>>>
 
     const filteredFileList = fileList.filter(item => !ignoreFileName.includes(item));
     // Function to handle when a video item is pressed
@@ -59,68 +84,91 @@ const DownloadFliesList = () => {
     };
 
 
-
     return (
-        <View style={{ marginBottom: 70 }}>
+        <View
+        >
 
-            {selectedVideo ? (
-                <Video
-                    source={{ uri: selectedVideo }}
-                    style={{ width: '100%', height: 200 }}
-                    resizeMode="contain"
-                    useNativeControls
-                    autoplay
-                    shouldPlay={true}
-                    isLooping
-                    onPlaybackStatusUpdate={status => {
-                        if (!status.isPlaying && status.positionMillis !== 0 && status.didJustFinish) {
-                            setSelectedVideo(false);
-                        }
-                    }}
-                    error
-                />
-            ) : ""}
+            <View style={{ marginBottom: 70 }}>
 
-            {/* {selectedVideo?<View style={{backgroundColor:'red'}}>
-                <Image
-              src={{ uri: selectedVideo }}
-              style={{ width: '100%', height: 300 }}
-             
-              /></View>:""} */}
-            <View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Download List :</Text>
-                    <View>
-                        <TouchableOpacity style={{ padding: 10 }} onPress={data}>
-                            <Text>Reload List </Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                {selectedVideo ? (
+                    <Video
+                        source={{ uri: selectedVideo }}
+                        style={{ width: '100%', height: 200, backgroundColor: 'black' }}
+                        resizeMode="contain"
+                        useNativeControls
+                        autoplay
+                        shouldPlay={true}
+                        isLooping
+                        onPlaybackStatusUpdate={status => {
+                            if (!status.isPlaying && status.positionMillis !== 0 && status.didJustFinish) {
+                                setSelectedVideo(false);
+                            }
+                        }}
+                        error
+                    />
+                ) : ""}
 
 
-                {/* <FlatList
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
+                >
+                    <View >
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 12 }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 0 }}>Download List :</Text>
+                            <View>
+                                <TouchableOpacity style={{ padding: 10, paddingTop: 0 }} onPress={data}>
+                                    {/* <Text>Reload List reload</Text> */}
+                                    <MaterialCommunityIcons style={{}} name={'reload'} size={25} color={'black'} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+
+                        {/* <FlatList
                     data={filteredFileList}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => index.toString()}
                 /> */}
 
 
-                {filteredFileList.length === 0 ? (
+                        {filteredFileList.length === 0 ? (
 
-                    <View style={{ display: 'flex', flexDirection: 'row',justifyContent:'center', padding: 10,paddingVertical:50, margin: 20, marginVertical: 10, backgroundColor: 'pink' }}>
+                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', padding: 10, paddingVertical: 50, margin: 20, marginVertical: 10, backgroundColor: 'pink' }}>
 
-                        <Text>No downloads</Text>
+                                <Text>No downloads</Text>
+                            </View>
+                        ) : (
+
+
+
+                            <View>
+
+                                <FlatList
+                                    data={filteredFileList}
+                                    renderItem={renderItem}
+                                    keyExtractor={(item, index) => index.toString()}
+                                />
+              
+                            </View>
+
+                            // <FlatList
+                            //     data={filteredFileList}
+                            //     renderItem={renderItem}
+                            //     keyExtractor={(item, index) => index.toString()}
+                            // />
+
+
+                        )}
                     </View>
-                ) : (
-                    <FlatList
-                        data={filteredFileList}
-                        renderItem={renderItem}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
-                )}
+                </ScrollView>
             </View>
+            {/* </TouchableOpacity> */}
         </View>
-
     );
 };
 

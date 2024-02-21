@@ -36,71 +36,13 @@ export const UserLoginApi = async (email, password) => {
 
 
 // User Login API Call 
-export const FormDataApi = async (loginData,token) => {
-  // console.log("api data", loginData)
-  // console.log("api data", token)
-console.log(">>>>>>>>>>>>>>>>>")
-  const DataPage={
-    "from": "Sender's Name",
-    "to": "Receiver's Name",
-    "date": "2024-02-10",
-    "firstName": "John",
-    "lastName": "Doe",
-    "gender": "male",
-    "age": 30,
-    "education": "Bachelor's Degree",
-    "address": "123 Main Street, City, Country",
-    "guardianName": "Jane Doe",
-    "martialStatus": "married",
-    "motherTongue": "english",
-    "mobileNumber": 1234567890,
-    "eMail": "example@example.com",
-    // "knownPerson": {
-    //     "personName": "known Person's Name",
-    //     "personRelation": "known to Reference Person"
-    // },
-    // "familyPerson": {
-    //     "courseDone": "yes",
-    //     "relation": "Relation to Family Person"
-    // },
-    // "professionalDetails": {
-    //     "designation": "Job Title",
-    //     "companyName": "Company Name",
-    //     "companyAddress": "456 Business Avenue, City, Country"
-    // },
-    // "physicalAilment": {
-    //     "inPastOne": "yes",
-    //     "inPresentOne": "no"
-    // },
-    // "psyschologicalAilment": {
-    //     "inPastTwo": "no",
-    //     "inPresentTwo": "yes"
-    // },
-    // "docFitnessCertificate": {
-    //     "medicineName": "Medicine Name",
-    //     "medicineDose": "Medicine Dose"
-    // },
-    "regularMedicine": "yes",
-    "referenceFrom": "Friend",
-    "brief": "Brief Description Brief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Description"
-    // "oldStudent": {
-    //     "oldStuName": "Old Student's Name",
-    //     "dateFirstCourse": "2020-01-01",
-    //     "firstCoursePlace": "First Course Place",
-    //     "firstAsstTeacher": "First Assistant Teacher's Name",
-    //     "dateLastCourse": "2023-12-31",
-    //     "lastCoursePlace": "Last Course Place",
-    //     "lastAsstTeacher": "Last Assistant Teacher's Name",
-    //     "courseDetails": "10-Days",
-    //     "triedAnyPractise": "yes",
-    //     "practiseRegularly": "yes",
-    //     "dailyHours": "1-2 hours",
-    //     "reason": "Reason for Trying the Practice",
-    //     "changeInYourSelf": "Changes Experienced"
-    // }
-}
+export const FormDataApi = async (loginData, token) => {
 
-  return await axios.post(`${GUEST_URL}/user/form`,DataPage, {
+  console.log("loginData >>>>123", loginData, "ngchgc")
+
+
+
+  return await axios.post(`${GUEST_URL}/user/form`, loginData, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -166,7 +108,7 @@ export const ForgotApiPassRest = async (email, password) => {
 
 //Profile api 
 export const UserGetProfileDetails = async (token) => {
-  console.log(token)
+
   return await axios.get(`${GUEST_URL}/user/profile`, {
     headers: {
       'Authorization': `Bearer ${token}`
@@ -213,31 +155,59 @@ export const UserUpdatedProfileDetails = async (fName, lName, userAge, token) =>
 
 
 //Updated Profile Pic api 
-export const UserUpdatedProfilePic = async (image, token) => {
-
-
-
-
-  // const ReqData = {
-  //   profile_pic: image,
+export const UserUpdatedProfilePic123 = async (image, token) => {
+  console.log("sahvbdjad", image)
+  const formData = new FormData();
+  // Append the image file to the FormData object
+  const imageurl = image.uri.split('/').pop();
+  formData.append("picture", {
+    uri: imageurl,
+    name: 'profile_pic.jpg',
+    type: 'image/jpeg',
+  });
+  //  // Configure headers
+  //  const headers = {
+  //   'Authorization': `Bearer ${token}`,
+  //   ...formData.getHeaders()
   // };
 
-  // return await axios.post(`${GUEST_URL}/user/updateprofilepicture`
-  //   , ReqData, {
-  //   headers: {
-  //     'Authorization': `Bearer ${token}`
-  //   }
-  // });
-
-  const formData = new FormData();
-  formData.append("profile_pic", image);
-
-  return await axios.post(`${GUEST_URL}/user/updateprofilepicture`, formData, {
+  return await axios.post(`${GUEST_URL}/user/uploaddp`, formData, {
     headers: {
-      // 'Authorization': `Bearer ${token}`
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OTQwYTE3MzJhZmRmY2NkMWIzNWIwOCIsImlhdCI6MTcwNTQ3MTQzMywiZXhwIjoxNzA1NjQ0MjMzfQ.5PN-Tbg6sJXCGLSwG8zqaGpL_dFfGzezwV-JPsK65X0'
+      'Authorization': `Bearer ${token}`
     }
   });
+};
+
+
+
+import FormData from 'form-data';
+
+// Update with your server URL
+
+export const UserUpdatedProfilePic = async (imageUri, token) => {
+  try {
+    const formData = new FormData();
+    const imageFileName = imageUri.split('/').pop(); // Extract filename from URI
+    // formData.append('picture', {
+    //   uri: imageUri,
+    //   name: imageFileName,
+    //   type: 'image/jpeg',
+    // });
+    formData.append('picture', imageUri);
+    console.log("cs", formData)
+    const response = await axios.post(`${GUEST_URL}/user/uploaddp`, formData, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+        // ...formData.getHeaders(),
+      },
+    });
+
+    // console.log('Upload successful:', response.data);
+    // return response.data; // Return response data if needed
+  } catch (error) {
+    console.error('Upload failed:', error);
+    throw error; // Rethrow the error for handling in the calling code
+  }
 };
 
 

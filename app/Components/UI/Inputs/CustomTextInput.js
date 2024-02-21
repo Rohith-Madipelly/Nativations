@@ -2,7 +2,6 @@ import { StyleSheet, Text, TextInput, View, Platform } from 'react-native'
 import React from 'react'
 
 const CustomTextInput = ({
-
     label,
     value,
     placeholder,
@@ -20,16 +19,19 @@ const CustomTextInput = ({
     borderColor,
     secure,
     validate,
+    editable,
     errorMessage,
     errorColor = 'red',
-    bgColor = 'white',
+    bgColor,
 
 }) => {
+
+    const backgroundColor = bgColor || 'white';
     const containerBorder = outlined ? styles.outlined : styles.standard;
     return (
         <View style={{ padding: 0,width:boxWidth }}>
             <Text style={styles.label}>{label} {asterisksymbol?<Text style={{color:'red'}}>*</Text>:""}</Text>
-            <View style={[styles.container, containerBorder, { borderColor: borderColor }, { backgroundColor: bgColor }]}>
+            <View style={[styles.container, containerBorder, { borderColor: borderColor }, { backgroundColor: backgroundColor }]}>
                 <View style={{ paddingRight: 8 }}>
                     {leftIcon}
 
@@ -50,7 +52,7 @@ const CustomTextInput = ({
                     onEndEditing={validate}
                     multiline={numLines > 1 ? true : false}
                     numberOfLines={numLines}
-
+                    editable={editable}
                     style={{ flex: 4 }}
 
                 />

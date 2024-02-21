@@ -35,7 +35,7 @@ import CustomPicker from '../../../Components/UI/Inputs/CustomPicker.js';
 import { FormData2 } from '../../../Fomik/schema/FormData2.js';
 
 
-export default function FormScreen123() {
+export default function FormScreen123() { 
 
   const [show, setShow] = useState()
   const [gender, setGender] = useState()
@@ -111,7 +111,291 @@ export default function FormScreen123() {
                   <>
                     <Text>ksjdb{values.FromDate}</Text>
 
+                    <Text>knownPerson</Text>
 
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'known Person Name'}
+                      label={'known Person Name'}
+                      name='known Person Name'
+                      value={values.personName}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("personName")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("personName")}
+
+                      validate={handleBlur("personName")}
+                      outlined
+                      borderColor={`${(errors.personName && touched.personName) || (errorFormAPI && errorFormAPI.personNameForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.personName && touched.personName) ? `${errors.personName}` : (errorFormAPI && errorFormAPI.personNameForm) ? `${errorFormAPI.personNameForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'known Person Relation'}
+                      label={'known Person Relation'}
+                      name='known Person Relation'
+                      value={values.personRelation}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("personRelation")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("personRelation")}
+
+                      validate={handleBlur("personRelation")}
+                      outlined
+                      borderColor={`${(errors.personRelation && touched.personRelation) || (errorFormAPI && errorFormAPI.personRelationForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.personRelation && touched.personRelation) ? `${errors.personRelation}` : (errorFormAPI && errorFormAPI.personRelationForm) ? `${errorFormAPI.personRelationForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'Family Person course Done'}
+                      label={'Family Person course Done'}
+                      name='Family Person course Done'
+                      value={values.courseDone}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("courseDone")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("courseDone")}
+
+                      validate={handleBlur("courseDone")}
+                      outlined
+                      borderColor={`${(errors.courseDone && touched.courseDone) || (errorFormAPI && errorFormAPI.courseDoneForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.courseDone && touched.courseDone) ? `${errors.courseDone}` : (errorFormAPI && errorFormAPI.courseDoneForm) ? `${errorFormAPI.courseDoneForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'Family Person relation'}
+                      label={'Family Person relation'}
+                      name='Family Person relation'
+                      value={values.relation}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("relation")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("relation")}
+
+                      validate={handleBlur("relation")}
+                      outlined
+                      borderColor={`${(errors.relation && touched.relation) || (errorFormAPI && errorFormAPI.relationForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.relation && touched.relation) ? `${errors.relation}` : (errorFormAPI && errorFormAPI.relationForm) ? `${errorFormAPI.relationForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+
+                    <Text> professionalDetails</Text>
+
+
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'Designation'}
+                      label={'designation'}
+                      name='Professional Details designation'
+                      value={values.designation}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("designation")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("designation")}
+
+                      validate={handleBlur("designation")}
+                      outlined
+                      borderColor={`${(errors.designation && touched.designation) || (errorFormAPI && errorFormAPI.designationForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.designation && touched.designation) ? `${errors.designation}` : (errorFormAPI && errorFormAPI.designationForm) ? `${errorFormAPI.designationForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+
+
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'CompanyName'}
+                      label={'Company Name'}
+                      name='companyName'
+                      value={values.companyName}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("companyName")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("companyName")}
+
+                      validate={handleBlur("companyName")}
+                      outlined
+                      borderColor={`${(errors.companyName && touched.companyName) || (errorFormAPI && errorFormAPI.companyNameForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.companyName && touched.companyName) ? `${errors.companyName}` : (errorFormAPI && errorFormAPI.companyNameForm) ? `${errorFormAPI.companyNameForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'Company Address'}
+                      label={'Company Address'}
+                      name='Company Address'
+                      value={values.CompanyAddress}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("CompanyAddress")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("CompanyAddress")}
+
+                      validate={handleBlur("CompanyAddress")}
+                      outlined
+                      borderColor={`${(errors.CompanyAddress && touched.CompanyAddress) || (errorFormAPI && errorFormAPI.CompanyAddressForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.CompanyAddress && touched.CompanyAddress) ? `${errors.CompanyAddress}` : (errorFormAPI && errorFormAPI.CompanyAddressForm) ? `${errorFormAPI.CompanyAddressForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+                    <Text>physicalAilment</Text>
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'Physical Ailment in Past One'}
+                      label={'Physical Ailment in Past One'}
+                      name='Physical Ailment inPastOne'
+                      value={values.inPastOne}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("inPastOne")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("inPastOne")}
+
+                      validate={handleBlur("inPastOne")}
+                      outlined
+                      borderColor={`${(errors.inPastOne && touched.inPastOne) || (errorFormAPI && errorFormAPI.inPastOneForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.inPastOne && touched.inPastOne) ? `${errors.inPastOne}` : (errorFormAPI && errorFormAPI.inPastOneForm) ? `${errorFormAPI.inPastOneForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'Physical Ailment in Present One'}
+                      label={'Physical Ailment in Present One'}
+                      name='Physical Ailment inPresentOne'
+                      value={values.inPresentOne}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("inPresentOne")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("inPresentOne")}
+
+                      validate={handleBlur("inPresentOne")}
+                      outlined
+                      borderColor={`${(errors.inPresentOne && touched.inPresentOne) || (errorFormAPI && errorFormAPI.inPresentOneForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.inPresentOne && touched.inPresentOne) ? `${errors.inPresentOne}` : (errorFormAPI && errorFormAPI.inPresentOneForm) ? `${errorFormAPI.inPresentOneForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'psyschological Ailment in Past Two'}
+                      label={'psyschological Ailment in Past Two'}
+                      name='psyschological Ailment in Past Two'
+                      value={values.inPastTwo}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("inPastTwo")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("inPastTwo")}
+
+                      validate={handleBlur("inPastTwo")}
+                      outlined
+                      borderColor={`${(errors.inPastTwo && touched.inPastTwo) || (errorFormAPI && errorFormAPI.inPastTwoForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.inPastTwo && touched.inPastTwo) ? `${errors.inPastTwo}` : (errorFormAPI && errorFormAPI.inPastTwoForm) ? `${errorFormAPI.inPastTwoForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'psyschological Ailment in Present Two'}
+                      label={'psyschological Ailment in Present Two'}
+                      name='psyschological Ailment inPresentTwo'
+                      value={values.inPresentTwo}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("inPresentTwo")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("inPresentTwo")}
+
+                      validate={handleBlur("inPresentTwo")}
+                      outlined
+                      borderColor={`${(errors.inPresentTwo && touched.inPresentTwo) || (errorFormAPI && errorFormAPI.inPresentTwoForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.inPresentTwo && touched.inPresentTwo) ? `${errors.inPresentTwo}` : (errorFormAPI && errorFormAPI.inPresentTwoForm) ? `${errorFormAPI.inPresentTwoForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+                    <Text>docFitnessCertificate</Text>
+
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'Fitness Certificate medicine Name'}
+                      label={'Fitness Certificate medicine Name'}
+                      name='docFitnessCertificate medicine Name'
+                      value={values.medicineName}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("medicineName")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("medicineName")}
+
+                      validate={handleBlur("medicineName")}
+                      outlined
+                      borderColor={`${(errors.medicineName && touched.medicineName) || (errorFormAPI && errorFormAPI.medicineNameForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.medicineName && touched.medicineName) ? `${errors.medicineName}` : (errorFormAPI && errorFormAPI.medicineNameForm) ? `${errorFormAPI.medicineNameForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'Fitness Certificate medicine Dose'}
+                      label={'Fitness Certificate medicine Dose'}
+                      name='docFitnessCertificate medicine Dose'
+                      value={values.medicineDose}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("medicineDose")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("medicineDose")}
+
+                      validate={handleBlur("medicineDose")}
+                      outlined
+                      borderColor={`${(errors.medicineDose && touched.medicineDose) || (errorFormAPI && errorFormAPI.medicineDoseForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.medicineDose && touched.medicineDose) ? `${errors.medicineDose}` : (errorFormAPI && errorFormAPI.medicineDoseForm) ? `${errorFormAPI.medicineDoseForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+
+                    <CustomTextInput
+                      boxWidth={'80%'}
+                      placeholder={'Fitness Certificate regular Medicine'}
+                      label={'Fitness Certificate regular Medicine'}
+                      name='docFitnessCertificate regular Medicine'
+                      value={values.regularMedicine}
+                      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                      // bgColor='#e1f3f8'
+                      // bgColor="#B1B1B0"
+                      onChangeText={(e) => { handleChange("regularMedicine")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("regularMedicine")}
+
+                      validate={handleBlur("regularMedicine")}
+                      outlined
+                      borderColor={`${(errors.regularMedicine && touched.regularMedicine) || (errorFormAPI && errorFormAPI.regularMedicineForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.regularMedicine && touched.regularMedicine) ? `${errors.regularMedicine}` : (errorFormAPI && errorFormAPI.regularMedicineForm) ? `${errorFormAPI.regularMedicineForm}` : ``}`}
+                    // errorColor='magenta'
+                    />
+
+
+
+
+
+                    <Text>knownPerson end</Text>
 
                     <Text>Old Student</Text>
 

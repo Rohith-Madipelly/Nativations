@@ -1,5 +1,5 @@
-import { Text, StyleSheet, ImageBackground, View, ScrollView, Image, TouchableOpacity, Alert, Platform, Button } from 'react-native'
-import React, { Component, useEffect, useState } from 'react'
+import { Text, StyleSheet, ImageBackground, View, ScrollView, Image, TouchableOpacity, Alert, Platform, Button, RefreshControl } from 'react-native'
+import React, { Component, useCallback, useEffect, useState } from 'react'
 // import { Button } from '../../screenComponents'
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from '../../redux/actions/loginAction'
@@ -65,6 +65,25 @@ const Profile = () => {
     PlatformChecker()
   }, [])
 
+
+    // >>>>>>>>>>>>>>>>>
+    const wait = (timeout) => {
+      return new Promise(resolve => setTimeout(resolve, timeout));
+    }
+  
+    const [refreshing, setRefreshing] = useState(false);
+  
+    const onRefresh = useCallback(() => {
+      setRefreshing(true);
+      ProfileNameKosam()
+      PlatformChecker()
+  
+    }, []);
+  
+  
+    // >>>>>>>>>>>>>>>>>>
+
+
   const ProfileNameKosam = async () => {
     setSpinnerbool(true)
     // console.log(tokenn)
@@ -78,16 +97,15 @@ const Profile = () => {
         setUserName([res.data.username])
         setStartingLetter(res.data.username.charAt(0))
         var datadsd = res.data.profile_picture
-        setProfilepic(datadsd)
+        // setProfilepic(datadsd)
 
 
         if (datadsd == "") {
         }
         else {
-          setProfilepic(`https://ads-reels-pictures.s3.ap-south-1.amazonaws.com/${datadsd}`)
-
+          setProfilepic(`http://satyasadhna.com:8001/pictures/${datadsd}`)
         }
-        console.log(profilepic)
+
         setSpinnerbool(false)
       }
       else {
@@ -100,6 +118,7 @@ const Profile = () => {
     }
     finally {
       setSpinnerbool(false)
+      setRefreshing(false);
 
     }
   }
@@ -137,10 +156,10 @@ const Profile = () => {
   if (!isConnected) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} >
-      <Text>No network found</Text>
-      <Text>Please check your internet connection</Text>
-      <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
-    </View>
+        <Text>No network found</Text>
+        <Text>Please check your internet connection</Text>
+        <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
+      </View>
     );
   } else {
   }
@@ -152,11 +171,16 @@ const Profile = () => {
         color={"#5F2404"}
         animation={'fade'}
       />
-      {/* <Text style={[styles.Heading_1, { margin: 25, marginHorizontal: 20 }]}>Profile</Text> */}
-
-
-      <ScrollView style={[{ borderTopRightRadius: 25, borderTopLeftRadius: 25, backgroundColor: "#FFF" }]}>
-        <View style={[{ paddingLeft: 29, paddingTop: 40, paddingRight: 20, }]}>
+      <ScrollView style={[{ borderTopRightRadius: 25, borderTopLeftRadius: 25, backgroundColor: "#FFF" }]}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      
+      >
+        <View style={[{ paddingLeft: 29, paddingTop: 20, paddingRight: 20}]}>
 
 
           <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("FullProfile") }}>
@@ -168,7 +192,7 @@ const Profile = () => {
                 <View>
 
 
-                  {/* {!profilepic?<View style={styles.outerCircle}>
+                  {profilepic ? <View style={styles.outerCircle}>
                     <ImageBackground
                       style={styles.innerCircle}
                       // source={profilepic}
@@ -179,17 +203,17 @@ const Profile = () => {
                     >
 
                     </ImageBackground>
-                  </View>: */}
-                  <View style={styles.outerCircle}>
-                    <ImageBackground
-                      style={styles.innerCircle}
-                      source={require("../../../assets/InternalImages/profile.png")}
-                      resizeMode="cover"
-                    >
-                      <Text style={styles.letter}>{StartingLetter.toLocaleUpperCase()}</Text>
-                    </ImageBackground>
-                  </View>
-                  {/* } */}
+                  </View> :
+                    <View style={styles.outerCircle}>
+                      <ImageBackground
+                        style={styles.innerCircle}
+                        source={require("../../../assets/InternalImages/profile.png")}
+                        resizeMode="cover"
+                      >
+                        <Text style={styles.letter}>{StartingLetter.toLocaleUpperCase()}</Text>
+                      </ImageBackground>
+                    </View>
+                  }
                 </View>
 
                 <View style={{ margin: 5, marginLeft: 14 }}>
@@ -327,7 +351,7 @@ const Profile = () => {
 
                       <View>
                         <Image style={{ width: 24, height: 24, }}
-                          source={require("../../../assets/InternalImages/ProfileLogos/form.jpg")}
+                          source={require("../../../assets/InternalImages/ProfileLogos/eidt.png")}
                           resizeMode={"contain"} />
                       </View>
 
@@ -484,7 +508,7 @@ const Profile = () => {
                 </TouchableOpacity>
               </View>
 
-              <View style={{ marginBottom: 10 }}>
+              {/* <View style={{ marginBottom: 10 }}>
                 <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("Help") }}>
 
                   <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
@@ -510,7 +534,7 @@ const Profile = () => {
 
                   </View>
                 </TouchableOpacity>
-              </View>
+              </View> */}
 
               <View style={{ marginBottom: 10 }}>
                 <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("DeleteAccount") }}>
@@ -520,8 +544,8 @@ const Profile = () => {
                     <View style={{ display: '', flexDirection: 'row', justifyContent: 'flex-start' }}>
 
                       <View>
-                        <Image style={{ width: 24, height: 24, }}
-                          source={require("../../../assets/InternalImages/ProfileLogos/help-circle-outline.png")}
+                        <Image style={{ width: 22, height: 22, }}
+                          source={require("../../../assets/InternalImages/ProfileLogos/trash.png")}
                           resizeMode={"contain"} />
                       </View>
 
@@ -540,7 +564,7 @@ const Profile = () => {
                 </TouchableOpacity>
               </View>
 
-
+{/* 
               <View style={{ marginBottom: 10 }}>
                 <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("FormScreen123") }}>
 
@@ -550,7 +574,7 @@ const Profile = () => {
 
                       <View>
                         <Image style={{ width: 24, height: 24, }}
-                          source={require("../../../assets/InternalImages/ProfileLogos/help-circle-outline.png")}
+                          source={require("../../../assets/InternalImages/ProfileLogos/logout.png")}
                           resizeMode={"contain"} />
                       </View>
 
@@ -567,7 +591,7 @@ const Profile = () => {
 
                   </View>
                 </TouchableOpacity>
-              </View>
+              </View> */}
 
 
             </View>

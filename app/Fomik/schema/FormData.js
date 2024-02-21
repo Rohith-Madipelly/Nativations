@@ -1,31 +1,31 @@
 import * as Yup from "yup";
 const FormData = Yup.object().shape({
 
-    FromDate: Yup.string()
+    from: Yup.string()
         .trim()
         .required("From Date is a Required Field"),
     // .matches(/^[0-9]{8}$/, "Invalid Date"),
 
-    toDate: Yup.string()
+    to: Yup.string()
         .trim()
         .required("To Date is a Required Field"),
     // .matches(/^[0-9]{8}$/, "Invalid Date"),
 
 
-    fName: Yup.string()
+    firstName: Yup.string()
         .trim()
         .required("First Name is a Required Field")
         .matches(/^[a-zA-Z ]*$/, "Name must contain only letters and spaces"),
 
-    lName: Yup.string()
+    lastName: Yup.string()
         .trim()
         .required("Last Name is a Required Field")
         .matches(/^[a-zA-Z ]*$/, "Name must contain only letters and spaces"),
 
     // >>>>>>>>>
-    Gender: Yup.string().required("Gender is a Required Field").oneOf(["male", "female"], "Invalid gender"),
+    gender: Yup.string().required("Gender is a Required Field").oneOf(["male", "female"], "Invalid gender"),
 
-    userAge: Yup.string()
+    age: Yup.string()
         .trim()
         .required("Enter age")
     // .matches(/^[0-9]$/, "Age must be a number")
@@ -35,44 +35,82 @@ const FormData = Yup.object().shape({
     // .min(18, "User Age must be at least 18 years old")
     // .max(120, "User Age cannot exceed 120 years"),
     ,
-    Education: Yup.string()
-        .required("Education Name is a Required Field")
-        .min(6, "Length is short"),
+    education: Yup.string()
+        .required("education Name is a Required Field"),
+        // .min(6, "To short"),
 
 
     // >>>>>>>>>>>>
-    MartialStatus: Yup.string()
-        .required("MartialStatus is a Required Field"),
+    martialStatus: Yup.string()
+        .required("martialStatus is a Required Field")
+        .oneOf(["single", "married", "windower", "widow", "separated", "divorced"], "Invalid mother Tongue"),
 
-
-    GuardianName: Yup.string()
+    guardianName: Yup.string()
         .required("Guardian Name is a Required Field"),
 
-    MotherTongue: Yup.string()
-        .required("Mother Tongue is a Required Field"),
+    motherTongue: Yup.string()
+        .required("Mother Tongue is a Required Field")
+        .oneOf(["hindi", "english"], "Invalid mother Tongue"),
 
-    Mobile_Number: Yup.string()
+    mobileNumber: Yup.string()
         .trim()
         .required("Mobile Number is a Required Field")
-        .matches(/^[0-9]{10}$/, "Mobile Number must be a 2-digit number"),
+        .matches(/^[0-9]{10}$/, "Mobile Number must be a 10-digit number"),
 
-    email: Yup.string().email().required("Email is a Required Field"),
-    Address: Yup.string()
-        .required("Address is a Required Field")
-        .min(15, "Length is short"),
+    eMail: Yup.string().email().required("Email is a Required Field"),
+    address: Yup.string()
+        .required("address is a Required Field"),
+        // .min(15, "Length is short"),
 
-    RegularMedicine: Yup.string()
+    regularMedicine: Yup.string()
         .required("Password is a Required Field")
-        .oneOf(["Yes", "No"], "Invalid gender"),
+        .oneOf(["yes", "no"], "Invalid regular Medicine"),
 
 
-    briefData: Yup.string()
+    brief: Yup.string()
 
         .min(15, "Length is short")
-        // .max(225, "ReferenceFrom Length is too Long")
+        // .max(225, "referenceFrom Length is too Long")
         .required("Information is a Required Field."),
-    ReferenceFrom: Yup.string()
-        .required("ReferenceFrom is a Required Field").oneOf(["Friend", "News-Paper","TV","Lectures","Others"], "Invalid Reference "),
+    referenceFrom: Yup.string()
+        .required("referenceFrom is a Required Field").oneOf(["Friend", "News-Paper", "TV", "Lectures", "Others"], "Invalid Reference "),
+
+    oldStuName: Yup.string(),
+    firstCoursePlace: Yup.string(),
+    dateFirstCourse: Yup.string(),
+    dateLastCourse: Yup.string(),
+    firstAsstTeacher: Yup.string(),
+    lastCoursePlace: Yup.string(),
+    lastAsstTeacher: Yup.string(),
+    courseDetails: Yup.string().oneOf(["10-Days", "20-Days", "30-Days", "50-Days", "60-Days", "Self-Course", "Service", "Courses"], "Invalid Input"),
+    triedAnyPractise: Yup.string(),
+    practiseRegularly: Yup.string().oneOf(["yes", "no"], "Invalid Input"),
+    dailyHours: Yup.string(),
+    reason: Yup.string(),
+    changeInYourSelf: Yup.string(),
+
+
+
+
+    personName: Yup.string(),
+    personRelation: Yup.string(),
+
+    courseDone: Yup.string().oneOf(["yes", "no"], "Invalid course Done yes or no"),
+
+    relation: Yup.string(),
+
+
+    designation: Yup.string(),
+    companyName: Yup.string(),
+    companyAddress: Yup.string(),
+
+
+    inPastOne: Yup.string(),
+    inPresentOne: Yup.string(),
+    inPastTwo: Yup.string(),
+    inPresentTwo: Yup.string(),
+    medicineName: Yup.string(),
+    medicineDose: Yup.string(),
 
 });
 export { FormData }

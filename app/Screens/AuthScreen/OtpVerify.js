@@ -61,8 +61,9 @@ export default function OtpVerify({ route }) {
             console.log(res)
             if (res) {
 
-                { navigation.navigate('Login') }
-
+                // { navigation.navigate('Login') }
+                { navigation.navigate('ForgotPassword') }
+                // {navigation.navigate('OtpVerify', { email: 'madipellyrohith@gmail.com' });}
                 setTimeout(() => {
 
                     setSpinnerbool(false)
@@ -72,6 +73,9 @@ export default function OtpVerify({ route }) {
             }
 
         } catch (error) {
+            // { navigation.navigate('ForgotPassword') }
+
+
             if (error.response) {
                 if (error.response.status === 400) {
                     console.log("Error With 400.")
@@ -90,7 +94,7 @@ export default function OtpVerify({ route }) {
                     console.log("Internal Server Error", error.message)
                 }
                 else {
-                    console.log("An error occurred response.",error.response.status)
+                    console.log("An error occurred response.", error.response.status)
                 }
             }
             else if (error.request) {
@@ -162,6 +166,7 @@ export default function OtpVerify({ route }) {
 
                                         <CustomTextInput
                                             placeholder={'Enter OTP'}
+                                            boxWidth={'80%'}
                                             label={'Enter OTP'}
                                             name='OTP'
                                             value={values.otp}
@@ -175,8 +180,8 @@ export default function OtpVerify({ route }) {
                                             rightIcon={<Pressable onPress={() => setShow({ ...setShow, otp: !show?.otp })}>
 
                                                 {!show?.otp ? (
-                                                    <Entypo name="eye" size={20} color="black" />) : (
-                                                    <Entypo name="eye-with-line" size={20} color="black" />)
+                                                    <Entypo name="eye-with-line" size={20} color="black" />) : (
+                                                        <Entypo name="eye" size={20} color="black" />)
                                                 }
 
                                             </Pressable>

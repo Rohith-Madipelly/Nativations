@@ -137,8 +137,11 @@ console.log("dabska>>>",VideoID)
       </SafeAreaView>
     );
   }
+
+
+  
   return (
-    <ScrollView style={{ }}
+    <ScrollView 
       refreshControl={
         <RefreshControl
           refreshing={refreshing}

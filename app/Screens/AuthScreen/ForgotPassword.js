@@ -167,8 +167,8 @@ export default function Login() {
                                             onBlur={handleBlur("password")}
                                             rightIcon={<Pressable onPress={() => setShow({ ...setShow, password: !show?.password })}>
                                                 {!show?.password ? (
-                                                    <Entypo name="eye" size={20} color="black" />) : (
-                                                    <Entypo name="eye-with-line" size={20} color="black" />)
+                                                    <Entypo name="eye-with-line" size={20} color="black" />) : (
+                                                        <Entypo name="eye" size={20} color="black" />)
                                                 }
 
                                             </Pressable>
@@ -196,8 +196,8 @@ export default function Login() {
                                             onBlur={handleBlur("ConfirmPassword")}
                                             rightIcon={<Pressable onPress={() => setShow({ ...setShow, ConfirmPassword: !show?.ConfirmPassword })}>
                                                 {!show?.ConfirmPassword ? (
-                                                    <Entypo name="eye" size={20} color="black" />) : (
-                                                    <Entypo name="eye-with-line" size={20} color="black" />)
+                                                    <Entypo name="eye-with-line" size={20} color="black" />) : (
+                                                        <Entypo name="eye" size={20} color="black" />)
                                                 }
 
                                             </Pressable>

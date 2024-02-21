@@ -202,7 +202,13 @@ export default function Register() {
                                             name='Mobile_Number'
                                             value={values.Mobile_Number}
                                             leftIcon={<FontAwesome name="phone" size={20} color="black" />}
-                                            onChangeText={(e) => { handleChange("Mobile_Number")(e); seterrorFormAPI(); }}
+                                            onChangeText={(e) => {
+                                                // Remove any non-numeric characters
+                                                const numericValue = e.replace(/[^0-9]/g, '');
+                                                // Update the state with the numeric value
+                                                handleChange("Mobile_Number")(numericValue);
+                                                seterrorFormAPI();
+                                            }}
                                             onBlur={handleBlur("Mobile_Number")}
                                             validate={handleBlur("Mobile_Number")}
                                             outlined
@@ -218,7 +224,8 @@ export default function Register() {
                                             name='Email'
                                             value={values.email}
                                             leftIcon={<FontAwesome name="user" size={20} color="black" />}
-                                            onChangeText={(e) => { handleChange("email")(e); seterrorFormAPI(); }}
+                                            onChangeText={(e) => {    const eToLowerCaseText = e.toLowerCase();  handleChange("email")(eToLowerCaseText); seterrorFormAPI(); }}
+                                            
                                             onBlur={handleBlur("email")}
                                             validate={handleBlur("email")}
                                             outlined
@@ -237,14 +244,14 @@ export default function Register() {
                                             // bgColor='#e1f3f8'
 
 
-                                            onChangeText={(e) => { handleChange("password")(e); seterrorFormAPI(); }}
+                                            onChangeText={(e) => { handleChange("password")(e); seterrorFormAPI(); setShow({ ...setShow, password: false }); }}
                                             onBlur={handleBlur("password")}
 
                                             rightIcon={<Pressable onPress={() => setShow({ ...setShow, password: !show?.password })}>
 
                                                 {!show?.password ? (
-                                                    <Entypo name="eye" size={20} color="black" />) : (
-                                                    <Entypo name="eye-with-line" size={20} color="black" />)
+                                                <Entypo name="eye-with-line" size={20} color="black" />) : (
+                                                    <Entypo name="eye" size={20} color="black" />)
                                                 }
 
                                             </Pressable>

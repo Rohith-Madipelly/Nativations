@@ -54,7 +54,7 @@ export default function OtpSender() {
             const res = await UserForgotOTPApi(email)
             console.log(res)
             if (res) {
-                {navigation.navigate('OtpVerify', { email: email });}
+                // {navigation.navigate('OtpVerify', { email: email });}
 
                 setTimeout(() => {
                     setSpinnerbool(false)
@@ -64,6 +64,7 @@ export default function OtpSender() {
             }
 
         } catch (error) {
+            {navigation.navigate('OtpVerify', { email: 'madipellyrohith@gmail.com' });}
             if (error.response) {
                 console.log(error.data)
                 if (error.response.status === 400) {
@@ -193,7 +194,7 @@ export default function OtpSender() {
                                                 Get OPT
                                             </CustomButton>
 
-                                            <View style={{}}>
+                                            {/* <View style={{}}>
                                                 <TouchableOpacity onPress={() => {navigation.navigate("ForgotPassword") }}>
                                                     <Text style={[styles.paragraphy, { color: 'black', marginTop: 20, fontWeight: '400' }]}>Forgot password?</Text>
                                                 </TouchableOpacity>
@@ -207,7 +208,7 @@ export default function OtpSender() {
                                                     </Text>
 
                                                 </TouchableOpacity>
-                                            </View>
+                                            </View> */}
 
 
                                         </>

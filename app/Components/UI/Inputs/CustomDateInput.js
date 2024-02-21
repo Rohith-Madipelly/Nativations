@@ -49,7 +49,7 @@ const CustomDateInput = ({
           editable={false}
           onPress={() => showMode("date")} // Use onPress instead of onPressIn for TextInput
           onBlur={onBlur}
-          style={{ flex: 4 }}
+          style={{ flex: 4,color:'black' }}
         />
         {show && (
           <DateTimePicker

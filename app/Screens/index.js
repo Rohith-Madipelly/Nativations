@@ -34,6 +34,7 @@ import About from "./MainScreen/OtherPages/About";
 import Help from "./MainScreen/OtherPages/Help";
 import FormScreen123 from "./MainScreen/OtherPages/FormScreen123";
 import TestingPage from "./MainScreen/OtherPages/TestingPage";
+import ProfilePicUpdate from "./Demo/ProfilePic";
 
 
 // import * as SplashScreen from 'expo-splash-screen';
@@ -96,6 +97,7 @@ export default function Screens() {
 
          
               {/* <Stack.Screen name="Home123" component={Reloading} /> */}
+              <Stack.Screen name="Home123" component={ProfilePicUpdate} />
               <Stack.Screen name="Home" component={BottomTabScreen} />
               <Stack.Screen name="VideoScreen" component={VideoScreen} />
               <Stack.Screen name="FormScreen" component={FormScreen} />

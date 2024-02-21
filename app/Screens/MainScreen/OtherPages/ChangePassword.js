@@ -13,7 +13,7 @@ import {
 } from "@expo/vector-icons";
 
 import { useState } from 'react';
-import { Formik } from "formik";
+import { Formik} from "formik";
 import { loginSchema } from "../../../Fomik/schema/signIn.js";
 
 import { ChangePasswordAPI, UserLoginApi } from "../../../utils/API_Calls";
@@ -26,6 +26,8 @@ import { setToken } from '../../../redux/actions/loginAction.jsx'
 import ASO from '../../../utils/AsyncStorage_Calls.js'
 import { ToasterSender } from '../../../utils/Toaster.js';
 import { ChangePassword } from '../../../Fomik/schema/ChangePassword.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 export default function Login() {
@@ -35,9 +37,25 @@ export default function Login() {
     const [spinnerBool, setSpinnerbool] = useState(false)
     let tokenn = useSelector((state) => state.token);
     const navigation = useNavigation();
-
+    
     const dispatch = useDispatch();
 
+    const LogOutHandle = async () => {
+        setSpinnerbool(true)
+        try {
+          await AsyncStorage.removeItem('AdsReel$:' + 'Token');
+          // setSpinnerbool(false)
+          setTimeout(() => {
+            dispatch(setToken(null));
+          }, 2000)
+        }
+        catch (e) {
+          console.log("error", e)
+        }
+    
+    
+    
+      }
 
     function onchange(text, field) {
         setValues({ ...values, [field]: text });
@@ -65,6 +83,8 @@ export default function Login() {
 
 
                 Alert.alert(res.data.message)
+
+              LogOutHandle()
             }
 
         } catch (error) {
@@ -170,8 +190,8 @@ export default function Login() {
                                             rightIcon={<Pressable onPress={() => setShow({ ...setShow, old_password: !show?.old_password })}>
 
                                                 {!show?.old_password ? (
-                                                    <Entypo name="eye" size={20} color="black" />) : (
-                                                    <Entypo name="eye-with-line" size={20} color="black" />)
+                                                    <Entypo name="eye-with-line" size={20} color="black" />) : (
+                                                        <Entypo name="eye" size={20} color="black" />)
                                                 }
 
                                             </Pressable>
@@ -205,8 +225,8 @@ export default function Login() {
                                             rightIcon={<Pressable onPress={() => setShow({ ...setShow, New_Password: !show?.New_Password })}>
 
                                                 {!show?.New_Password ? (
-                                                    <Entypo name="eye" size={20} color="black" />) : (
-                                                    <Entypo name="eye-with-line" size={20} color="black" />)
+                                                      <Entypo name="eye-with-line" size={20} color="black" />) : (
+                                                        <Entypo name="eye" size={20} color="black" />)
                                                 }
 
                                             </Pressable>

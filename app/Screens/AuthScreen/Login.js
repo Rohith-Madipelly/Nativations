@@ -26,7 +26,7 @@ import { setToken } from '../../redux/actions/loginAction.jsx'
 import ASO from '../../utils/AsyncStorage_Calls.js' 
 import { ToasterSender } from '../../utils/Toaster.js';
 
-
+ 
 export default function Login() {
 
     const [show, setShow] = useState()
@@ -168,7 +168,7 @@ export default function Login() {
                                                 // bgColor='#e1f3f8'
                                                 // bgColor="#B1B1B0"
 
-                                                onChangeText={(e) => { handleChange("email")(e); seterrorFormAPI(); }}
+                                                onChangeText={(e) => {    const eToLowerCaseText = e.toLowerCase();  handleChange("email")(eToLowerCaseText); seterrorFormAPI(); }}
                                                 onBlur={handleBlur("email")}
 
                                                 // validate={() => {
@@ -197,14 +197,15 @@ export default function Login() {
                                                 // bgColor='#e1f3f8'
 
 
-                                                onChangeText={(e) => { handleChange("password")(e); seterrorFormAPI(); }}
+                                                onChangeText={(e) => { handleChange("password")(e); seterrorFormAPI(); setShow({ ...setShow, password: false }); }}
                                                 onBlur={handleBlur("password")}
 
                                                 rightIcon={<Pressable onPress={() => setShow({ ...setShow, password: !show?.password })}>
 
                                                     {!show?.password ? (
-                                                        <Entypo name="eye" size={20} color="black" />) : (
-                                                        <Entypo name="eye-with-line" size={20} color="black" />)
+                                                        <Entypo name="eye-with-line" size={20} color="black" />) : (
+                                                        
+                                                            <Entypo name="eye" size={20} color="black" />)
                                                     }
 
                                                 </Pressable>
@@ -229,7 +230,7 @@ export default function Login() {
                                             </CustomButton>
 
                                             <View style={{}}>
-                                                <TouchableOpacity onPress={() => {navigation.navigate("ForgotPassword") }}>
+                                                <TouchableOpacity onPress={() => {navigation.navigate("ForgotPasswordEmail") }}>
                                                     <Text style={[styles.paragraphy, { color: 'black', marginTop: 20, fontWeight: '400' }]}>Forgot password?</Text>
                                                 </TouchableOpacity>
                                             </View>

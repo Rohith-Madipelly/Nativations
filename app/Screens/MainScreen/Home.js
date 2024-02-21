@@ -17,7 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
-  const [isData, setIsData] = useState()
+  const [isData, setIsData] = useState() 
   const [Banners, setBanners] = useState()
   const [meditationTracks, setMeditationTracks] = useState()
   const [pravachan, setPravachan] = useState()
