@@ -77,7 +77,7 @@ export default function Screens() {
 
   useEffect(() => {
     setUser(loginSelector)
-   
+
   }, [loginSelector])
 
 
@@ -93,16 +93,16 @@ export default function Screens() {
         <Stack.Group >
           {user ? (
             <>
-         
 
-         
+
+
               {/* <Stack.Screen name="Home123" component={Reloading} /> */}
-              <Stack.Screen name="Home123" component={ProfilePicUpdate} />
+              {/* <Stack.Screen name="Home123" component={ProfilePicUpdate} /> */}
               <Stack.Screen name="Home" component={BottomTabScreen} />
               <Stack.Screen name="VideoScreen" component={VideoScreen} />
               <Stack.Screen name="FormScreen" component={FormScreen} />
               {/* <Stack.Screen name="FormScreen123" component={TestingPage} /> */}
-              <Stack.Screen name="FormScreen123" component={FormScreen123} />
+              {/* <Stack.Screen name="FormScreen123" component={FormScreen123} /> */}
               <Stack.Screen name="FullProfile" component={UpdateProfile} />
               <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
               <Stack.Screen name="ProfilePassword" component={ChangePassword} />
@@ -117,7 +117,7 @@ export default function Screens() {
               <Stack.Screen name="VideoScreen" component={VideoScreen} /> */}
 
 
-            </> 
+            </>
           ) : (
             <>
               <Stack.Screen name="Login" component={Login} />

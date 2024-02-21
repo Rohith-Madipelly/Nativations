@@ -155,26 +155,14 @@ export const UserUpdatedProfileDetails = async (fName, lName, userAge, token) =>
 
 
 //Updated Profile Pic api 
-export const UserUpdatedProfilePic123 = async (image, token) => {
-  console.log("sahvbdjad", image)
-  const formData = new FormData();
-  // Append the image file to the FormData object
-  const imageurl = image.uri.split('/').pop();
-  formData.append("picture", {
-    uri: imageurl,
-    name: 'profile_pic.jpg',
-    type: 'image/jpeg',
-  });
-  //  // Configure headers
-  //  const headers = {
-  //   'Authorization': `Bearer ${token}`,
-  //   ...formData.getHeaders()
-  // };
+export const UserUpdatedProfilePic123 = async (formData, token) => {
+  console.log("data vachindhi",formData,token)
 
   return await axios.post(`${GUEST_URL}/user/uploaddp`, formData, {
     headers: {
-      'Authorization': `Bearer ${token}`
-    }
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${token}`,
+    },
   });
 };
 

@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ImageBackground, Dimensions, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, TouchableOpacity, Platform, ScrollView, RefreshControl, Button } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { UserGetProfileDetails, UserUpdatedProfileDetails, UserUpdatedProfilePic } from '../../../utils/API_Calls'
+import { UserGetProfileDetails, UserUpdatedProfileDetails, UserUpdatedProfilePic, UserUpdatedProfilePic123 } from '../../../utils/API_Calls'
 import Spinner from 'react-native-loading-spinner-overlay';
 import Feather from "react-native-vector-icons/Feather"
 import { StatusBar } from 'expo-status-bar';
@@ -18,6 +18,7 @@ import { ToasterSender } from '../../../utils/Toaster';
 import NetInfo from '@react-native-community/netinfo';
 import CustomTextInput from '../../../Components/UI/Inputs/CustomTextInput';
 import axios, { Axios } from 'axios';
+// import { GUEST_URL } from '../../../Enviornment';
 
 
 const Profile = () => {
@@ -33,74 +34,105 @@ const Profile = () => {
 
   const [UserEmail, setUserEmail] = useState("")
   const [UserPhone, setUserPhone] = useState("")
-  const [UserDOB, setDOB] = useState("")
 
-  const [age, setAge] = useState("")
-  const [Errorage, setErrorAge] = useState("")
-
-  const [gender, setGender] = useState("")
-  const [Wallet, setWallet] = useState("")
-  const [profilepic, setProfilepic] = useState(null)
-  const [editToggle, setEditToggle] = useState(false)
-
-  const [errorEmail, setErrorEmail] = useState(true)
+  const [profilePic, setProfilePic] = useState(null)
 
   const navigation = useNavigation();
-  const [error, setError] = useState("")
+
   const loginSelectorToken = useSelector((state) => state.token);
 
-
-  const FormData = global.formData;
-
+  // console.log(GUEST_URL)
 
   var tokenn = loginSelectorToken;
   tokenn = tokenn.replaceAll('"', '');
 
-  console.log(tokenn)
 
-  const handleEditToggle = () => {
-    setEditToggle(!editToggle);
-  }
+
+
   const [image, setImage] = useState(null);
   const [isConnected, setIsConnected] = useState(true);
 
+  // const pickImage = async () => {
+  //   try {
+
+
+  //     // No permissions request is necessary for launching the image library
+  //     await ImagePicker.requestMediaLibraryPermissionsAsync()
+  //     let result = await ImagePicker.launchImageLibraryAsync({
+  //       mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //       allowsEditing: true,
+  //       aspect: [4, 3],
+  //       quality: 1,
+  //     });
+
+
+  //     const CameraImage = async () => {
+  //       // No permissions request is necessary for launching the image library
+  //       await ImagePicker.requestCameraPermissionsAsync()
+  //       let result = await ImagePicker.launchImageLibraryAsync({
+  //         cameraType: ImagePicker.CameraType.front,
+  //         allowsEditing: true,
+  //         aspect: [4, 3],
+  //         // aspect: [1, 1],
+  //         quality: 1,
+  //       });
+  //     }
+  //     // console.log(result.assets[0].uri);
+
+  //     if (!result.canceled) {
+
+  //       await saveImage(result.assets[0].uri)
+
+  //     }
+  //   } catch (error) {
+  //     console.log("try catch pickImage")
+  //   }
+  // }
+
+  // Function to pick an image from device
+
+
   const pickImage = async () => {
     try {
-
-
-      // No permissions request is necessary for launching the image library
-      await ImagePicker.requestMediaLibraryPermissionsAsync()
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [1, 1],
         quality: 1,
       });
 
-
-      const CameraImage = async () => {
-        // No permissions request is necessary for launching the image library
-        await ImagePicker.requestCameraPermissionsAsync()
-        let result = await ImagePicker.launchImageLibraryAsync({
-          cameraType: ImagePicker.CameraType.front,
-          allowsEditing: true,
-          aspect: [4, 3],
-          // aspect: [1, 1],
-          quality: 1,
-        });
-      }
-      // console.log(result.assets[0].uri);
-
-      if (!result.canceled) {
-
-        await saveImage(result.assets[0].uri)
-
+      if (!result.cancelled) {
+        setProfilePic(result.assets[0].uri);
+        setTimeout(() => { handleProfilePicUpdate() }, 2000)
       }
     } catch (error) {
-      console.log("try catch pickImage")
+      console.error('Error picking an image:', error);
     }
-  }
+  };
 
+
+
+
+  const handleProfilePicUpdate = async () => {
+    try {
+      const formData123 = new FormData();
+      formData123.append('picture', {
+        uri: profilePic,
+        name: 'profile.jpg',
+        type: 'image/jpeg', // Adjust the type according to your image
+      });
+      const res = await UserUpdatedProfilePic123(formData123, tokenn)
+
+
+      if (res) {
+        console.log(">>>", res)
+      } else { console.log("cdfc") }
+
+    } catch (error) {
+      console.error('Error updating profile picture:', error);
+    }
+
+  };
 
 
   // const saveImage=async(image)=>{
@@ -176,32 +208,6 @@ const Profile = () => {
   }
 
 
-  const sendToBackEnd = async (image) => {
-    try {
-      const formData = new FormData();
-
-      formData.append("picture", {
-        uri: image,
-        name: 'profile_pic.jpg',
-        type: 'image/jpeg',
-      });
-
-      const config ={
-        headers:{
-          "Content-Type":"multipart/form-data",
-        },
-        transformRequest:()=>{
-          return formData;
-        }
-      }
-      await axios.post('http://www.satyasadhna.com:8001/user/uploaddp',formData,config)
-
-      
-    } catch (error) {
-      console.log(">>>>",error)
-    }
-  }
-
   const userData = async () => {
     setSpinnerbool(true)
     try {
@@ -219,9 +225,9 @@ const Profile = () => {
         if (datadsd == "") {
         }
         else {
-          setProfilepic(`http://satyasadhna.com:8001/pictures/${datadsd}`)
+          setProfilePic(`http://satyasadhna.com:8001/pictures/${datadsd}`)
         }
-        console.log(profilepic)
+        console.log(profilePic)
       }
       else {
 
@@ -237,9 +243,6 @@ const Profile = () => {
     }
   }
 
-  const profilepicUpdated = (image) => {
-    console.log(image)
-  }
 
 
   //Profile API
@@ -380,7 +383,7 @@ const Profile = () => {
                   outlined
                 />
               </View>
-
+              <Button title="Update Profile Pic" onPress={handleProfilePicUpdate} />
             </ImageBackground>
           </View></View>
 
@@ -388,13 +391,13 @@ const Profile = () => {
 
 
 
-        {profilepic ? <TouchableOpacity onPress={() => { }}>
+        {profilePic ? <TouchableOpacity onPress={() => { }}>
           <View style={styles.outerCircle}>
             <ImageBackground
               style={styles.innerCircle}
-              // source={profilepic}
+              // source={profilePic}
               source={{
-                uri: profilepic,
+                uri: profilePic,
               }}
               resizeMode="cover"
             />
