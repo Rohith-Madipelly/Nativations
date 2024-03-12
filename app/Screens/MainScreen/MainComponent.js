@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 
 
-const MainComponent = ({ NameUnderLogo, titleUnder, screenName, children }) => {
+const MainComponent = ({screenName, children }) => {
     return (
                 <LinearGradient style={{ height: 880 }} colors={['rgba(20, 0, 255, 0.91)', 'rgba(255, 255, 255, 0.77)', '#FFF']}>
 

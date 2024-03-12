@@ -10,11 +10,9 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-import { UserGetProfileDetails } from '../../utils/API_Calls'
+import { GetPlayStoreAPI, UserGetProfileDetails } from '../../utils/API_Calls'
 import { OpenStore } from '../../utils/OpenStore';
 import onShare from '../../utils/ShareBtn';
-import { AppLinkAndroid } from '../../Enviornment';
-import { AppLinkIOS } from '../../Enviornment';
 import NetInfo from '@react-native-community/netinfo';
 
 
@@ -23,21 +21,14 @@ const Profile = () => {
   const [UserName, setUserName] = useState("")
   const [StartingLetter, setStartingLetter] = useState("")
   const [profilepic, setProfilepic] = useState(null)
+
   const [appLink, setAppLink] = useState()
+  const [appCall, setAppCall] = useState()
   const dispatch = useDispatch();
   let tokenn = useSelector((state) => state.token);
 
 
   const [isConnected, setIsConnected] = useState(true);
-
-  const PlatformChecker = () => {
-    if (Platform.OS !== 'ios') {
-      setAppLink(AppLinkAndroid)
-    } else {
-      setAppLink(AppLinkIOS)
-    }
-
-  }
 
 
 
@@ -62,26 +53,26 @@ const Profile = () => {
 
   useEffect(() => {
     ProfileNameKosam()
-    PlatformChecker()
+
+
   }, [])
 
 
-    // >>>>>>>>>>>>>>>>>
-    const wait = (timeout) => {
-      return new Promise(resolve => setTimeout(resolve, timeout));
-    }
-  
-    const [refreshing, setRefreshing] = useState(false);
-  
-    const onRefresh = useCallback(() => {
-      setRefreshing(true);
-      ProfileNameKosam()
-      PlatformChecker()
-  
-    }, []);
-  
-  
-    // >>>>>>>>>>>>>>>>>>
+  // >>>>>>>>>>>>>>>>>
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    ProfileNameKosam()
+
+  }, []);
+
+
+  // >>>>>>>>>>>>>>>>>>
 
 
   const ProfileNameKosam = async () => {
@@ -98,7 +89,7 @@ const Profile = () => {
         setStartingLetter(res.data.username.charAt(0))
         var datadsd = res.data.profile_picture
         // setProfilepic(datadsd)
-
+        Rate_Review(tokenn)
 
         if (datadsd == "") {
         }
@@ -123,6 +114,26 @@ const Profile = () => {
     }
   }
 
+  const Rate_Review = async (tokenn) => {
+    try {
+      const res = await GetPlayStoreAPI(tokenn)
+
+      if (res) {
+        setAppLink(res.data.playStore)
+        
+      }
+      else {
+        console.log("sad")
+      }
+    } catch (error) {
+      setTimeout(() => {
+        console.log("Error in fetching", error)
+      }, 1000);
+    }
+    finally {
+      
+    }
+  }
   const logoutValidation = async () => {
     Alert.alert('Logout', 'Are you sure you want to logout ?',
       [{ text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
@@ -178,9 +189,9 @@ const Profile = () => {
             onRefresh={onRefresh}
           />
         }
-      
+
       >
-        <View style={[{ paddingLeft: 29, paddingTop: 20, paddingRight: 20}]}>
+        <View style={[{ paddingLeft: 29, paddingTop: 20, paddingRight: 20 }]}>
 
 
           <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("FullProfile") }}>
@@ -411,39 +422,6 @@ const Profile = () => {
                 </TouchableOpacity>
               </View>
 
-              {/* Rate & Review tab */}
-              <View style={{ marginBottom: 10 }}>
-
-                <TouchableOpacity activeOpacity={0.6} onPress={OpenStore
-                  // () => { navigation.navigate("ProfileRateAndReview") }
-                }>
-
-
-                  <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
-
-                    <View style={{ display: '', flexDirection: 'row', justifyContent: 'flex-start' }}>
-
-                      <View>
-                        <Image style={{ width: 24, height: 24, }}
-                          source={require("../../../assets/InternalImages/ProfileLogos/hexagram.png")}
-                          resizeMode={"contain"} />
-                      </View>
-
-                      <View style={{ marginLeft: 14 }}>
-                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Rate & Review</Text>
-                      </View>
-                    </View>
-
-                    <View style={{ marginTop: 0 }}>
-                      <Image style={{ width: 22, height: 22 }}
-                        source={require("../../../assets/InternalImages/right.png")}
-                        resizeMode={"contain"} />
-                    </View>
-
-                  </View>
-
-                </TouchableOpacity>
-              </View>
 
               <View style={{ marginBottom: 10 }}>
 
@@ -462,6 +440,41 @@ const Profile = () => {
 
                       <View style={{ marginLeft: 14 }}>
                         <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Privacy Policy</Text>
+                      </View>
+                    </View>
+
+                    <View style={{ marginTop: 0 }}>
+                      <Image style={{ width: 22, height: 22 }}
+                        source={require("../../../assets/InternalImages/right.png")}
+                        resizeMode={"contain"} />
+                    </View>
+
+                  </View>
+
+                </TouchableOpacity>
+              </View>
+
+
+              {/* Rate & Review tab */}
+              <View style={{ marginBottom: 10 }}>
+
+                <TouchableOpacity activeOpacity={0.6} onPress={() => { OpenStore(appLink) }
+                  // () => { navigation.navigate("ProfileRateAndReview") }
+                }>
+
+
+                  <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
+
+                    <View style={{ display: '', flexDirection: 'row', justifyContent: 'flex-start' }}>
+
+                      <View>
+                        <Image style={{ width: 24, height: 24, }}
+                          source={require("../../../assets/InternalImages/ProfileLogos/hexagram.png")}
+                          resizeMode={"contain"} />
+                      </View>
+
+                      <View style={{ marginLeft: 14 }}>
+                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Rate & Review</Text>
                       </View>
                     </View>
 
@@ -564,8 +577,8 @@ const Profile = () => {
                 </TouchableOpacity>
               </View>
 
-{/* 
-              <View style={{ marginBottom: 10 }}>
+
+              {/* <View style={{ marginBottom: 10 }}>
                 <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("FormScreen123") }}>
 
                   <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>

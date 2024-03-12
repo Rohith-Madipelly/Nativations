@@ -115,8 +115,8 @@ const BottomTabScreen = ({ route }) => {
         name="Home"
         component={Home}
         options={({ navigation }) => ({
-          headerShown: true, // Show the header
-          headerBackVisible: true, // Hide the back button
+          headerShown: true,
+          headerBackVisible: true, 
           headerStyle: {
             backgroundColor: '#006BFF',
           },

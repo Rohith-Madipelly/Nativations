@@ -57,7 +57,7 @@ const ButtonTotal = ({ youtubeURL }) => {
 
   return (
     <View>
-    {/* // Working Fine */}
+      {/* // Working Fine */}
       <View style={{ marginTop: 20, flexDirection: 'row' }}>
 
         <ButtonC1Cricle
@@ -65,7 +65,7 @@ const ButtonTotal = ({ youtubeURL }) => {
         >
           <Entypo name="share" size={20} color="white" />
         </ButtonC1Cricle>
-        
+
         <ButtonC1Cricle
           styleData={{ marginLeft: 20 }}
           onPress={YoutubeDownloader}
@@ -77,7 +77,20 @@ const ButtonTotal = ({ youtubeURL }) => {
 
 
       </View>
-      <Text>{downloadDisplay ? <Text style={{ marginTop: 20 }}>Download Progress: {Math.round(downloadProgress * 100)}%</Text> : ""}</Text>
+      {/* <Text>{downloadDisplay ? <Text style={{ marginTop: 20 }}>Download Progress: {Math.round(downloadProgress * 100)}%</Text> : ""}</Text> */}
+
+      <Text>
+        {downloadDisplay ? (
+          <Text style={{ marginTop: 20 }}>
+            {downloadProgress === 1
+              ? "Download Success"
+              : `Download Progress: ${Math.round(downloadProgress * 100)}%`}
+          </Text>
+        ) : (
+          ""
+        )}
+      </Text>
+
     </View>
   )
 }

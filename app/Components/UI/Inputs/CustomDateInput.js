@@ -38,10 +38,10 @@ const CustomDateInput = ({
   };
 
   return (
-    <TouchableOpacity style={[{ padding: 0, width: boxWidth }]} onPress={() => showMode("date")}>
+    <TouchableOpacity style={[{ padding: 0, width: boxWidth,overflow:'hidden' }]} onPress={() => showMode("date")}>
       <Text style={styles.label}>{label} {asterisksymbol?<Text style={{color:'red'}}>*</Text>:""}</Text>
       <View style={[styles.container, containerBorder, { borderColor: borderColor }, { backgroundColor: bgColor }]}>
-        {leftIcon ? <View style={{ paddingRight: 8 }}>{leftIcon}</View> : null}
+        {leftIcon ? <View style={{ paddingRight: 0 }}>{leftIcon}</View> : null}
         <TextInput
           placeholder={placeholder ? placeholder : label ? `Enter ${label}` : ''}
           value={date ? date.toLocaleDateString() : ''}
@@ -49,19 +49,27 @@ const CustomDateInput = ({
           editable={false}
           onPress={() => showMode("date")} // Use onPress instead of onPressIn for TextInput
           onBlur={onBlur}
-          style={{ flex: 4,color:'black' }}
+          style={{ flex: 1,color:'black' }}
         />
         {show && (
           <DateTimePicker
+          style={{}}
             value={date || new Date()} // Pass date or current date if not provided
             mode={mode}
-            display={"spinner"}
+            // display={"spinner"}
+            display={"compact"}
+
             is24Hour={true}
             minimumDate={minimumDate}
             maximumDate={maximumDate}
             onChange={onChange}
+   
           />
+  
         )}
+
+
+
       </View>
       <Text style={{ color: errorColor, marginLeft: 15 }}>{errorMessage}</Text>
     </TouchableOpacity>

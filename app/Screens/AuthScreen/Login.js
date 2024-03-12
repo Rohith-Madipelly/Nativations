@@ -47,9 +47,9 @@ export default function Login() {
         seterrorFormAPI()
         try {
             const { email, password } = user;
+            
             setSpinnerbool(true)
             const res = await UserLoginApi(email, password)
-            console.log(res)
             if (res) {
                 const Message = res.data.message
                 const token = res.data.token
@@ -57,7 +57,7 @@ export default function Login() {
                 ASO.setTokenJWT("Token", JSON.stringify(res.data.token), function (res, status) {
                     if (status) {
                         // console.warn(status, " status>>>>>.")
-                        // ToasterSender({ Message: `${Message}` })
+                        ToasterSender({ Message: `${Message}` })
                         dispatch(setToken(token));
                     }
                 })
@@ -127,7 +127,7 @@ export default function Login() {
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
                 // behavior={Platform.OS === "ios" ? 100:0}
-                // keyboardVerticalOffset={1000}
+                keyboardVerticalOffset={5000}
                 // style={styles.container}
                 >
                     {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}

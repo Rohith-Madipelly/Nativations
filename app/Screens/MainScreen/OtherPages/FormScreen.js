@@ -32,6 +32,7 @@ import MainComponent from '../MainComponent.js';
 import { FormData } from '../../../Fomik/schema/FormData.js';
 import CustomDateInput from '../../../Components/UI/Inputs/CustomDateInput.js';
 import CustomPicker from '../../../Components/UI/Inputs/CustomPicker.js';
+import { DateConvert } from '../../../utils/DateConvert.js';
 
 
 export default function FormScreen() {
@@ -40,6 +41,15 @@ export default function FormScreen() {
   const [gender, setgender] = useState()
   const [errorFormAPI, seterrorFormAPI] = useState("")
   const [spinnerBool, setSpinnerbool] = useState(false)
+
+
+  const [stratingfrom,setstartingFrom]=useState("")
+
+  const [courseDate,setCourseDate]=useState("")
+
+  const minvalueofstratingfrom=DateConvert(stratingfrom)
+  const minvalueofcourseDate=DateConvert(courseDate)
+
   let tokenn = useSelector((state) => state.token);
   const navigation = useNavigation();
 
@@ -53,7 +63,6 @@ export default function FormScreen() {
   }
 
 
-  // >>>
   const genders = [
     { label: 'Select gender', value: 'N/A' },
     { label: 'Male', value: 'male' },
@@ -112,6 +121,7 @@ export default function FormScreen() {
 
 
   const motherTongueData = [
+    { label: 'Select', value: 'N/A' },
     { label: 'Hindi', value: 'hindi' },
     { label: 'English', value: 'english' },
   ]
@@ -141,6 +151,8 @@ export default function FormScreen() {
 
     seterrorFormAPI()
     try {
+      console.log("Data Set")
+
       const { from, to, firstName, lastName, gender, age, education, martialStatus, guardianName, motherTongue, mobileNumber, eMail, address, medicineName, medicineDose, regularMedicine, brief, referenceFrom,
         oldStuName, firstCoursePlace, dateFirstCourse, dateLastCourse, firstAsstTeacher, lastCoursePlace, lastAsstTeacher, courseDetails, triedAnyPractise, practiseRegularly, dailyHours, reason, changeInYourSelf,
         personName, personRelation, courseDone, relation, designation, companyName, companyAddress, inPastOne, inPresentOne, inPastTwo, inPresentTwo } = user;
@@ -197,6 +209,7 @@ export default function FormScreen() {
 
       const dataEngin = { from, to, date, firstName, lastName, gender, age, education, martialStatus, guardianName, motherTongue, mobileNumber, eMail, address, regularMedicine, brief, referenceFrom, oldStudent, docFitnessCertificate, psyschologicalAilment, physicalAilment, professionalDetails, familyPerson, knownPerson }
       setSpinnerbool(true)
+      console.log("asdda")
       const res = await FormDataApi(dataEngin, tokenn)
 
       if (res) {
@@ -244,7 +257,7 @@ export default function FormScreen() {
       setSpinnerbool(false)
 
       if (error) {
-
+console.log(error)
         // message = error.message;
         // seterrorFormAPI(message)
         // "eMail or Password does not match !"
@@ -278,17 +291,20 @@ export default function FormScreen() {
               <Formik
                 // enableReinitialize
                 validateOnMount={true}
+             
+
                 // initialValues={{
-                //   from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", motherTongue: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
-                //   oldStuName: "", firstCoursePlace: "", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "", lastCoursePlace: "", lastAsstTeacher: "", courseDetails: "", triedAnyPractise: "", practiseRegularly: "", dailyHours: "", reason: "", changeInYourSelf: "",
-                //   personName: "", personRelation: "", courseDone: "", relation: "", designation: "", companyName: "", companyAddress: "", inPastOne: "", inPresentOne: "", inPastTwo: "", inPresentTwo: ""
+                // from: "", to: "", firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", motherTongue: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
+                // // oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
+                // // personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
                 // }}
 
                 initialValues={{
-                from: "", to: "", firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", motherTongue: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
-                // oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
-                // personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
-                }}
+                  // from: "", to: "", firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", motherTongue: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
+                  from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", motherTongue: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
+                  // oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
+                  // personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
+                  }}
 
 
                 onSubmit={submitHandler}
@@ -318,7 +334,7 @@ export default function FormScreen() {
                         // bgColor="#B1B1B0"
                         asterisksymbol={true}
                         // onChangeText={onChangeText}
-                        onChangeText={(e) => { handleChange("from")(e); seterrorFormAPI(); }}
+                        onChangeText={(e) => { handleChange("from")(e);setstartingFrom(e); seterrorFormAPI(); }}
                         onBlur={handleBlur("from")}
                         boxWidth={"40%"}
                         validate={handleBlur("from")}
@@ -355,7 +371,7 @@ export default function FormScreen() {
                         // errorColor='magenta'
                         boxWidth={"40%"}
                         // boxWidth={"auto"}
-                        minimumDate={new Date()}
+                        minimumDate={minvalueofstratingfrom}
                         maximumDate={new Date(2090, 10, 20)}
                       />
 
@@ -436,6 +452,7 @@ export default function FormScreen() {
                         label={'Your Age'}
                         name='Age'
                         value={values.age}
+                        keyboardType="numeric"
                         // leftIcon={<FontAwesome name="phone" size={20} color="black" />}
                         onChangeText={(e) => { handleChange("age")(e); seterrorFormAPI(); }}
                         onBlur={handleBlur("age")}
@@ -576,7 +593,15 @@ export default function FormScreen() {
                       name='mobileNumber'
                       value={values.mobileNumber}
                       // leftIcon={<FontAwesome name="phone" size={20} color="black" />}
-                      onChangeText={(e) => { handleChange("mobileNumber")(e); seterrorFormAPI(); }}
+                      onChangeText={(e) => {
+                        // Ensure only digits are entered
+                        const input = e.replace(/\D/g, '');
+                        // Restrict to 10 digits
+                        const mobileNumber = input.slice(0, 10);
+                        handleChange("mobileNumber")(mobileNumber);
+                        seterrorFormAPI();
+                    }}
+                    keyboardType="numeric"
                       onBlur={handleBlur("mobileNumber")}
                       validate={handleBlur("mobileNumber")}
                       outlined
@@ -596,7 +621,9 @@ export default function FormScreen() {
                       // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                       // bgColor='#e1f3f8'
                       // bgColor="#B1B1B0"
-                      onChangeText={(e) => { handleChange("eMail")(e); seterrorFormAPI(); }}
+                      // onChangeText={(e) => { handleChange("eMail")(e); seterrorFormAPI(); }}
+                      onChangeText={(e) => {    const eToLowerCaseText = e.toLowerCase();  handleChange("eMail")(eToLowerCaseText); seterrorFormAPI(); }}
+
                       onBlur={handleBlur("eMail")}
 
                       validate={handleBlur("eMail")}
@@ -1065,7 +1092,7 @@ export default function FormScreen() {
                           // bgColor="#B1B1B0"
 
                           // onChangeText={onChangeText}
-                          onChangeText={(e) => { handleChange("dateFirstCourse")(e); seterrorFormAPI(); }}
+                          onChangeText={(e) => { handleChange("dateFirstCourse")(e);setCourseDate(e); seterrorFormAPI(); }}
                           onBlur={handleBlur("dateFirstCourse")}
                           boxWidth={"40%"}
                           validate={handleBlur("dateFirstCourse")}
@@ -1096,7 +1123,7 @@ export default function FormScreen() {
                           borderColor={`${(errors.dateLastCourse && touched.dateLastCourse) || (errorFormAPI && errorFormAPI.dateLastCourseForm) ? "red" : "#ccc"}`}
                           errorMessage={`${(errors.dateLastCourse && touched.dateLastCourse) ? `${errors.dateLastCourse}` : (errorFormAPI && errorFormAPI.dateLastCourseForm) ? `${errorFormAPI.dateLastCourseForm}` : ``}`}
                           // errorColor='magenta'
-                          minimumDate={new Date(1990, 1, 1)}
+                          minimumDate={minvalueofcourseDate}
                           maximumDate={new Date(2100, 10, 20)}
                         />
 

@@ -1,12 +1,36 @@
 import axios from 'axios';
 
-import { GUEST_URL, BASE_URL } from '../Enviornment.js'
+import { GUEST_URL } from '../Enviornment.js'
+import { Platform } from 'react-native';
+
+// Platform for store link
+const getAPIBaseUrl = () => {
+  if (Platform.OS === 'ios') {
+    return 'user/appStore';
+  } else if (Platform.OS === 'android') {
+    return 'user/playStore';
+  } else {
+    throw new Error('Unsupported platform');
+  }
+};
+
 
 
 //Home Page api 
 export const HomePageData = async (token) => {
   console.log("api data", token)
   return await axios.get(`${GUEST_URL}/user/home`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+};
+
+
+// User Form Data API Call 
+export const FormDataApi = async (loginData, token) => {
+
+  return await axios.post(`${GUEST_URL}/user/form`, loginData, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -24,25 +48,9 @@ export const VideoPageData = async (token, id) => {
   });
 };
 
-// User Login API Call 
-export const UserLoginApi = async (email, password) => {
-  const loginData = {
-    email: email,
-    password: password
-  };
-
-  return await axios.post(`${GUEST_URL}/login`, loginData);
-};
-
-
-// User Login API Call 
-export const FormDataApi = async (loginData, token) => {
-
-  console.log("loginData >>>>123", loginData, "ngchgc")
-
-
-
-  return await axios.post(`${GUEST_URL}/user/form`, loginData, {
+//Live Page api 
+export const LivePageData = async (token) => {
+  return await axios.get(`${GUEST_URL}/user/live`, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -50,23 +58,26 @@ export const FormDataApi = async (loginData, token) => {
 };
 
 
+// User Login API Call 
+export const UserLoginApi = async (email, password) => {
+  const loginData = {
+    email: email,
+    password: password
+  };
+  return await axios.post(`${GUEST_URL}/login`, loginData);
+};
+
+
 // User Registertion API Call 
 export const UserRegisterApi = async (username, email, phone_number, password) => {
-
-
   const loginData = {
     phone_number: phone_number,
     email: email,
     username: username,
     password: password
   };
-  console.log("loginData", loginData)
-
-
   return await axios.post(`${GUEST_URL}/register`, loginData);
 };
-
-
 
 
 // User Forgot OTP Send API Call 
@@ -74,7 +85,6 @@ export const UserForgotOTPApi = async (email) => {
   const loginData = {
     email: email,
   };
-
   return await axios.post(`${GUEST_URL}/otp`, loginData);
 };
 
@@ -82,12 +92,10 @@ export const UserForgotOTPApi = async (email) => {
 
 // User Forgot OTP verifyotp API Call 
 export const UserVerifyOtp = async (email, userOtp) => {
-
   const ReqData = {
     email: email,
     userOtp: userOtp
   };
-  console.log(ReqData)
 
   return await axios.post(`${GUEST_URL}/verifyotp`, ReqData);
 };
@@ -116,14 +124,29 @@ export const UserGetProfileDetails = async (token) => {
   });
 };
 
-//Live Page api 
-export const LivePageData = async (token) => {
-  return await axios.get(`${GUEST_URL}/user/live`, {
+
+//Updated Profile Pic api 
+export const UserUpdatedProfilePic123 = async (formData, token) => {
+  // console.log("data vachindhi",formData,token)
+  return await axios.post(`${GUEST_URL}/user/uploaddp`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+};
+
+//GetPlayStore api 
+export const GetPlayStoreAPI = async (token) => {
+  const apiUrl = getAPIBaseUrl();
+  console.log("><>",apiUrl)
+  return await axios.get(`${GUEST_URL}/${apiUrl}`, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   });
 };
+
 
 
 //Delete Account api 
@@ -154,49 +177,30 @@ export const UserUpdatedProfileDetails = async (fName, lName, userAge, token) =>
 
 
 
-//Updated Profile Pic api 
-export const UserUpdatedProfilePic123 = async (formData, token) => {
-  console.log("data vachindhi",formData,token)
 
-  return await axios.post(`${GUEST_URL}/user/uploaddp`, formData, {
+
+//Profile api 
+export const AboutAPI = async (token) => {
+
+  return await axios.get(`${GUEST_URL}/user/about`, {
     headers: {
-      'Content-Type': 'multipart/form-data',
-      'Authorization': `Bearer ${token}`,
-    },
+      'Authorization': `Bearer ${token}`
+    }
   });
 };
 
 
 
-import FormData from 'form-data';
+//PrivacyPolicyAPI
+export const PrivacyPolicyAPI = async (token) => {
 
-// Update with your server URL
-
-export const UserUpdatedProfilePic = async (imageUri, token) => {
-  try {
-    const formData = new FormData();
-    const imageFileName = imageUri.split('/').pop(); // Extract filename from URI
-    // formData.append('picture', {
-    //   uri: imageUri,
-    //   name: imageFileName,
-    //   type: 'image/jpeg',
-    // });
-    formData.append('picture', imageUri);
-    console.log("cs", formData)
-    const response = await axios.post(`${GUEST_URL}/user/uploaddp`, formData, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-        // ...formData.getHeaders(),
-      },
-    });
-
-    // console.log('Upload successful:', response.data);
-    // return response.data; // Return response data if needed
-  } catch (error) {
-    console.error('Upload failed:', error);
-    throw error; // Rethrow the error for handling in the calling code
-  }
+  return await axios.get(`${GUEST_URL}/user/privacypolicy`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
 };
+
 
 
 //Profile PasswordChange
@@ -230,83 +234,3 @@ export const GetVideosDataAPI = async (token) => {
 
 
 
-
-//Video api  locations based
-export const GetVideosDataAPI2 = async (ReqData, page, token) => {
-
-  // const ReqData2 = {
-  //   longitude: '78.384433',
-  //   latitude: '17.444594',
-  // };
-
-  return await axios.post(`${GUEST_URL}/user/locationvideos?page=${page}`,
-    ReqData,
-    {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-
-    });
-};
-
-
-// Put Like on Video
-export const PutLikeAPI = async (dateVideoId, token) => {
-  return await axios.put(`${GUEST_URL}/user/${dateVideoId}/likes`, {}, {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-
-  });
-};
-
-
-
-// Repost API Call
-export const PostRepostAPI = async (ReqData, token) => {
-
-  return await axios.post(`${GUEST_URL}/user/report`,
-    ReqData,
-    {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-
-    });
-};
-
-//Profile rewarded
-export const rewardedAPI = async (videoId, tokenn) => {
-  const ReqData = {
-    videoId: videoId,
-  };
-
-  return await axios.post(`${GUEST_URL}/user/wallet`
-    , ReqData, {
-    headers: {
-      'Authorization': `Bearer ${tokenn}`
-    }
-  });
-};
-
-// Get Wallet Amount
-export const GetWalletAmountAPI = async (token) => {
-  return await axios.get(`${GUEST_URL}/user/walletamount`, {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-
-  });
-};
-
-
-
-//Put Like Video
-export const PutLikeVideoAPI = async (token) => {
-  return await axios.get(`${GUEST_URL}/user/walletamount`, {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-
-  });
-};

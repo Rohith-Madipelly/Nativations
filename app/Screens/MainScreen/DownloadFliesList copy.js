@@ -83,13 +83,13 @@ const DownloadFliesList = () => {
 
     return (
         <View>
-            {/* <ScrollView> */}
+            <ScrollView>
             <View style={{ marginBottom: 70 }}>
 
                 {selectedVideo ? (
                     <Video
                         source={{ uri: selectedVideo }}
-                        style={{ width: '100%', height: 200, backgroundColor: 'black', position: 'fixed' }}
+                        style={{ width: '100%', height: 200, backgroundColor: 'black',position:'fixed' }}
                         resizeMode="contain"
                         useNativeControls
                         autoplay
@@ -104,44 +104,38 @@ const DownloadFliesList = () => {
                     />
                 ) : ""}
 
-
-                <View >
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 12 }}>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 0 }}>Download List :</Text>
-                        <View>
-                            <TouchableOpacity style={{ padding: 10, paddingTop: 0 }} onPress={data}>
-                                {/* <Text>Reload List reload</Text> */}
-                                <MaterialCommunityIcons style={{}} name={'reload'} size={25} color={'black'} />
-                            </TouchableOpacity>
+                <ScrollView>
+                    <View >
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 12 }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 0 }}>Download List :</Text>
+                            <View>
+                                <TouchableOpacity style={{ padding: 10, paddingTop: 0 }} onPress={data}>
+                                    {/* <Text>Reload List reload</Text> */}
+                                    <MaterialCommunityIcons style={{}} name={'reload'} size={25} color={'black'} />
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
 
 
-                    <ScrollView style={{ height: 400 }}>
+
                         {filteredFileList.length === 0 ? (
                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', padding: 10, paddingVertical: 50, margin: 20, marginVertical: 10, backgroundColor: 'pink' }}>
 
                                 <Text>No downloads</Text>
                             </View>
                         ) : (
-                            <View>
-
-                                <FlatList
-                                    data={filteredFileList}
-                                    renderItem={renderItem}
-                                    keyExtractor={(item, index) => index.toString()}
-                                    nestedScrollEnabled={true}
-                                    scrollEnabled={false}
-                                />
-                                <View style={{ height: 30 }}>
-
-                                </View>
-                            </View>
+                            <FlatList
+                                data={filteredFileList}
+                                renderItem={renderItem}
+                                keyExtractor={(item, index) => index.toString()}
+                                nestedScrollEnabled={true}
+                                scrollEnabled={false}
+                            />
                         )}
-                    </ScrollView>
-                </View>
+                    </View>
+                </ScrollView>
             </View>
-            {/* </ScrollView> */}
+            </ScrollView>
         </View>
 
     );

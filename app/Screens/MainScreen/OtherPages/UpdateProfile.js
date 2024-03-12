@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground, Dimensions, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, TouchableOpacity, Platform, ScrollView, RefreshControl, Button } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, Dimensions, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, TouchableOpacity, Platform, ScrollView, RefreshControl, Button, Alert } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { UserGetProfileDetails, UserUpdatedProfileDetails, UserUpdatedProfilePic, UserUpdatedProfilePic123 } from '../../../utils/API_Calls'
@@ -94,6 +94,7 @@ const Profile = () => {
 
   const pickImage = async () => {
     try {
+      await ImagePicker.requestMediaLibraryPermissionsAsync()
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
@@ -103,33 +104,68 @@ const Profile = () => {
 
       if (!result.cancelled) {
         setProfilePic(result.assets[0].uri);
-        setTimeout(() => { handleProfilePicUpdate() }, 2000)
+        setTimeout(() => {
+
+          handleProfilePicUpdate(result.assets[0].uri)
+        }, 1000);
+      } else {
+
       }
     } catch (error) {
-      console.error('Error picking an image:', error);
+      // console.error('Error picking an image:', error);
     }
   };
 
 
 
 
-  const handleProfilePicUpdate = async () => {
+  const handleProfilePicUpdate = async (image) => {
     try {
       const formData123 = new FormData();
       formData123.append('picture', {
-        uri: profilePic,
+        // uri: profilePic,
+        uri: image,
         name: 'profile.jpg',
         type: 'image/jpeg', // Adjust the type according to your image
       });
+
       const res = await UserUpdatedProfilePic123(formData123, tokenn)
 
 
       if (res) {
-        console.log(">>>", res)
+        console.log(">>>", res.data)
+        console.log(">>>", res.data.message)
+        const Message = res.data.message;
+        ToasterSender({ Message: `${Message}` })
       } else { console.log("cdfc") }
 
     } catch (error) {
-      console.error('Error updating profile picture:', error);
+      // console.error('Error updating profile picture:', error);
+      if (error.response) {
+        if (error.response.status === 400) {
+          // console.log("Error With 400.", `${error.response.data.message}`)
+          const MessageError = error.response.data.message;
+
+          ToasterSender({ Message: `${MessageError}` })
+        }
+        else if (error.response.status === 401) {
+          console.log("User Not Found.",)
+
+        }
+        else if (error.response.status === 500) {
+          console.log("Internal Server Error", error.message)
+          Alert.alert("User Not Found", error.message)
+        }
+        else {
+          console.log("An error occurred response.")
+        }
+      }
+      else if (error.request) {
+        console.log("No Response Received From the Server.")
+      }
+      else {
+        console.log("Error in Setting up the Request.")
+      }
     }
 
   };
@@ -225,6 +261,7 @@ const Profile = () => {
         if (datadsd == "") {
         }
         else {
+          setProfilePic("")
           setProfilePic(`http://satyasadhna.com:8001/pictures/${datadsd}`)
         }
         console.log(profilePic)
@@ -314,7 +351,7 @@ const Profile = () => {
             <Feather name="arrow-left" style={{
               fontSize: 25,
               marginLeft: 2,
-              color: 'white'
+              color: 'black'
             }} />
           </TouchableOpacity>
 
@@ -323,7 +360,7 @@ const Profile = () => {
             <Feather name="camera" style={{
               fontSize: 20,
               marginLeft: 20,
-              color: 'white'
+              color: 'black'
             }} />
           </TouchableOpacity>
 
@@ -383,7 +420,7 @@ const Profile = () => {
                   outlined
                 />
               </View>
-              <Button title="Update Profile Pic" onPress={handleProfilePicUpdate} />
+              {/* <Button title="Update Profile Pic" onPress={handleProfilePicUpdate} /> */}
             </ImageBackground>
           </View></View>
 

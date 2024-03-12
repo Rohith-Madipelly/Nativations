@@ -174,10 +174,6 @@ console.log("dabska>>>",VideoID)
             <Feather name="arrow-left" size={35} color="white" />
           </Pressable>
 
-          {/* {playing ?"":<View style={{ position:"absolute",top:'75%', marginHorizontal:50 ,backgroundColor:'red'}}>
-          <Text style={{textAlign:'center'}}>Rohith Madipelly Rohith MadipellyRohith MadipellyRohith Madipelly </Text>
-
-        </View>} */}
 
         </View>
 

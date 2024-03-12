@@ -7,17 +7,13 @@ import ASO from "../utils/AsyncStorage_Calls";
 import { useSelector, useDispatch } from "react-redux";
 import { setToken } from '../redux/actions/loginAction'
 
-// import Home from "./MainScreen/Home";
-// import SideBar from "./Drawer/SideBar";
-// import SideBar from "./Drawer/SideBar React Navigation";
-
 
 import VideoScreen from './MainScreen/VideoScreen';
-// import Onboard from "./AuthScreen/Onboard";
+
 
 
 import Login from "./AuthScreen/Login";
-import Register from "./AuthScreen/Register";
+import Register from "./AuthScreen/Register copy";
 import ForgotPassword from "./AuthScreen/ForgotPassword";
 import BottomTabScreen from "../Navigations/BottomTabScreen";
 // import DownloadScreen123 from "../../Hello.js/DownloadScreen123";
@@ -41,7 +37,7 @@ import ProfilePicUpdate from "./Demo/ProfilePic";
 
 // SplashScreen.preventAutoHideAsync();
 export default function Screens() {
-  const [user, setUser] = useState(true)
+  const [user, setUser] = useState()
 
   const Stack = createNativeStackNavigator();
   const dispatch = useDispatch();
@@ -93,30 +89,16 @@ export default function Screens() {
         <Stack.Group >
           {user ? (
             <>
-
-
-
-              {/* <Stack.Screen name="Home123" component={Reloading} /> */}
-              {/* <Stack.Screen name="Home123" component={ProfilePicUpdate} /> */}
               <Stack.Screen name="Home" component={BottomTabScreen} />
               <Stack.Screen name="VideoScreen" component={VideoScreen} />
               <Stack.Screen name="FormScreen" component={FormScreen} />
-              {/* <Stack.Screen name="FormScreen123" component={TestingPage} /> */}
-              {/* <Stack.Screen name="FormScreen123" component={FormScreen123} /> */}
               <Stack.Screen name="FullProfile" component={UpdateProfile} />
               <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
               <Stack.Screen name="ProfilePassword" component={ChangePassword} />
-
+              <Stack.Screen name="FormScreen123" component={FormScreen123} />
               <Stack.Screen name="About" component={About} />
               <Stack.Screen name="Help" component={Help} />
               <Stack.Screen name="Privacy Policy" component={PrivacyPolicy} />
-
-
-
-              {/* <Stack.Screen name="VideoScreen" component={VideoScreen} />
-              <Stack.Screen name="VideoScreen" component={VideoScreen} /> */}
-
-
             </>
           ) : (
             <>
@@ -125,8 +107,8 @@ export default function Screens() {
               <Stack.Screen name="ForgotPasswordEmail" component={OtpSender} />
               <Stack.Screen name="OtpVerify" component={OtpVerify} />
               <Stack.Screen name="Register" component={Register} />
+              {/* <Stack.Screen name="Register" component={Register} /> */}
               <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-
             </>
           )
           }
