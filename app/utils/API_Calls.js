@@ -232,5 +232,24 @@ export const GetVideosDataAPI = async (token) => {
 };
 
 
+//Form requesties
+export const GetFormReqs = async (token) => {
+
+  return await axios.get(`${GUEST_URL}/user/courses`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+};
 
 
+
+//Form GetCourseData
+export const GetCourseData = async (id,token) => {
+
+  return await axios.get(`${GUEST_URL}/user/singlecourse/${id}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+};

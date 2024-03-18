@@ -53,8 +53,6 @@ const Profile = () => {
 
   useEffect(() => {
     ProfileNameKosam()
-
-
   }, [])
 
 
@@ -120,7 +118,7 @@ const Profile = () => {
 
       if (res) {
         setAppLink(res.data.playStore)
-        
+
       }
       else {
         console.log("sad")
@@ -131,7 +129,7 @@ const Profile = () => {
       }, 1000);
     }
     finally {
-      
+
     }
   }
   const logoutValidation = async () => {
@@ -203,7 +201,7 @@ const Profile = () => {
                 <View>
 
 
-                  {profilepic ? <View style={styles.outerCircle}>
+                  {/* {profilepic ? <View style={styles.outerCircle}>
                     <ImageBackground
                       style={styles.innerCircle}
                       // source={profilepic}
@@ -211,20 +209,23 @@ const Profile = () => {
                         uri: profilepic,
                       }}
                       resizeMode="cover"
+                      onError={(error) => Alert.alert("Error in ", error)}
                     >
 
                     </ImageBackground>
-                  </View> :
+                  </View> : */}
                     <View style={styles.outerCircle}>
                       <ImageBackground
                         style={styles.innerCircle}
                         source={require("../../../assets/InternalImages/profile.png")}
                         resizeMode="cover"
+                        onError={(error) => Alert.alert("Error in ", error)}
+
                       >
                         <Text style={styles.letter}>{StartingLetter.toLocaleUpperCase()}</Text>
                       </ImageBackground>
                     </View>
-                  }
+                   {/* }  */}
                 </View>
 
                 <View style={{ margin: 5, marginLeft: 14 }}>
@@ -578,7 +579,7 @@ const Profile = () => {
               </View>
 
 
-              {/* <View style={{ marginBottom: 10 }}>
+              <View style={{ marginBottom: 10 }}>
                 <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("FormScreen123") }}>
 
                   <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
@@ -604,7 +605,7 @@ const Profile = () => {
 
                   </View>
                 </TouchableOpacity>
-              </View> */}
+              </View>
 
 
             </View>

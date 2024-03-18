@@ -356,13 +356,13 @@ const Profile = () => {
           </TouchableOpacity>
 
 
-          <TouchableOpacity onPress={() => { pickImage() }} style={{ backgroundColor: '' }}>
+          {/* <TouchableOpacity onPress={() => { pickImage() }} style={{ backgroundColor: '' }}>
             <Feather name="camera" style={{
               fontSize: 20,
               marginLeft: 20,
               color: 'black'
             }} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
 
         </View>
@@ -379,20 +379,20 @@ const Profile = () => {
           paddingLeft: 25,
           paddingTop: 20,
           backgroundColor: 'white',
-          height: 500,
+          height:700,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
         }}>
 
 
           <View>
-            <Text style={{ fontSize: 20, fontWeight: 800, }}>User Profile </Text>
+            {/* <Text style={{ fontSize: 20, fontWeight: 800, }}>User Profile </Text> */}
 
             <ImageBackground
               style={{ width: '100%', position: 'relative', paddingTop: 25, marginTop: 1, display: 'flex', alignItems: 'center', height: '90%' }}
               contentFit="fixed"
               // blurRadius={0.2}
-              source={require("../../../assets/image/Rectangle 33.png")}
+              // source={require("../../../assets/image/Rectangle 33.png")}
             >
 
               <View style={{ width: '100%', marginLeft: 20 }}>
@@ -428,7 +428,7 @@ const Profile = () => {
 
 
 
-        {profilePic ? <TouchableOpacity onPress={() => { }}>
+        {/* {profilePic ? <TouchableOpacity onPress={() => { }}>
           <View style={styles.outerCircle}>
             <ImageBackground
               style={styles.innerCircle}
@@ -438,7 +438,8 @@ const Profile = () => {
               }}
               resizeMode="cover"
             />
-          </View></TouchableOpacity> : <TouchableOpacity onPress={() => { }}><View style={styles.outerCircle}>
+          </View></TouchableOpacity> : */}
+           {/* <TouchableOpacity onPress={() => { }}><View style={styles.outerCircle}>
             <ImageBackground
               style={styles.innerCircle}
               source={require("../../../../assets/profile2.jpg")}
@@ -450,7 +451,8 @@ const Profile = () => {
             >
             </ImageBackground>
           </View>
-        </TouchableOpacity>}
+        </TouchableOpacity> */}
+        {/* } */}
         <View>
 
         </View>

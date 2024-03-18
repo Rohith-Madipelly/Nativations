@@ -35,7 +35,7 @@ import CustomPicker from '../../../Components/UI/Inputs/CustomPicker.js';
 import { DateConvert } from '../../../utils/DateConvert.js';
 
 
-export default function FormScreen() { 
+export default function FormScreenCopy() { 
   const [date123, setDate] = useState(new Date());
 
   const [gender, setgender] = useState()
@@ -286,13 +286,11 @@ console.log(error)
         >
           {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
 
-          <ScrollView style={{ height: 800 }}>
+          <ScrollView style={{ height: 'auto'  }}>
             <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 50 }}>
               <Formik
                 // enableReinitialize
                 validateOnMount={true}
-             
-
                 // initialValues={{
                 // from: "", to: "", firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", motherTongue: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
                 // // oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
@@ -445,6 +443,9 @@ console.log(error)
                         error="Please select a gender"
                       />
 
+
+
+
                       <CustomTextInput
                         boxWidth={'30%'}
                         placeholder={'Age'}
@@ -513,6 +514,9 @@ console.log(error)
                       // pickerStyle={{ backgroundColor: '#f0f0f0' }}
                       error="Please select a gender"
                     />
+
+
+
                     <CustomTextInput
                       placeholder={'Enter Your Guardian Name'}
                       asterisksymbol={true}
@@ -992,6 +996,8 @@ console.log(error)
                     // pickerStyle={{ backgroundColor: '#f0f0f0' }}
                     // error="Please select a gender"
                     />
+
+
 
 
                     <CustomTextInput

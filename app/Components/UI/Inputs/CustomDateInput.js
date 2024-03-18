@@ -19,6 +19,7 @@ const CustomDateInput = ({
   errorMessage,
   errorColor = 'red',
   bgColor = 'white',
+  disabled = false,
 }) => {
   const containerBorder = outlined ? styles.outlined : styles.standard;
   const [date, setDate] = useState(value); // Initialize date state with the provided value
@@ -38,7 +39,12 @@ const CustomDateInput = ({
   };
 
   return (
-    <TouchableOpacity style={[{ padding: 0, width: boxWidth,overflow:'hidden' }]} onPress={() => showMode("date")}>
+    <TouchableOpacity style={[{ padding: 0, width: boxWidth,overflow:'hidden' }]} 
+    // onPress={() => showMode("date")}
+    onPress={() => !disabled && showMode("date")} // Disable onPress if disabled prop is true
+    disabled={disabled}
+    
+    >
       <Text style={styles.label}>{label} {asterisksymbol?<Text style={{color:'red'}}>*</Text>:""}</Text>
       <View style={[styles.container, containerBorder, { borderColor: borderColor }, { backgroundColor: bgColor }]}>
         {leftIcon ? <View style={{ paddingRight: 0 }}>{leftIcon}</View> : null}
@@ -63,7 +69,7 @@ const CustomDateInput = ({
             minimumDate={minimumDate}
             maximumDate={maximumDate}
             onChange={onChange}
-   
+           
           />
   
         )}
