@@ -33,6 +33,7 @@ import TestingPage from "./MainScreen/OtherPages/TestingPage";
 import ProfilePicUpdate from "./Demo/ProfilePic";
 import FormScreenCopy from "./MainScreen/OtherPages/FormScreenCopy";
 import FormScreenNew from "./MainScreen/OtherPages/FormScreenNew";
+import FormScreenNew123 from "./MainScreen/OtherPages/FormScreenNew123";
 
 
 // import * as SplashScreen from 'expo-splash-screen';
@@ -91,15 +92,18 @@ export default function Screens() {
         <Stack.Group >
           {user ? (
             <>
-              <Stack.Screen name="FormScreen12344Test" component={FormScreenNew} />
+              {/* <Stack.Screen name="FormScreen12344Test123" component={FormScreenNew123} />
+              <Stack.Screen name="FormScreen12344Test" component={FormScreenNew} /> */}
               <Stack.Screen name="Home" component={BottomTabScreen} />
               <Stack.Screen name="VideoScreen" component={VideoScreen} />
+
               <Stack.Screen name="FormScreen" component={FormScreen} />
+              
               <Stack.Screen name="FullProfile" component={UpdateProfile} />
               <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
               <Stack.Screen name="ProfilePassword" component={ChangePassword} />
-              <Stack.Screen name="FormScreen12" component={FormScreenCopy} />
-              <Stack.Screen name="FormScreen123" component={FormScreen123} />
+
+              <Stack.Screen name="FormScreen123" component={FormScreenNew} />
               <Stack.Screen name="About" component={About} />
               <Stack.Screen name="Help" component={Help} />
               <Stack.Screen name="Privacy Policy" component={PrivacyPolicy} />

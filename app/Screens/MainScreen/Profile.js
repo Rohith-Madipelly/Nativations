@@ -617,7 +617,7 @@ const Profile = () => {
         </View>
         <View style={[{ padding: 29, paddingTop: 0, paddingRight: 60, paddingLeft: 60, paddingBottom: 10 }]}>
           {/* <Button title='LogOut' onPress={() => { logoutValidation() }}>Logout</Button> */}
-          <Button title='Logout' onPress={() => { logoutValidation() }}></Button>
+          <Button title='Log out' onPress={() => { logoutValidation() }}></Button>
         </View>
 
 

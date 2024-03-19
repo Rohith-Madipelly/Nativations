@@ -35,7 +35,7 @@ import CustomPicker from '../../../Components/UI/Inputs/CustomPicker.js';
 import { DateConvert } from '../../../utils/DateConvert.js';
 
 
-export default function FormScreenNew() {
+export default function FormScreenNew123() {
   const [date123, setDate] = useState(new Date());
   const [errorFormAPI, seterrorFormAPI] = useState("")
   const [spinnerBool, setSpinnerbool] = useState(false)
@@ -126,7 +126,7 @@ export default function FormScreenNew() {
       console.log(">>>>>>", response.data);
       setToDisplay(true)
       setCourseData(response.data) // You can process the API response data here
-      setCourseDataFrom(response.data.from) // You can process the API response data here
+      setCourseDataFrom(new Date(response.data.from)) // You can process the API response data here
       setCourseDataTo(response.data.to)
       console.log("Timer", courseDataTo) // You can process the API response data here
     } catch (error) {
@@ -379,37 +379,67 @@ export default function FormScreenNew() {
                         error="Please select a CourseType"
                       />
 
-                    
+                      <Text>Course Information {courseData.from}</Text>
 
                       {toDisplay ? <>
                         <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: '90%' }}>
-                          
-
-                          <CustomTextInput
+                          <CustomDateInput
                             placeholder={'From'}
-                            boxWidth={'40%'}
-                            label={'form'}
+                            label={'From '}
                             name='From'
-                            value={courseDataFrom}
-                            // asterisksymbol={true}
+                            // value={values.from}
+                            // value={new Date(courseData.from)}
+                            value={new Date(courseDataFrom)}
+                            // value={`${courseData.from || values.courseName}`}
+
+                            // value={courseData.to}
                             leftIcon={<MaterialIcons name="date-range" size={20} color="black" />}
-                            // borderColor={`${(errors.courseDataFrom && touched.courseDataFrom) || (errorFormAPI && errorFormAPI.courseDataFromForm) ? "red" : "#ccc"}`}
-                            // errorMessage={`${(errors.courseDataFrom && touched.courseDataFrom) ? `${errors.courseDataFrom}` : (errorFormAPI && errorFormAPI.courseNameForm) ? `${errorFormAPI.courseNameForm}` : ``}`}
-                            editable={false}
+                            // bgColor='#e1f3f8'
+                            // bgColor="#B1B1B0"
+                            asterisksymbol={true}
+                            // onChangeText={onChangeText}
+                            // onChangeText={(e) => { handleChange("from")(e); setstartingFrom(e); seterrorFormAPI(); }}
+                            onBlur={handleBlur("from")}
+                            boxWidth={"40%"}
+                            validate={handleBlur("from")}
+                            outlined
+                            borderColor={`${(errors.from && touched.from) || (errorFormAPI && errorFormAPI.fromForm) ? "red" : "#ccc"}`}
+                            errorMessage={`${(errors.from && touched.from) ? `${errors.from}` : (errorFormAPI && errorFormAPI.fromForm) ? `${errorFormAPI.fromForm}` : ``}`}
+                            // errorColor='magenta'
+                            minimumDate={new Date()}
+                            maximumDate={new Date(2090, 10, 20)}
+                            disabled={true}
                           />
 
-
-                          <CustomTextInput
+                          <CustomDateInput
                             placeholder={'To'}
-                            boxWidth={'40%'}
-                            label={'To'}
+                            label={'To '}
                             name='To'
-                            value={courseDataTo}
-                            // asterisksymbol={true}
+                            // value={values.to}
+                            // value={values.to}
+                            value={new Date(courseDataTo)}
+                            asterisksymbol={true}
                             leftIcon={<MaterialIcons name="date-range" size={20} color="black" />}
-                            // borderColor={`${(errors.courseName && touched.courseName) || (errorFormAPI && errorFormAPI.courseNameForm) ? "red" : "#ccc"}`}
-                            // errorMessage={`${(errors.courseName && touched.courseName) ? `${errors.courseName}` : (errorFormAPI && errorFormAPI.courseNameForm) ? `${errorFormAPI.courseNameForm}` : ``}`}
-                            editable={false}
+                            // bgColor='#e1f3f8'
+                            // bgColor="#B1B1B0"
+
+                            onChangeText={(e) => { handleChange("to")(e); seterrorFormAPI(); }}
+                            onBlur={handleBlur("to")}
+
+
+                            validate={handleBlur("to")}
+
+                            outlined
+
+                            borderColor={`${(errors.to && touched.to) || (errorFormAPI && errorFormAPI.toForm) ? "red" : "#ccc"}`}
+
+                            errorMessage={`${(errors.to && touched.to) ? `${errors.to}` : (errorFormAPI && errorFormAPI.toForm) ? `${errorFormAPI.toForm}` : ``}`}
+                            // errorColor='magenta'
+                            boxWidth={"40%"}
+                            // boxWidth={"auto"}
+                            minimumDate={minvalueofstratingfrom}
+                            maximumDate={new Date(2090, 10, 20)}
+                            disabled={true}
                           />
                         </View>
 
@@ -465,6 +495,9 @@ export default function FormScreenNew() {
                         label={'address'}
                         name='address'
                         value={values.address}
+                        // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                        // bgColor='#e1f3f8'
+                        // bgColor="#B1B1B0"
                         onChangeText={(e) => { handleChange("address")(e); seterrorFormAPI(); }}
                         onBlur={handleBlur("address")}
 
@@ -472,6 +505,7 @@ export default function FormScreenNew() {
                         outlined
                         borderColor={`${(errors.address && touched.address) || (errorFormAPI && errorFormAPI.addressForm) ? "red" : "#ccc"}`}
                         errorMessage={`${(errors.address && touched.address) ? `${errors.address}` : (errorFormAPI && errorFormAPI.addressForm) ? `${errorFormAPI.addressForm}` : ``}`}
+                        // errorColor='magenta'
                         numLines={4}
                       />
 
@@ -547,7 +581,7 @@ export default function FormScreenNew() {
                         // pickerStyle={{ backgroundColor: '#f0f0f0' }}
                         error="Please select a gender"
                       />
-
+                     
 
                       {values.category === "For Old Students" && (
                         <CustomPicker

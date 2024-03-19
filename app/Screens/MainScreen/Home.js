@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import NetInfo from '@react-native-community/netinfo';
 import { useNavigation } from '@react-navigation/native';
+import { LogOutHandle123 } from '../../utils/LogOut';
 
 const Home = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
@@ -87,9 +88,6 @@ const Home = () => {
         setBhanaja(res.data.bhanaja)
         setUpComingEvents(res.data.upComingEvents)
 
-
-        // console.log("Data Testing Passed",meditationTracks,"pravachan",pravachan,"<previousEvents>",previousEvents,"<bhanaja>",bhanaja,".",upComingEvents)
-
       }
       else {
         console.log(">>> 123")
@@ -97,9 +95,16 @@ const Home = () => {
       }
 
 
-    } catch (error) {
+    } catch (error) { 
+
+      if (error.response) {
+        if (error.response.status === 401) {
+            console.log("Error With 400.>>>>>>>>>>>>>>>>>>>>>>>>>>>>",error.response.status)
+            LogOutHandle123()
+        }
+      }
       setTimeout(() => {
-        console.log("Error in fetching", error.response.status)
+        console.log("Error in fetching>", error.response.status)
       }, 1000);
 
       setTimeout(() => {
