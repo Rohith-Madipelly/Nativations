@@ -12,7 +12,12 @@ const FormData = Yup.object().shape({
     // // .matches(/^[0-9]{8}$/, "Invalid Date"),
 
 
-    category:Yup.string(),
+    category:Yup.string()
+    .required("Category is a Required Field"),
+    courseName:Yup.string(),
+  
+    language:Yup.string()
+    .required("language is a Required Field"),
 
     firstName: Yup.string()
         .trim()
@@ -50,9 +55,9 @@ const FormData = Yup.object().shape({
     guardianName: Yup.string()
         .required("Guardian Name is a Required Field"),
 
-    motherTongue: Yup.string()
-        .required("Mother Tongue is a Required Field")
-        .oneOf(["hindi", "english"], "Invalid mother Tongue"),
+    language: Yup.string()
+        .required("Mother Tongue is a Required Field"),
+        // .oneOf(["hindi", "english"], "Invalid mother Tongue"),
 
     mobileNumber: Yup.string()
         .trim()

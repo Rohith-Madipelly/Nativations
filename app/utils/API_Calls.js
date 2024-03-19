@@ -243,6 +243,17 @@ export const GetFormReqs = async (token) => {
 };
 
 
+//Form GetFormDataSumbited
+export const GetFormDataSumbited = async (token) => {
+
+  return await axios.get(`${GUEST_URL}/user/formdata`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  // return token
+};
 
 //Form GetCourseData
 export const GetCourseData = async (id,token) => {

@@ -33,9 +33,9 @@ import FormScreenNew from "./MainScreen/OtherPages/FormScreenNew";
 
 
 
-// import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from 'expo-splash-screen';
 
-// SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync();
 export default function Screens() {
   const [user, setUser] = useState()
 
@@ -49,12 +49,14 @@ export default function Screens() {
 
   // Method to verifiy where user is login or not from async-storage
   const verifyToken = async () => {
+    console.log("<><><>>>>>>>>>>>>>>>>><")
     ASO.getTokenJWT('Token', (error, token) => {
       if (error) {
         console.error('Error getting token:', error);
       } else {
         if (token != null) {
           dispatch(setToken(token));
+          SplashScreen.hideAsync();
         }
       }
     });
@@ -96,7 +98,7 @@ export default function Screens() {
               <Stack.Screen name="VideoScreen" component={VideoScreen} />
 
               {/* <Stack.Screen name="FormScreen" component={FormScreen} /> */}
-              
+
               <Stack.Screen name="FullProfile" component={UpdateProfile} />
               <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
               <Stack.Screen name="ProfilePassword" component={ChangePassword} />
