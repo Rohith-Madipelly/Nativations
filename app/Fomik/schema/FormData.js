@@ -1,16 +1,18 @@
 import * as Yup from "yup";
 const FormData = Yup.object().shape({
 
-    from: Yup.string()
-        .trim()
-        .required("From Date is a Required Field"),
-    // .matches(/^[0-9]{8}$/, "Invalid Date"),
+    // from: Yup.string()
+    //     .trim()
+    //     .required("From Date is a Required Field"),
+    // // .matches(/^[0-9]{8}$/, "Invalid Date"),
 
-    to: Yup.string()
-        .trim()
-        .required("To Date is a Required Field"),
-    // .matches(/^[0-9]{8}$/, "Invalid Date"),
+    // to: Yup.string()
+    //     .trim()
+    //     .required("To Date is a Required Field"),
+    // // .matches(/^[0-9]{8}$/, "Invalid Date"),
 
+
+    category:Yup.string(),
 
     firstName: Yup.string()
         .trim()

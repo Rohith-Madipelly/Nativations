@@ -36,6 +36,8 @@ import { DateConvert } from '../../../utils/DateConvert.js';
 
 
 export default function FormScreenNew() {
+
+
   const [date123, setDate] = useState(new Date());
   const [errorFormAPI, seterrorFormAPI] = useState("")
   const [spinnerBool, setSpinnerbool] = useState(false)
@@ -49,14 +51,14 @@ export default function FormScreenNew() {
   const [toDisplay, setToDisplay] = useState(false)
 
 
-
-
+  const [gender, setgender] = useState()
   const minvalueofstratingfrom = DateConvert(stratingfrom)
   const minvalueofcourseDate = DateConvert(courseDate)
+
+
   const [selectedType, setSelectedType] = useState(null);
   let tokenn = useSelector((state) => state.token);
   const navigation = useNavigation();
-
   const [data, SetData] = useState([])
   const [otherLanguage, setOtherLanguage] = useState('');
 
@@ -65,10 +67,6 @@ export default function FormScreenNew() {
     setOtherLanguage(text);
     // You can perform additional validations or actions here if needed
   };
-
-
-  const DataTest = new Date(2055, 10, 20)
-
 
   const categoryData = [
     { label: 'Select Category', value: 'N/A' },
@@ -83,7 +81,6 @@ export default function FormScreenNew() {
     { label: 'Bikaner', value: 'Bikaner' },
     { label: 'Other', value: 'other' },
   ]
-
 
   const genders = [
     { label: 'Select gender', value: 'N/A' },
@@ -135,8 +132,6 @@ export default function FormScreenNew() {
   };
 
   const GetData = async () => {
-
-
     const res = await GetFormReqs(tokenn)
     try {
       if (res) {
@@ -147,7 +142,6 @@ export default function FormScreenNew() {
     catch (error) {
       console.log(error)
     }
-
   }
 
 

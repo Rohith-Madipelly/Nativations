@@ -13,11 +13,11 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Formik } from "formik";
 import { loginSchema } from "../../../Fomik/schema/signIn.js";
 import { Picker } from "@react-native-picker/picker";
-import { FormDataApi, UserLoginApi } from "../../../utils/API_Calls.js";
+import { FormDataApi, GetCourseData, GetFormReqs, UserLoginApi } from "../../../utils/API_Calls.js";
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import { useNavigation } from '@react-navigation/native';
@@ -53,6 +53,64 @@ export default function FormScreen() {
   let tokenn = useSelector((state) => state.token);
   const navigation = useNavigation();
 
+  
+
+
+  const [courseData, setCourseData] = useState("")
+  const [from, setfrom] = useState()
+  const [to, setCourseDataTo] = useState()
+
+
+  const [toDisplay, setToDisplay] = useState(false)
+
+
+
+
+  const [selectedType, setSelectedType] = useState(null);
+
+  const [data, SetData] = useState([])
+  const [otherLanguage, setOtherLanguage] = useState('');
+
+  // Function to handle change in other language input
+  const handleOtherLanguageChange = (text) => {
+    setOtherLanguage(text);
+    // You can perform additional validations or actions here if needed
+  };
+
+  const categoryData = [
+    { label: 'Select Category', value: 'N/A' },
+    { label: 'For New Students', value: 'For New Students' },
+    { label: 'For Old Students', value: 'For Old Students' },
+    { label: 'For Children/Teens', value: 'For Children/Teens' },
+    { label: 'For Executives', value: 'For Executives' },
+  ];
+  const LanguageData = [
+    { label: 'Select', value: 'N/A' },
+    { label: 'Kolkata', value: 'Kolkata' },
+    { label: 'Bikaner', value: 'Bikaner' },
+    { label: 'Other', value: 'other' },
+  ]
+
+  const genders = [
+    { label: 'Select gender', value: 'N/A' },
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ];
+
+  const Types = [
+    { label: 'Select Type', value: 'N/A' },
+    { label: 'Attend', value: 'Attend' },
+    { label: 'Serve', value: 'Serve' },
+  ];
+
+  const AllcoursesforDrops = [
+    { label: 'Select Type', value: 'N/A' },
+    ...data.map(course => ({
+      label: course.courseName,
+      value: course._id
+    }))
+  ];
+
   try {
     if (tokenn != null) {
       tokenn = tokenn.replaceAll('"', '');
@@ -63,11 +121,51 @@ export default function FormScreen() {
   }
 
 
-  const genders = [
-    { label: 'Select gender', value: 'N/A' },
-    { label: 'Male', value: 'male' },
-    { label: 'Female', value: 'female' },
-  ];
+
+
+  const fetchUserData = async (id) => {
+    if (id === 'N/A') {
+      return
+    }
+    try {
+      const response = await GetCourseData(id, tokenn);
+
+      console.log(">>>>>>", response.data);
+      setToDisplay(true)
+      setCourseData(response.data) // You can process the API response data here
+      setfrom(response.data.from) // You can process the API response data here
+      setCourseDataTo(response.data.to)
+       // You can process the API response data here
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const GetData = async () => {
+    const res = await GetFormReqs(tokenn)
+    try {
+      if (res) {
+        let hero = res.data.allCourses;
+        SetData(hero)
+      }
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+
+  useEffect(() => {
+    GetData()
+  }, [])
+
+
+
+  // const genders = [
+  //   { label: 'Select gender', value: 'N/A' },
+  //   { label: 'Male', value: 'male' },
+  //   { label: 'Female', value: 'female' },
+  // ];
 
   const martialStatus = [
     { label: 'Select', value: 'N/A' },
@@ -153,7 +251,7 @@ export default function FormScreen() {
     try {
       console.log("Data Set")
 
-      const { from, to, firstName, lastName, gender, age, education, martialStatus, guardianName, motherTongue, mobileNumber, eMail, address, medicineName, medicineDose, regularMedicine, brief, referenceFrom,
+      const {firstName, lastName, gender, age, education, martialStatus, guardianName, motherTongue, mobileNumber, eMail, address, medicineName, medicineDose, regularMedicine, brief, referenceFrom,
         oldStuName, firstCoursePlace, dateFirstCourse, dateLastCourse, firstAsstTeacher, lastCoursePlace, lastAsstTeacher, courseDetails, triedAnyPractise, practiseRegularly, dailyHours, reason, changeInYourSelf,
         personName, personRelation, courseDone, relation, designation, companyName, companyAddress, inPastOne, inPresentOne, inPastTwo, inPresentTwo } = user;
 
@@ -203,7 +301,6 @@ export default function FormScreen() {
       const docFitnessCertificate = {
         medicineName, medicineDose,
       }
-
 
 
 
@@ -299,13 +396,21 @@ console.log(error)
                 // // personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
                 // }}
 
-                initialValues={{
-                  // from: "", to: "", firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", motherTongue: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
-                  from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", motherTongue: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
-                  // oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
-                  // personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
-                  }}
+                // initialValues={{
+                //   // from: "", to: "", firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", motherTongue: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
+                //   from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", motherTongue: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
+                //   // oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
+                //   // personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
+                //   }}
 
+
+                  initialValues={{
+                    // from: from, to: courseDataTo,
+                     firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", motherTongue: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
+                    // from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", motherTongue: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
+                    oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
+                    personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
+                    }}
 
                 onSubmit={submitHandler}
                 validator={() => ({})}
@@ -322,7 +427,7 @@ console.log(error)
                   isValid,
                 }) => (
                   <>
-
+{/* 
                     <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: '90%' }}>
                       <CustomDateInput
                         placeholder={'From'}
@@ -375,7 +480,268 @@ console.log(error)
                         maximumDate={new Date(2090, 10, 20)}
                       />
 
-                    </View>
+                    </View> */}
+
+
+                    <CustomPicker
+                        placeholder={'Enter Your category'}
+                        asterisksymbol={true}
+                        boxWidth={'80%'}
+                        label={'category'}
+                        name='category'
+                        // value={values.category}
+                        // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                        // bgColor='#e1f3f8'
+                        // bgColor="#B1B1B0"
+                        onChangeText={(e) => { handleChange("category")(e); seterrorFormAPI(); }}
+                        onBlur={handleBlur("category")}
+
+                        validate={handleBlur("category")}
+                        outlined
+                        borderColor={`${(errors.category && touched.category) || (errorFormAPI && errorFormAPI.categoryForm) ? "red" : "#ccc"}`}
+                        errorMessage={`${(errors.category && touched.category) ? `${errors.category}` : (errorFormAPI && errorFormAPI.categoryForm) ? `${errorFormAPI.categoryForm}` : ``}`}
+                        // errorColor='magenta'
+                        value={values.category}
+                        items={categoryData}
+                        onValueChange={(itemValue) => handleChange("category")(itemValue)}
+                        containerStyle={{ width: 200 }}
+                        labelStyle={{ color: 'blue' }}
+                        // pickerStyle={{ backgroundColor: '#f0f0f0' }}
+                        error="Please select a category"
+                      />
+
+                      <CustomPicker
+                        placeholder={'Enter Your Course Type'}
+                        asterisksymbol={true}
+                        boxWidth={'80%'}
+                        label={'Course Type'}
+                        name='CourseType'
+                        // value={values.CourseType}
+                        // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                        // bgColor='#e1f3f8'
+                        // bgColor="#B1B1B0"
+                        onChangeText={(e) => { handleChange("CourseType")(e); seterrorFormAPI(); }}
+                        onBlur={handleBlur("CourseType")}
+                        validate={handleBlur("CourseType")}
+                        outlined
+                        borderColor={`${(errors.CourseType && touched.CourseType) || (errorFormAPI && errorFormAPI.CourseTypeForm) ? "red" : "#ccc"}`}
+                        errorMessage={`${(errors.CourseType && touched.CourseType) ? `${errors.CourseType}` : (errorFormAPI && errorFormAPI.CourseTypeForm) ? `${errorFormAPI.CourseTypeForm}` : ``}`}
+                        // errorColor='magenta'
+                        value={values.CourseType}
+                        items={AllcoursesforDrops}
+                        onValueChange={
+                          (itemValue) => {
+                            handleChange("CourseType")(itemValue);
+                            // fetchUserData(itemValue)
+                            fetchUserData(itemValue)
+                          }
+                        }
+                        containerStyle={{ width: 200 }}
+                        labelStyle={{ color: 'blue' }}
+                        // pickerStyle={{ backgroundColor: '#f0f0f0' }}
+                        error="Please select a CourseType"
+                      />
+                      {toDisplay ? <>
+                        <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: '90%' }}>
+                          <CustomTextInput
+                            placeholder={'From'}
+                            boxWidth={'40%'}
+                            label={'form'}
+                            name='From'
+                            value={from}
+                            // asterisksymbol={true}
+                            leftIcon={<MaterialIcons name="date-range" size={20} color="black" />}
+                            // borderColor={`${(errors.from && touched.from) || (errorFormAPI && errorFormAPI.fromForm) ? "red" : "#ccc"}`}
+                            // errorMessage={`${(errors.from && touched.from) ? `${errors.from}` : (errorFormAPI && errorFormAPI.courseNameForm) ? `${errorFormAPI.courseNameForm}` : ``}`}
+                            editable={false}
+                          />
+                          {/* courseDataForm api save to handleChange("to")(from) */}
+
+
+                          <CustomTextInput
+                            placeholder={'To'}
+                            boxWidth={'40%'}
+                            label={'To'}
+                            name='To'
+                            value={to}
+                            // asterisksymbol={true}
+                            leftIcon={<MaterialIcons name="date-range" size={20} color="black" />}
+                            // borderColor={`${(errors.courseName && touched.courseName) || (errorFormAPI && errorFormAPI.courseNameForm) ? "red" : "#ccc"}`}
+                            // errorMessage={`${(errors.courseName && touched.courseName) ? `${errors.courseName}` : (errorFormAPI && errorFormAPI.courseNameForm) ? `${errorFormAPI.courseNameForm}` : ``}`}
+                            editable={false}
+                          />
+                        </View>
+
+                        <CustomTextInput
+                          placeholder={'Your course Name'}
+                          asterisksymbol={true}
+                          boxWidth={'80%'}
+                          label={'course Name'}
+                          name='courseName'
+                          value={`${courseData.courseName || values.courseName}`}
+                          // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                          // bgColor='#e1f3f8'
+                          // bgColor="#B1B1B0"
+                          onChangeText={(e) => { handleChange("courseName")(e); seterrorFormAPI(); }}
+                          onBlur={handleBlur("courseName")}
+
+                          validate={handleBlur("courseName")}
+                          outlined
+                          borderColor={`${(errors.courseName && touched.courseName) || (errorFormAPI && errorFormAPI.courseNameForm) ? "red" : "#ccc"}`}
+                          errorMessage={`${(errors.courseName && touched.courseName) ? `${errors.courseName}` : (errorFormAPI && errorFormAPI.courseNameForm) ? `${errorFormAPI.courseNameForm}` : ``}`}
+                          // errorColor='magenta'
+                          editable={false}
+                        />
+
+                        <CustomTextInput
+                          placeholder={'Enter Your course Duration'}
+                          asterisksymbol={true}
+                          boxWidth={'80%'}
+                          label={'course Duration'}
+                          name='course_Duration'
+                          value={`${courseData.courseDuration || values.course_Duration}`}
+                          // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                          // bgColor='#e1f3f8'
+                          // bgColor="#B1B1B0"
+                          onChangeText={(e) => { handleChange("course_Duration")(e); seterrorFormAPI(); }}
+                          onBlur={handleBlur("course_Duration")}
+
+                          validate={handleBlur("course_Duration")}
+                          outlined
+                          borderColor={`${(errors.course_Duration && touched.course_Duration) || (errorFormAPI && errorFormAPI.course_DurationForm) ? "red" : "#ccc"}`}
+                          errorMessage={`${(errors.course_Duration && touched.course_Duration) ? `${errors.course_Duration}` : (errorFormAPI && errorFormAPI.course_DurationForm) ? `${errorFormAPI.course_DurationForm}` : ``}`}
+                          // errorColor='magenta'
+                          editable={false}
+                        />
+
+                      </> : ""}
+
+                      <CustomTextInput
+                        // placeholder={'State/Province,Country,Regions'}
+                        placeholder={'Address'}
+                        asterisksymbol={true}
+                        boxWidth={'80%'}
+                        label={'address'}
+                        name='address'
+                        value={values.address}
+                        onChangeText={(e) => { handleChange("address")(e); seterrorFormAPI(); }}
+                        onBlur={handleBlur("address")}
+
+                        validate={handleBlur("address")}
+                        outlined
+                        borderColor={`${(errors.address && touched.address) || (errorFormAPI && errorFormAPI.addressForm) ? "red" : "#ccc"}`}
+                        errorMessage={`${(errors.address && touched.address) ? `${errors.address}` : (errorFormAPI && errorFormAPI.addressForm) ? `${errorFormAPI.addressForm}` : ``}`}
+                        numLines={4}
+                      />
+
+
+
+                      <CustomPicker
+                        placeholder={'Enter Your Language '}
+                        asterisksymbol={true}
+                        boxWidth={'80%'}
+                        label={'Language'}
+                        name='Language'
+                        onChangeText={(e) => { handleChange("Language")(e); seterrorFormAPI(); }}
+                        onBlur={handleBlur("Language")}
+                        validate={handleBlur("Language")}
+                        outlined
+                        borderColor={`${(errors.Language && touched.Language) || (errorFormAPI && errorFormAPI.LanguageForm) ? "red" : "#ccc"}`}
+                        errorMessage={`${(errors.Language && touched.Language) ? `${errors.Language}` : (errorFormAPI && errorFormAPI.LanguageForm) ? `${errorFormAPI.LanguageForm}` : ``}`}
+                        value={values.Language}
+                        items={LanguageData}
+                        onValueChange={(itemValue) => {
+                          handleChange("Language")(itemValue);
+                          // seterrorFormAPI();
+                        }}
+                        containerStyle={{ width: 200 }}
+                        labelStyle={{ color: 'blue' }}
+                      />
+                      {/* Input field for other language */}
+                      {values.Language === 'other' && (
+
+                        <CustomTextInput
+                          boxWidth={'80%'}
+                          label={'Other Language'}
+                          name='Other Language'
+                          // value={values.personName}
+                          value={otherLanguage}
+                          onChangeText={handleOtherLanguageChange}
+                          placeholder="Other Language"
+                          onBlur={handleBlur("personName")}
+                          validate={handleBlur("personName")}
+                          outlined
+                          borderColor={`${(errors.personName && touched.personName) || (errorFormAPI && errorFormAPI.personNameForm) ? "red" : "#ccc"}`}
+                          errorMessage={`${(errors.personName && touched.personName) ? `${errors.personName}` : (errorFormAPI && errorFormAPI.personNameForm) ? `${errorFormAPI.personNameForm}` : ``}`}
+                        // errorColor='magenta'
+                        />
+                      )}
+
+
+
+                      {/* <Text>{values.CourseType}</Text> */}
+                      <CustomPicker
+                        placeholder={'Enter Your gender'}
+                        asterisksymbol={true}
+                        boxWidth={'80%'}
+                        label={'gender'}
+                        name='gender'
+                        // value={values.gender}
+                        // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                        // bgColor='#e1f3f8'
+                        // bgColor="#B1B1B0"
+                        onChangeText={(e) => { handleChange("gender")(e); seterrorFormAPI(); }}
+                        onBlur={handleBlur("gender")}
+
+                        validate={handleBlur("gender")}
+                        outlined
+                        borderColor={`${(errors.gender && touched.gender) || (errorFormAPI && errorFormAPI.genderForm) ? "red" : "#ccc"}`}
+                        errorMessage={`${(errors.gender && touched.gender) ? `${errors.gender}` : (errorFormAPI && errorFormAPI.genderForm) ? `${errorFormAPI.genderForm}` : ``}`}
+                        // errorColor='magenta'
+                        value={values.gender}
+                        items={genders}
+                        onValueChange={(itemValue) => handleChange("gender")(itemValue)}
+                        containerStyle={{ width: 200 }}
+                        labelStyle={{ color: 'blue' }}
+                        // pickerStyle={{ backgroundColor: '#f0f0f0' }}
+                        error="Please select a gender"
+                      />
+
+
+                      {values.category === "For Old Students" && (
+                        <CustomPicker
+                          placeholder={'Select Type'}
+                          asterisksymbol={true}
+                          boxWidth={'80%'}
+                          label={'Type'}
+                          name='Type'
+                          // value={values.Type}
+                          // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                          // bgColor='#e1f3f8'
+                          // bgColor="#B1B1B0"
+                          onChangeText={(e) => { handleChange("Type")(e); seterrorFormAPI(); }}
+                          onBlur={handleBlur("Type")}
+
+                          validate={handleBlur("Type")}
+                          outlined
+                          borderColor={`${(errors.Type && touched.Type) || (errorFormAPI && errorFormAPI.TypeForm) ? "red" : "#ccc"}`}
+                          errorMessage={`${(errors.Type && touched.Type) ? `${errors.Type}` : (errorFormAPI && errorFormAPI.TypeForm) ? `${errorFormAPI.TypeForm}` : ``}`}
+                          // errorColor='magenta'
+                          value={values.Type}
+                          items={Types}
+                          onValueChange={(itemValue) => {
+                            handleChange("Type")(itemValue);
+                            // Make API call here passing the selected item's ID value
+                          }}
+
+                          containerStyle={{ width: 200 }}
+                          labelStyle={{ color: 'blue' }}
+                          // pickerStyle={{ backgroundColor: '#f0f0f0' }}
+                          error="Please select a Type"
+                        />
+                      )}
+
+
 
                     <CustomTextInput
                       boxWidth={'80%'}

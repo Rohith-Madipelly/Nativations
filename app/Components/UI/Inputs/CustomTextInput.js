@@ -32,7 +32,7 @@ const CustomTextInput = ({
         <View style={{ padding: 0,width:boxWidth }}>
             <Text style={styles.label}>{label} {asterisksymbol?<Text style={{color:'red'}}>*</Text>:""}</Text>
             <View style={[styles.container, containerBorder, { borderColor: borderColor }, { backgroundColor: backgroundColor }]}>
-                <View style={{ paddingRight: 8 }}>
+                <View style={{ paddingRight: 3 }}>
                     {leftIcon}
 
                 </View>
@@ -56,7 +56,7 @@ const CustomTextInput = ({
                     style={{ flex: 4 }}
 
                 />
-                <View style={{ paddingLeft: 8 }}>
+                <View style={{ paddingLeft: 5 }}>
                     {rightIcon}
 
                 </View>
