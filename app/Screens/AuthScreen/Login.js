@@ -23,10 +23,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../redux/actions/loginAction.jsx'
 
-import ASO from '../../utils/AsyncStorage_Calls.js' 
+import ASO from '../../utils/AsyncStorage_Calls.js'
 import { ToasterSender } from '../../utils/Toaster.js';
 
- 
+
 export default function Login() {
 
     const [show, setShow] = useState()
@@ -46,10 +46,23 @@ export default function Login() {
 
         seterrorFormAPI()
         try {
-            const { email, password } = user;
-            
+            const { emailorPhoneNumber, password } = user;
+
+            let loginFormData;
+
+            console.log("sca",emailorPhoneNumber)
+
+            if (/^\d+$/.test(emailorPhoneNumber)) {
+              loginFormData = { phone_number: emailorPhoneNumber };
+            } else {
+              loginFormData = { email: emailorPhoneNumber };
+            }
+            loginFormData.password = password;
+
+           
+
             setSpinnerbool(true)
-            const res = await UserLoginApi(email, password)
+            const res = await UserLoginApi(loginFormData)
             if (res) {
                 const Message = res.data.message
                 const token = res.data.token
@@ -126,134 +139,134 @@ export default function Login() {
             <AuthComponent NameUnderLogo={"Satya Sadhna"} titleUnder={""} screenName={"LOGIN"}>
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
-                // behavior={Platform.OS === "ios" ? 100:0}
-                keyboardVerticalOffset={5000}
+                    // behavior={Platform.OS === "ios" ? 100:0}
+                    keyboardVerticalOffset={5000}
                 // style={styles.container}
                 >
                     {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
 
-                        <ScrollView style={{ height: 400, }}>
-                            <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <Formik
-                                    // enableReinitialize
-                                    validateOnMount={true}
-                                    // initialValues={{ email: "madipellyrohith@gmail.com", password: "Rohith@7" }}
-                                    initialValues={{ email: "", password: "" }}
-                                    onSubmit={submitHandler}
-                                    validator={() => ({})}
-                                    validationSchema={loginSchema}
-                                >
-                                    {({
-                                        handleChange,
-                                        handleBlur,
-                                        handleSubmit,
-                                        isSubmitting,
-                                        values,
-                                        touched,
-                                        errors,
-                                        isValid,
-                                    }) => (
-                                        <>
+                    <ScrollView style={{ height: 400, }}>
+                        <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <Formik
+                                // enableReinitialize
+                                validateOnMount={true}
+                                // initialValues={{ email: "madipellyrohith@gmail.com", password: "Rohith@7" }}
+                                initialValues={{ emailorPhoneNumber: "", password: "" }}
+                                onSubmit={submitHandler}
+                                validator={() => ({})}
+                                validationSchema={loginSchema}
+                            >
+                                {({
+                                    handleChange,
+                                    handleBlur,
+                                    handleSubmit,
+                                    isSubmitting,
+                                    values,
+                                    touched,
+                                    errors,
+                                    isValid,
+                                }) => (
+                                    <>
 
 
 
 
-                                            <CustomTextInput
+                                        <CustomTextInput
                                             boxWidth={'80%'}
-                                                placeholder={'Enter Email '}
-                                                label={'Email'}
-                                                name='email'
-                                                value={values.email}
-                                                leftIcon={<FontAwesome name="user" size={20} color="black" />}
-                                                // bgColor='#e1f3f8'
-                                                // bgColor="#B1B1B0"
+                                            placeholder={'Enter Email or Phone Number'}
+                                            label={'Email or Phone Number'}
+                                            name='email'
+                                            value={values.emailorPhoneNumber}
+                                            leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                                            // bgColor='#e1f3f8'
+                                            // bgColor="#B1B1B0"
 
-                                                onChangeText={(e) => {    const eToLowerCaseText = e.toLowerCase();  handleChange("email")(eToLowerCaseText); seterrorFormAPI(); }}
-                                                onBlur={handleBlur("email")}
+                                            onChangeText={(e) => { const eToLowerCaseText = e.toLowerCase(); handleChange("emailorPhoneNumber")(eToLowerCaseText); seterrorFormAPI(); }}
+                                            onBlur={handleBlur("emailorPhoneNumber")}
 
-                                                // validate={() => {
-                                                //     if (!values?.first) { setError({ ...error, first: 'Please enter your name' }) }
-                                                //     else { setError({ ...error, first: null }) }
-                                                // }}
+                                            // validate={() => {
+                                            //     if (!values?.first) { setError({ ...error, first: 'Please enter your name' }) }
+                                            //     else { setError({ ...error, first: null }) }
+                                            // }}
 
-                                                validate={handleBlur("email")}
+                                            validate={handleBlur("emailorPhoneNumber")}
 
-                                                outlined
+                                            outlined
 
-                                                borderColor={`${(errors.email && touched.email) || (errorFormAPI && errorFormAPI.EmailForm) ? "red" : "#ccc"}`}
+                                            borderColor={`${(errors.emailorPhoneNumber && touched.emailorPhoneNumber) || (errorFormAPI && errorFormAPI.emailorPhoneNumberForm) ? "red" : "#ccc"}`}
 
-                                                errorMessage={`${(errors.email && touched.email) ? `${errors.email}` : (errorFormAPI && errorFormAPI.EmailForm) ? `${errorFormAPI.EmailForm}` : ``}`}
+                                            errorMessage={`${(errors.emailorPhoneNumber && touched.emailorPhoneNumber) ? `${errors.emailorPhoneNumber}` : (errorFormAPI && errorFormAPI.emailorPhoneNumberForm) ? `${errorFormAPI.emailorPhoneNumberForm}` : ``}`}
 
-                                            // errorColor='magenta'
-                                            />
+                                        // errorColor='magenta'
+                                        />
 
-                                            <CustomTextInput
+                                        <CustomTextInput
                                             boxWidth={'80%'}
-                                                placeholder={'Enter Password'}
-                                                label={'Password'}
-                                                name='Password'
-                                                value={values.password}
-                                                leftIcon={<Entypo name="lock" size={20} color="black" />}
-                                                // bgColor='#e1f3f8'
+                                            placeholder={'Enter Password'}
+                                            label={'Password'}
+                                            name='Password'
+                                            value={values.password}
+                                            leftIcon={<Entypo name="lock" size={20} color="black" />}
+                                            // bgColor='#e1f3f8'
 
 
-                                                onChangeText={(e) => { handleChange("password")(e); seterrorFormAPI(); setShow({ ...setShow, password: false }); }}
-                                                onBlur={handleBlur("password")}
+                                            onChangeText={(e) => { handleChange("password")(e); seterrorFormAPI(); setShow({ ...setShow, password: false }); }}
+                                            onBlur={handleBlur("password")}
 
-                                                rightIcon={<Pressable onPress={() => setShow({ ...setShow, password: !show?.password })}>
+                                            rightIcon={<Pressable onPress={() => setShow({ ...setShow, password: !show?.password })}>
 
-                                                    {!show?.password ? (
-                                                        <Entypo name="eye-with-line" size={20} color="black" />) : (
-                                                        
-                                                            <Entypo name="eye" size={20} color="black" />)
-                                                    }
+                                                {!show?.password ? (
+                                                    <Entypo name="eye-with-line" size={20} color="black" />) : (
 
-                                                </Pressable>
+                                                    <Entypo name="eye" size={20} color="black" />)
                                                 }
 
-                                                secure={!show?.password} //default to true
-                                                validate={handleBlur("password")}
-                                                borderColor={`${(errors.password && touched.password) || (errorFormAPI && errorFormAPI.PasswordForm) ? "red" : "#ccc"}`}
-                                                errorMessage={`${(errors.password && touched.password) ? `${errors.password}` : (errorFormAPI && errorFormAPI.PasswordForm) ? `${errorFormAPI.PasswordForm}` : ``}`}
-                                                // errorColor='magenta'
-                                                outlined
-                                            />
+                                            </Pressable>
+                                            }
+
+                                            secure={!show?.password} //default to true
+                                            validate={handleBlur("password")}
+                                            borderColor={`${(errors.password && touched.password) || (errorFormAPI && errorFormAPI.PasswordForm) ? "red" : "#ccc"}`}
+                                            errorMessage={`${(errors.password && touched.password) ? `${errors.password}` : (errorFormAPI && errorFormAPI.PasswordForm) ? `${errorFormAPI.PasswordForm}` : ``}`}
+                                            // errorColor='magenta'
+                                            outlined
+                                        />
 
 
-                                            <CustomButton
-                                                onPress={handleSubmit}
-                                                leftIcon={<Entypo style={styles.icon} name={'login'} size={18} color={'white'} />}
-                                                bgColor={`${!isValid ? "rgba(220, 142, 128, 0.9)" : "rgba(242, 142, 128, 1)"}`}
+                                        <CustomButton
+                                            onPress={handleSubmit}
+                                            leftIcon={<Entypo style={styles.icon} name={'login'} size={18} color={'white'} />}
+                                            bgColor={`${!isValid ? "rgba(220, 142, 128, 0.9)" : "rgba(242, 142, 128, 1)"}`}
 
-                                                style={{ marginTop: 50 }}>
-                                                Login
-                                            </CustomButton>
+                                            style={{ marginTop: 50 }}>
+                                            Login
+                                        </CustomButton>
 
-                                            <View style={{}}>
-                                                <TouchableOpacity onPress={() => {navigation.navigate("ForgotPasswordEmail") }}>
-                                                    <Text style={[styles.paragraphy, { color: 'black', marginTop: 20, fontWeight: '400' }]}>Forgot password?</Text>
-                                                </TouchableOpacity>
-                                            </View>
-
-
-                                            <View style={{ width: '65%', textAlign: 'center', marginTop: 40 }}>
-                                                <TouchableOpacity onPress={() => { navigation.navigate("Register")}}>
-                                                    <Text style={[styles.paragraphy, { textAlign: 'center', color: '#7C7C7C', fontWeight: '400' }]}>Don’t have an account?
-                                                        <Text style={[styles.underline, { color: '#006AFF' }]}> Sign Up</Text>
-                                                    </Text>
-
-                                                </TouchableOpacity>
-                                            </View>
+                                        <View style={{}}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate("ForgotPasswordEmail") }}>
+                                                <Text style={[styles.paragraphy, { color: 'black', marginTop: 20, fontWeight: '400' }]}>Forgot password?</Text>
+                                            </TouchableOpacity>
+                                        </View>
 
 
-                                        </>
+                                        <View style={{ width: '65%', textAlign: 'center', marginTop: 40 }}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate("Register") }}>
+                                                <Text style={[styles.paragraphy, { textAlign: 'center', color: '#7C7C7C', fontWeight: '400' }]}>Don’t have an account?
+                                                    <Text style={[styles.underline, { color: '#006AFF' }]}> Sign Up</Text>
+                                                </Text>
 
-                                    )}
+                                            </TouchableOpacity>
+                                        </View>
 
 
-                                </Formik>
-                            </View>
-                        </ScrollView>
+                                    </>
+
+                                )}
+
+
+                            </Formik>
+                        </View>
+                    </ScrollView>
                     {/* </TouchableWithoutFeedback> */}
                 </KeyboardAvoidingView>
             </AuthComponent>

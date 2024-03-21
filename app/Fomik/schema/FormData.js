@@ -1,23 +1,14 @@
 import * as Yup from "yup";
 const FormData = Yup.object().shape({
 
-    // from: Yup.string()
-    //     .trim()
-    //     .required("From Date is a Required Field"),
-    // // .matches(/^[0-9]{8}$/, "Invalid Date"),
+    category: Yup.string()
+        .required("Category is a Required Field"),
 
-    // to: Yup.string()
-    //     .trim()
-    //     .required("To Date is a Required Field"),
-    // // .matches(/^[0-9]{8}$/, "Invalid Date"),
+    Courses: Yup.string()
+        .required("Courses is a Required Field")
+        .notOneOf(["N/A"], "Please Select Courses"),
 
 
-    category:Yup.string()
-    .required("Category is a Required Field"),
-    courseName:Yup.string(),
-  
-    language:Yup.string()
-    .required("language is a Required Field"),
 
     firstName: Yup.string()
         .trim()
@@ -44,20 +35,38 @@ const FormData = Yup.object().shape({
     ,
     education: Yup.string()
         .required("education Name is a Required Field"),
-        // .min(6, "To short"),
+    // .min(6, "To short"),
 
 
     // >>>>>>>>>>>>
-    martialStatus: Yup.string()
-        .required("martialStatus is a Required Field")
-        .oneOf(["single", "married", "windower", "widow", "separated", "divorced"], "Invalid mother Tongue"),
 
     guardianName: Yup.string()
         .required("Guardian Name is a Required Field"),
 
+
+
+
+
+
     language: Yup.string()
-        .required("Mother Tongue is a Required Field"),
-        // .oneOf(["hindi", "english"], "Invalid mother Tongue"),
+    .required("language is a Required Field"),
+    Language: Yup.string(),
+
+    martialStatus: Yup.string()
+        .required("martialStatus is a Required Field"),
+        // .oneOf(["single", "married", "windower", "widow", "separated", "divorced"], "Invalid martial Status"),
+
+
+
+
+
+
+
+
+
+
+
+
 
     mobileNumber: Yup.string()
         .trim()
@@ -67,18 +76,18 @@ const FormData = Yup.object().shape({
     eMail: Yup.string().email().required("Email is a Required Field"),
     address: Yup.string()
         .required("address is a Required Field"),
-        // .min(15, "Length is short"),
+    // .min(15, "Length is short"),
 
     regularMedicine: Yup.string()
-        .required("Password is a Required Field")
-        .oneOf(["yes", "no"], "Invalid regular Medicine"),
+        .required("regularMedicine is a Required Field"),
+        // .oneOf(["yes", "no"], "Invalid regular Medicine"),
 
 
     brief: Yup.string()
 
         .min(15, "Length is short")
         // .max(225, "referenceFrom Length is too Long")
-        .required("Information is a Required Field."),
+        .required("Brief Information is a Required Field."),
     referenceFrom: Yup.string()
         .required("referenceFrom is a Required Field").oneOf(["Friend", "News-Paper", "TV", "Lectures", "Others"], "Invalid Reference "),
 
@@ -91,7 +100,7 @@ const FormData = Yup.object().shape({
     lastAsstTeacher: Yup.string(),
     courseDetails: Yup.string().oneOf(["10-Days", "20-Days", "30-Days", "50-Days", "60-Days", "Self-Course", "Service", "Courses"], "Invalid Input"),
     triedAnyPractise: Yup.string(),
-    practiseRegularly: Yup.string().oneOf(["yes", "no"], "Invalid Input"),
+    practiseRegularly: Yup.string().oneOf(["yes", "no", "Courses"], "Invalid Input"),
     dailyHours: Yup.string(),
     reason: Yup.string(),
     changeInYourSelf: Yup.string(),

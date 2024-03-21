@@ -14,7 +14,7 @@ import {
 } from "@expo/vector-icons";
 
 import { useEffect, useState } from 'react';
-import { Formik } from "formik";
+import { Formik, useFormik } from "formik";
 import { loginSchema } from "../../../Fomik/schema/signIn.js";
 import { Picker } from "@react-native-picker/picker";
 import { FormDataApi, GetCourseData, GetFormDataSumbited, GetFormReqs, UserLoginApi } from "../../../utils/API_Calls.js";
@@ -41,8 +41,45 @@ export default function FormScreen() {
   const [gender, setgender] = useState()
   const [errorFormAPI, seterrorFormAPI] = useState("")
   const [spinnerBool, setSpinnerbool] = useState(false)
+  const [userReviewsData, setUserReviewsData] = useState()
+  const [initialValuesData, setInitialValuesData] = useState(
+    // {
+    //   // from: from, to: courseDataTo,
+    //   category: "", courseName: "",
+    //   firstName: "Rohith", lastName: "Madipelly", gender: "", age: "20", education: "Civil Btech", martialStatus: "", guardianName: "Venu", language: "", mobileNumber: "9951072003", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bank Colony,", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
+    //   // from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", language: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
+    //   oldStuName: "", firstCoursePlace: "", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "", lastCoursePlace: "", lastAsstTeacher: "", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "", dailyHours: "", reason: "", changeInYourSelf: "",
+    //   personName: "", personRelation: "", courseDone: "", relation: "", designation: "", companyName: "", companyAddress: "", inPastOne: "", inPresentOne: "", inPastTwo: "", inPresentTwo: ""
+    // }
 
+    {
+      category: "", courseName: "",
+    }
+  )
 
+  const { handleChange,
+    handleBlur,
+    handleSubmit,
+    isSubmitting,
+    values,
+    touched,
+    errors,
+    isValid,
+    setValues,
+   } = useFormik({
+      initialValues: {
+      // from: from, to: courseDataTo,
+      category: "", courseName: "",
+      firstName: "Rohith", lastName: "Madipelly", gender: "", age: "20", education: "Civil Btech", martialStatus: "", guardianName: "Venu", language: "", mobileNumber: "9951072003", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bank Colony,", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
+      // from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", language: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
+      oldStuName: "", firstCoursePlace: "", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "", lastCoursePlace: "", lastAsstTeacher: "", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "", dailyHours: "", reason: "", changeInYourSelf: "",
+      personName: "", personRelation: "", courseDone: "", relation: "", designation: "", companyName: "", companyAddress: "", inPastOne: "", inPresentOne: "", inPastTwo: "", inPresentTwo: ""
+    
+      },
+      onSubmit: values => {
+        alert(JSON.stringify(values, null, 2));
+      },
+    });
   const [stratingfrom, setstartingFrom] = useState("")
 
   const [courseDate, setCourseDate] = useState("")
@@ -52,7 +89,6 @@ export default function FormScreen() {
 
   let tokenn = useSelector((state) => state.token);
   const navigation = useNavigation();
-
 
 
 
@@ -74,7 +110,7 @@ export default function FormScreen() {
   // Function to handle change in other language input
   const handleOtherLanguageChange = (text) => {
     setOtherLanguage(text);
-    // You can perform additional validations or actions here if needed
+
   };
 
   const categoryData = [
@@ -135,7 +171,10 @@ export default function FormScreen() {
       setCourseData(response.data) // You can process the API response data here
       setfrom(response.data.from) // You can process the API response data here
       setCourseDataTo(response.data.to)
+      console.log("//////////////", from)
       // You can process the API response data here
+
+      console.log("courseData", courseData)
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -154,22 +193,50 @@ export default function FormScreen() {
     }
   }
   const GetFormData = async () => {
-    console.log("sbjhdjah", tokenn)
-    const res = await GetFormDataSumbited(tokenn)
-    console.log("sbjhdjah123", tokenn)
+    // setSpinnerbool(true)
 
+    console.log("dfda")
+
+    const res = await GetFormDataSumbited(tokenn)
     try {
+
       if (res) {
-        console.log("Data Form Page", res.data)
+        console.log(res.data.userExists)
+        // console.log("Data Form Page", res.data.userExists.brief)
+        setUserReviewsData(res.data.userExists)
+        console.log(">>>>>>>>", userReviewsData)
+
+
+        setInitialValuesData(prevState => ({
+          ...prevState,
+          lastName: "NewLastName"
+        }))
+      }
+      else {
+
+
       }
     }
     catch (error) {
-      console.log(error)
+      console.log(">>>", error)
+      setSpinnerbool(false)
+
     }
+    finally {
+      setSpinnerbool(false)
+    }
+
+
   }
 
   useEffect(() => {
     GetFormData()
+    // setSpinnerbool(true)
+
+    // setTimeout(() => {
+
+    // setSpinnerbool(false)
+    // }, 500);
     GetData()
   }, [])
 
@@ -232,7 +299,7 @@ export default function FormScreen() {
   ];
 
 
-  const motherTongueData = [
+  const languageData = [
     { label: 'Select', value: 'N/A' },
     { label: 'Hindi', value: 'hindi' },
     { label: 'English', value: 'english' },
@@ -260,16 +327,12 @@ export default function FormScreen() {
   };
   date = date123.toLocaleDateString()
   const submitHandler = async (user) => {
-
     seterrorFormAPI()
     try {
       console.log("Data Set")
-
-      const { firstName, lastName, gender, age, education, martialStatus, guardianName, motherTongue, mobileNumber, eMail, address, medicineName, medicineDose, regularMedicine, brief, referenceFrom,
+      const { category, firstName, lastName, gender, age, education, martialStatus, guardianName, language, mobileNumber, eMail, address, medicineName, medicineDose, regularMedicine, brief, referenceFrom,
         oldStuName, firstCoursePlace, dateFirstCourse, dateLastCourse, firstAsstTeacher, lastCoursePlace, lastAsstTeacher, courseDetails, triedAnyPractise, practiseRegularly, dailyHours, reason, changeInYourSelf,
         personName, personRelation, courseDone, relation, designation, companyName, companyAddress, inPastOne, inPresentOne, inPastTwo, inPresentTwo } = user;
-
-      // const { from, to, firstName, lastName, gender, age, education, martialStatus, guardianName, motherTongue, mobileNumber, eMail, address, regularMedicine, brief, referenceFrom, } = user;
 
       const oldStudent = {
         oldStuName,
@@ -315,11 +378,16 @@ export default function FormScreen() {
       const docFitnessCertificate = {
         medicineName, medicineDose,
       }
+      const courseId = `${courseData._id}`
+      const courseName = `${courseData.courseName}`
+      const courseDuration = `${courseData.courseDuration}`
+      const state = `ap`
 
 
 
-      const dataEngin = { from, to, date, firstName, lastName, gender, age, education, martialStatus, guardianName, motherTongue, mobileNumber, eMail, address, regularMedicine, brief, referenceFrom, oldStudent, docFitnessCertificate, psyschologicalAilment, physicalAilment, professionalDetails, familyPerson, knownPerson }
+      const dataEngin = { category, courseId, courseName, state, courseDuration, from, to, date, firstName, lastName, gender, age, education, martialStatus, guardianName, language, mobileNumber, eMail, address, regularMedicine, brief, referenceFrom, oldStudent, docFitnessCertificate, psyschologicalAilment, physicalAilment, professionalDetails, familyPerson, knownPerson }
       setSpinnerbool(true)
+
       console.log("asdda")
       const res = await FormDataApi(dataEngin, tokenn)
 
@@ -339,6 +407,7 @@ export default function FormScreen() {
       if (error.response) {
         if (error.response.status === 400) {
           console.log("Error With 400.")
+          showAlertAndNavigate(error.response.data.message)
         }
         else if (error.response.status === 401) {
           seterrorFormAPI({ PasswordForm: `${error.response.data.message}` })
@@ -380,16 +449,24 @@ export default function FormScreen() {
   }
 
 
+  useEffect(() => {
+
+  }, [])
 
 
-  return (
-    <>
+
+  if (spinnerBool) {
+    return (
       <Spinner
         visible={spinnerBool}
         color={"#5F2404"}
         animation={'fade'}
       />
+    )
+  }
 
+  return (
+    <>
       <MainComponent NameUnderLogo={"Satya Sadhna"} titleUnder={""} screenName={"Form"}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -401,47 +478,7 @@ export default function FormScreen() {
 
           <ScrollView style={{ height: 800 }}>
             <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 50 }}>
-              <Formik
-                // enableReinitialize
-                validateOnMount={true}
-
-
-                // initialValues={{
-                // from: "", to: "", firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", motherTongue: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
-                // // oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
-                // // personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
-                // }}
-
-                // initialValues={{
-                //   // from: "", to: "", firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", motherTongue: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
-                //   from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", motherTongue: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
-                //   // oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
-                //   // personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
-                //   }}
-
-
-                initialValues={{
-                  // from: from, to: courseDataTo,
-                  firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", motherTongue: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
-                  // from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", motherTongue: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
-                  oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
-                  personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
-                }}
-
-                onSubmit={submitHandler}
-                validator={() => ({})}
-                validationSchema={FormData}
-              >
-                {({
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  isSubmitting,
-                  values,
-                  touched,
-                  errors,
-                  isValid,
-                }) => (
+             
                   <>
                     {/* 
                     <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: '90%' }}>
@@ -498,7 +535,7 @@ export default function FormScreen() {
 
                     </View> */}
 
-
+                    {userReviewsData ? <Text>Hai I am Rohith Madipelly {userReviewsData.brief}</Text> : ""}
                     <CustomPicker
                       placeholder={'Enter Your category'}
                       asterisksymbol={true}
@@ -526,28 +563,64 @@ export default function FormScreen() {
                       error="Please select a category"
                     />
 
+                    {values.category === "For Old Students" && (
+                      <CustomPicker
+                        placeholder={'Select Type'}
+                        asterisksymbol={true}
+                        boxWidth={'80%'}
+                        label={'Type'}
+                        name='Type'
+                        // value={values.Type}
+                        // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                        // bgColor='#e1f3f8'
+                        // bgColor="#B1B1B0"
+                        onChangeText={(e) => { handleChange("Type")(e); seterrorFormAPI(); }}
+                        onBlur={handleBlur("Type")}
+
+                        validate={handleBlur("Type")}
+                        outlined
+                        borderColor={`${(errors.Type && touched.Type) || (errorFormAPI && errorFormAPI.TypeForm) ? "red" : "#ccc"}`}
+                        errorMessage={`${(errors.Type && touched.Type) ? `${errors.Type}` : (errorFormAPI && errorFormAPI.TypeForm) ? `${errorFormAPI.TypeForm}` : ``}`}
+                        // errorColor='magenta'
+                        value={values.Type}
+                        items={Types}
+                        onValueChange={(itemValue) => {
+                          handleChange("Type")(itemValue);
+                          // Make API call here passing the selected item's ID value
+                        }}
+
+                        containerStyle={{ width: 200 }}
+                        labelStyle={{ color: 'blue' }}
+                        // pickerStyle={{ backgroundColor: '#f0f0f0' }}
+                        error="Please select a Type"
+                      />
+                    )}
+
+
+
+
                     <CustomPicker
-                      placeholder={'Enter Your Course Type'}
+                      placeholder={'Enter Your Course '}
                       asterisksymbol={true}
                       boxWidth={'80%'}
-                      label={'Course Type'}
-                      name='CourseType'
-                      // value={values.CourseType}
+                      label={'Select Course'}
+                      name='Courses'
+                      // value={values.Courses}
                       // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                       // bgColor='#e1f3f8'
                       // bgColor="#B1B1B0"
-                      onChangeText={(e) => { handleChange("CourseType")(e); seterrorFormAPI(); }}
-                      onBlur={handleBlur("CourseType")}
-                      validate={handleBlur("CourseType")}
+                      onChangeText={(e) => { handleChange("Courses")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("Courses")}
+                      validate={handleBlur("Courses")}
                       outlined
-                      borderColor={`${(errors.CourseType && touched.CourseType) || (errorFormAPI && errorFormAPI.CourseTypeForm) ? "red" : "#ccc"}`}
-                      errorMessage={`${(errors.CourseType && touched.CourseType) ? `${errors.CourseType}` : (errorFormAPI && errorFormAPI.CourseTypeForm) ? `${errorFormAPI.CourseTypeForm}` : ``}`}
+                      borderColor={`${(errors.Courses && touched.Courses) || (errorFormAPI && errorFormAPI.CoursesForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.Courses && touched.Courses) ? `${errors.Courses}` : (errorFormAPI && errorFormAPI.CoursesForm) ? `${errorFormAPI.CoursesForm}` : ``}`}
                       // errorColor='magenta'
-                      value={values.CourseType}
+                      value={values.Courses}
                       items={AllcoursesforDrops}
                       onValueChange={
                         (itemValue) => {
-                          handleChange("CourseType")(itemValue);
+                          handleChange("Courses")(itemValue);
                           // fetchUserData(itemValue)
                           fetchUserData(itemValue)
                         }
@@ -555,7 +628,7 @@ export default function FormScreen() {
                       containerStyle={{ width: 200 }}
                       labelStyle={{ color: 'blue' }}
                       // pickerStyle={{ backgroundColor: '#f0f0f0' }}
-                      error="Please select a CourseType"
+                      error="Please select a Courses"
                     />
                     {toDisplay ? <>
                       <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: '90%' }}>
@@ -598,6 +671,7 @@ export default function FormScreen() {
                         // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                         // bgColor='#e1f3f8'
                         // bgColor="#B1B1B0"
+
                         onChangeText={(e) => { handleChange("courseName")(e); seterrorFormAPI(); }}
                         onBlur={handleBlur("courseName")}
 
@@ -605,8 +679,8 @@ export default function FormScreen() {
                         outlined
                         borderColor={`${(errors.courseName && touched.courseName) || (errorFormAPI && errorFormAPI.courseNameForm) ? "red" : "#ccc"}`}
                         errorMessage={`${(errors.courseName && touched.courseName) ? `${errors.courseName}` : (errorFormAPI && errorFormAPI.courseNameForm) ? `${errorFormAPI.courseNameForm}` : ``}`}
-                        // errorColor='magenta'
-                        editable={false}
+                      // errorColor='magenta'
+                      // editable={false}
                       />
 
                       <CustomTextInput
@@ -695,7 +769,7 @@ export default function FormScreen() {
 
 
 
-                    {/* <Text>{values.CourseType}</Text> */}
+                    {/* <Text>{values.Courses}</Text> */}
                     <CustomPicker
                       placeholder={'Enter Your gender'}
                       asterisksymbol={true}
@@ -724,38 +798,6 @@ export default function FormScreen() {
                     />
 
 
-                    {values.category === "For Old Students" && (
-                      <CustomPicker
-                        placeholder={'Select Type'}
-                        asterisksymbol={true}
-                        boxWidth={'80%'}
-                        label={'Type'}
-                        name='Type'
-                        // value={values.Type}
-                        // leftIcon={<FontAwesome name="user" size={20} color="black" />}
-                        // bgColor='#e1f3f8'
-                        // bgColor="#B1B1B0"
-                        onChangeText={(e) => { handleChange("Type")(e); seterrorFormAPI(); }}
-                        onBlur={handleBlur("Type")}
-
-                        validate={handleBlur("Type")}
-                        outlined
-                        borderColor={`${(errors.Type && touched.Type) || (errorFormAPI && errorFormAPI.TypeForm) ? "red" : "#ccc"}`}
-                        errorMessage={`${(errors.Type && touched.Type) ? `${errors.Type}` : (errorFormAPI && errorFormAPI.TypeForm) ? `${errorFormAPI.TypeForm}` : ``}`}
-                        // errorColor='magenta'
-                        value={values.Type}
-                        items={Types}
-                        onValueChange={(itemValue) => {
-                          handleChange("Type")(itemValue);
-                          // Make API call here passing the selected item's ID value
-                        }}
-
-                        containerStyle={{ width: 200 }}
-                        labelStyle={{ color: 'blue' }}
-                        // pickerStyle={{ backgroundColor: '#f0f0f0' }}
-                        error="Please select a Type"
-                      />
-                    )}
 
 
 
@@ -919,40 +961,40 @@ export default function FormScreen() {
                       asterisksymbol={true}
                       boxWidth={'80%'}
                       label={'Mother Tongue'}
-                      name='motherTongue'
-                      value={values.motherTongue}
+                      name='language'
+                      value={values.language}
                       // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                       // bgColor='#e1f3f8'
                       // bgColor="#B1B1B0"
-                      onChangeText={(e) => { handleChange("motherTongue")(e); seterrorFormAPI(); }}
-                      onBlur={handleBlur("motherTongue")}
+                      onChangeText={(e) => { handleChange("language")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("language")}
 
-                      validate={handleBlur("motherTongue")}
+                      validate={handleBlur("language")}
                       outlined
-                      borderColor={`${(errors.motherTongue && touched.motherTongue) || (errorFormAPI && errorFormAPI.motherTongueForm) ? "red" : "#ccc"}`}
-                      errorMessage={`${(errors.motherTongue && touched.motherTongue) ? `${errors.motherTongue}` : (errorFormAPI && errorFormAPI.motherTongueForm) ? `${errorFormAPI.motherTongueForm}` : ``}`}
+                      borderColor={`${(errors.language && touched.language) || (errorFormAPI && errorFormAPI.languageForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.language && touched.language) ? `${errors.language}` : (errorFormAPI && errorFormAPI.languageForm) ? `${errorFormAPI.languageForm}` : ``}`}
                     // errorColor='magenta'
                     /> */}
 
 
                     <CustomPicker
-                      placeholder={'Enter Your Mother Tongue'}
+                      placeholder={'Enter Your language'}
                       asterisksymbol={true}
                       boxWidth={'80%'}
-                      label={'Mother Tongue'}
-                      name='motherTongue'
+                      label={'language'}
+                      name='language'
 
-                      onChangeText={(e) => { handleChange("motherTongue")(e); seterrorFormAPI(); }}
-                      onBlur={handleBlur("motherTongue")}
+                      onChangeText={(e) => { handleChange("language")(e); seterrorFormAPI(); }}
+                      onBlur={handleBlur("language")}
 
-                      validate={handleBlur("motherTongue")}
+                      validate={handleBlur("language")}
                       outlined
-                      borderColor={`${(errors.motherTongue && touched.motherTongue) || (errorFormAPI && errorFormAPI.motherTongueForm) ? "red" : "#ccc"}`}
-                      errorMessage={`${(errors.motherTongue && touched.motherTongue) ? `${errors.motherTongue}` : (errorFormAPI && errorFormAPI.motherTongueForm) ? `${errorFormAPI.motherTongueForm}` : ``}`}
+                      borderColor={`${(errors.language && touched.language) || (errorFormAPI && errorFormAPI.languageForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.language && touched.language) ? `${errors.language}` : (errorFormAPI && errorFormAPI.languageForm) ? `${errorFormAPI.languageForm}` : ``}`}
                       // errorColor='magenta'
-                      value={values.motherTongue}
-                      items={motherTongueData}
-                      onValueChange={(itemValue) => handleChange("motherTongue")(itemValue)}
+                      value={values.language}
+                      items={languageData}
+                      onValueChange={(itemValue) => handleChange("language")(itemValue)}
                       containerStyle={{ width: 200 }}
                       labelStyle={{ color: 'blue' }}
                     // pickerStyle={{ backgroundColor: '#f0f0f0' }}
@@ -1738,10 +1780,6 @@ export default function FormScreen() {
 
                   </>
 
-                )}
-
-
-              </Formik>
             </View>
           </ScrollView>
           {/* </TouchableWithoutFeedback> */}

@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const token=""
 try {
-  token = AsyncStorage.getItem('AdsReel$:' + 'Token');
+  token = AsyncStorage.getItem('SatyaSadhna:' + 'Token');
   // console.log(token);
 } catch (error) {
 

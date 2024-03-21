@@ -8,7 +8,14 @@ import Ionic from 'react-native-vector-icons/Ionicons';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {
+  Entypo,
+  Feather,
+  AntDesign,
+  MaterialIcons,
+  Ionicons, FontAwesome,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 import { GetPlayStoreAPI, UserGetProfileDetails } from '../../utils/API_Calls'
 import { OpenStore } from '../../utils/OpenStore';
@@ -214,18 +221,18 @@ const Profile = () => {
 
                     </ImageBackground>
                   </View> : */}
-                    <View style={styles.outerCircle}>
-                      <ImageBackground
-                        style={styles.innerCircle}
-                        source={require("../../../assets/InternalImages/profile.png")}
-                        resizeMode="cover"
-                        onError={(error) => Alert.alert("Error in ", error)}
+                  <View style={styles.outerCircle}>
+                    <ImageBackground
+                      style={styles.innerCircle}
+                      source={require("../../../assets/InternalImages/profile.png")}
+                      resizeMode="cover"
+                      onError={(error) => Alert.alert("Error in ", error)}
 
-                      >
-                        <Text style={styles.letter}>{StartingLetter.toLocaleUpperCase()}</Text>
-                      </ImageBackground>
-                    </View>
-                   {/* }  */}
+                    >
+                      <Text style={styles.letter}>{StartingLetter.toLocaleUpperCase()}</Text>
+                    </ImageBackground>
+                  </View>
+                  {/* }  */}
                 </View>
 
                 <View style={{ margin: 5, marginLeft: 14 }}>
@@ -318,36 +325,7 @@ const Profile = () => {
               </View>
               {/* Password tab  end*/}
 
-              {/* <View style={{ marginBottom: 10 }}>
 
-                <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("ProfileNotifications") }}>
-
-
-                  <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
-
-                    <View style={{ display: '', flexDirection: 'row', justifyContent: 'flex-start' }}>
-
-                      <View>
-                        <Image style={{ width: 24, height: 24, }}
-                          source={require("../../../assets/InternalImages/ProfileLogos/bell-outline.png")}
-                          resizeMode={"contain"} />
-                      </View>
-
-                      <View style={{ marginLeft: 14 }}>
-                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Notifications</Text>
-                      </View>
-                    </View>
-
-                    <View style={{ marginTop: 0 }}>
-                      <Image style={{ width: 22, height: 22 }}
-                        source={require("../../../assets/InternalImages/right.png")}
-                        resizeMode={"contain"} />
-                    </View>
-
-                  </View>
-                </TouchableOpacity>
-
-              </View> */}
 
 
               {/* notification tab end */}
@@ -392,9 +370,15 @@ const Profile = () => {
               <Text style={[styles.Heading_u2, { marginBottom: 28 }]}>More</Text>
 
 
+
+
+
+
+
+
               <View style={{ marginBottom: 10 }}>
 
-                <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("About") }}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("SatyaSadhana") }}>
 
                   {/* About */}
                   <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
@@ -408,7 +392,39 @@ const Profile = () => {
                       </View>
 
                       <View style={{ marginLeft: 14 }}>
-                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}> About</Text>
+                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>About Satya Sadhana</Text>
+                      </View>
+                    </View>
+
+                    <View style={{ marginTop: 0 }}>
+                      <Image style={{ width: 22, height: 22 }}
+                        source={require("../../../assets/InternalImages/right.png")}
+                        resizeMode={"contain"} />
+                    </View>
+
+                  </View>
+
+                </TouchableOpacity>
+              </View>
+
+
+              <View style={{ marginBottom: 10 }}>
+
+                <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("About_Guruji") }}>
+
+                  {/* About */}
+                  <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
+
+                    <View style={{ display: '', flexDirection: 'row', justifyContent: 'flex-start' }}>
+
+                      <View>
+                        <Image style={{ width: 24, height: 24, }}
+                          source={require("../../../assets/InternalImages/ProfileLogos/alert-circle-outline.png")}
+                          resizeMode={"contain"} />
+                      </View>
+
+                      <View style={{ marginLeft: 14 }}>
+                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Known About Guruji</Text>
                       </View>
                     </View>
 
@@ -522,34 +538,6 @@ const Profile = () => {
                 </TouchableOpacity>
               </View>
 
-              {/* <View style={{ marginBottom: 10 }}>
-                <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("Help") }}>
-
-                  <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
-
-                    <View style={{ display: '', flexDirection: 'row', justifyContent: 'flex-start' }}>
-
-                      <View>
-                        <Image style={{ width: 24, height: 24, }}
-                          source={require("../../../assets/InternalImages/ProfileLogos/help-circle-outline.png")}
-                          resizeMode={"contain"} />
-                      </View>
-
-                      <View style={{ marginLeft: 14 }}>
-                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Help</Text>
-                      </View>
-                    </View>
-
-                    <View style={{ marginTop: 0 }}>
-                      <Image style={{ width: 22, height: 22 }}
-                        source={require("../../../assets/InternalImages/right.png")}
-                        resizeMode={"contain"} />
-                    </View>
-
-                  </View>
-                </TouchableOpacity>
-              </View> */}
-
               <View style={{ marginBottom: 10 }}>
                 <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("DeleteAccount") }}>
 
@@ -578,22 +566,22 @@ const Profile = () => {
                 </TouchableOpacity>
               </View>
 
-
               <View style={{ marginBottom: 10 }}>
-                <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("FormScreen123") }}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => { logoutValidation() }}>
 
                   <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
 
                     <View style={{ display: '', flexDirection: 'row', justifyContent: 'flex-start' }}>
 
                       <View>
-                        <Image style={{ width: 24, height: 24, }}
-                          source={require("../../../assets/InternalImages/ProfileLogos/logout.png")}
-                          resizeMode={"contain"} />
+                        {/* <Image style={{ width: 22, height: 22, }}
+                          source={require("../../../assets/InternalImages/ProfileLogos/logout.svg")}
+                          resizeMode={"contain"} /> */}
+                        <MaterialCommunityIcons name={'logout'} size={22} color={'black'} />
                       </View>
 
                       <View style={{ marginLeft: 14 }}>
-                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Form Demo for Dev Update</Text>
+                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Log out</Text>
                       </View>
                     </View>
 
@@ -608,6 +596,8 @@ const Profile = () => {
               </View>
 
 
+
+
             </View>
           </View>
 
@@ -615,10 +605,10 @@ const Profile = () => {
 
 
         </View>
-        <View style={[{ padding: 29, paddingTop: 0, paddingRight: 60, paddingLeft: 60, paddingBottom: 10 }]}>
-          {/* <Button title='LogOut' onPress={() => { logoutValidation() }}>Logout</Button> */}
-          <Button title='Log out' onPress={() => { logoutValidation() }}></Button>
-        </View>
+        {/* <View style={[{ padding: 29, paddingTop: 0, paddingRight: 60, paddingLeft: 60, paddingBottom: 10 }]}> */}
+        {/* <Button title='LogOut' onPress={() => { logoutValidation() }}>Logout</Button> */}
+        {/* <Button title='Log out' onPress={() => { logoutValidation() }}></Button>
+        </View> */}
 
 
 

@@ -42,7 +42,20 @@ export default function FormScreen() {
   const [errorFormAPI, seterrorFormAPI] = useState("")
   const [spinnerBool, setSpinnerbool] = useState(false)
   const [userReviewsData, setUserReviewsData] = useState()
+  const [initialValuesData, setInitialValuesData] = useState(
+    // {
+    //   // from: from, to: courseDataTo,
+    //   category: "", courseName: "",
+    //   firstName: "Rohith", lastName: "Madipelly", gender: "", age: "20", education: "Civil Btech", martialStatus: "", guardianName: "Venu", language: "", mobileNumber: "9951072003", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bank Colony,", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
+    //   // from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", language: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
+    //   oldStuName: "", firstCoursePlace: "", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "", lastCoursePlace: "", lastAsstTeacher: "", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "", dailyHours: "", reason: "", changeInYourSelf: "",
+    //   personName: "", personRelation: "", courseDone: "", relation: "", designation: "", companyName: "", companyAddress: "", inPastOne: "", inPresentOne: "", inPastTwo: "", inPresentTwo: ""
+    // }
 
+    {
+      category: "", courseName: "",
+    }
+  )
   const [stratingfrom, setstartingFrom] = useState("")
 
   const [courseDate, setCourseDate] = useState("")
@@ -52,7 +65,6 @@ export default function FormScreen() {
 
   let tokenn = useSelector((state) => state.token);
   const navigation = useNavigation();
-
 
 
 
@@ -74,7 +86,7 @@ export default function FormScreen() {
   // Function to handle change in other language input
   const handleOtherLanguageChange = (text) => {
     setOtherLanguage(text);
-    // You can perform additional validations or actions here if needed
+
   };
 
   const categoryData = [
@@ -157,22 +169,50 @@ export default function FormScreen() {
     }
   }
   const GetFormData = async () => {
+    // setSpinnerbool(true)
+
+    console.log("dfda")
 
     const res = await GetFormDataSumbited(tokenn)
     try {
+
       if (res) {
+        console.log(res.data.userExists)
         // console.log("Data Form Page", res.data.userExists.brief)
-        setUserReviewsData(res.data.userExists.brief)
-        console.log(userReviewsData)
+        setUserReviewsData(res.data.userExists)
+        console.log(">>>>>>>>", userReviewsData)
+
+
+        setInitialValuesData(prevState => ({
+          ...prevState,
+          lastName: "NewLastName"
+        }))
+      }
+      else {
+
+
       }
     }
     catch (error) {
-      console.log(error)
+      console.log(">>>", error)
+      setSpinnerbool(false)
+
     }
+    finally {
+      setSpinnerbool(false)
+    }
+
+
   }
 
   useEffect(() => {
     GetFormData()
+    // setSpinnerbool(true)
+
+    // setTimeout(() => {
+
+    // setSpinnerbool(false)
+    // }, 500);
     GetData()
   }, [])
 
@@ -321,7 +361,7 @@ export default function FormScreen() {
 
 
 
-      const dataEngin = { category, courseId,courseName,state,courseDuration, from, to, date, firstName, lastName, gender, age, education, martialStatus, guardianName, language, mobileNumber, eMail, address, regularMedicine, brief, referenceFrom, oldStudent, docFitnessCertificate, psyschologicalAilment, physicalAilment, professionalDetails, familyPerson, knownPerson }
+      const dataEngin = { category, courseId, courseName, state, courseDuration, from, to, date, firstName, lastName, gender, age, education, martialStatus, guardianName, language, mobileNumber, eMail, address, regularMedicine, brief, referenceFrom, oldStudent, docFitnessCertificate, psyschologicalAilment, physicalAilment, professionalDetails, familyPerson, knownPerson }
       setSpinnerbool(true)
 
       console.log("asdda")
@@ -389,14 +429,20 @@ export default function FormScreen() {
 
   }, [])
 
-  return (
-    <>
+
+
+  if (spinnerBool) {
+    return (
       <Spinner
         visible={spinnerBool}
         color={"#5F2404"}
         animation={'fade'}
       />
+    )
+  }
 
+  return (
+    <>
       <MainComponent NameUnderLogo={"Satya Sadhna"} titleUnder={""} screenName={"Form"}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -412,40 +458,17 @@ export default function FormScreen() {
                 // enableReinitialize
                 validateOnMount={true}
 
-
-                // initialValues={{
-                // from: "", to: "", firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", language: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
-                // // oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
-                // // personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
-                // }}
-
-                // initialValues={{
-                //   // from: "", to: "", firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", language: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
-                //   from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", language: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
-                //   // oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
-                //   // personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
-                //   }}
+                initialValues={initialValuesData}
 
 
                 // initialValues={{
                 //   // from: from, to: courseDataTo,
                 //   category: "", courseName: "",
-                //   firstName: "Rohith", lastName: "madipelly", gender: "male", age: "19", education: "civil En Btech", martialStatus: "married", guardianName: "Jane Doe", language: "english", mobileNumber: "9951072005", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bankcolony, shanthi nagar", medicineName: "Medicine Name", medicineDose: "Medicine Name", regularMedicine: "yes", brief: "f DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief DescriptionBrief Des", referenceFrom: "Friend",
+                //   firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", language: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
                 //   // from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", language: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
-                //   oldStuName: "Rohith MAdipelly", firstCoursePlace: "warangal", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "DataGuru", lastCoursePlace: "Hyd", lastAsstTeacher: "code hero", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "yes", dailyHours: "1-2 hours", reason: "good resaon", changeInYourSelf: " Changes Experience change mee",
-                //   personName: "krishana", personRelation: "Brother", courseDone: "yes", relation: "Relation to Family Person", designation: "Dev", companyName: "Dev compl", companyAddress: "WOrld", inPastOne: "yes", inPresentOne: "no", inPastTwo: "no", inPresentTwo: "no"
+                //   oldStuName: "", firstCoursePlace: "", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "", lastCoursePlace: "", lastAsstTeacher: "", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "", dailyHours: "", reason: "", changeInYourSelf: "",
+                //   personName: "", personRelation: "", courseDone: "", relation: "", designation: "", companyName: "", companyAddress: "", inPastOne: "", inPresentOne: "", inPastTwo: "", inPresentTwo: ""
                 // }}
-
-
-
-                initialValues={{
-                  // from: from, to: courseDataTo,
-                  category: "", courseName: "",
-                  firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", language: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
-                  // from: "", to: "", firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", language: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
-                  oldStuName: "", firstCoursePlace: "", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "", lastCoursePlace: "", lastAsstTeacher: "", courseDetails: "", triedAnyPractise: "yes", practiseRegularly: "", dailyHours: "", reason: "", changeInYourSelf: "",
-                  personName: "", personRelation: "", courseDone: "", relation: "", designation: "", companyName: "", companyAddress: "", inPastOne: "", inPresentOne: "", inPastTwo: "", inPresentTwo: ""
-                }}
                 onSubmit={submitHandler}
                 validator={() => ({})}
                 validationSchema={FormData}
@@ -461,62 +484,9 @@ export default function FormScreen() {
                   isValid,
                 }) => (
                   <>
-                    {/* 
-                    <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: '90%' }}>
-                      <CustomDateInput
-                        placeholder={'From'}
-                        label={'From '}
-                        name='From'
-                        value={values.from}
-                        leftIcon={<MaterialIcons name="date-range" size={20} color="black" />}
-                        // bgColor='#e1f3f8'
-                        // bgColor="#B1B1B0"
-                        asterisksymbol={true}
-                        // onChangeText={onChangeText}
-                        onChangeText={(e) => { handleChange("from")(e);setstartingFrom(e); seterrorFormAPI(); }}
-                        onBlur={handleBlur("from")}
-                        boxWidth={"40%"}
-                        validate={handleBlur("from")}
-                        outlined
-                        borderColor={`${(errors.from && touched.from) || (errorFormAPI && errorFormAPI.fromForm) ? "red" : "#ccc"}`}
-                        errorMessage={`${(errors.from && touched.from) ? `${errors.from}` : (errorFormAPI && errorFormAPI.fromForm) ? `${errorFormAPI.fromForm}` : ``}`}
-                        // errorColor='magenta'
-                        minimumDate={new Date()}
-                        maximumDate={new Date(2090, 10, 20)}
-                      />
+                    
 
-
-                      <CustomDateInput
-                        placeholder={'To'}
-                        label={'To '}
-                        name='To'
-                        value={values.to}
-                        asterisksymbol={true}
-                        leftIcon={<MaterialIcons name="date-range" size={20} color="black" />}
-                        // bgColor='#e1f3f8'
-                        // bgColor="#B1B1B0"
-
-                        onChangeText={(e) => { handleChange("to")(e); seterrorFormAPI(); }}
-                        onBlur={handleBlur("to")}
-
-
-                        validate={handleBlur("to")}
-
-                        outlined
-
-                        borderColor={`${(errors.to && touched.to) || (errorFormAPI && errorFormAPI.toForm) ? "red" : "#ccc"}`}
-
-                        errorMessage={`${(errors.to && touched.to) ? `${errors.to}` : (errorFormAPI && errorFormAPI.toForm) ? `${errorFormAPI.toForm}` : ``}`}
-                        // errorColor='magenta'
-                        boxWidth={"40%"}
-                        // boxWidth={"auto"}
-                        minimumDate={minvalueofstratingfrom}
-                        maximumDate={new Date(2090, 10, 20)}
-                      />
-
-                    </View> */}
-
-
+                    {userReviewsData ? <Text>Hai I am Rohith Madipelly {userReviewsData.brief}</Text> : ""}
                     <CustomPicker
                       placeholder={'Enter Your category'}
                       asterisksymbol={true}
@@ -576,6 +546,9 @@ export default function FormScreen() {
                         error="Please select a Type"
                       />
                     )}
+
+
+
 
                     <CustomPicker
                       placeholder={'Enter Your Course '}
@@ -693,9 +666,9 @@ export default function FormScreen() {
                       name='address'
                       value={values.address}
                       onChangeText={(e) => { handleChange("address")(e); seterrorFormAPI(); }}
-                      onBlur={handleBlur("address")}
+                      onBlur={handleBlur}
 
-                      validate={handleBlur("address")}
+                      validate={handleBlur}
                       outlined
                       borderColor={`${(errors.address && touched.address) || (errorFormAPI && errorFormAPI.addressForm) ? "red" : "#ccc"}`}
                       errorMessage={`${(errors.address && touched.address) ? `${errors.address}` : (errorFormAPI && errorFormAPI.addressForm) ? `${errorFormAPI.addressForm}` : ``}`}

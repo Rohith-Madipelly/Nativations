@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 
 
 import ASO from "../utils/AsyncStorage_Calls";
@@ -34,8 +34,11 @@ import FormScreenNew from "./MainScreen/OtherPages/FormScreenNew";
 
 
 import * as SplashScreen from 'expo-splash-screen';
+import About_Guruji from "./MainScreen/OtherPages/About_Guruji";
+import SatyaSadhana from "./MainScreen/OtherPages/SatyaSadhana";
+import DaatPage from "./MainScreen/OtherPages/Data";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 export default function Screens() {
   const [user, setUser] = useState()
 
@@ -49,23 +52,31 @@ export default function Screens() {
 
   // Method to verifiy where user is login or not from async-storage
   const verifyToken = async () => {
-    console.log("<><><>>>>>>>>>>>>>>>>><")
+
     ASO.getTokenJWT('Token', (error, token) => {
       if (error) {
         console.error('Error getting token:', error);
       } else {
         if (token != null) {
           dispatch(setToken(token));
-          SplashScreen.hideAsync();
         }
       }
+      setAppIsReady(true);
+
     });
 
   }
 
 
 
-  // To Call verifyToken()
+
+  useEffect(() => {
+    setUser(loginSelector)
+  }, [loginSelector])
+
+
+  const [appIsReady, setAppIsReady] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       await verifyToken();
@@ -73,13 +84,19 @@ export default function Screens() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    setUser(loginSelector)
-  }, [loginSelector])
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
 
+  if (!appIsReady) {
+    return null;
+  }
 
   return (
-    <NavigationContainer >
+    // <NavigationContainer >
+    <NavigationContainer onLayout={onLayoutRootView}>
 
       <Stack.Navigator
         // initialRouteName={user ? 'Bottom-navigator' : 'Register'}
@@ -90,20 +107,15 @@ export default function Screens() {
         <Stack.Group >
           {user ? (
             <>
-              <Stack.Screen name="FormScreen" component={FormScreen} />
-
-              {/* <Stack.Screen name="FormScreen12344Test123" component={FormScreenNew123} />
-              <Stack.Screen name="FormScreen12344Test" component={FormScreenNew} /> */}
-              <Stack.Screen name="Home" component={BottomTabScreen} />
+              <Stack.Screen name="BottomTabScreen" component={BottomTabScreen} />
               <Stack.Screen name="VideoScreen" component={VideoScreen} />
-
-              {/* <Stack.Screen name="FormScreen" component={FormScreen} /> */}
-
+              <Stack.Screen name="FormScreen" component={FormScreen} />
+              <Stack.Screen name="FormScreenDemo" component={DaatPage} />
+              <Stack.Screen name="About_Guruji" component={About_Guruji} />
+              <Stack.Screen name="SatyaSadhana" component={SatyaSadhana} />
               <Stack.Screen name="FullProfile" component={UpdateProfile} />
               <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
               <Stack.Screen name="ProfilePassword" component={ChangePassword} />
-
-              <Stack.Screen name="FormScreen123" component={FormScreenNew} />
               <Stack.Screen name="About" component={About} />
               <Stack.Screen name="Help" component={Help} />
               <Stack.Screen name="Privacy Policy" component={PrivacyPolicy} />

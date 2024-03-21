@@ -28,6 +28,7 @@ const Home = () => {
 
   const [isConnected, setIsConnected] = useState(true);
   const navigation = useNavigation();
+  
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
@@ -43,8 +44,6 @@ const Home = () => {
   let tokenn = useSelector((state) => state.token);
 
 
-
-  // >>>>>>>>>>>>>>>>>
   const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
@@ -56,9 +55,6 @@ const Home = () => {
     HomeData()
 
   }, []);
-
-
-  // >>>>>>>>>>>>>>>>>>
 
   try {
     if (tokenn != null) {
@@ -119,19 +115,6 @@ const Home = () => {
   }
 
 
-
-
-
-
-
-  // useLayoutEffect(() => {
-
-  //   Stack.Navigator.defaultProps = {
-  //     screenOptions: {
-  //       headerShown: true,
-  //     },
-  //   };
-  // }, []);
 
   if (spinnerBool) {
     return (

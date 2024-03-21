@@ -6,11 +6,13 @@ import { Provider } from 'react-redux'
 import Entypo from '@expo/vector-icons/Entypo';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { StatusBar } from 'expo-status-bar'
 
 
 // Keep the splash screen visible while we fetch resources
 // SplashScreen.preventAutoHideAsync();
 export default function App() {
+  // <StatusBar translucent={true} backgroundColor="transparent" />
   // const [appIsReady, setAppIsReady] = useState(false);
   // useEffect(() => {
   //   async function prepare() {
@@ -47,8 +49,7 @@ export default function App() {
   // }
   return (
     <Provider store={store}>
-
-    <Screen/>
+      <Screen />
     </Provider>
   )
 }

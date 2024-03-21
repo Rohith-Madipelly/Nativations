@@ -59,12 +59,13 @@ export const LivePageData = async (token) => {
 
 
 // User Login API Call 
-export const UserLoginApi = async (email, password) => {
-  const loginData = {
-    email: email,
-    password: password
-  };
-  return await axios.post(`${GUEST_URL}/login`, loginData);
+export const UserLoginApi = async (loginFormData) => {
+  console.log(">>",loginFormData)
+  // const loginData = {
+  //   email: loginFormData.email,
+  //   password: loginFormData.password
+  // };
+  return await axios.post(`${GUEST_URL}/login`, loginFormData);
 };
 
 
@@ -139,7 +140,7 @@ export const UserUpdatedProfilePic123 = async (formData, token) => {
 //GetPlayStore api 
 export const GetPlayStoreAPI = async (token) => {
   const apiUrl = getAPIBaseUrl();
-  console.log("><>",apiUrl)
+  console.log("><>", apiUrl)
   return await axios.get(`${GUEST_URL}/${apiUrl}`, {
     headers: {
       'Authorization': `Bearer ${token}`
@@ -251,12 +252,13 @@ export const GetFormDataSumbited = async (token) => {
       'Authorization': `Bearer ${token}`
     }
   });
-
-  // return token
 };
 
+
+
+
 //Form GetCourseData
-export const GetCourseData = async (id,token) => {
+export const GetCourseData = async (id, token) => {
 
   return await axios.get(`${GUEST_URL}/user/singlecourse/${id}`, {
     headers: {
