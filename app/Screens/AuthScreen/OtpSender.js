@@ -54,7 +54,7 @@ export default function OtpSender() {
             const res = await UserForgotOTPApi(email)
             console.log(res)
             if (res) {
-                // {navigation.navigate('OtpVerify', { email: email });}
+                {navigation.navigate('OtpVerify', { email: email });}
 
                 setTimeout(() => {
                     setSpinnerbool(false)
@@ -64,7 +64,7 @@ export default function OtpSender() {
             }
 
         } catch (error) {
-            {navigation.navigate('OtpVerify', { email: 'madipellyrohith@gmail.com' });}
+            // {navigation.navigate('OtpVerify', { email: 'madipellyrohith@gmail.com' });}
             if (error.response) {
                 console.log(error.data)
                 if (error.response.status === 400) {
@@ -72,9 +72,13 @@ export default function OtpSender() {
                     console.log("Error With 400.")
                 }
                 else if (error.response.status === 401) {
+                    console.log("Error With 400.")
+
                     seterrorFormAPI({ PasswordForm: `${error.response.data.message}` })
                 }
                 else if (error.response.status === 404) {
+                    console.log("Error With 400.")
+
                     seterrorFormAPI({ EmailForm: `${error.response.data.message}` })
                 }
 
@@ -84,6 +88,8 @@ export default function OtpSender() {
                 }
                 else if (error.response.status === 429) {
                     Alert.alert(error.response.data.message)
+                    console.log("Error With 429.",error)
+
                     // {navigation.navigate('OtpVerify', { email: "madipellyrohith@gmail.com" });}
                 }
                 else {
@@ -127,7 +133,7 @@ export default function OtpSender() {
                 animation={'fade'}
             />
 
-            <AuthComponent NameUnderLogo={"Satya Sadhna"} titleUnder={""} screenName={"Register Your Email"}>
+            <AuthComponent NameUnderLogo={"Satya Sadhna"} titleUnder={""} screenName={"Get OTP"}>
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
                 // behavior={Platform.OS === "ios" ? 100:0}

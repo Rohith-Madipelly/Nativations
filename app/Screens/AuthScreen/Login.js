@@ -25,6 +25,8 @@ import { setToken } from '../../redux/actions/loginAction.jsx'
 
 import ASO from '../../utils/AsyncStorage_Calls.js'
 import { ToasterSender } from '../../utils/Toaster.js';
+import { ToasterMessage } from '../../utils/ToasterMessage.js';
+import { ErrorResPrinter } from '../../utils/ErrorResPrinter.js';
 
 
 export default function Login() {
@@ -64,13 +66,16 @@ export default function Login() {
             setSpinnerbool(true)
             const res = await UserLoginApi(loginFormData)
             if (res) {
+                console.log(res.data)
                 const Message = res.data.message
                 const token = res.data.token
+                // const userName123=res.data.username
 
                 ASO.setTokenJWT("Token", JSON.stringify(res.data.token), function (res, status) {
                     if (status) {
                         // console.warn(status, " status>>>>>.")
-                        ToasterSender({ Message: `${Message}` })
+                        ToasterMessage("success",`Success`,`${Message}`)
+                        // ToasterSender({ Message: `${Message}` })
                         dispatch(setToken(token));
                     }
                 })
@@ -84,22 +89,25 @@ export default function Login() {
             }
 
         } catch (error) {
+            console.log(error,"Find me")
             if (error.response) {
                 if (error.response.status === 400) {
+                    
                     console.log("Error With 400.")
                 }
                 else if (error.response.status === 401) {
                     seterrorFormAPI({ PasswordForm: `${error.response.data.message}` })
                 }
                 else if (error.response.status === 404) {
-                    seterrorFormAPI({ EmailForm: `${error.response.data.message}` })
+                    seterrorFormAPI({ emailorPhoneNumberForm: `${error.response.data.message}` })
                 }
 
                 else if (error.response.status === 500) {
                     console.log("Internal Server Error", error.message)
                 }
                 else {
-                    console.log("An error occurred response.")
+                    console.log("An error occurred response.>>")
+                    ErrorResPrinter(`${error.message}`)
                 }
             }
             else if (error.request) {
@@ -241,6 +249,9 @@ export default function Login() {
                                             style={{ marginTop: 50 }}>
                                             Login
                                         </CustomButton>
+
+
+     
 
                                         <View style={{}}>
                                             <TouchableOpacity onPress={() => { navigation.navigate("ForgotPasswordEmail") }}>

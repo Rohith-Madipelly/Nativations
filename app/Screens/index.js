@@ -37,7 +37,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import About_Guruji from "./MainScreen/OtherPages/About_Guruji";
 import SatyaSadhana from "./MainScreen/OtherPages/SatyaSadhana";
 import DaatPage from "./MainScreen/OtherPages/Data";
-
+import ErrorBoundary from "react-native-error-boundary";
+import NetInfo from '@react-native-community/netinfo';
+import { Alert } from "react-native";
 // SplashScreen.preventAutoHideAsync();
 export default function Screens() {
   const [user, setUser] = useState()
@@ -94,46 +96,58 @@ export default function Screens() {
     return null;
   }
 
+
+  const CustomFallback = (props) => (
+    <View>
+      <Text> Ooops! Got Error</Text>
+    </View>
+  );
+
+
+
   return (
     // <NavigationContainer >
     <NavigationContainer onLayout={onLayoutRootView}>
+      <ErrorBoundary FallbackComponent={CustomFallback}>
+        <Stack.Navigator
+          // initialRouteName={user ? 'Bottom-navigator' : 'Register'}
+          screenOptions={{
+            headerShown: false
+          }}
+        >
+          <Stack.Group >
+            {user ? (
+              <>
 
-      <Stack.Navigator
-        // initialRouteName={user ? 'Bottom-navigator' : 'Register'}
-        screenOptions={{
-          headerShown: false
-        }}
-      >
-        <Stack.Group >
-          {user ? (
-            <>
-              <Stack.Screen name="BottomTabScreen" component={BottomTabScreen} />
-              <Stack.Screen name="VideoScreen" component={VideoScreen} />
-              <Stack.Screen name="FormScreen" component={FormScreen} />
-              <Stack.Screen name="FormScreenDemo" component={DaatPage} />
-              <Stack.Screen name="About_Guruji" component={About_Guruji} />
-              <Stack.Screen name="SatyaSadhana" component={SatyaSadhana} />
-              <Stack.Screen name="FullProfile" component={UpdateProfile} />
-              <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
-              <Stack.Screen name="ProfilePassword" component={ChangePassword} />
-              <Stack.Screen name="About" component={About} />
-              <Stack.Screen name="Help" component={Help} />
-              <Stack.Screen name="Privacy Policy" component={PrivacyPolicy} />
-            </>
-          ) : (
-            <>
-              <Stack.Screen name="Login" component={Login} />
-              {/* <Stack.Screen name="Onboard" component={Onboard} /> */}
-              <Stack.Screen name="ForgotPasswordEmail" component={OtpSender} />
-              <Stack.Screen name="OtpVerify" component={OtpVerify} />
-              <Stack.Screen name="Register" component={Register} />
-              {/* <Stack.Screen name="Register" component={Register} /> */}
-              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-            </>
-          )
-          }
-        </Stack.Group>
-      </Stack.Navigator>
+
+                <Stack.Screen name="BottomTabScreen" component={BottomTabScreen} />
+                <Stack.Screen name="VideoScreen" component={VideoScreen} />
+                <Stack.Screen name="FormScreen" component={FormScreen} />
+
+                <Stack.Screen name="About_Guruji" component={About_Guruji} />
+                <Stack.Screen name="SatyaSadhana" component={SatyaSadhana} />
+                <Stack.Screen name="FullProfile" component={UpdateProfile} />
+                <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
+                <Stack.Screen name="ProfilePassword" component={ChangePassword} />
+                <Stack.Screen name="About" component={About} />
+                <Stack.Screen name="Help" component={Help} />
+                <Stack.Screen name="Privacy Policy" component={PrivacyPolicy} />
+              </>
+            ) : (
+              <>
+                <Stack.Screen name="Login" component={Login} />
+                {/* <Stack.Screen name="Onboard" component={Onboard} /> */}
+                <Stack.Screen name="ForgotPasswordEmail" component={OtpSender} />
+                <Stack.Screen name="OtpVerify" component={OtpVerify} />
+                <Stack.Screen name="Register" component={Register} />
+                {/* <Stack.Screen name="Register" component={Register} /> */}
+                <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+              </>
+            )
+            }
+          </Stack.Group>
+        </Stack.Navigator>
+      </ErrorBoundary>
     </NavigationContainer>
   );
 }

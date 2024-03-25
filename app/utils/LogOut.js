@@ -1,24 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { setToken } from "../redux/actions/loginAction";
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
-
-export const LogOutHandle123 = async () => {
-  console.log("logininninin ")
-  // const dispatch=useDispatch();
+export const LogOutHandle123 = async (dispatch) => {
+  console.log("logininninin ");
 
   try {
-   
     await AsyncStorage.removeItem('AdsReel$:' + 'Token');
-    // setSpinnerbool(false)
-    // setTimeout(() => {
-      // dispatch(setToken(null));
-    // }, 2000)
-    console.log("dbkjasd")
-  }
-  catch (e) {
-    console.log("error", e)
+    dispatch(setToken(null));
+    console.log("dbkjasd");
+  } catch (e) {
+    console.log("error", e);
   }
 }
 
+// Usage:
+// Inside your component where you want to call this function, you can do:
+// const dispatch = useDispatch();
+// LogOutHandle123(dispatch);

@@ -21,6 +21,7 @@ import { GetPlayStoreAPI, UserGetProfileDetails } from '../../utils/API_Calls'
 import { OpenStore } from '../../utils/OpenStore';
 import onShare from '../../utils/ShareBtn';
 import NetInfo from '@react-native-community/netinfo';
+import { LogOutHandle123 } from '../../utils/LogOut';
 
 
 const Profile = () => {
@@ -110,6 +111,16 @@ const Profile = () => {
     } catch (error) {
       setTimeout(() => {
         console.log("Error in fetching", error)
+        Alert.alert('something went wrong', 'Please Login again',
+        [{ text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        {
+          text: 'YES', onPress: () => {
+            // LogOutHandle()
+            LogOutHandle123(dispatch)
+            // navigation.navigate('Decide-navigator')
+          }
+        }]
+      )
       }, 1000);
     }
     finally {
@@ -139,34 +150,21 @@ const Profile = () => {
 
     }
   }
+
+
   const logoutValidation = async () => {
     Alert.alert('Logout', 'Are you sure you want to logout ?',
       [{ text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
       {
         text: 'YES', onPress: () => {
-          LogOutHandle()
+          // LogOutHandle()
+          LogOutHandle123(dispatch)
           // navigation.navigate('Decide-navigator')
         }
       }]
     )
   }
 
-  const LogOutHandle = async () => {
-    setSpinnerbool(true)
-    try {
-      await AsyncStorage.removeItem('AdsReel$:' + 'Token');
-      // setSpinnerbool(false)
-      setTimeout(() => {
-        dispatch(setToken(null));
-      }, 2000)
-    }
-    catch (e) {
-      console.log("error", e)
-    }
-
-
-
-  }
   const navigation = useNavigation();
 
   if (!isConnected) {
@@ -196,7 +194,7 @@ const Profile = () => {
         }
 
       >
-        <View style={[{ paddingLeft: 29, paddingTop: 20, paddingRight: 20 }]}>
+        <View style={[{ paddingLeft: 29, paddingTop: 50, paddingRight: 20 }]}>
 
 
           <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("FullProfile") }}>
@@ -594,7 +592,6 @@ const Profile = () => {
                   </View>
                 </TouchableOpacity>
               </View>
-
 
 
 

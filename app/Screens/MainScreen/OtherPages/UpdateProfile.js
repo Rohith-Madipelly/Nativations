@@ -18,6 +18,8 @@ import { ToasterSender } from '../../../utils/Toaster';
 import NetInfo from '@react-native-community/netinfo';
 import CustomTextInput from '../../../Components/UI/Inputs/CustomTextInput';
 import axios, { Axios } from 'axios';
+import { LogOutHandle123 } from '../../../utils/LogOut';
+import { BASE_URL } from '../../../Enviornment';
 // import { GUEST_URL } from '../../../Enviornment';
 
 
@@ -146,11 +148,12 @@ const Profile = () => {
           // console.log("Error With 400.", `${error.response.data.message}`)
           const MessageError = error.response.data.message;
 
-          ToasterSender({ Message: `${MessageError}` })
+          // ToasterSender({ Message: `${MessageError}` })
         }
         else if (error.response.status === 401) {
-          console.log("User Not Found.",)
-
+          console.log("sdc")
+          console.log("User Not Found.",error.response.data.message)
+ 
         }
         else if (error.response.status === 500) {
           console.log("Internal Server Error", error.message)
@@ -220,6 +223,7 @@ const Profile = () => {
         }
         else if (error.response.status === 401) {
           console.log("Password is wrong", error.message)
+          // console.log("feef")
           // setError("Password is wrong")
         }
         else if (error.response.status === 500) {
@@ -262,7 +266,7 @@ const Profile = () => {
         }
         else {
           setProfilePic("")
-          setProfilePic(`http://satyasadhna.com:8001/pictures/${datadsd}`)
+          setProfilePic(`${BASE_URL}/pictures/${datadsd}`)
         }
         console.log(profilePic)
       }
@@ -330,6 +334,8 @@ const Profile = () => {
         marginTop: 0,
         width: windoWidth,
         height: windowHeight,
+        paddingTop:50,
+        // backgroundColor:'red'
       }}>
         <Spinner
           visible={spinnerBool}
@@ -338,13 +344,14 @@ const Profile = () => {
         />
         <View style={{
           position: 'absolute',
-          top: 5,
+          top: 35,
           left: 5,
           right: 5,
           flexDirection: 'row',
           justifyContent: 'space-between',
           zIndex: 1,
           padding: 10,
+      
         }}>
 
           <TouchableOpacity onPress={() => { navigation.goBack(); }}>
@@ -379,14 +386,14 @@ const Profile = () => {
           paddingLeft: 25,
           paddingTop: 20,
           backgroundColor: 'white',
-          height:700,
+          height:665,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
         }}>
 
 
           <View>
-            {/* <Text style={{ fontSize: 20, fontWeight: 800, }}>User Profile </Text> */}
+            <Text style={{ fontSize: 20, fontWeight: 800, }}>User Profile </Text>
 
             <ImageBackground
               style={{ width: '100%', position: 'relative', paddingTop: 25, marginTop: 1, display: 'flex', alignItems: 'center', height: '90%' }}

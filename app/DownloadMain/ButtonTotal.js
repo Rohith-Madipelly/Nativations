@@ -21,6 +21,7 @@ const ButtonTotal = ({ youtubeURL }) => {
   };
   const YoutubeDownloader = async () => {
     const basicInfo = await ytdl.getBasicInfo(youtubeURL);
+    
     const Videotitle123 = basicInfo.player_response.videoDetails.title;
     const videoUrls = await ytdl(youtubeURL, { quality: "highestaudio" });
     const videoFinalUri = videoUrls[0].url;

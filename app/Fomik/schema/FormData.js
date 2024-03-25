@@ -26,13 +26,16 @@ const FormData = Yup.object().shape({
     age: Yup.string()
         .trim()
         .required("Enter age")
+        .matches(/^[1-9][0-9]?$/, "Age must be a number between 1 and 100")
+        .min(1, "Age must be between 1 and 100")
+        .max(100, "Age must be between 1 and 100"),
     // .matches(/^[0-9]$/, "Age must be a number")
 
     // .positive("User Age must be a positive number")
     // .integer("User Age must be an integer")
     // .min(18, "User Age must be at least 18 years old")
     // .max(120, "User Age cannot exceed 120 years"),
-    ,
+    
     education: Yup.string()
         .required("education Name is a Required Field"),
     // .min(6, "To short"),
@@ -49,12 +52,12 @@ const FormData = Yup.object().shape({
 
 
     language: Yup.string()
-    .required("language is a Required Field"),
+        .required("language is a Required Field"),
     Language: Yup.string(),
 
     martialStatus: Yup.string()
         .required("martialStatus is a Required Field"),
-        // .oneOf(["single", "married", "windower", "widow", "separated", "divorced"], "Invalid martial Status"),
+    // .oneOf(["single", "married", "windower", "widow", "separated", "divorced"], "Invalid martial Status"),
 
 
 
@@ -80,7 +83,7 @@ const FormData = Yup.object().shape({
 
     regularMedicine: Yup.string()
         .required("regularMedicine is a Required Field"),
-        // .oneOf(["yes", "no"], "Invalid regular Medicine"),
+    // .oneOf(["yes", "no"], "Invalid regular Medicine"),
 
 
     brief: Yup.string()

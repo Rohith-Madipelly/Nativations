@@ -1,4 +1,4 @@
-import { SafeAreaView, View, ScrollView, RefreshControl, Text, Button } from 'react-native'
+import { SafeAreaView, View, ScrollView, RefreshControl, Text, Button, Alert } from 'react-native'
 // import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 
@@ -15,6 +15,9 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import NetInfo from '@react-native-community/netinfo';
 import { useNavigation } from '@react-navigation/native';
 import { LogOutHandle123 } from '../../utils/LogOut';
+import { useDispatch } from 'react-redux';
+import { ErrorResPrinter } from '../../utils/ErrorResPrinter';
+
 
 const Home = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
@@ -28,7 +31,21 @@ const Home = () => {
 
   const [isConnected, setIsConnected] = useState(true);
   const navigation = useNavigation();
-  
+  const dispatch = useDispatch();
+
+  const logoutValidation = async () => {
+    console.log("dasda")
+    Alert.alert('Logout', 'Are you sure you want to logout ?',
+      [{ text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+      {
+        text: 'YES', onPress: () => {
+          // LogOutHandle()
+          LogOutHandle123(dispatch)
+          // navigation.navigate('Decide-navigator')
+        }
+      }]
+    )
+  }
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
@@ -96,11 +113,23 @@ const Home = () => {
       if (error.response) {
         if (error.response.status === 401) {
             console.log("Error With 400.>>>>>>>>>>>>>>>>>>>>>>>>>>>>",error.response.status)
-            LogOutHandle123()
+            // ErrorResPrinter("Failed Please Login again ")
+            Alert.alert('something went wrong', 'Please Login again',
+            [{ text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+            {
+              text: 'YES', onPress: () => {
+                // LogOutHandle()
+                LogOutHandle123(dispatch)
+                // navigation.navigate('Decide-navigator')
+              }
+            }]
+          )
         }
       }
       setTimeout(() => {
-        console.log("Error in fetching>", error.response.status)
+        console.log("Error in fetching 123>", error.response.status)
+
+
       }, 1000);
 
       setTimeout(() => {
@@ -133,7 +162,7 @@ const Home = () => {
 
   return (
     <SafeAreaView>
-      <View style={{ paddingTop: 0 }}>
+      <View style={{ paddingTop: 0,marginBottom:10 }}>
         <ScrollView
           refreshControl={
             <RefreshControl

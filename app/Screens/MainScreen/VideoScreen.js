@@ -40,7 +40,7 @@ const VideoScreen = ({ route }) => {
 
   const navigation = useNavigation();
   const [playing, setPlaying] = useState(false);
-
+  const [title, setTitle] = useState("")
   const onStateChange = useCallback((state) => {
     if (state === "ended") {
       setPlaying(false);
@@ -101,9 +101,9 @@ const VideoScreen = ({ route }) => {
       if (res) {
         setDataPage(res.data.postDetails)
         setRelatedPosts(res.data.relatedPosts)
-
+        setTitle(res.data.postDetails.title)
         setVideoID(getIdFromUrl(res.data.postDetails.videoUrl))
-        // console.log(getIdFromUrl(res.data.postDetails.videoUrl))
+        console.log(res.data.postDetails.title)
       }
       else {
         console.log("No Respones")
@@ -124,7 +124,7 @@ const VideoScreen = ({ route }) => {
       setRefreshing(false);
     }
   }
-console.log("dabska>>>",VideoID)
+  console.log("dabska>>>", VideoID)
 
   if (spinnerBool) {
     return (
@@ -139,9 +139,9 @@ console.log("dabska>>>",VideoID)
   }
 
 
-  
+
   return (
-    <ScrollView 
+    <ScrollView
       refreshControl={
         <RefreshControl
           refreshing={refreshing}
@@ -184,7 +184,8 @@ console.log("dabska>>>",VideoID)
           {playing ? "pause" : "Watch Now"}
         </CustomButton>
 
-        {DataPage ? <Text style={[styles.paragraphy_U10, { width: '90%' }]}>{DataPage.description}</Text> : ""}
+        {DataPage ? <Text style={[styles.paragraphy_U11, { width: '90%',paddingBottom:5 }]}>{DataPage.title}</Text> : ""}
+        {DataPage ? <Text style={[styles.paragraphy_U10, { width: '90%',paddingLeft:5 }]}>{DataPage.description}</Text> : ""}
 
         {DataPage ? <View style={{ paddingTop: 20, flexDirection: 'row' }}>
           {/* <ButtonTotal youtubeURL={DataPageVideo} /> */}
@@ -193,9 +194,9 @@ console.log("dabska>>>",VideoID)
 
 
         {relatedPosts ? <View><Snap_Carousel7 relatedPostsData={relatedPosts} /></View> : <View><Text>No Related Posts</Text></View>}
-      <View style={{height:20}}>
+        <View style={{ height: 20 }}>
 
-      </View>
+        </View>
       </SafeAreaView>
     </ScrollView>
   )
@@ -207,6 +208,18 @@ const styles = StyleSheet.create({
 
   paragraphy_U10: {
     fontSize: 12,
+    fontWeight: '500'
+
+    //   color: #000;
+    // font-family: Jost;
+    // font-size: 10px;
+    // font-style: normal;
+    // font-weight: 300;
+    // line-height: 130%; /* 13px */
+  },
+
+  paragraphy_U11: {
+    fontSize: 16,
     fontWeight: '500'
 
     //   color: #000;

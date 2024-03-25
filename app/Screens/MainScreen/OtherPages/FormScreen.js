@@ -38,6 +38,17 @@ export default function FormScreen() {
   const [userReviewsData, setUserReviewsData] = useState()
 
 
+  const ErrorChecker = () => {
+    if (Object.values(errors).length === 0) {
+      handleSubmit();
+    } else {
+      // Display errors in an alert
+      // alert(Object.values(errors).join(', '));
+      alert("Please fill in the mandatory fields");
+    }
+  };
+
+
   const { handleChange,
     handleBlur,
     handleSubmit,
@@ -90,11 +101,19 @@ export default function FormScreen() {
   const [toDisplay, setToDisplay] = useState(false)
   const [data, SetData] = useState([])
   const [otherLanguage, setOtherLanguage] = useState('');
+  const [otherState, setOtherState] = useState('');
 
   // Function to handle change in other language input
   const handleOtherLanguageChange = (text) => {
     setOtherLanguage(text);
   };
+
+
+    // Function to handle change in other language input
+    const handleOtherStateChange = (text) => {
+      setOtherState(text);
+    };
+  
 
   try {
     if (tokenn != null) {
@@ -190,8 +209,15 @@ export default function FormScreen() {
 
   const languageData = [
     { label: 'Select', value: 'N/A' },
-    // { label: 'Hindi', value: 'hindi' },
-    // { label: 'English', value: 'english' },
+    { label: 'Hindi', value: 'hindi' },
+    { label: 'English', value: 'english' },
+    // { label: 'Kolkata', value: 'Kolkata' },
+    // { label: 'Bikaner', value: 'Bikaner' },
+    // { label: 'Other', value: 'other' },
+  ]
+
+  const stateData = [
+    { label: 'Select', value: 'N/A' },
     { label: 'Kolkata', value: 'Kolkata' },
     { label: 'Bikaner', value: 'Bikaner' },
     { label: 'Other', value: 'other' },
@@ -284,7 +310,7 @@ export default function FormScreen() {
     seterrorFormAPI()
     try {
       console.log("Data Set")
-      const { category, firstName, lastName, gender, age, education, martialStatus, guardianName, language, mobileNumber, eMail, address, medicineName, medicineDose, regularMedicine, brief, referenceFrom,
+      const { category,state, firstName, lastName, gender, age, education, martialStatus, guardianName, language, mobileNumber, eMail, address, medicineName, medicineDose, regularMedicine, brief, referenceFrom,
         oldStuName, firstCoursePlace, dateFirstCourse, dateLastCourse, firstAsstTeacher, lastCoursePlace, lastAsstTeacher, courseDetails, triedAnyPractise, practiseRegularly, dailyHours, reason, changeInYourSelf,
         personName, personRelation, courseDone, relation, designation, companyName, companyAddress, inPastOne, inPresentOne, inPastTwo, inPresentTwo } = user;
 
@@ -335,13 +361,14 @@ export default function FormScreen() {
       const courseId = `${courseData._id}`
       const courseName = `${courseData.courseName}`
       const courseDuration = `${courseData.courseDuration}`
-      const state = `ap`
+    
 
 
 
-      const dataEngin = { category, courseId, courseName, state, courseDuration, from, to, date, firstName, lastName, gender, age, education, martialStatus, guardianName, language: `${otherLanguage ? otherLanguage : language}`, mobileNumber, eMail, address, regularMedicine, brief, referenceFrom, oldStudent, docFitnessCertificate, psyschologicalAilment, physicalAilment, professionalDetails, familyPerson, knownPerson }
+      const dataEngin = { category, courseId, courseName, courseDuration, from, to, date, firstName, lastName, gender, age, education, martialStatus, guardianName, language: `${otherLanguage ? otherLanguage : language}`,state: `${otherState ? otherState : state}`, mobileNumber, eMail, address, regularMedicine, brief, referenceFrom, oldStudent, docFitnessCertificate, psyschologicalAilment, physicalAilment, professionalDetails, familyPerson, knownPerson }
       setSpinnerbool(true)
       console.log(">>>>Tester", dataEngin.language)
+      console.log(">>>>Tester", dataEngin.state)
       console.log("asdda")
       const res = await FormDataApi(dataEngin, tokenn)
 
@@ -352,8 +379,6 @@ export default function FormScreen() {
 
           setSpinnerbool(false)
         }, 50);
-
-
       }
 
     } catch (error) {
@@ -416,7 +441,7 @@ export default function FormScreen() {
           address: `${userReviewsData.address}`,
 
           gender: `${userReviewsData.gender}`,
-          language: `${userReviewsData.language}`,
+          city: `${userReviewsData.city}`,
           guardianName: `${userReviewsData.guardianName}`,
           age: `${userReviewsData.age}`,
           martialStatus: `${userReviewsData.martialStatus}`,
@@ -588,8 +613,8 @@ export default function FormScreen() {
                   <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: '90%' }}>
                     <CustomTextInput
                       placeholder={'From'}
-                      boxWidth={'40%'}
-                      label={'form'}
+                      boxWidth={'43%'}
+                      label={'from'}
                       name='From'
                       value={from}
                       // asterisksymbol={true}
@@ -603,7 +628,7 @@ export default function FormScreen() {
 
                     <CustomTextInput
                       placeholder={'To'}
-                      boxWidth={'40%'}
+                      boxWidth={'43%'}
                       label={'To'}
                       name='To'
                       value={to}
@@ -656,27 +681,50 @@ export default function FormScreen() {
 
                 </> : ""}
 
-                {/* <CustomTextInput
-                  placeholder={'Address'}
+
+
+                <CustomPicker
+                  placeholder={'Enter Your City'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'address'}
-                  name='address'
-                  value={values.address}
-                  onChangeText={(e) => { handleChange("address")(e); seterrorFormAPI(); }}
-                  onBlur={handleBlur("address")}
+                  label={'City'}
+                  name='City'
 
-                  validate={handleBlur("address")}
+                  onChangeText={(e) => { handleChange("state")(e); seterrorFormAPI(); }}
+                  onBlur={handleBlur("state")}
+
+                  validate={handleBlur("state")}
                   outlined
-                  borderColor={`${(errors.address && touched.address) || (errorFormAPI && errorFormAPI.addressForm) ? "red" : "#ccc"}`}
-                  errorMessage={`${(errors.address && touched.address) ? `${errors.address}` : (errorFormAPI && errorFormAPI.addressForm) ? `${errorFormAPI.addressForm}` : ``}`}
-                  numLines={4}
-                /> */}
+                  borderColor={`${(errors.state && touched.state) || (errorFormAPI && errorFormAPI.stateForm) ? "red" : "#ccc"}`}
+                  errorMessage={`${(errors.state && touched.state) ? `${errors.state}` : (errorFormAPI && errorFormAPI.stateForm) ? `${errorFormAPI.stateForm}` : ``}`}
+                  // errorColor='magenta'
+                  value={values.state}
+                  items={stateData}
+                  onValueChange={(itemValue) => handleChange("state")(itemValue)}
+                  containerStyle={{ width: 200 }}
+                  labelStyle={{ color: 'blue' }}
+                // pickerStyle={{ backgroundColor: '#f0f0f0' }}
+                // error="Please select a referenceFrom"
+                />
 
+                {values.state === 'other' && (
 
-
-
-
+                  <CustomTextInput
+                    boxWidth={'80%'}
+                    label={'Other City'}
+                    name='Other City'
+                    // value={values.personName}
+                    value={otherState}
+                    onChangeText={handleOtherStateChange}
+                    placeholder="Other City"
+                    onBlur={handleBlur("otherState")}
+                    validate={handleBlur("otherState")}
+                    outlined
+                    borderColor={`${(errors.otherState && touched.otherState) || (errorFormAPI && errorFormAPI.otherStateForm) ? "red" : "#ccc"}`}
+                    errorMessage={`${(errors.otherState && touched.otherState) ? `${errors.otherState}` : (errorFormAPI && errorFormAPI.otherStateForm) ? `${errorFormAPI.otherStateForm}` : ``}`}
+                  // errorColor='magenta'
+                  />
+                )}
 
 
 
@@ -793,7 +841,7 @@ export default function FormScreen() {
                 // error="Please select a referenceFrom"
                 />
 
-                {values.language === 'other' && (
+                {/* {values.language === 'other' && (
 
                   <CustomTextInput
                     boxWidth={'80%'}
@@ -810,7 +858,7 @@ export default function FormScreen() {
                     errorMessage={`${(errors.personName && touched.personName) ? `${errors.personName}` : (errorFormAPI && errorFormAPI.personNameForm) ? `${errorFormAPI.personNameForm}` : ``}`}
                   // errorColor='magenta'
                   />
-                )}
+                )} */}
                 <CustomTextInput
                   placeholder={'Enter Your education'}
                   asterisksymbol={true}
@@ -1603,7 +1651,7 @@ export default function FormScreen() {
                   />
                 </View>
                 {/* <Text>Old Student end Demo_Line</Text> */}
-{/* 
+                {/* 
                 {errors && (
                   <Text style={{ color: 'red' }}>
                     {Object.values(errors).join(', ')}
@@ -1611,7 +1659,7 @@ export default function FormScreen() {
                 )} */}
 
                 <CustomButton
-                  onPress={handleSubmit}
+                  onPress={ErrorChecker}
                   // leftIcon={<Entypo style={styles.icon} name={'Save'} size={18} color={'white'} />}
                   bgColor={`${!isValid ? "rgba(220, 142, 128, 0.9)" : "rgba(242, 142, 128, 1)"}`}
 

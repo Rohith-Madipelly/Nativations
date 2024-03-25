@@ -23,7 +23,6 @@ import { setToken } from '../../redux/actions/loginAction.jsx'
 import ASO from '../../utils/AsyncStorage_Calls.js'
 import { ToasterSender } from '../../utils/Toaster.js';
 import { signupSchema } from '../../Fomik/schema/signUpSchema.js';
-import { ErrorResPrinter } from '../../utils/ErrorResPrinter.js';
 
 
 export default function Register() {
@@ -31,6 +30,7 @@ export default function Register() {
     const [show, setShow] = useState()
     const [errorFormAPI, seterrorFormAPI] = useState("")
     const [spinnerBool, setSpinnerbool] = useState(false)
+    const [SignUp, setSignUp] = useState(false)
 
     const navigation = useNavigation();
 
@@ -103,7 +103,6 @@ export default function Register() {
                 }
                 else {
                     Alert.alert(error.response.data.message)
-
                     console.log("An error occurred response.", error, "<><", error.response.status, "ddd", error.response.data.message)
                 }
             }
@@ -114,7 +113,7 @@ export default function Register() {
             }
             else {
                 Alert.alert(error.data.message)
-                // ErrorResPrinter(`${error.message}`)
+
                 console.log("Error in Setting up the Request.")
             }
 
@@ -143,15 +142,13 @@ export default function Register() {
             <AuthComponent NameUnderLogo={"Satya Sadhna"} titleUnder={""} screenName={"SIGN UP"}>
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
-                // behavior={Platform.OS === "ios" ? 100:0}
-                // keyboardVerticalOffset={1000}
-                // style={styles.container}
                 >
-                    {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
+
 
                     <ScrollView style={{ height: 500, }}>
                         <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Formik
+                       
+                                <Formik
                                 // enableReinitialize
                                 validateOnMount={true}
                                 initialValues={{ Name: "", Mobile_Number: "", email: "", password: "" }}
@@ -172,9 +169,6 @@ export default function Register() {
                                 }) => (
                                     <>
 
-
-
-
                                         <CustomTextInput
                                             boxWidth={'80%'}
                                             placeholder={'Enter Your Name'}
@@ -186,10 +180,6 @@ export default function Register() {
                                             // bgColor="#B1B1B0"
                                             onChangeText={(e) => { handleChange("Name")(e); seterrorFormAPI(); }}
                                             onBlur={handleBlur("Name")}
-                                            // validate={() => {
-                                            //     if (!values?.first) { setError({ ...error, first: 'Please enter your name' }) }
-                                            //     else { setError({ ...error, first: null }) }
-                                            // }}
                                             validate={handleBlur("Name")}
                                             outlined
                                             borderColor={`${(errors.Name && touched.Name) || (errorFormAPI && errorFormAPI.NameForm) ? "red" : "#ccc"}`}
@@ -214,7 +204,6 @@ export default function Register() {
                                             onBlur={handleBlur("Mobile_Number")}
                                             validate={handleBlur("Mobile_Number")}
                                             outlined
-                                            eyboardType="numeric"
                                             borderColor={`${(errors.Mobile_Number && touched.Mobile_Number) || (errorFormAPI && errorFormAPI.Mobile_NumberForm) ? "red" : "#ccc"}`}
                                             errorMessage={`${(errors.Mobile_Number && touched.Mobile_Number) ? `${errors.Mobile_Number}` : (errorFormAPI && errorFormAPI.Mobile_NumberForm) ? `${errorFormAPI.Mobile_NumberForm}` : ``}`}
                                         // errorColor='magenta'
@@ -278,6 +267,16 @@ export default function Register() {
                                             Sign Up
                                         </CustomButton>
 
+
+                                        {/* <CustomButton
+                                            onPress={()=>{ToasterSender({ Message: `Test` })}}
+                                            // leftIcon={<Entypo style={styles.icon} name={'login'} size={18} color={'white'} />}
+                                            bgColor={`${!isValid ? "rgba(220, 142, 128, 0.9)" : "rgba(242, 142, 128, 1)"}`}
+
+                                            style={{ marginTop: 50 }}>
+                                            Test ToasterSender
+                                        </CustomButton> */}
+
                                         <View style={{ width: '65%', textAlign: 'center', marginTop: 20 }}>
                                             <TouchableOpacity onPress={() => { navigation.navigate("Login") }}>
                                                 <Text style={[styles.paragraphy, { textAlign: 'center', color: '#7C7C7C', fontWeight: '400' }]}>Already have an account?
@@ -293,7 +292,7 @@ export default function Register() {
                                 )}
 
 
-                            </Formik>
+                            </Formik> 
                         </View>
                     </ScrollView>
                     {/* </TouchableWithoutFeedback> */}

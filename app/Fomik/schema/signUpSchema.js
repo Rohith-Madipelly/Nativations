@@ -11,7 +11,7 @@ const signupSchema = Yup.object().shape({
   email: Yup.string().email().required("Email is a Required Field"),
 
   password: Yup.string()
-  .min(6, "Password Length is short")
+  .min(8, "Password Length is short")
   .max(225, "Password Length is too Long")
   .required("Password is a Required Field")
 

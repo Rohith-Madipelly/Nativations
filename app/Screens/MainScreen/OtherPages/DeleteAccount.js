@@ -56,6 +56,8 @@ const DeleteAccount = () => {
 
 
         } catch (error) {
+
+
             // setTimeout(() => {
             //     console.log("Error in fetching", error.response.status)
             // }, 1000);
@@ -66,14 +68,13 @@ const DeleteAccount = () => {
             // }, 5000)
         }
         finally {
-            // setSpinnerbool(false)
-
+            dispatch(setToken(null));
         }
     }
 
     return (
         <View>
-            <Text>DeleteAccount</Text>
+            <Text></Text>
 
         </View>
     )

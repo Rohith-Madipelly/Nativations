@@ -7,6 +7,8 @@ import Entypo from '@expo/vector-icons/Entypo';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { StatusBar } from 'expo-status-bar'
+import { SafeAreaProvider}  from 'react-native-safe-area-context'
+import Toast from 'react-native-toast-message'
 
 
 // Keep the splash screen visible while we fetch resources
@@ -47,9 +49,15 @@ export default function App() {
   // if (!appIsReady) {
   //   return null;
   // }
+
+
+
   return (
-    <Provider store={store}>
-      <Screen />
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <Screen />
+        <Toast />
+      </Provider>
+    </SafeAreaProvider>
   )
 }
