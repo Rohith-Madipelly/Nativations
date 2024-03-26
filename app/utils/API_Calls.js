@@ -60,7 +60,7 @@ export const LivePageData = async (token) => {
 
 // User Login API Call 
 export const UserLoginApi = async (loginFormData) => {
-  console.log(">>",loginFormData)
+  console.log(">>", loginFormData)
   // const loginData = {
   //   email: loginFormData.email,
   //   password: loginFormData.password
@@ -93,6 +93,8 @@ export const UserForgotOTPApi = async (email) => {
 
 // User Forgot OTP verifyotp API Call 
 export const UserVerifyOtp = async (email, userOtp) => {
+
+  console.log("otp is ",)
   const ReqData = {
     email: email,
     userOtp: userOtp
@@ -105,7 +107,7 @@ export const UserVerifyOtp = async (email, userOtp) => {
 
 // User Forgot OTP verifyotp API Call 
 export const ForgotApiPassRest = async (email, password) => {
-
+console.log(email, password)
   const ReqData = {
     email: email,
     password: password

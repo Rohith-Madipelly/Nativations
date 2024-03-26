@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "vardhaman.satyasadhna",
+      "package": "com.madipellyrohith.Navigations",
       "config": {
         "usesCleartextTraffic": true
       }

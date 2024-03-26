@@ -12,7 +12,7 @@ import {
     MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Formik } from "formik";
 import { loginSchema } from "../../Fomik/schema/signIn.js";
 
@@ -27,18 +27,27 @@ import ASO from '../../utils/AsyncStorage_Calls.js'
 import { ToasterSender } from '../../utils/Toaster.js';
 import { ToasterMessage } from '../../utils/ToasterMessage.js';
 import { ErrorResPrinter } from '../../utils/ErrorResPrinter.js';
-
+import NetInfo from '@react-native-community/netinfo';
 
 export default function Login() {
 
     const [show, setShow] = useState()
     const [errorFormAPI, seterrorFormAPI] = useState("")
     const [spinnerBool, setSpinnerbool] = useState(false)
-
+    const [isConnected, setIsConnected] = useState(true);
     const navigation = useNavigation();
 
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        const unsubscribe = NetInfo.addEventListener(state => {
+            // setIsConnected(state.isConnected);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, []);
 
     function onchange(text, field) {
         setValues({ ...values, [field]: text });
@@ -52,16 +61,16 @@ export default function Login() {
 
             let loginFormData;
 
-            console.log("sca",emailorPhoneNumber)
+            console.log("sca", emailorPhoneNumber)
 
             if (/^\d+$/.test(emailorPhoneNumber)) {
-              loginFormData = { phone_number: emailorPhoneNumber };
+                loginFormData = { phone_number: emailorPhoneNumber };
             } else {
-              loginFormData = { email: emailorPhoneNumber };
+                loginFormData = { email: emailorPhoneNumber };
             }
             loginFormData.password = password;
 
-           
+
 
             setSpinnerbool(true)
             const res = await UserLoginApi(loginFormData)
@@ -74,7 +83,7 @@ export default function Login() {
                 ASO.setTokenJWT("Token", JSON.stringify(res.data.token), function (res, status) {
                     if (status) {
                         // console.warn(status, " status>>>>>.")
-                        ToasterMessage("success",`Success`,`${Message}`)
+                        ToasterMessage("success", `Success`, `${Message}`)
                         // ToasterSender({ Message: `${Message}` })
                         dispatch(setToken(token));
                     }
@@ -89,10 +98,10 @@ export default function Login() {
             }
 
         } catch (error) {
-            console.log(error,"Find me")
+            console.log(error, "Find me")
             if (error.response) {
                 if (error.response.status === 400) {
-                    
+
                     console.log("Error With 400.")
                 }
                 else if (error.response.status === 401) {
@@ -134,6 +143,14 @@ export default function Login() {
             setSpinnerbool(false)
         }
     }
+    // if (!isConnected) {
+    // Alert.alert("Your Device is currently Offline and not connected to the internet")
+    // return(<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 150 }} >
+    //       <Text>No network found</Text>
+    //       <Text>Please check your internet connection</Text>
+    //       <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
+    //     </View>)
+    // }
 
 
     return (
@@ -153,7 +170,7 @@ export default function Login() {
                 >
                     {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
 
-                    <ScrollView style={{ height: 400, }}>
+                    {isConnected ? <ScrollView style={{ height: 400, }}>
                         <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Formik
                                 // enableReinitialize
@@ -251,7 +268,7 @@ export default function Login() {
                                         </CustomButton>
 
 
-     
+
 
                                         <View style={{}}>
                                             <TouchableOpacity onPress={() => { navigation.navigate("ForgotPasswordEmail") }}>
@@ -277,7 +294,10 @@ export default function Login() {
 
                             </Formik>
                         </View>
-                    </ScrollView>
+                    </ScrollView> : <View style={{display:'flex', justifyContent:'center',alignItems:'center'}}>
+                        <Text>No network found</Text>
+                        <Text>Please check your internet connection</Text>
+                    </View>}
                     {/* </TouchableWithoutFeedback> */}
                 </KeyboardAvoidingView>
             </AuthComponent>

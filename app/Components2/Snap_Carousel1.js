@@ -13,6 +13,8 @@ const Snap_Carousel1 = ({ BannerData }) => {
     const carouselRef = useRef(null);
     const navigation = useNavigation();
 
+
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",BannerData)
     const RenderItem = ({ item, index }) => {
 
         return (

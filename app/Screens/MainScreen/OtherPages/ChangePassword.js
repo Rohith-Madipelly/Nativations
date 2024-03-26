@@ -83,8 +83,8 @@ export default function Login() {
 
 
                 Alert.alert(res.data.message)
-
-              LogOutHandle()
+                navigation.navigate('Home')
+            //   LogOutHandle()
             }
 
         } catch (error) {

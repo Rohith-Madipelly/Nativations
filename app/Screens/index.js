@@ -12,6 +12,7 @@ import VideoScreen from './MainScreen/VideoScreen';
 
 
 
+
 import Login from "./AuthScreen/Login";
 import Register from "./AuthScreen/Register copy";
 import ForgotPassword from "./AuthScreen/ForgotPassword";
@@ -39,7 +40,7 @@ import SatyaSadhana from "./MainScreen/OtherPages/SatyaSadhana";
 import DaatPage from "./MainScreen/OtherPages/Data";
 import ErrorBoundary from "react-native-error-boundary";
 import NetInfo from '@react-native-community/netinfo';
-import { Alert } from "react-native";
+import { Alert, View,Text } from "react-native";
 // SplashScreen.preventAutoHideAsync();
 export default function Screens() {
   const [user, setUser] = useState()
@@ -135,13 +136,15 @@ export default function Screens() {
               </>
             ) : (
               <>
+
                 <Stack.Screen name="Login" component={Login} />
                 {/* <Stack.Screen name="Onboard" component={Onboard} /> */}
                 <Stack.Screen name="ForgotPasswordEmail" component={OtpSender} />
                 <Stack.Screen name="OtpVerify" component={OtpVerify} />
                 <Stack.Screen name="Register" component={Register} />
-                {/* <Stack.Screen name="Register" component={Register} /> */}
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+                {/* <Stack.Screen name="Register" component={Register} /> */}
+                {/* <Stack.Screen name="ForgotPassword" component={ForgotPassword} /> */}
               </>
             )
             }

@@ -27,6 +27,7 @@ import ASO from '../../utils/AsyncStorage_Calls.js'
 import { ToasterSender } from '../../utils/Toaster.js';
 import { OTPSchema } from '../../Fomik/schema/OTPSchema.js';
 import { Email } from '../../Fomik/schema/Email.js';
+import { ToasterMessage } from '../../utils/ToasterMessage.js';
 
 
 export default function OtpVerify({ route }) {
@@ -49,21 +50,23 @@ export default function OtpVerify({ route }) {
     function onchange(text, field) {
         setValues({ ...values, [field]: text });
     }
+    console.log(">>>>>>>>>>>sdhbfkja 1")
 
     const submitHandler = async (user) => {
-        console.log(">>>>>>>>>>>sdhbfkja")
+        console.log(">>>>>>>>>>>sdhbfkja wwww")
         seterrorFormAPI()
         try {
             const { otp } = user;
-
+            console.log(otp)
             setSpinnerbool(true)
             const res = await UserVerifyOtp(email, otp)
             console.log(res)
             if (res) {
-
+                const Message = res.data.message;
                 // { navigation.navigate('Login') }
-                { navigation.navigate('ForgotPassword') }
-                // {navigation.navigate('OtpVerify', { email: 'madipellyrohith@gmail.com' });}
+                ToasterMessage("success", `Success`, `${Message}`)
+                // { navigation.navigate('ForgotPassword') }
+                { navigation.navigate('ForgotPassword', { email: email }); }
                 setTimeout(() => {
 
                     setSpinnerbool(false)
@@ -181,7 +184,7 @@ export default function OtpVerify({ route }) {
 
                                                 {!show?.otp ? (
                                                     <Entypo name="eye-with-line" size={20} color="black" />) : (
-                                                        <Entypo name="eye" size={20} color="black" />)
+                                                    <Entypo name="eye" size={20} color="black" />)
                                                 }
 
                                             </Pressable>

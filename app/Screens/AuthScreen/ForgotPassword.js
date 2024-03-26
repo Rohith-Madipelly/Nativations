@@ -12,21 +12,23 @@ import {
 } from "@expo/vector-icons";
 import { useState } from 'react';
 import { Formik } from "formik";
-import { loginSchema } from "../../Fomik/schema/signIn.js";
 
-import { UserLoginApi } from "../../utils/API_Calls";
+
+import { ForgotApiPassRest, UserLoginApi } from "../../utils/API_Calls";
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { setToken } from '../../redux/actions/loginAction.jsx'
 
-import ASO from '../../utils/AsyncStorage_Calls.js'
-import { ToasterSender } from '../../utils/Toaster.js';
 import { RestPasswordschema } from '../../Fomik/schema/RestPassword.js';
+import { ToasterMessage } from '../../utils/ToasterMessage.js';
 
 
-export default function Login() {
+export default function Login({ route }) {
 
+    const { params } = route;
+    const email = params?.email || '';
+    console.log("><>",email)
+    
     const [show, setShow] = useState()
     const [errorFormAPI, seterrorFormAPI] = useState("")
     const [spinnerBool, setSpinnerbool] = useState(false)
@@ -44,22 +46,14 @@ export default function Login() {
 
         seterrorFormAPI()
         try {
-            const { email, password } = user;
+            const { ConfirmPassword } = user;
             setSpinnerbool(true)
-            const res = await UserLoginApi(email, password)
+            const res = await ForgotApiPassRest(email, ConfirmPassword)
             console.log(res)
             if (res) {
                 const Message = res.data.message
-                const token = res.data.token
-
-                ASO.setTokenJWT("Token", JSON.stringify(res.data.token), function (res, status) {
-                    if (status) {
-                        // console.warn(status, " status>>>>>.")
-                        ToasterSender({ Message: `${Message}` })
-                        dispatch(setToken(token));
-                    }
-                })
-
+                ToasterMessage("success", `Success`, `${Message}`)
+                 navigation.navigate('Login') 
                 setTimeout(() => {
 
                     setSpinnerbool(false)
@@ -135,7 +129,8 @@ export default function Login() {
                             <Formik
                                 // enableReinitialize
                                 validateOnMount={true}
-                                initialValues={{ NewPassword:"", ConfirmPassword: "" }}
+                                initialValues={{ NewPassword: "", ConfirmPassword: "" }}
+                                // initialValues={{ NewPassword: "Rohith@123", ConfirmPassword: "Rohith@123" }}
                                 onSubmit={submitHandler}
                                 validator={() => ({})}
                                 validationSchema={RestPasswordschema}
@@ -156,28 +151,28 @@ export default function Login() {
 
 
                                         <CustomTextInput
-                                        boxWidth={'80%'}
+                                            boxWidth={'80%'}
                                             placeholder={'Enter Password'}
                                             label={'Password'}
                                             name='Password'
-                                            value={values.password}
+                                            value={values.NewPassword}
                                             leftIcon={<Entypo name="lock" size={20} color="black" />}
                                             // bgColor='#e1f3f8'
-                                            onChangeText={(e) => { handleChange("password")(e); seterrorFormAPI(); }}
-                                            onBlur={handleBlur("password")}
-                                            rightIcon={<Pressable onPress={() => setShow({ ...setShow, password: !show?.password })}>
-                                                {!show?.password ? (
+                                            onChangeText={(e) => { handleChange("NewPassword")(e); seterrorFormAPI(); }}
+                                            onBlur={handleBlur("NewPassword")}
+                                            rightIcon={<Pressable onPress={() => setShow({ ...setShow, NewPassword: !show?.NewPassword })}>
+                                                {!show?.NewPassword ? (
                                                     <Entypo name="eye-with-line" size={20} color="black" />) : (
-                                                        <Entypo name="eye" size={20} color="black" />)
+                                                    <Entypo name="eye" size={20} color="black" />)
                                                 }
 
                                             </Pressable>
                                             }
 
-                                            secure={!show?.password} //default to true
-                                            validate={handleBlur("password")}
-                                            borderColor={`${(errors.password && touched.password) || (errorFormAPI && errorFormAPI.PasswordForm) ? "red" : "#ccc"}`}
-                                            errorMessage={`${(errors.password && touched.password) ? `${errors.password}` : (errorFormAPI && errorFormAPI.PasswordForm) ? `${errorFormAPI.PasswordForm}` : ``}`}
+                                            secure={!show?.NewPassword} //default to true
+                                            validate={handleBlur("NewPassword")}
+                                            borderColor={`${(errors.NewPassword && touched.NewPassword) || (errorFormAPI && errorFormAPI.NewPasswordForm) ? "red" : "#ccc"}`}
+                                            errorMessage={`${(errors.NewPassword && touched.NewPassword) ? `${errors.NewPassword}` : (errorFormAPI && errorFormAPI.NewPasswordForm) ? `${errorFormAPI.NewPasswordForm}` : ``}`}
                                             // errorColor='magenta'
                                             outlined
                                         />
@@ -185,7 +180,7 @@ export default function Login() {
 
 
                                         <CustomTextInput
-                                        boxWidth={'80%'}
+                                            boxWidth={'80%'}
                                             placeholder={'Enter Confirm Password'}
                                             label={'Confirm Password'}
                                             name='Confirm Password'
@@ -197,7 +192,7 @@ export default function Login() {
                                             rightIcon={<Pressable onPress={() => setShow({ ...setShow, ConfirmPassword: !show?.ConfirmPassword })}>
                                                 {!show?.ConfirmPassword ? (
                                                     <Entypo name="eye-with-line" size={20} color="black" />) : (
-                                                        <Entypo name="eye" size={20} color="black" />)
+                                                    <Entypo name="eye" size={20} color="black" />)
                                                 }
 
                                             </Pressable>
