@@ -10,6 +10,14 @@ import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider}  from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
+import { Platform } from 'react-native';
+import * as FileSystem from 'expo-file-system';
+
+// Path to the JKS file
+const jksFilePath = Platform.select({
+  // ios: `${FileSystem.documentDirectory}/path/to/your/file.jks`,
+  android: `/vardhaman-satyasadhna-key.keystore`,
+});
 
 // Keep the splash screen visible while we fetch resources
 // SplashScreen.preventAutoHideAsync();

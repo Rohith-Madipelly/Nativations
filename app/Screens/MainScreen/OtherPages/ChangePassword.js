@@ -83,7 +83,7 @@ export default function Login() {
 
 
                 Alert.alert(res.data.message)
-                navigation.navigate('Home')
+                navigation.navigate('Profile')
             //   LogOutHandle()
             }
 

@@ -194,7 +194,7 @@ const Profile = () => {
         }
 
       >
-        <View style={[{ paddingLeft: 29, paddingTop: 50, paddingRight: 20 }]}>
+        <View style={[{ paddingLeft: 29, paddingTop: 30, paddingRight: 20 }]}>
 
 
           <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("FullProfile") }}>
