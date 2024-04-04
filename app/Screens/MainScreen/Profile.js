@@ -57,10 +57,16 @@ const Profile = () => {
   }
   catch (err) {
     console.log("Error in token quotes", err)
+    if (err.response.status === 500) {
+      console.log("Internal Server Error", err.message)
+  }
   }
 
   useEffect(() => {
-    ProfileNameKosam()
+    
+    if(isConnected){
+      ProfileNameKosam()
+    }
   }, [])
 
 
@@ -73,7 +79,10 @@ const Profile = () => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    ProfileNameKosam()
+       
+    if(isConnected){
+      ProfileNameKosam()
+    }
 
   }, []);
 

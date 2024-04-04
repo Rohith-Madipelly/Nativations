@@ -23,9 +23,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "vardhaman.satyasadhna",
+      "package": "vardhaman.satyasadhnaOne",
       "config": {
-        "usesCleartextTraffic": true
+        "usesCleartextTraffic": true,
+          "keystorePath": "./vardhaman-satyasadhna-key.keystore",
+          "keystorePassword": "vardhaman@321"
+
       }
     },
     "web": {

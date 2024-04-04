@@ -42,7 +42,9 @@ const LiveScreen = () => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    HomeData()
+    if(isConnected){
+      HomeData()
+    }
 
   }, []);
 
@@ -79,11 +81,16 @@ const LiveScreen = () => {
   }
   catch (err) {
     console.log("Error in token quotes", err)
+     if (err.response.status === 500) {
+      console.log("Internal Server Error", err.message)
+  }
   }
 
 
   useEffect(() => {
-    HomeData()
+    if(isConnected){
+      HomeData()
+    }
   }, [])
 
   const HomeData = async () => {

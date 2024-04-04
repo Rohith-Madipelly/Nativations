@@ -123,6 +123,9 @@ const PrivacyPolicy = () => {
           <View style={{margin:20}}>
             <Text style={{fontWeight:900,fontSize:23,marginBottom:20}}>Privacy Policy</Text>
             <Text>{data}</Text>
+            <View style={{height:150}}>
+
+            </View>
           </View>
         </ScrollView>
       </View>

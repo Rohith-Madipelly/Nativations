@@ -69,7 +69,9 @@ const Home = () => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    HomeData()
+   if(isConnected){
+      HomeData()
+    }
 
   }, []);
 
@@ -83,7 +85,9 @@ const Home = () => {
   }
 
   useEffect(() => {
-    HomeData()
+    if(isConnected){
+      HomeData()
+    }
   }, [])
 
   const HomeData = async () => {
@@ -125,6 +129,9 @@ const Home = () => {
             }]
           )
         }
+        else if(error.response.status === 500) {
+          console.log("Internal Server Error", error.message)
+      }
       }
       setTimeout(() => {
         console.log("Error in fetching 123>", error.response.status)
