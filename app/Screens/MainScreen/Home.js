@@ -21,7 +21,7 @@ import { ErrorResPrinter } from '../../utils/ErrorResPrinter';
 
 const Home = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
-  const [isData, setIsData] = useState() 
+  const [isData, setIsData] = useState()
   const [Banners, setBanners] = useState()
   const [meditationTracks, setMeditationTracks] = useState()
   const [pravachan, setPravachan] = useState()
@@ -69,7 +69,7 @@ const Home = () => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-   if(isConnected){
+    if (isConnected) {
       HomeData()
     }
 
@@ -85,20 +85,21 @@ const Home = () => {
   }
 
   useEffect(() => {
-    if(isConnected){
+    if (isConnected) {
+
+    
       HomeData()
     }
-  }, [])
+  }, [isConnected])
 
   const HomeData = async () => {
     setSpinnerbool(true)
 
     try {
       const res = await HomePageData(tokenn)
-
       if (res) {
-        setIsData(res.data)
-        
+
+        setIsData(true)
         setBanners(res.data.banners)
         setMeditationTracks(res.data.meditationTracks)
         setPravachan(res.data.pravachan)
@@ -109,46 +110,32 @@ const Home = () => {
       }
       else {
         console.log(">>> 123")
-
       }
 
 
-    } catch (error) { 
+    } catch (error) {
+      setIsData(false)
+      // console.log(">>>>>>>.", error)
+      // Alert.alert(`Something Went Wrong ${error.code} `)
 
       if (error.response) {
         if (error.response.status === 401) {
-            console.log("Error With 400.>>>>>>>>>>>>>>>>>>>>>>>>>>>>",error.response.status)
-            // ErrorResPrinter("Failed Please Login again ")
-            Alert.alert('something went wrong', 'Please Login again',
+          Alert.alert('Something went wrong', 'Please login again',
             [{ text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
             {
               text: 'YES', onPress: () => {
-                // LogOutHandle()
-                LogOutHandle123(dispatch)
-                // navigation.navigate('Decide-navigator')
+                LogOutHandle123(dispatch);
               }
             }]
-          )
+          );
+        } else if (error.response.status === 500) {
+          console.log("Internal Server Error", error.message);
         }
-        else if(error.response.status === 500) {
-          console.log("Internal Server Error", error.message)
+      } else if (error.request) {
+        // Alert.alert("Something went wrong");
+      } else {
+        Alert.alert("Error in setting up the request");
       }
-      }
-      else if(error.request){
-        Alert.alert("Something Went Wrong")
-      }
-      else{
-        Alert.alert("Error in Setting up the Request")
-      }
-      setTimeout(() => {
-        console.log("Error in fetching 123>", error.response.status)
-
-
-      }, 1000);
-
-      setTimeout(() => {
-        setSpinnerbool(false)
-      }, 5000)
     }
     finally {
       setSpinnerbool(false)
@@ -176,7 +163,7 @@ const Home = () => {
 
   return (
     <SafeAreaView>
-      <View style={{ paddingTop: 0,marginBottom:10 }}>
+      <View style={{ paddingTop: 0, marginBottom: 10 }}>
         <ScrollView
           refreshControl={
             <RefreshControl
@@ -205,7 +192,10 @@ const Home = () => {
 
               <Snap_Carousel6 Up_Coming_EventsData={upComingEvents} />
 
-            </View> : ""}
+            </View> :
+              <View>
+                <Text>No Data Found</Text>
+              </View>}
           </View> : (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 150 }} >
               <Text>No network found</Text>

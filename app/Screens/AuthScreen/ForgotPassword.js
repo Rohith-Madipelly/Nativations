@@ -83,6 +83,11 @@ export default function Login({ route }) {
             }
             else if (error.request) {
                 console.log("No Response Received From the Server.")
+                if (error.request.status === 0) {
+                    // console.log("error in request ",error.request.status)
+                    Alert.alert("No Network Found","Please Check your Internet Connection")
+                  }
+               
             }
             else {
                 console.log("Error in Setting up the Request.")

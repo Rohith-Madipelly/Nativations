@@ -59,12 +59,12 @@ const Profile = () => {
     console.log("Error in token quotes", err)
     if (err.response.status === 500) {
       console.log("Internal Server Error", err.message)
-  }
+    }
   }
 
   useEffect(() => {
-    
-    if(isConnected){
+
+    if (isConnected) {
       ProfileNameKosam()
     }
   }, [])
@@ -79,12 +79,12 @@ const Profile = () => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-       
-    if(isConnected){
+
+    if (isConnected) {
       ProfileNameKosam()
     }
 
-  }, []);
+  }, [isConnected]);
 
 
   // >>>>>>>>>>>>>>>>>>
@@ -118,25 +118,14 @@ const Profile = () => {
 
       }
     } catch (error) {
-      setTimeout(() => {
-        console.log("Error in fetching", error)
-        Alert.alert('something went wrong', 'Please Login again',
-        [{ text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        {
-          text: 'YES', onPress: () => {
-            // LogOutHandle()
-            LogOutHandle123(dispatch)
-            // navigation.navigate('Decide-navigator')
-          }
-        }]
-      )
-      }, 1000);
-      
+      console.log(">>>>>>>.", error)
+      // Alert.alert(`Something Went Wrong ${error.code} `)
+
       if (error.response) {
         if (error.response.status === 401) {
-            console.log("Error With 400.>>>>>>>>>>>>>>>>>>>>>>>>>>>>",error.response.status)
-            // ErrorResPrinter("Failed Please Login again ")
-            Alert.alert('something went wrong', 'Please Login again',
+          console.log("Error With 400.>>>>>>>>>>>>>>>>>>>>>>>>>>>>", error.response.status)
+          // ErrorResPrinter("Failed Please Login again ")
+          Alert.alert('something went wrong', 'Please Login again',
             [{ text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
             {
               text: 'YES', onPress: () => {
@@ -147,14 +136,17 @@ const Profile = () => {
             }]
           )
         }
-        else if(error.response.status === 500) {
+        else if (error.response.status === 500) {
           console.log("Internal Server Error", error.message)
+        }
       }
+      else if (error.request) {
+        if (error.request.status === 0) {
+          // console.log("error in request ",error.request.status)
+          // Alert.alert("Something Went Wrong")
+        }
       }
-      else if(error.request){
-        Alert.alert("Something Went Wrong")
-      }
-      else{
+      else {
         Alert.alert("Error in Setting up the Request")
       }
     }

@@ -99,7 +99,11 @@ export default function OtpSender() {
                 }
             }
             else if (error.request) {
-           
+                if (error.request.status === 0) {
+                    // console.log("error in request ",error.request.status)
+                    Alert.alert("No Network Found","Please Check your Internet Connection")
+                  }
+               
                 console.log("No Response Received From the Server.")
             }
             else {

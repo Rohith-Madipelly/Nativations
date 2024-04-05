@@ -63,6 +63,7 @@ const ButtonTotal = ({ youtubeURL }) => {
 
         <ButtonC1Cricle
           onPress={() => { onShare(`${youtubeURL}`) }}
+          // onPress={() => { onShare(`https://play.google.com/store/apps/details?id=vardhaman.satyasadhnaOne`) }}
         >
           <Entypo name="share" size={20} color="white" />
         </ButtonC1Cricle>

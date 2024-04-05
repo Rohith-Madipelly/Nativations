@@ -108,9 +108,14 @@ export default function Register() {
                 }
             }
             else if (error.request) {
-                Alert.alert(error.request.data.message)
+                // Alert.alert(error.request.data.message)
 
                 console.log("No Response Received From the Server.")
+                if (error.request.status === 0) {
+                    // console.log("error in request ",error.request.status)
+                    Alert.alert("No Network Found","Please Check your Internet Connection")
+                  }
+               
             }
             else {
                 Alert.alert(error.data.message)

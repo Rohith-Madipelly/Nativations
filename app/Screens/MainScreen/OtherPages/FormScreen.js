@@ -234,6 +234,7 @@ export default function FormScreen() {
     try {
       if (res) {
         let hero = res.data.allCourses;
+        console.log("hero Data",hero)
         SetData(hero)
       }
     }

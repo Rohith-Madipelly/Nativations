@@ -1,4 +1,4 @@
-import { Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Alert } from 'react-native';
 import AuthComponent from './AuthComponent';
 import CustomButton from '../../Components/UI/Button/ButtonC1';
 import CustomTextInput from '../../Components/UI/Inputs/CustomTextInput';
@@ -121,6 +121,12 @@ export default function Login() {
             }
             else if (error.request) {
                 console.log("No Response Received From the Server.")
+                
+                    if (error.request.status === 0) {
+                      // console.log("error in request ",error.request.status)
+                      Alert.alert("No Network Found","Please Check your Internet Connection")
+                    }
+                 
             }
             else {
                 console.log("Error in Setting up the Request.")

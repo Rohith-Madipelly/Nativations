@@ -91,7 +91,7 @@ const LiveScreen = () => {
     if(isConnected){
       HomeData()
     }
-  }, [])
+  }, [isConnected])
 
   const HomeData = async () => {
 
@@ -117,6 +117,10 @@ const LiveScreen = () => {
 
 
     } catch (error) {
+      console.log(">>>>>>>.", error)
+      Alert.alert(`Something Went Wrong ${error.code} `)
+
+
       if (error.response) {
         if (error.response.status === 401) {
             console.log("Error With 400.>>>>>>>>>>>>>>>>>>>>>>>>>>>>",error.response.status)
@@ -137,7 +141,7 @@ const LiveScreen = () => {
       }
       }
       else if(error.request){
-        Alert.alert("Something Went Wrong")
+        // Alert.alert("Something Went Wrong")
       }
       else{
         Alert.alert("Error in Setting up the Request")
