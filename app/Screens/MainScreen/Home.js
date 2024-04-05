@@ -98,6 +98,7 @@ const Home = () => {
 
       if (res) {
         setIsData(res.data)
+        
         setBanners(res.data.banners)
         setMeditationTracks(res.data.meditationTracks)
         setPravachan(res.data.pravachan)
@@ -132,6 +133,12 @@ const Home = () => {
         else if(error.response.status === 500) {
           console.log("Internal Server Error", error.message)
       }
+      }
+      else if(error.request){
+        Alert.alert("Something Went Wrong")
+      }
+      else{
+        Alert.alert("Error in Setting up the Request")
       }
       setTimeout(() => {
         console.log("Error in fetching 123>", error.response.status)

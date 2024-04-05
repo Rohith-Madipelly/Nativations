@@ -117,14 +117,33 @@ const LiveScreen = () => {
 
 
     } catch (error) {
-      setTimeout(() => {
-        console.log("Error in fetching", error.response.status)
-      }, 1000);
-      console.log(error)
+      if (error.response) {
+        if (error.response.status === 401) {
+            console.log("Error With 400.>>>>>>>>>>>>>>>>>>>>>>>>>>>>",error.response.status)
+            // ErrorResPrinter("Failed Please Login again ")
+            Alert.alert('something went wrong', 'Please Login again',
+            [{ text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+            {
+              text: 'YES', onPress: () => {
+                // LogOutHandle()
+                LogOutHandle123(dispatch)
+                // navigation.navigate('Decide-navigator')
+              }
+            }]
+          )
+        }
+        else if(error.response.status === 500) {
+          console.log("Internal Server Error", error.message)
+      }
+      }
+      else if(error.request){
+        Alert.alert("Something Went Wrong")
+      }
+      else{
+        Alert.alert("Error in Setting up the Request")
+      }
 
-      setTimeout(() => {
-        // setSpinnerbool(false)
-      }, 5000)
+
     }
     finally {
       // setSpinnerbool(false)
