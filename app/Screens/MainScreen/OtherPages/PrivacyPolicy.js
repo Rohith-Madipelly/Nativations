@@ -119,9 +119,11 @@ const PrivacyPolicy = () => {
         </LinearGradient>
       </View>
       <View style={{ position: 'relative', top: '15%', backgroundColor: 'pink', height: '100%', borderRadius: 30, overflow: 'scroll', backgroundColor: 'white' }}>
+      <Text style={{fontWeight:900,fontSize:23,marginBottom:5,marginLeft:20,marginTop:20}}>Privacy Policy</Text>
+       
         <ScrollView>
-          <View style={{margin:20}}>
-            <Text style={{fontWeight:900,fontSize:23,marginBottom:20}}>Privacy Policy</Text>
+          <View style={{margin:20,marginTop:10}}>
+            
             <Text>{data}</Text>
             <View style={{height:150}}>
 

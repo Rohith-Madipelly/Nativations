@@ -142,6 +142,7 @@ const apiName=PlaystoreAPI;
         </LinearGradient>
       </View>
       <View style={{ position: 'relative', top: '15%', backgroundColor: 'pink', height: '100%', borderRadius: 30, overflow: 'scroll', backgroundColor: 'white' }}>
+        
         <ScrollView>
           <View style={{margin:20}}>
             <Text style={{fontWeight:900,fontSize:23,marginBottom:20}}>About</Text>

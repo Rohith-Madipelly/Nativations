@@ -16,9 +16,13 @@
       }
     },
 
-    "production": {}
+    "production": {
+      "autoIncrement":true
+    }
   },
   "submit": {
-    "production": {}
+    "production": {
+      
+    }
   }
 }

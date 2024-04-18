@@ -158,11 +158,20 @@ const Home = () => {
     );
   } else {
   }
-
+  if (!isConnected) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} >
+      <Text>No network found</Text>
+      <Text>Please check your internet connection</Text>
+      <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
+    </View>
+    );
+  } else {
+  }
 
 
   return (
-    <SafeAreaView>
+    // <SafeAreaView>
       <View style={{ paddingTop: 0, marginBottom: 10 }}>
         <ScrollView
           refreshControl={
@@ -197,7 +206,7 @@ const Home = () => {
                 <Text>No Data Found</Text>
               </View>}
           </View> : (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 150 }} >
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
               <Text>No network found</Text>
               <Text>Please check your internet connection</Text>
               <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
@@ -209,7 +218,7 @@ const Home = () => {
       </View>
 
 
-    </SafeAreaView>
+
   )
 }
 

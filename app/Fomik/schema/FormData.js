@@ -88,7 +88,7 @@ const FormData = Yup.object().shape({
 
     brief: Yup.string()
 
-        .min(15, "Length is short")
+        .min(2, "Length is short")
         // .max(225, "referenceFrom Length is too Long")
         .required("Brief Information is a Required Field."),
     referenceFrom: Yup.string()

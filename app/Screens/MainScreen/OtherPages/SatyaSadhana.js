@@ -113,8 +113,10 @@ const SatyaSadhana = () => {
                 </LinearGradient>
             </View>
             <View style={{ position: 'relative', top: '10%', backgroundColor: 'pink', height: '100%', borderRadius: 30, overflow: 'scroll', backgroundColor: 'white' }}>
+            <Text style={{ fontWeight: 900, fontSize: 23, margin:20 }}>About</Text>
+                
                 <ScrollView>
-                    <View style={{ margin: 15, marginTop: 50 }}>
+                    <View style={{ margin: 15, marginTop: 5 }}>
                         <View>
                             <Text style={{ marginBottom: 10, marginLeft: 10 }}>
                             <Text> </Text>Satya means truth and Sadhna means to be with truth of the mind and to experience this truth. Satya Sadhna is the process of experiencing the truth of the mind and the truth of oneself.

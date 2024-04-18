@@ -8,7 +8,6 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
@@ -26,10 +25,10 @@
       "package": "vardhaman.satyasadhnaOne",
       "config": {
         "usesCleartextTraffic": true,
-          "keystorePath": "./vardhaman-satyasadhna-key.keystore",
-          "keystorePassword": "vardhaman@321"
-
-      }
+        "keystorePath": "./vardhaman-satyasadhna-key.keystore",
+        "keystorePassword": "vardhaman@321"
+      },
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -49,6 +48,5 @@
         ]
       ]
     }
-
   }
 }
