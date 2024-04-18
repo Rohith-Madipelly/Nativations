@@ -35,7 +35,7 @@ const Snap_Carousel6 = ({Up_Coming_EventsData}) => {
         <View style={{marginTop:10}}>
             <View style={{marginLeft:20}}>
 
-                <Text style={[styles.Heading_U3]}>Up Coming Events</Text>
+                <Text style={[styles.Heading_U3]}>Upcoming Events</Text>
             </View>
 
             <View style={{ marginTop: 10, display: 'flex', flexDirection: 'row' }}>

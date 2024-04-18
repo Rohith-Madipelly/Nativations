@@ -72,12 +72,12 @@ export default function OtpSender() {
                     console.log("Error With 400.")
                 }
                 else if (error.response.status === 401) {
-                    console.log("Error With 400.")
+                    console.log("Error With 401.")
 
                     seterrorFormAPI({ PasswordForm: `${error.response.data.message}` })
                 }
                 else if (error.response.status === 404) {
-                    console.log("Error With 400.")
+                    console.log("Error With 404.")
 
                     seterrorFormAPI({ EmailForm: `${error.response.data.message}` })
                 }
@@ -173,8 +173,8 @@ export default function OtpSender() {
 
                                             <CustomTextInput
                                             boxWidth={'80%'}
-                                                placeholder={'Enter Your Email'}
-                                                label={'Enter Your Email'}
+                                                placeholder={'Enter your email'}
+                                                label={'Enter your email'}
                                                 name='Email'
                                                 value={values.email}
                                                 leftIcon={<FontAwesome name="user" size={20} color="black" />}

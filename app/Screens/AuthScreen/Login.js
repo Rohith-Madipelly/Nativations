@@ -176,7 +176,7 @@ export default function Login() {
                 >
                     {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
 
-                    {isConnected ? <ScrollView style={{ height: 400, }}>
+                    {isConnected ? <ScrollView style={{ height: 600, }}>
                         <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Formik
                                 // enableReinitialize

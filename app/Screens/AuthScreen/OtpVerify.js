@@ -134,7 +134,7 @@ export default function OtpVerify({ route }) {
                 animation={'fade'}
             />
 
-            <AuthComponent NameUnderLogo={"Satya Sadhna"} titleUnder={""} screenName={"Enter Your Otp for Email Verification"}>
+            <AuthComponent NameUnderLogo={"Satya Sadhna"} titleUnder={""} screenName={"Enter your otp for email verification"}>
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
 
@@ -205,7 +205,7 @@ export default function OtpVerify({ route }) {
                                             bgColor={`${!isValid ? "rgba(220, 142, 128, 0.9)" : "rgba(242, 142, 128, 1)"}`}
 
                                             style={{ marginTop: 50 }}>
-                                            Verify OPT
+                                            Verify OTP
                                         </CustomButton>
 
 

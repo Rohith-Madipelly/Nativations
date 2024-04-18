@@ -176,8 +176,8 @@ export default function Login() {
 
                                         <CustomTextInput
                                             boxWidth={'80%'}
-                                            placeholder={'old Password'}
-                                            label={'old Password'}
+                                            placeholder={'Old password'}
+                                            label={'Old password'}
                                             name='Password'
                                             value={values.old_password}
                                             leftIcon={<Entypo name="lock" size={20} color="black" />}
@@ -211,8 +211,8 @@ export default function Login() {
 
                                         <CustomTextInput
                                             boxWidth={'80%'}
-                                            placeholder={'Enter New  Password'}
-                                            label={'New Password'}
+                                            placeholder={'Enter new  password'}
+                                            label={'New password'}
                                             name='Password'
                                             value={values.New_Password}
                                             leftIcon={<Entypo name="lock" size={20} color="black" />}

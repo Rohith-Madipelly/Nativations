@@ -21,12 +21,12 @@ export const OpenStore = (PACKAGE_NAME) => {
   if (Platform.OS !== 'ios') {
     // If the platform is not iOS, open the Google Play Store
     Linking.openURL(`${PACKAGE_NAME}`).catch(err =>
-      alert('Please check for Google Play Store'),
+      alert('Please check Google Play Store'),
     );
   } else {
     // If the platform is iOS, open the App Store
     Linking.openURL(`${PACKAGE_NAME}`).catch(err =>
-      alert('Please check for the App Store'),
+      alert('Please check the App Store'),
     );
   }
 };
