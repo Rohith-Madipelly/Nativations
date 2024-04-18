@@ -417,7 +417,7 @@ const Profile = () => {
                       </View>
 
                       <View style={{ marginLeft: 14 }}>
-                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>About Satya Sadhana</Text>
+                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>About Satya Sadhna</Text>
                       </View>
                     </View>
 
@@ -449,7 +449,7 @@ const Profile = () => {
                       </View>
 
                       <View style={{ marginLeft: 14 }}>
-                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Known About Guruji</Text>
+                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Know About Guruji</Text>
                       </View>
                     </View>
 

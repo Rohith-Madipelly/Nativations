@@ -526,14 +526,14 @@ export default function FormScreen() {
           <ScrollView style={{ height: 800 }}>
             <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 50 }}>
               <>
-                {userReviewsData ? <Text>Preview Data fetched here</Text> : ""}
+                {/* {userReviewsData ? <Text>Preview Data fetched here</Text> : ""} */}
                 {/* <Button title='Clear' onPress={()=>{resetForm}}></Button> */}
 
                 <CustomPicker
-                  placeholder={'Enter Your category'}
+                  placeholder={'Enter your category'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'category'}
+                  label={'Category'}
                   name='category'
                   onChangeText={(e) => { handleChange("category")(e); seterrorFormAPI(); }}
                   onBlur={handleBlur("category")}
@@ -549,9 +549,9 @@ export default function FormScreen() {
                   error="Please select a category"
                 />
 
-                {values.category === "For Old Students" && (
+                {values.category === "For old students" && (
                   <CustomPicker
-                    placeholder={'Select Type'}
+                    placeholder={'Select type'}
                     asterisksymbol={true}
                     boxWidth={'80%'}
                     label={'Type'}
@@ -582,10 +582,10 @@ export default function FormScreen() {
 
 
                 <CustomPicker
-                  placeholder={'Enter Your Course '}
+                  placeholder={'Enter your course '}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'Select Course'}
+                  label={'Select course'}
                   name='Courses'
                   onChangeText={(e) => { handleChange("Courses")(e); seterrorFormAPI(); }}
                   onBlur={handleBlur("Courses")}
@@ -605,7 +605,7 @@ export default function FormScreen() {
                   }
                   containerStyle={{ width: 200 }}
                   labelStyle={{ color: 'blue' }}
-                  error="Please select a Courses"
+                  error="Please select a courses"
                 />
 
 
@@ -664,10 +664,10 @@ export default function FormScreen() {
                   />
 
                   <CustomTextInput
-                    placeholder={'Enter Your course Duration'}
+                    placeholder={'Enter your course duration'}
                     asterisksymbol={true}
                     boxWidth={'80%'}
-                    label={'course Duration'}
+                    label={'Course duration'}
                     name='course_Duration'
                     value={`${courseData.courseDuration || values.course_Duration}`}
                     onChangeText={(e) => { handleChange("course_Duration")(e); seterrorFormAPI(); }}
@@ -685,11 +685,11 @@ export default function FormScreen() {
 
 
                 <CustomPicker
-                  placeholder={'Enter Your City'}
+                  placeholder={'Enter your city'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
                   label={'City'}
-                  name='City'
+                  name='city'
 
                   onChangeText={(e) => { handleChange("state")(e); seterrorFormAPI(); }}
                   onBlur={handleBlur("state")}
@@ -712,8 +712,8 @@ export default function FormScreen() {
 
                   <CustomTextInput
                     boxWidth={'80%'}
-                    label={'Other City'}
-                    name='Other City'
+                    label={'Other city'}
+                    name='Other city'
                     // value={values.personName}
                     value={otherState}
                     onChangeText={handleOtherStateChange}
@@ -733,8 +733,8 @@ export default function FormScreen() {
                   boxWidth={'80%'}
                   asterisksymbol={true}
                   placeholder={'Enter Your First Name'}
-                  label={'First Name '}
-                  name='First Name'
+                  label={'First name '}
+                  name='First name'
                   value={values.firstName}
                   // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                   // bgColor='#e1f3f8'
@@ -752,9 +752,9 @@ export default function FormScreen() {
                 <CustomTextInput
                   boxWidth={'80%'}
                   asterisksymbol={true}
-                  placeholder={'Enter Your Last Name'}
-                  label={'Last Name'}
-                  name='Last Name'
+                  placeholder={'Enter your last name'}
+                  label={'Last name'}
+                  name='Last name'
                   value={values.lastName}
                   // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                   // bgColor='#e1f3f8'
@@ -771,10 +771,10 @@ export default function FormScreen() {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '80%' }}>
 
                   <CustomPicker
-                    placeholder={'Enter Your gender'}
+                    placeholder={'Enter your gender'}
                     asterisksymbol={true}
                     boxWidth={'60%'}
-                    label={'gender'}
+                    label={'Gender'}
                     name='gender'
                     // value={values.gender}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -801,7 +801,7 @@ export default function FormScreen() {
                     boxWidth={'30%'}
                     placeholder={'Age'}
                     asterisksymbol={true}
-                    label={'Your Age'}
+                    label={'Your age'}
                     name='Age'
                     value={values.age}
                     keyboardType="numeric"
@@ -819,10 +819,10 @@ export default function FormScreen() {
 
 
                 <CustomPicker
-                  placeholder={'Enter Your language'}
+                  placeholder={'Enter your language'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'language'}
+                  label={'Language'}
                   name='language'
 
                   onChangeText={(e) => { handleChange("language")(e); seterrorFormAPI(); }}
@@ -861,11 +861,11 @@ export default function FormScreen() {
                   />
                 )} */}
                 <CustomTextInput
-                  placeholder={'Enter Your education'}
+                  placeholder={'Enter your Education'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'education'}
-                  name='education'
+                  label={'Education'}
+                  name='Education'
                   value={values.education}
                   onChangeText={(e) => { handleChange("education")(e); seterrorFormAPI(); }}
                   onBlur={handleBlur("education")}
@@ -876,11 +876,11 @@ export default function FormScreen() {
                 />
 
                 <CustomPicker
-                  placeholder={'Martial Status'}
+                  placeholder={'Marital status'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'Martial Status'}
-                  name='martialStatus'
+                  label={'Marital status'}
+                  name='Maritalstatus'
                   onChangeText={(e) => { handleChange("martialStatus")(e); seterrorFormAPI(); }}
                   onBlur={handleBlur("martialStatus")}
                   validate={handleBlur("martialStatus")}
@@ -896,11 +896,11 @@ export default function FormScreen() {
                 />
 
                 <CustomTextInput
-                  placeholder={'Enter Your Guardian Name'}
+                  placeholder={'Enter Your Father or Spouse Name'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'Guardian Name'}
-                  name='Guardian Name'
+                  label={'Father or spouse name'}
+                  name='Father or spouse name'
                   value={values.guardianName}
                   onChangeText={(e) => { handleChange("guardianName")(e); seterrorFormAPI(); }}
                   onBlur={handleBlur("guardianName")}
@@ -911,10 +911,10 @@ export default function FormScreen() {
                 />
 
                 <CustomTextInput
-                  placeholder={'Mobile Number'}
+                  placeholder={'Mobile number'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'Mobile Number'}
+                  label={'Mobile number'}
                   name='mobileNumber'
                   value={values.mobileNumber}
                   // leftIcon={<FontAwesome name="phone" size={20} color="black" />}
@@ -937,11 +937,11 @@ export default function FormScreen() {
 
 
                 <CustomTextInput
-                  placeholder={'Enter Your eMail'}
+                  placeholder={'Enter Your Email'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'eMail'}
-                  name='eMail'
+                  label={'Email'}
+                  name='Email'
                   value={values.eMail}
                   // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                   // bgColor='#e1f3f8'
@@ -961,11 +961,11 @@ export default function FormScreen() {
 
 
                 <CustomTextInput
-                  placeholder={'Enter Your address'}
+                  placeholder={'Enter Your Address'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'address'}
-                  name='address'
+                  label={'Address'}
+                  name='Address'
                   value={values.address}
                   // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                   // bgColor='#e1f3f8'
@@ -987,9 +987,9 @@ export default function FormScreen() {
                   {/* <Text>knownPerson Demo_line</Text> */}
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'known Person Name'}
-                    label={'known Person Name'}
-                    name='known Person Name'
+                    placeholder={'Is any known person attending the course'}
+                    label={'Is any known person attending the course'}
+                    name='Is any known person attending the course'
                     value={values.personName}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1006,9 +1006,9 @@ export default function FormScreen() {
 
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'known Person Relation'}
-                    label={'known Person Relation'}
-                    name='known Person Relation'
+                    placeholder={'Known person relation'}
+                    label={'Known person relation'}
+                    name='known person relation'
                     value={values.personRelation}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1034,9 +1034,9 @@ export default function FormScreen() {
                 <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'Physical Ailment in Past One'}
-                    label={'Physical Ailment in Past One'}
-                    name='Physical Ailment inPastOne'
+                    placeholder={'Physical ailment in past one'}
+                    label={'Physical ailment in past one'}
+                    name='Physical ailment in past one'
                     value={values.inPastOne}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1053,9 +1053,9 @@ export default function FormScreen() {
 
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'Physical Ailment in Present One'}
-                    label={'Physical Ailment in Present One'}
-                    name='Physical Ailment inPresentOne'
+                    placeholder={'Physical ailment in present one'}
+                    label={'Physical ailment in present one'}
+                    name='Physical ailment in present one'
                     value={values.inPresentOne}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1077,9 +1077,9 @@ export default function FormScreen() {
                 <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'psyschological Ailment in Past Two'}
-                    label={'psyschological Ailment in Past Two'}
-                    name='psyschological Ailment in Past Two'
+                    placeholder={'Psyschological ailment in past two'}
+                    label={'Psyschological ailment in past two'}
+                    name='Psyschological ailment in past two'
                     value={values.inPastTwo}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1096,9 +1096,9 @@ export default function FormScreen() {
 
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'psyschological Ailment in Present Two'}
-                    label={'psyschological Ailment in Present Two'}
-                    name='psyschological Ailment inPresentTwo'
+                    placeholder={'Psyschological ailment in present two'}
+                    label={'Psyschological ailment in present two'}
+                    name='Psyschological ailment in present two'
                     value={values.inPresentTwo}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1118,8 +1118,8 @@ export default function FormScreen() {
 
                 <CustomTextInput
                   boxWidth={'80%'}
-                  placeholder={'Fitness Certificate medicine Name'}
-                  label={'Fitness Certificate medicine Name'}
+                  placeholder={'Fitness certificate medicine name'}
+                  label={'Fitness certificate medicine name'}
                   name='docFitnessCertificate medicine Name'
                   value={values.medicineName}
                   // leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -1138,8 +1138,8 @@ export default function FormScreen() {
 
                 <CustomTextInput
                   boxWidth={'80%'}
-                  placeholder={'Fitness Certificate medicine Dose'}
-                  label={'Fitness Certificate medicine Dose'}
+                  placeholder={'Fitness certificate medicine dose'}
+                  label={'Fitness certificate medicine dose'}
                   name='docFitnessCertificate medicine Dose'
                   value={values.medicineDose}
                   // leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -1181,8 +1181,8 @@ export default function FormScreen() {
                   <CustomPicker
                     //  asterisksymbol={true}
                     boxWidth={'80%'}
-                    placeholder={'Family Person course Done'}
-                    label={'Family Person course Done'}
+                    placeholder={'Family person course done'}
+                    label={'Family person course done'}
                     name='Family Person course Done'
 
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -1207,9 +1207,9 @@ export default function FormScreen() {
 
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'Family Person relation'}
-                    label={'Family Person relation'}
-                    name='Family Person relation'
+                    placeholder={'Family person relation'}
+                    label={'Family person relation'}
+                    name='Family person relation'
                     value={values.relation}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1233,8 +1233,8 @@ export default function FormScreen() {
                   <CustomTextInput
                     boxWidth={'80%'}
                     placeholder={'Designation'}
-                    label={'designation'}
-                    name='Professional Details designation'
+                    label={'Designation'}
+                    name='Professional details designation'
                     value={values.designation}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1253,8 +1253,8 @@ export default function FormScreen() {
 
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'CompanyName'}
-                    label={'Company Name'}
+                    placeholder={'Company name'}
+                    label={'Company name'}
                     name='companyName'
                     value={values.companyName}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -1272,9 +1272,9 @@ export default function FormScreen() {
 
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'Company Address'}
-                    label={'Company Address'}
-                    name='Company Address'
+                    placeholder={'Company address'}
+                    label={'Company address'}
+                    name='Company address'
                     value={values.companyAddress}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1292,10 +1292,10 @@ export default function FormScreen() {
                 {/* <Text>professionalDetails Demo_line end</Text> */}
 
                 <CustomPicker
-                  placeholder={'Regular Any Medical Issues'}
+                  placeholder={'Regular any medical issues'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'Any Medical Issues'}
+                  label={'Any medical issues'}
                   name='regularMedicine'
                   // value={values.gender}
                   // leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -1320,10 +1320,10 @@ export default function FormScreen() {
 
 
                 <CustomTextInput
-                  placeholder={'Enter More Information Data'}
+                  placeholder={'Enter more information data'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'More Information'}
+                  label={'More information'}
                   name='brief'
                   value={values.brief}
                   // leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -1341,10 +1341,10 @@ export default function FormScreen() {
                 />
 
                 <CustomPicker
-                  placeholder={'Referred By'}
+                  placeholder={'Referred by'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
-                  label={'Refered By'}
+                  label={'Refered by'}
                   name='Refered By'
 
                   onChangeText={(e) => { handleChange("referenceFrom")(e); seterrorFormAPI(); }}
@@ -1370,8 +1370,8 @@ export default function FormScreen() {
                 <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'Old Student Name'}
-                    label={'Old Student Name'}
+                    placeholder={'Old student name'}
+                    label={'Old student name'}
                     name='Old Student Name'
                     value={values.oldStuName}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -1389,8 +1389,8 @@ export default function FormScreen() {
 
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'First Course Place'}
-                    label={'First Course Place'}
+                    placeholder={'First course place'}
+                    label={'First course place'}
                     name='First Course Place'
                     value={values.firstCoursePlace}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -1408,9 +1408,9 @@ export default function FormScreen() {
 
                   <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', width: '90%' }}>
                     <CustomDateInput
-                      placeholder={'First Course date'}
-                      label={'First Course date'}
-                      name='First Course date'
+                      placeholder={'First course date'}
+                      label={'First course date'}
+                      name='First course date'
                       value={values.dateFirstCourse}
                       leftIcon={<MaterialIcons name="date-range" size={20} color="black" />}
                       // bgColor='#e1f3f8'
@@ -1431,9 +1431,9 @@ export default function FormScreen() {
 
 
                     <CustomDateInput
-                      placeholder={'Last Course date'}
-                      label={'Last Course date'}
-                      name='Last Course date'
+                      placeholder={'Last course date'}
+                      label={'Last course date'}
+                      name='Last course date'
                       value={values.dateLastCourse}
                       leftIcon={<MaterialIcons name="date-range" size={20} color="black" />}
                       // bgColor='#e1f3f8'
@@ -1455,9 +1455,9 @@ export default function FormScreen() {
                   </View>
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'First Asst Teacher'}
-                    label={'First Asst Teacher'}
-                    name='First Asst Teacher'
+                    placeholder={'First asst teacher'}
+                    label={'First asst teacher'}
+                    name='First asst Teacher'
                     value={values.firstAsstTeacher}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1477,9 +1477,9 @@ export default function FormScreen() {
 
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'last Course Place'}
-                    label={'last Course Place'}
-                    name='last Course Place'
+                    placeholder={'Last course place'}
+                    label={'Last course place'}
+                    name='last course place'
                     value={values.lastCoursePlace}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1496,9 +1496,9 @@ export default function FormScreen() {
 
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'last Asst Teacher'}
-                    label={'last Asst Teacher'}
-                    name='last Asst Teacher'
+                    placeholder={'Last asst teacher'}
+                    label={'Last asst teacher'}
+                    name='last asst teacher'
                     value={values.lastAsstTeacher}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1514,9 +1514,9 @@ export default function FormScreen() {
                   />
 
                   <CustomPicker
-                    placeholder={'Enter Course Details'}
+                    placeholder={'Enter course details'}
                     boxWidth={'80%'}
-                    label={'Course Details'}
+                    label={'Course details'}
                     name='Course Details'
 
                     onChangeText={(e) => { handleChange("courseDetails")(e); seterrorFormAPI(); }}
@@ -1546,9 +1546,9 @@ export default function FormScreen() {
 
 
                   <CustomTextInput
-                    placeholder={'Tried Any Practise'}
+                    placeholder={'Tried any practise'}
                     boxWidth={'80%'}
-                    label={'Tried Any Practise'}
+                    label={'Tried any practise'}
                     name='Tried Any Practise'
                     value={values.triedAnyPractise}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -1567,10 +1567,10 @@ export default function FormScreen() {
 
 
                   <CustomPicker
-                    placeholder={'Practise Regularly'}
+                    placeholder={'Practise regularly'}
                     boxWidth={'80%'}
-                    label={'Practise Regularly'}
-                    name='Practise Regularly'
+                    label={'Practise regularly'}
+                    name='Practise regularly'
 
                     onChangeText={(e) => { handleChange("practiseRegularly")(e); seterrorFormAPI(); }}
                     onBlur={handleBlur("practiseRegularly")}
@@ -1590,9 +1590,9 @@ export default function FormScreen() {
                   />
 
                   <CustomTextInput
-                    placeholder={'Daily Hours'}
+                    placeholder={'Daily hours'}
                     boxWidth={'80%'}
-                    label={'Daily Hours'}
+                    label={'Daily hours'}
                     name='Daily Hours'
                     value={values.dailyHours}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -1632,9 +1632,9 @@ export default function FormScreen() {
 
 
                   <CustomTextInput
-                    placeholder={'Change In YourSelf'}
+                    placeholder={'Change in yourself'}
                     boxWidth={'80%'}
-                    label={'Change In YourSelf'}
+                    label={'Change in yourself'}
                     name='Change In YourSelf'
                     value={values.changeInYourSelf}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}

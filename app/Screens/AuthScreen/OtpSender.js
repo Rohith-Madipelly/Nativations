@@ -201,7 +201,7 @@ export default function OtpSender() {
                                                 bgColor={`${!isValid ? "rgba(220, 142, 128, 0.9)" : "rgba(242, 142, 128, 1)"}`}
 
                                                 style={{ marginTop: 50 }}>
-                                                Get OPT
+                                                Get OTP 
                                             </CustomButton>
 
                                             {/* <View style={{}}>

@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     label: {
         fontWeight: '500',
         marginBottom: 4,
-        // textTransform: 'capitalize'
+        textTransform: 'none'
     },
     container: {
         padding: 10,

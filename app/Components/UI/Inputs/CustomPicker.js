@@ -94,11 +94,11 @@ const styles = StyleSheet.create({
         // borderColor: 'darkgrey',
         borderWidth: 1,
     },
-    // label: {
-    //     fontWeight: '500',
-    //     marginBottom: 4,
-    //     textTransform: 'capitalize',
-    // },
+    label: {
+        fontWeight: '500',
+        marginBottom: 4,
+        textTransform: 'none',
+    },
     pickerContainer: {
         backgroundColor: 'white',
         borderRadius: 20,
