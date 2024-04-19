@@ -13,7 +13,7 @@ import {
 } from "@expo/vector-icons";
 
 import { useState } from 'react';
-import { Formik} from "formik";
+import { Formik } from "formik";
 import { loginSchema } from "../../../Fomik/schema/signIn.js";
 
 import { ChangePasswordAPI, UserLoginApi } from "../../../utils/API_Calls";
@@ -37,25 +37,25 @@ export default function Login() {
     const [spinnerBool, setSpinnerbool] = useState(false)
     let tokenn = useSelector((state) => state.token);
     const navigation = useNavigation();
-    
+
     const dispatch = useDispatch();
 
     const LogOutHandle = async () => {
         setSpinnerbool(true)
         try {
-          await AsyncStorage.removeItem('AdsReel$:' + 'Token');
-          // setSpinnerbool(false)
-          setTimeout(() => {
-            dispatch(setToken(null));
-          }, 2000)
+            await AsyncStorage.removeItem('AdsReel$:' + 'Token');
+            // setSpinnerbool(false)
+            setTimeout(() => {
+                dispatch(setToken(null));
+            }, 2000)
         }
         catch (e) {
-          console.log("error", e)
+            console.log("error", e)
         }
-    
-    
-    
-      }
+
+
+
+    }
 
     function onchange(text, field) {
         setValues({ ...values, [field]: text });
@@ -84,7 +84,7 @@ export default function Login() {
 
                 Alert.alert(res.data.message)
                 navigation.navigate('Profile')
-            //   LogOutHandle()
+                //   LogOutHandle()
             }
 
         } catch (error) {
@@ -157,7 +157,7 @@ export default function Login() {
                             <Formik
                                 // enableReinitialize
                                 validateOnMount={true}
-                                initialValues={{ old_password: "", New_Password: "" }}
+                                initialValues={{ old_password: "", new_password: "" }}
                                 onSubmit={submitHandler}
                                 validator={() => ({})}
                                 validationSchema={ChangePassword}
@@ -191,7 +191,7 @@ export default function Login() {
 
                                                 {!show?.old_password ? (
                                                     <Entypo name="eye-with-line" size={20} color="black" />) : (
-                                                        <Entypo name="eye" size={20} color="black" />)
+                                                    <Entypo name="eye" size={20} color="black" />)
                                                 }
 
                                             </Pressable>
@@ -205,40 +205,39 @@ export default function Login() {
                                             outlined
                                         />
 
-
-
-
-
                                         <CustomTextInput
                                             boxWidth={'80%'}
                                             placeholder={'Enter new  password'}
-                                            label={'New password'}
+                                            label={'Enter new  password'}
                                             name='Password'
-                                            value={values.New_Password}
+                                            value={values.new_password}
                                             leftIcon={<Entypo name="lock" size={20} color="black" />}
                                             // bgColor='#e1f3f8'
 
 
-                                            onChangeText={(e) => { handleChange("New_Password")(e); seterrorFormAPI(); }}
-                                            onBlur={handleBlur("New_Password")}
+                                            onChangeText={(e) => { handleChange("new_password")(e); seterrorFormAPI(); }}
+                                            onBlur={handleBlur("new_password")}
 
-                                            rightIcon={<Pressable onPress={() => setShow({ ...setShow, New_Password: !show?.New_Password })}>
+                                            rightIcon={<Pressable onPress={() => setShow({ ...setShow, new_password: !show?.new_password })}>
 
-                                                {!show?.New_Password ? (
-                                                      <Entypo name="eye-with-line" size={20} color="black" />) : (
-                                                        <Entypo name="eye" size={20} color="black" />)
+                                                {!show?.new_password ? (
+                                                    <Entypo name="eye-with-line" size={20} color="black" />) : (
+                                                    <Entypo name="eye" size={20} color="black" />)
                                                 }
 
                                             </Pressable>
                                             }
 
-                                            secure={!show?.New_Password} //default to true
-                                            validate={handleBlur("New_Password")}
-                                            borderColor={`${(errors.New_Password && touched.New_Password) || (errorFormAPI && errorFormAPI.New_PasswordForm) ? "red" : "#ccc"}`}
-                                            errorMessage={`${(errors.New_Password && touched.New_Password) ? `${errors.New_Password}` : (errorFormAPI && errorFormAPI.New_PasswordForm) ? `${errorFormAPI.New_PasswordForm}` : ``}`}
+                                            secure={!show?.new_password} //default to true
+                                            validate={handleBlur("new_password")}
+                                            borderColor={`${(errors.new_password && touched.new_password) || (errorFormAPI && errorFormAPI.new_passwordForm) ? "red" : "#ccc"}`}
+                                            errorMessage={`${(errors.new_password && touched.new_password) ? `${errors.new_password}` : (errorFormAPI && errorFormAPI.new_passwordForm) ? `${errorFormAPI.new_passwordForm}` : ``}`}
                                             // errorColor='magenta'
                                             outlined
                                         />
+
+
+
 
 
                                         <CustomButton

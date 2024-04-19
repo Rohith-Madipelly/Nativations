@@ -109,6 +109,7 @@ const FormData = Yup.object().shape({
     changeInYourSelf: Yup.string(),
 
     FitnessCertificate: Yup.string(),
+    state: Yup.string().required("City is a required Field"),
 
 
 
