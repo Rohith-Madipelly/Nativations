@@ -131,7 +131,35 @@ const FormData = Yup.object().shape({
     inPresentOne: Yup.string(),
     inPastTwo: Yup.string(),
     inPresentTwo: Yup.string(),
+    // FitnessCertificate:Yup.string().when(['inPresentTwo', 'inPastTwo'], {
+    //     is: (inPresentTwo, inPastTwo) => inPresentTwo === 'Yes' || inPastTwo === 'Yes',
+    //     then: Yup.string().required('Fitness certificate is required').oneOf(["yes", "no"], "Invalid course done yes or no"),
+    //   }),
+
+    FitnessCertificate: Yup.string()
+      .required("FitnessCertificate is a required field")
+      .notOneOf(["N/A"], "Please select courses"),
+
+
+  
+    //   FitnessCertificate: Yup.string().when('inPresentTwo', {
+    //     is: true,
+    //     then: Yup.string().required('Fitness certificate is required').oneOf(["yes", "no"], "Invalid value for FitnessCertificate")
+    //   }),
+
+      
     medicineName: Yup.string(),
+
+    
+  
+    // medicineName: Yup.string().when('FitnessCertificate', {
+    //     is: 'yes',
+    //     then: Yup.string().required('546 certificate is required'),
+    //     otherwise: Yup.string(),
+    //   }),
+      
+
+
     medicineDose: Yup.string(),
 
 });

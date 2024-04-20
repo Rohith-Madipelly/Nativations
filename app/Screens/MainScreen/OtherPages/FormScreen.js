@@ -65,7 +65,7 @@ export default function FormScreen() {
       // firstName: "Rohith", lastName: "Madipelly", gender: "", age: "20", education: "Civil Btech", martialStatus: "", guardianName: "Venu", language: "", mobileNumber: "9951072003", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bank Colony,", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
       firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", language: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
       oldStuName: "", firstCoursePlace: "", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "", lastCoursePlace: "", lastAsstTeacher: "", courseDetails: "", triedAnyPractise: "", practiseRegularly: "", dailyHours: "", reason: "", changeInYourSelf: "",
-      personName: "", personRelation: "", courseDone: "", relation: "", designation: "", companyName: "", companyAddress: "", inPastOne: "", inPresentOne: "", inPastTwo: "", inPresentTwo: ""
+      personName: "", personRelation: "", courseDone: "", relation: "", designation: "", companyName: "", companyAddress: "", inPastOne: "", inPresentOne: "", FitnessCertificate:"",inPastTwo: "", inPresentTwo: ""
     },
 
     onSubmit: values => {
@@ -261,6 +261,8 @@ export default function FormScreen() {
   }
 
 
+
+
   // When user Selects Course Fetch the Course Information
   const fetchUserData = async (id) => {
     if (id === 'N/A') {
@@ -375,8 +377,8 @@ export default function FormScreen() {
 
       const docFitnessCertificate = {
 
-        medicineName: `${FitnessCertificate === 'yes' ? medicineName : ""}`,
-        medicineDose: `${FitnessCertificate === 'yes' ? medicineDose : ""}`,
+        medicineName: `${FitnessCertificate === 'yes' ? medicineName : "N/A"}`,
+        medicineDose: `${FitnessCertificate === 'yes' ? medicineDose : "N/A"}`,
       }
       const courseId = `${courseData._id}`
       const courseName = `${courseData.courseName}`
@@ -390,7 +392,7 @@ export default function FormScreen() {
       console.log(">>>>Tester", dataEngin.language)
       console.log(">>>>Tester", dataEngin.state)
       console.log(">>>>Tester regularMedicine", regularMedicine)
-      console.log(">>>>Tester brief", brief)
+      console.log(">>>>Tester", dataEngin)
       console.log("asdda")
       const res = await FormDataApi(dataEngin, tokenn)
 
@@ -503,11 +505,11 @@ export default function FormScreen() {
           companyAddress: `${userReviewsData.professionalDetails.companyAddress}`,
 
 
-          inPastOne: `${userReviewsData.physicalAilment.inPastOne}`,
-          inPresentOne: `${userReviewsData.physicalAilment.inPresentOne}`,
+          // inPastOne: `${userReviewsData.physicalAilment.inPastOne}`,
+          // inPresentOne: `${userReviewsData.physicalAilment.inPresentOne}`,
 
-          inPastTwo: `${userReviewsData.psyschologicalAilment.inPastTwo}`,
-          inPresentTwo: `${userReviewsData.psyschologicalAilment.inPresentTwo}`,
+          // inPastTwo: `${userReviewsData.psyschologicalAilment.inPastTwo}`,
+          // inPresentTwo: `${userReviewsData.psyschologicalAilment.inPresentTwo}`,
 
 
           medicineName: `${userReviewsData.docFitnessCertificate.medicineName}`,
@@ -681,6 +683,24 @@ export default function FormScreen() {
                     borderColor={`${(errors.courseName && touched.courseName) || (errorFormAPI && errorFormAPI.courseNameForm) ? "red" : "#ccc"}`}
                     errorMessage={`${(errors.courseName && touched.courseName) ? `${errors.courseName}` : (errorFormAPI && errorFormAPI.courseNameForm) ? `${errorFormAPI.courseNameForm}` : ``}`}
                     // errorColor='magenta'
+                    editable={false}
+                  />
+
+                  <CustomTextInput
+                    placeholder={'Your Course City'}
+                    asterisksymbol={true}
+                    boxWidth={'80%'}
+                    label={'Course City'}
+                    name='courseName'
+                    value={`${courseData.city || values.courseName}`}
+                    // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                    // bgColor='#e1f3f8'
+                    // bgColor="#B1B1B0"
+
+
+                    outlined
+                    borderColor={`${(errors.courseName && touched.courseName) || (errorFormAPI && errorFormAPI.courseNameForm) ? "red" : "#ccc"}`}
+
                     editable={false}
                   />
 
@@ -1300,6 +1320,9 @@ export default function FormScreen() {
 
 
                 </View>
+
+                {/* <Text> is present {values.inPresentTwo}</Text> */}
+                {/* <Text> is inPast {values.inPastTwo}</Text> */}
                 {/* <Text style={{ fontWeight: 800, fontSize: 15, marginTop: 5, marginBottom: 5 }}>------- Fitness Certificate -------</Text> */}
                 {values.inPresentTwo === "yes" || values.inPastTwo === "yes" ? <CustomPicker
                   placeholder={'If yes, kindly bring a fitness certificate from your doctor'}
