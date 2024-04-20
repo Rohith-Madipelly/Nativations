@@ -35,7 +35,7 @@ const FormData = Yup.object().shape({
     // .integer("User Age must be an integer")
     // .min(18, "User Age must be at least 18 years old")
     // .max(120, "User Age cannot exceed 120 years"),
-    
+
     education: Yup.string()
         .required("Education name is a required field "),
     // .min(6, "To short"),
@@ -56,8 +56,8 @@ const FormData = Yup.object().shape({
     Language: Yup.string(),
 
     martialStatus: Yup.string()
-        .required("MartialStatus is a required field"),
-    // .oneOf(["single", "married", "windower", "widow", "separated", "divorced"], "Invalid martial Status"),
+        .required("Marital status is a required field")
+        .oneOf(["Single", "Married", "Widower", "Widow", "Separated", "Divorced"], "Invalid marital status"),
 
 
 
@@ -76,7 +76,7 @@ const FormData = Yup.object().shape({
         .required("Mobile number is a required field")
         .matches(/^[0-9]{10}$/, "Mobile number must be a 10-digit number"),
 
-    eMail: Yup.string().email("Please enter a valid Email").required("Please enter a valid Email"),
+    eMail: Yup.string().email("Please enter a valid Email").required("Please enter a valid email"),
     address: Yup.string()
         .required("Address is a required field"),
     // .min(15, "Length is short"),
@@ -92,7 +92,7 @@ const FormData = Yup.object().shape({
         // .max(225, "referenceFrom Length is too Long")
         .required("Brief information is a required field."),
     referenceFrom: Yup.string()
-        .required("ReferenceFrom is a required field").oneOf(["Friend", "News-Paper", "TV", "Lectures", "Others"], "Invalid Reference "),
+        .required("Reference from is a required field").oneOf(["Friend", "News-Paper", "TV", "Lectures", "Others"], "Invalid reference "),
 
     oldStuName: Yup.string(),
     firstCoursePlace: Yup.string(),
@@ -101,7 +101,7 @@ const FormData = Yup.object().shape({
     firstAsstTeacher: Yup.string(),
     lastCoursePlace: Yup.string(),
     lastAsstTeacher: Yup.string(),
-    courseDetails: Yup.string().oneOf(["10-Days", "20-Days", "30-Days", "50-Days", "60-Days", "Self-Course", "Service", "Courses"], "Invalid Input"),
+    courseDetails: Yup.string().oneOf(["10-Days", "20-Days", "30-Days", "50-Days", "60-Days", "Self-Course", "Service", "Courses"], "Invalid input"),
     triedAnyPractise: Yup.string(),
     practiseRegularly: Yup.string().oneOf(["yes", "no", "Courses"], "Invalid input"),
     dailyHours: Yup.string(),
@@ -109,7 +109,7 @@ const FormData = Yup.object().shape({
     changeInYourSelf: Yup.string(),
 
     FitnessCertificate: Yup.string(),
-    state: Yup.string().required("City is a required Field"),
+    state: Yup.string().required("City is a required Field ").oneOf(["Kolkata", "Bikaner", "other"], "Invalid input"),
 
 
 
@@ -129,38 +129,37 @@ const FormData = Yup.object().shape({
 
     inPastOne: Yup.string(),
     inPresentOne: Yup.string(),
+
     inPastTwo: Yup.string(),
     inPresentTwo: Yup.string(),
-    // FitnessCertificate:Yup.string().when(['inPresentTwo', 'inPastTwo'], {
-    //     is: (inPresentTwo, inPastTwo) => inPresentTwo === 'Yes' || inPastTwo === 'Yes',
-    //     then: Yup.string().required('Fitness certificate is required').oneOf(["yes", "no"], "Invalid course done yes or no"),
-    //   }),
+
 
     FitnessCertificate: Yup.string()
-      .required("FitnessCertificate is a required field")
-      .notOneOf(["N/A"], "Please select courses"),
+        .when(['inPastTwo', 'inPresentTwo'], ([inPastTwo, inPresentTwo], schema) => {
+
+            if (inPresentTwo === "Yes" || inPastTwo === "Yes")
+                return schema
+                    .required('Fitness certificate is required').oneOf(["Yes", "No"], "Invalid value for Fitness Certificate")
+            return
+        }),
 
 
-  
-    //   FitnessCertificate: Yup.string().when('inPresentTwo', {
-    //     is: true,
-    //     then: Yup.string().required('Fitness certificate is required').oneOf(["yes", "no"], "Invalid value for FitnessCertificate")
-    //   }),
-
-      
-    medicineName: Yup.string(),
-
-    
-  
-    // medicineName: Yup.string().when('FitnessCertificate', {
-    //     is: 'yes',
-    //     then: Yup.string().required('546 certificate is required'),
-    //     otherwise: Yup.string(),
-    //   }),
-      
 
 
-    medicineDose: Yup.string(),
+    medicineName: Yup.string().when('FitnessCertificate', ([FitnessCertificate], schema) => {
+
+        if (FitnessCertificate === "Yes")
+            return schema
+                .required("Medicine name is a required field")
+        return
+    }),
+    medicineDose: Yup.string().when('FitnessCertificate', ([FitnessCertificate], schema) => {
+
+        if (FitnessCertificate === "Yes")
+            return schema
+                .required("Medicine dose is a required field")
+        return
+    }),
 
 });
 export { FormData }

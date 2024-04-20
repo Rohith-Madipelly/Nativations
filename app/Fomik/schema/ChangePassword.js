@@ -11,7 +11,7 @@ const ChangePassword = Yup.object().shape({
     .max(15, 'Password should not be more than 15 characters')
     .required('Old password is required'),
 
-  new_password: Yup.string()
+    New_Password: Yup.string()
     .min(6, 'Password must be at least 6 characters')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])(?=.*[^\w\d\s]).+$/,

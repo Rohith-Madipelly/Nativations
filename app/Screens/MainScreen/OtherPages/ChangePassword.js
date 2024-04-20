@@ -76,8 +76,11 @@ export default function Login() {
         seterrorFormAPI()
         try {
             const { old_password, New_Password, } = user;
+
+            console.log(old_password, New_Password, tokenn)
             setSpinnerbool(true)
             const res = await ChangePasswordAPI(old_password, New_Password, tokenn)
+            
             if (res) {
                 console.log(res.data.message)
 
@@ -157,7 +160,7 @@ export default function Login() {
                             <Formik
                                 // enableReinitialize
                                 validateOnMount={true}
-                                initialValues={{ old_password: "", new_password: "" }}
+                                initialValues={{ old_password: "", New_Password: "" }}
                                 onSubmit={submitHandler}
                                 validator={() => ({})}
                                 validationSchema={ChangePassword}
@@ -210,17 +213,17 @@ export default function Login() {
                                             placeholder={'Enter new  password'}
                                             label={'Enter new  password'}
                                             name='Password'
-                                            value={values.new_password}
+                                            value={values.New_Password}
                                             leftIcon={<Entypo name="lock" size={20} color="black" />}
                                             // bgColor='#e1f3f8'
 
 
-                                            onChangeText={(e) => { handleChange("new_password")(e); seterrorFormAPI(); }}
-                                            onBlur={handleBlur("new_password")}
+                                            onChangeText={(e) => { handleChange("New_Password")(e); seterrorFormAPI(); }}
+                                            onBlur={handleBlur("New_Password")}
 
-                                            rightIcon={<Pressable onPress={() => setShow({ ...setShow, new_password: !show?.new_password })}>
+                                            rightIcon={<Pressable onPress={() => setShow({ ...setShow, New_Password: !show?.New_Password })}>
 
-                                                {!show?.new_password ? (
+                                                {!show?.New_Password ? (
                                                     <Entypo name="eye-with-line" size={20} color="black" />) : (
                                                     <Entypo name="eye" size={20} color="black" />)
                                                 }
@@ -228,10 +231,10 @@ export default function Login() {
                                             </Pressable>
                                             }
 
-                                            secure={!show?.new_password} //default to true
-                                            validate={handleBlur("new_password")}
-                                            borderColor={`${(errors.new_password && touched.new_password) || (errorFormAPI && errorFormAPI.new_passwordForm) ? "red" : "#ccc"}`}
-                                            errorMessage={`${(errors.new_password && touched.new_password) ? `${errors.new_password}` : (errorFormAPI && errorFormAPI.new_passwordForm) ? `${errorFormAPI.new_passwordForm}` : ``}`}
+                                            secure={!show?.New_Password} //default to true
+                                            validate={handleBlur("New_Password")}
+                                            borderColor={`${(errors.New_Password && touched.New_Password) || (errorFormAPI && errorFormAPI.New_PasswordForm) ? "red" : "#ccc"}`}
+                                            errorMessage={`${(errors.New_Password && touched.New_Password) ? `${errors.New_Password}` : (errorFormAPI && errorFormAPI.New_PasswordForm) ? `${errorFormAPI.New_PasswordForm}` : ``}`}
                                             // errorColor='magenta'
                                             outlined
                                         />

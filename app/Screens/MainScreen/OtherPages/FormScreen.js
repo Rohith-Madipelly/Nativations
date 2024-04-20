@@ -65,7 +65,7 @@ export default function FormScreen() {
       // firstName: "Rohith", lastName: "Madipelly", gender: "", age: "20", education: "Civil Btech", martialStatus: "", guardianName: "Venu", language: "", mobileNumber: "9951072003", eMail: "madipellyrohith@gmail.com", address: "11-24-140,2nd bank Colony,", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
       firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", language: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
       oldStuName: "", firstCoursePlace: "", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "", lastCoursePlace: "", lastAsstTeacher: "", courseDetails: "", triedAnyPractise: "", practiseRegularly: "", dailyHours: "", reason: "", changeInYourSelf: "",
-      personName: "", personRelation: "", courseDone: "", relation: "", designation: "", companyName: "", companyAddress: "", inPastOne: "", inPresentOne: "", FitnessCertificate:"",inPastTwo: "", inPresentTwo: ""
+      personName: "", personRelation: "", courseDone: "", relation: "", designation: "", companyName: "", companyAddress: "", inPastOne: "", inPresentOne: "", FitnessCertificate: "", inPastTwo: "", inPresentTwo: ""
     },
 
     onSubmit: values => {
@@ -158,12 +158,12 @@ export default function FormScreen() {
 
   const martialStatus = [
     { label: 'Select', value: 'N/A' },
-    { label: 'Single', value: 'single' },
-    { label: 'Married', value: 'married' },
-    { label: 'Widower', value: 'widower' },
-    { label: 'Widow', value: 'widow' },
-    { label: 'Separated', value: 'separated' },
-    { label: 'Divorced', value: 'divorced' },
+    { label: 'Single', value: 'Single' },
+    { label: 'Married', value: 'Married' },
+    { label: 'Widower', value: 'Widower' },
+    { label: 'Widow', value: 'Widow' },
+    { label: 'Separated', value: 'Separated' },
+    { label: 'Divorced', value: 'Divorced' },
   ];
 
   const courseDetailsData = [
@@ -198,19 +198,19 @@ export default function FormScreen() {
 
   const FitnessCertificateData = [
     { label: 'Select', value: 'N/A' },
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' },
+    { label: 'Yes', value: 'Yes' },
+    { label: 'No', value: 'No' },
   ];
   const inPastTwoData = [
     { label: 'Select', value: 'N/A' },
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' },
+    { label: 'Yes', value: 'Yes' },
+    { label: 'No', value: 'No' },
   ];
 
   const inPresentTwoData = [
     { label: 'Select', value: 'N/A' },
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' },
+    { label: 'Yes', value: 'Yes' },
+    { label: 'No', value: 'No' },
   ];
 
 
@@ -377,8 +377,8 @@ export default function FormScreen() {
 
       const docFitnessCertificate = {
 
-        medicineName: `${FitnessCertificate === 'yes' ? medicineName : "N/A"}`,
-        medicineDose: `${FitnessCertificate === 'yes' ? medicineDose : "N/A"}`,
+        medicineName: `${FitnessCertificate === 'Yes' ? medicineName : "N/A"}`,
+        medicineDose: `${FitnessCertificate === 'Yes' ? medicineDose : "N/A"}`,
       }
       const courseId = `${courseData._id}`
       const courseName = `${courseData.courseName}`
@@ -512,8 +512,8 @@ export default function FormScreen() {
           // inPresentTwo: `${userReviewsData.psyschologicalAilment.inPresentTwo}`,
 
 
-          medicineName: `${userReviewsData.docFitnessCertificate.medicineName}`,
-          medicineDose: `${userReviewsData.docFitnessCertificate.medicineDose}`,
+          // medicineName: `${userReviewsData.docFitnessCertificate.medicineName}`,
+          // medicineDose: `${userReviewsData.docFitnessCertificate.medicineDose}`,
           regularMedicine: `${userReviewsData.docFitnessCertificate.regularMedicine}`,
 
 
@@ -851,7 +851,7 @@ export default function FormScreen() {
                   errorMessage={`${(errors.education && touched.education) ? `${errors.education}` : (errorFormAPI && errorFormAPI.educationForm) ? `${errorFormAPI.educationForm}` : ``}`}
                 />
 
-
+                {/* <Text>{errors.state}</Text> */}
                 <CustomPicker
                   placeholder={'Enter your city'}
                   asterisksymbol={true}
@@ -940,8 +940,8 @@ export default function FormScreen() {
                   onBlur={handleBlur("martialStatus")}
                   validate={handleBlur("martialStatus")}
                   outlined
-                  borderColor={`${(errors.martialStatus && touched.martialStatus) || (errorFormAPI && errorFormAPI.martialStatusForm) ? "red" : "#ccc"}`}
-                  errorMessage={`${(errors.martialStatus && touched.martialStatus) ? `${errors.martialStatus}` : (errorFormAPI && errorFormAPI.martialStatusForm) ? `${errorFormAPI.genderForm}` : ``}`}
+                  borderColor={`${(errors.martialStatus) || (errorFormAPI && errorFormAPI.martialStatusForm) ? "red" : "#ccc"}`}
+                  errorMessage={`${(errors.martialStatus) ? `${errors.martialStatus}` : (errorFormAPI && errorFormAPI.martialStatusForm) ? `${errorFormAPI.genderForm}` : ``}`}
                   value={values.martialStatus}
                   items={martialStatus}
                   onValueChange={(itemValue) => handleChange("martialStatus")(itemValue)}
@@ -1324,7 +1324,7 @@ export default function FormScreen() {
                 {/* <Text> is present {values.inPresentTwo}</Text> */}
                 {/* <Text> is inPast {values.inPastTwo}</Text> */}
                 {/* <Text style={{ fontWeight: 800, fontSize: 15, marginTop: 5, marginBottom: 5 }}>------- Fitness Certificate -------</Text> */}
-                {values.inPresentTwo === "yes" || values.inPastTwo === "yes" ? <CustomPicker
+                {values.inPresentTwo === "Yes" || values.inPastTwo === "Yes" ? <CustomPicker
                   placeholder={'If yes, kindly bring a fitness certificate from your doctor'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
@@ -1352,7 +1352,7 @@ export default function FormScreen() {
                 /> : ""}
 
 
-                {values.FitnessCertificate === "yes" ?
+                {values.FitnessCertificate === "Yes" ?
                   <CustomTextInput
                     boxWidth={'80%'}
                     placeholder={'Name of medicine'}
@@ -1367,12 +1367,13 @@ export default function FormScreen() {
 
                     validate={handleBlur("medicineName")}
                     outlined
+                    // borderColor={"red"}
                     borderColor={`${(errors.medicineName && touched.medicineName) || (errorFormAPI && errorFormAPI.medicineNameForm) ? "red" : "#ccc"}`}
                     errorMessage={`${(errors.medicineName && touched.medicineName) ? `${errors.medicineName}` : (errorFormAPI && errorFormAPI.medicineNameForm) ? `${errorFormAPI.medicineNameForm}` : ``}`}
                   // errorColor='magenta'
                   /> : ""}
 
-                {values.FitnessCertificate === "yes" ?
+                {values.FitnessCertificate === "Yes" ?
                   <CustomTextInput
                     boxWidth={'80%'}
                     placeholder={'Dose of medicine'}
@@ -1396,7 +1397,7 @@ export default function FormScreen() {
 
 
 
-                {values.FitnessCertificate === "yes" ?
+                {values.FitnessCertificate === "Yes" ?
                   <CustomPicker
                     placeholder={'If taking any medicine regularly have you brought it with you?'}
                     asterisksymbol={true}

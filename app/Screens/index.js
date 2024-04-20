@@ -30,7 +30,7 @@ import PrivacyPolicy from "./MainScreen/OtherPages/PrivacyPolicy";
 import About from "./MainScreen/OtherPages/About";
 import Help from "./MainScreen/OtherPages/Help";
 
-import FormScreenNew from "./MainScreen/OtherPages/FormScreenNew";
+import FormScreenChecker from "./MainScreen/OtherPages/FormScreenChecker";
 
 
 
@@ -119,8 +119,9 @@ export default function Screens() {
           <Stack.Group >
             {user ? (
               <>
-
-
+ {/* <Stack.Screen name="FormScreen12" component={FormScreenChecker} /> */}
+ 
+ {/* <Stack.Screen name="FormScreen" component={FormScreen} /> */}
                 <Stack.Screen name="BottomTabScreen" component={BottomTabScreen} />
                 <Stack.Screen name="VideoScreen" component={VideoScreen} />
                 <Stack.Screen name="FormScreen" component={FormScreen} />
