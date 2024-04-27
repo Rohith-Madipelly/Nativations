@@ -82,7 +82,7 @@ const FormData = Yup.object().shape({
     // .min(15, "Length is short"),
 
     regularMedicine: Yup.string()
-        .required("Regular medicine is a required field"),
+        .required("Please select if taking any medicie regular"),
     // .oneOf(["yes", "no"], "Invalid regular Medicine"),
 
 

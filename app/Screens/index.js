@@ -40,7 +40,7 @@ import SatyaSadhana from "./MainScreen/OtherPages/SatyaSadhana";
 import DaatPage from "./MainScreen/OtherPages/Data";
 import ErrorBoundary from "react-native-error-boundary";
 import NetInfo from '@react-native-community/netinfo';
-import { Alert, View,Text } from "react-native";
+import { Alert, View, Text } from "react-native";
 // SplashScreen.preventAutoHideAsync();
 export default function Screens() {
   const [user, setUser] = useState()
@@ -119,9 +119,9 @@ export default function Screens() {
           <Stack.Group >
             {user ? (
               <>
- {/* <Stack.Screen name="FormScreen12" component={FormScreenChecker} /> */}
- 
- {/* <Stack.Screen name="FormScreen" component={FormScreen} /> */}
+                {/* <Stack.Screen name="FormScreen12" component={FormScreenChecker} /> */}
+
+                {/* <Stack.Screen name="FormScreen" component={FormScreen} /> */}
                 <Stack.Screen name="BottomTabScreen" component={BottomTabScreen} />
                 <Stack.Screen name="VideoScreen" component={VideoScreen} />
                 <Stack.Screen name="FormScreen" component={FormScreen} />
