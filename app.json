@@ -48,6 +48,9 @@
         ]
       ],
       "scheme": "newapp"
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

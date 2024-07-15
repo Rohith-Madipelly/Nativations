@@ -96,6 +96,7 @@ export default function Login() {
 
 
             }
+            
 
         } catch (error) {
             console.log(error, "Find me")
@@ -171,7 +172,7 @@ export default function Login() {
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
                     // behavior={Platform.OS === "ios" ? 100:0}
-                    keyboardVerticalOffset={5000}
+                    keyboardVerticalOffset={5000} 
                 // style={styles.container}
                 >
                     {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}

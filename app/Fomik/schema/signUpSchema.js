@@ -4,11 +4,16 @@ const signupSchema = Yup.object().shape({
     .trim()
     .required("First name is a required field")
     .matches(/^[a-zA-Z ]*$/, "Name must contain only letters and spaces"),
-  Mobile_Number: Yup.string()
+  
+  
+    Mobile_Number: Yup.string()
     .trim()
     .required("Mobile number is a required field")
     .matches(/^[0-9]{10}$/, "Mobile number must be a 10-digit number"),
-  email: Yup.string().email("Enter a valid email").required("Email is a required field"),
+ 
+ 
+ 
+    email: Yup.string().email("Enter a valid email").required("Email is a required field"),
 
   password: Yup.string()
   .min(8, "Password length is short")

@@ -59,11 +59,11 @@ export const LivePageData = async (token) => {
 
 
 // User Login API Call 
-export const UserLoginApi = async (loginFormData) => {
+export const UserLoginApi = async (loginFormData,) => {
   console.log(">>", loginFormData)
   // const loginData = {
-  //   email: loginFormData.email,
-  //   password: loginFormData.password
+  //   email: "madipel",
+  //   password: password
   // };
   return await axios.post(`${GUEST_URL}/login`, loginFormData);
 };

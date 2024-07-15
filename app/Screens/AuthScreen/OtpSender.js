@@ -47,7 +47,7 @@ export default function OtpSender() {
     const submitHandler = async (user) => {
     
         seterrorFormAPI()
-        try {
+        try { 
             const { email} = user;
 
             setSpinnerbool(true)

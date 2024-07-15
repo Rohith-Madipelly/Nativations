@@ -30,7 +30,7 @@ import { Email } from '../../Fomik/schema/Email.js';
 import { ToasterMessage } from '../../utils/ToasterMessage.js';
 
 
-export default function OtpVerify({ route }) {
+export default function OtpVerify({ route }) { 
 
 
 
@@ -40,7 +40,7 @@ export default function OtpVerify({ route }) {
     // email
     const [show, setShow] = useState()
     const [errorFormAPI, seterrorFormAPI] = useState("")
-    const [spinnerBool, setSpinnerbool] = useState(false)
+    const [spinnerBool, setSpinnerbool] = useState(false) 
 
     const navigation = useNavigation();
 

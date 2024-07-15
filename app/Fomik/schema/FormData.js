@@ -81,8 +81,7 @@ const FormData = Yup.object().shape({
         .required("Address is a required field"),
     // .min(15, "Length is short"),
 
-    regularMedicine: Yup.string()
-        .required("Please select if taking any medicie regular"),
+
     // .oneOf(["yes", "no"], "Invalid regular Medicine"),
 
 
@@ -144,6 +143,15 @@ const FormData = Yup.object().shape({
         }),
 
 
+
+
+    regularMedicine: Yup.string().when('FitnessCertificate', ([FitnessCertificate], schema) => {
+       
+        if (FitnessCertificate === "Yes")
+            return schema
+            .required("Please select if taking any medicie regular")
+        return
+    }),
 
 
     medicineName: Yup.string().when('FitnessCertificate', ([FitnessCertificate], schema) => {

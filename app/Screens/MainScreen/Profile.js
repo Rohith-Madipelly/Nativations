@@ -163,7 +163,6 @@ const Profile = () => {
 
       if (res) {
         setAppLink(res.data.playStore)
-
       }
       else {
         console.log("sad")
@@ -275,6 +274,7 @@ const Profile = () => {
               </View>
             </View>
           </TouchableOpacity>
+          
           <View style={styles.Heading_u2}>
             <View>
 

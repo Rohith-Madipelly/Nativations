@@ -2,12 +2,12 @@ import { SafeAreaView, View, ScrollView, RefreshControl, Text, Button, Alert } f
 // import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 
-import Snap_Carousel1 from '../../Components2/Snap_Carousel1';
-import Snap_Carousel2 from '../../Components2/Snap_Carousel2';
-import Snap_Carousel3 from '../../Components2/Snap_Carousel3';
-import Snap_Carousel4 from '../../Components2/Snap_Carousel4';
-import Snap_Carousel5 from '../../Components2/Snap_Carousel5';
-import Snap_Carousel6 from '../../Components2/Snap_Carousel6';
+// import Snap_Carousel1 from '../../Components2/Snap_Carousel1';
+// import Snap_Carousel2 from '../../Components2/Snap_Carousel2';
+// import Snap_Carousel3 from '../../Components2/Snap_Carousel3';
+// import Snap_Carousel4 from '../../Components2/Snap_Carousel4';
+// import Snap_Carousel5 from '../../Components2/Snap_Carousel5';
+// import Snap_Carousel6 from '../../Components2/Snap_Carousel6';
 
 import { HomePageData } from '../../utils/API_Calls';
 import { useSelector } from 'react-redux';
@@ -187,7 +187,7 @@ const Home = () => {
 
             {isData ? <View>
 
-              <Snap_Carousel1 BannerData={Banners} />
+              {/* <Snap_Carousel1 BannerData={Banners} />
 
               <Snap_Carousel2 BannerData2={meditationTracks} />
 
@@ -199,7 +199,7 @@ const Home = () => {
 
               <Snap_Carousel5 BannerDataBajana={bhanaja} />
 
-              <Snap_Carousel6 Up_Coming_EventsData={upComingEvents} />
+              <Snap_Carousel6 Up_Coming_EventsData={upComingEvents} /> */}
 
             </View> :
               <View>

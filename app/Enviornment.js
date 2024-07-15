@@ -4,7 +4,6 @@
 
 // export const GUEST_URL="http://www.satyasadhna.com:8001"
 export const GUEST_URL="https://www.satyasadhna.com"
-
 export const BASE_URL = "https://www.satyasadhna.com"
 
 
