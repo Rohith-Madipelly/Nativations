@@ -26,8 +26,10 @@ import Snap_Carousel7 from '../../Components2/Snap_Carousel7.js';
 import VideoComponent from '../../Components/VideoComponent.js';
 import AudioComponent from '../../Components/AudioComponent.js';
 
+const Stack = createNativeStackNavigator();
 
-const VideoScreen = ({ route }) => {
+
+const YoutudeScreen = ({ route }) => {
   const { id } = route.params
   // console.log("adsd>>>>", id)
 
@@ -54,7 +56,7 @@ const VideoScreen = ({ route }) => {
   }, []);
 
 
-
+  const dispatch = useDispatch();
   let tokenn = useSelector((state) => state.token);
 
   // >>>>>>>>>>>>>>>>>
@@ -100,14 +102,16 @@ const VideoScreen = ({ route }) => {
       const res = await VideoPageData(tokenn, id)
 
       if (res) {
-        console.log("data mes", res.data.postDetails.type)
+        // console.log("data mes", res.data.postDetails.youtubeUrl)
         setType(res.data.postDetails.type)
+
+
 
         setDataPage(res.data.postDetails)
         setRelatedPosts(res.data.relatedPosts)
         setTitle(res.data.postDetails.title)
-        setVideoID(getIdFromUrl(res.data.postDetails.videoUrl))
-        console.log(res.data.postDetails.title)
+        setVideoID(getIdFromUrl(res.data.postDetails.youtubeUrl))
+
       }
       else {
         console.log("No Respones")
@@ -164,30 +168,43 @@ const VideoScreen = ({ route }) => {
 
 
 
-        <View style={{ width: '100%', height: 280, marginTop: 30 }}>
-          {DataPage ? <VideoComponent DataPage={DataPage} /> : ""}
+        <View style={{ width: '100%', marginTop: 30 }}>
+
+          <YoutubePlayer
+            height={222}
+            play={playing}
+            // videoId={ScreenData.VideoID}
+            videoId={VideoID}
+            onChangeState={onStateChange}
+            showinfo={false}
+            controls={1}
+          />
+
+
+          <Pressable style={{ position: "absolute", top: '10%', left: 10, backgroundColor: '#3d423e', borderRadius: 50 }} onPress={() => { navigation.goBack(); }}>
+            <Feather name="arrow-left" size={35} color="white" />
+          </Pressable>
         </View>
 
 
+        <CustomButton
+          onPress={togglePlaying}
+          styleData={{ paddingHorizontal: 50, marginVertical: 10 }}>
+          {playing ? "pause" : "Watch Now"}
+        </CustomButton>
+
         {DataPage ? <Text style={[styles.paragraphy_U11, { width: '90%', paddingBottom: 5 }]}>{DataPage.title}</Text> : ""}
-        {DataPage ? <Text style={[styles.paragraphy_U10, { width: '90%', paddingLeft: 5,marginBottom:25 }]}>{DataPage.description}</Text> : ""}
+        {DataPage ? <Text style={[styles.paragraphy_U10, { width: '90%', paddingLeft: 5 }]}>{DataPage.description}</Text> : ""}
 
-        {/* {DataPage ? <View style={{ paddingTop: 20, flexDirection: 'row' }}> */}
-        {/* <ButtonTotal youtubeURL={DataPageVideo} /> */}
-        {/* <ButtonTotal youtubeURL={DataPage.videoUrl} />
-        </View> : ""} */}
-
-
-
-        {/* <Text>{type === "Video" ? <VideoComponent item={DataPage} /> : type === "Audio" ? <AudioComponent item={DataPage} /> : "ll"}</Text> */}
+        {DataPage ? <View style={{ paddingTop: 20, flexDirection: 'row' }}>
+          {/* <ButtonTotal youtubeURL={DataPageVideo} /> */}
+          <ButtonTotal youtubeURL={DataPage.videoUrl} />
+        </View> : ""}
 
 
 
-        {relatedPosts ? <View>
-          <Snap_Carousel7 relatedPostsData={relatedPosts} />
-        </View> : <View>
-          <Text>No Related Posts</Text>
-        </View>}
+
+        {relatedPosts.lenght === 0 ? <View><Snap_Carousel7 relatedPostsData={relatedPosts} /></View> : <View><Text>No Related Posts</Text></View>}
         <View style={{ height: 20 }}>
 
         </View>
@@ -196,7 +213,7 @@ const VideoScreen = ({ route }) => {
   )
 }
 
-export default VideoScreen
+export default YoutudeScreen
 
 const styles = StyleSheet.create({
 

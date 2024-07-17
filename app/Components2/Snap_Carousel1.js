@@ -1,9 +1,13 @@
 import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useRef, useState } from 'react'
-import Carousel from 'react-native-snap-carousel';
+// import Carousel from 'react-native-snap-carousel';
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { GUEST_URL } from '../Enviornment';
+
+import Carousel from 'react-native-reanimated-carousel';
+import LoadingImage from '../Components/ImageConatiners/LoadingImage';
+
 
 
 const Snap_Carousel1 = ({ BannerData }) => {
@@ -14,14 +18,43 @@ const Snap_Carousel1 = ({ BannerData }) => {
     const navigation = useNavigation();
 
 
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",BannerData)
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", BannerData)
     const RenderItem = ({ item, index }) => {
 
+        const Navigationn = () => {
+            if (item.type == "Youtube" || item.type == undefined) {
+                navigation.navigate('YoutudeScreen', { id: `${item.id}` })
+                // console.log("chgchgcjyhcjhc", item.id)
+            }
+            else if (item.type == "Audio") {
+                // console.log("this is Audio ")
+                navigation.navigate('AudioScreen', { id: `${item.id}` })
+            }
+            else if (item.type == "Video") {
+                // console.log("video")
+                navigation.navigate('VideoScreen', { id: `${item.id}` })
+            }
+        }
+
+
+
         return (
-            <Pressable onPress={() => {navigation.navigate('VideoScreen', { id: `${item.id}` });}}>
-                <View style={{ padding: 10, marginLeft: 8 }} >
-                    <Image source={{ uri: `${GUEST_URL}/thumbnail/${item.thumbnail}` }} style={{ width: width * 0.90, height: 200, borderRadius: 20 }} />
-                </View> 
+            <Pressable onPress={() => { Navigationn() }} key={index} style={{justifyContent:'center',alignItems:'center'}}>
+                <View style={{width: '98%',justifyContent:'center',alignItems:'center',borderRadius: 20,overflow:'hidden'}} >
+                    {/* <Image source={{ uri: `${GUEST_URL}/${item.thumbnail}` }} style={{ width: '100%', height: 200, borderRadius: 20, resizeMode: 'contain', }} /> */}
+
+
+                    <LoadingImage
+                        source={{ uri: `${GUEST_URL}/${item.thumbnail}` }}
+                        //   style={{ width: '100%', height: 240, }}
+                        style={{ width: '100%', height: 200, borderRadius: 20, resizeMode:'cover' }}
+                        loaderColor="#ff0000" // Optional: change loader color
+                        // resizeMode="contain"
+                    />
+
+
+                </View>
+                {/* <Text>{`${GUEST_URL}/${item.thumbnail}`}</Text> */}
             </Pressable>
         );
     }
@@ -35,8 +68,8 @@ const Snap_Carousel1 = ({ BannerData }) => {
     }
 
     return (
-        <View>
-            <Carousel
+        <View style={{ justifyContent: "center", alignItems: 'center', marginTop: 10 }}>
+            {/* <Carousel
                 ref={carouselRef}
                 loop={true}
                 data={BannerData}
@@ -46,7 +79,25 @@ const Snap_Carousel1 = ({ BannerData }) => {
                 itemWidth={510}
                 autoplay={true}
                 autoplayDelay={4000}
-            />
+            /> */}
+            {BannerData.length === 0 ?
+                    <View style={{ height: 171, width: width * 0.78, marginHorizontal: 10, backgroundColor: '#E8E8E899', alignItems: 'center', justifyContent: 'center',borderRadius:15 }} >
+                        <Text>No posts available</Text>
+                    </View>
+                    :<Carousel
+                    loop
+                    // ref={carouselRef}
+                    width={width * 0.9}
+                    height={width * 0.65}
+                    autoPlay={true}
+                    data={BannerData}
+                    scrollAnimationDuration={4000}
+                    renderItem={RenderItem}
+                /> }
+                <View>
+                    
+                    </View>
+
         </View>
     )
 }

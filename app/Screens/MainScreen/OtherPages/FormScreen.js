@@ -766,6 +766,8 @@ export default function FormScreen() {
                   errorMessage={`${(errors.lastName && touched.lastName) ? `${errors.lastName}` : (errorFormAPI && errorFormAPI.lastNameForm) ? `${errorFormAPI.firstNameForm}` : ``}`}
                 // errorColor='magenta'
                 />
+
+                
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '80%' }}>
 
                   <CustomPicker

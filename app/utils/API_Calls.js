@@ -18,7 +18,7 @@ const getAPIBaseUrl = () => {
 
 //Home Page api 
 export const HomePageData = async (token) => {
-  console.log("api data", token)
+  // console.log("api data", token)
   return await axios.get(`${GUEST_URL}/user/home`, {
     headers: {
       'Authorization': `Bearer ${token}`

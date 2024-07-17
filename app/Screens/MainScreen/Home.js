@@ -2,12 +2,11 @@ import { SafeAreaView, View, ScrollView, RefreshControl, Text, Button, Alert } f
 // import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 
-// import Snap_Carousel1 from '../../Components2/Snap_Carousel1';
-// import Snap_Carousel2 from '../../Components2/Snap_Carousel2';
-// import Snap_Carousel3 from '../../Components2/Snap_Carousel3';
-// import Snap_Carousel4 from '../../Components2/Snap_Carousel4';
-// import Snap_Carousel5 from '../../Components2/Snap_Carousel5';
-// import Snap_Carousel6 from '../../Components2/Snap_Carousel6';
+import Snap_Carousel1 from '../../Components2/Snap_Carousel1';
+import Snap_Carousel2 from '../../Components2/Snap_Carousel2';
+import Snap_Carousel3 from '../../Components2/Snap_Carousel3';
+import Snap_Carousel5 from '../../Components2/Snap_Carousel5';
+
 
 import { HomePageData } from '../../utils/API_Calls';
 import { useSelector } from 'react-redux';
@@ -172,7 +171,7 @@ const Home = () => {
 
   return (
     // <SafeAreaView>
-      <View style={{ paddingTop: 0, marginBottom: 10 }}>
+      <View style={{ paddingTop: 0, marginBottom:0}}>
         <ScrollView
           refreshControl={
             <RefreshControl
@@ -185,21 +184,28 @@ const Home = () => {
           {isConnected ? <View>
 
 
-            {isData ? <View>
+            {isData ? <View >
+              <View style={{height:20}}>
+                </View>
 
-              {/* <Snap_Carousel1 BannerData={Banners} />
+              <Snap_Carousel1 BannerData={Banners} />
 
-              <Snap_Carousel2 BannerData2={meditationTracks} />
+              <Snap_Carousel2 BannerData2={meditationTracks} CarouselName={'Meditation Tracks'}/>
 
 
               <Snap_Carousel3 BannerDataPravachan={pravachan} />
 
+              <Snap_Carousel2 BannerData2={previousEvents} CarouselName={'Previous Event Videos'}/>
 
-              <Snap_Carousel4 PreviousEventsData={previousEvents} />
+              
 
-              <Snap_Carousel5 BannerDataBajana={bhanaja} />
+              <Snap_Carousel5 BannerDataBajana={bhanaja} /> 
 
-              <Snap_Carousel6 Up_Coming_EventsData={upComingEvents} /> */}
+              <Snap_Carousel2 BannerData2={upComingEvents} CarouselName={'Upcoming Events'}/>
+
+              {/*<Snap_Carousel6 Up_Coming_EventsData={upComingEvents} />*/}
+              <View style={{height:20}}>
+                </View>
 
             </View> :
               <View>

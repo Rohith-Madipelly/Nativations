@@ -41,6 +41,8 @@ import DaatPage from "./MainScreen/OtherPages/Data";
 import ErrorBoundary from "react-native-error-boundary";
 import NetInfo from '@react-native-community/netinfo';
 import { Alert, View, Text } from "react-native";
+import AudioScreen from "./MainScreen/AudioScreen";
+import YoutudeScreen from "./MainScreen/YoutudeScreen";
 // SplashScreen.preventAutoHideAsync();
 export default function Screens() {
   const [user, setUser] = useState()
@@ -124,6 +126,8 @@ export default function Screens() {
                 {/* <Stack.Screen name="FormScreen" component={FormScreen} /> */}
                 <Stack.Screen name="BottomTabScreen" component={BottomTabScreen} />
                 <Stack.Screen name="VideoScreen" component={VideoScreen} />
+                <Stack.Screen name="AudioScreen" component={AudioScreen} />
+                <Stack.Screen name="YoutudeScreen" component={YoutudeScreen} />
                 <Stack.Screen name="FormScreen" component={FormScreen} />
 
                 <Stack.Screen name="About_Guruji" component={About_Guruji} />
