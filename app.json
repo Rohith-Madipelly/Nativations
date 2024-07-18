@@ -2,10 +2,11 @@
   "expo": {
     "name": "Satya Sadhna",
     "slug": "Navigations",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -15,20 +16,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "vardhaman.satyasadhnaOne"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "vardhaman.satyasadhnaOne",
-      "config": {
-        "usesCleartextTraffic": true,
-        "keystorePath": "./vardhaman-satyasadhna-key.keystore",
-        "keystorePassword": "vardhaman@321"
-      },
-      "versionCode": 3
+      "package": "vardhaman.satyasadhnaOne"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -38,17 +34,7 @@
         "projectId": "7c804e7a-7842-4219-9ab3-fb5aca0c2563"
       }
     },
-    "expo": {
-      "plugins": [
-        [
-          "expo-image-picker",
-          {
-            "photosPermission": "The app accesses your photos to let you share them with your friends."
-          }
-        ]
-      ],
-      "scheme": "newapp"
-    },
+
     "plugins": [
       "expo-font"
     ]

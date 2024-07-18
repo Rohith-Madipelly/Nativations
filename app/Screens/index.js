@@ -20,29 +20,29 @@ import BottomTabScreen from "../Navigations/BottomTabScreen";
 // import DownloadScreen123 from "../../Hello.js/DownloadScreen123";
 import OtpSender from "./AuthScreen/OtpSender";
 import OtpVerify from "./AuthScreen/OtpVerify";
-import ChangePassword from "./MainScreen/OtherPages/ChangePassword";
-import UpdateProfile from "./MainScreen/OtherPages/UpdateProfile";
+
+import Reloading from "./Demo/Reloading";
 // import FormScreen123 from "./MainScreen/OtherPages/FormScreen123";
 import FormScreen from "./MainScreen/OtherPages/FormScreen";
-import Reloading from "./Demo/Reloading";
 import DeleteAccount from "./MainScreen/OtherPages/DeleteAccount";
 import PrivacyPolicy from "./MainScreen/OtherPages/PrivacyPolicy";
 import About from "./MainScreen/OtherPages/About";
 import Help from "./MainScreen/OtherPages/Help";
-
-import FormScreenChecker from "./MainScreen/OtherPages/FormScreenChecker";
-
-
-
-import * as SplashScreen from 'expo-splash-screen';
+import ChangePassword from "./MainScreen/OtherPages/ChangePassword";
+import UpdateProfile from "./MainScreen/OtherPages/UpdateProfile";
 import About_Guruji from "./MainScreen/OtherPages/About_Guruji";
 import SatyaSadhana from "./MainScreen/OtherPages/SatyaSadhana";
-import DaatPage from "./MainScreen/OtherPages/Data";
+
+import * as SplashScreen from 'expo-splash-screen';
+
 import ErrorBoundary from "react-native-error-boundary";
 import NetInfo from '@react-native-community/netinfo';
 import { Alert, View, Text } from "react-native";
 import AudioScreen from "./MainScreen/AudioScreen";
 import YoutudeScreen from "./MainScreen/YoutudeScreen";
+
+
+
 // SplashScreen.preventAutoHideAsync();
 export default function Screens() {
   const [user, setUser] = useState()
@@ -89,8 +89,10 @@ export default function Screens() {
     fetchData();
   }, []);
 
+  console.log("Cs",appIsReady)
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
+      console.log("Cs")
       await SplashScreen.hideAsync();
     }
   }, [appIsReady]);
@@ -131,7 +133,7 @@ export default function Screens() {
                 <Stack.Screen name="FormScreen" component={FormScreen} />
 
                 <Stack.Screen name="About_Guruji" component={About_Guruji} />
-                <Stack.Screen name="SatyaSadhana" component={SatyaSadhana} />
+                <Stack.Screen name="About_SatyaSadhana" component={SatyaSadhana} />
                 <Stack.Screen name="FullProfile" component={UpdateProfile} />
                 <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
                 <Stack.Screen name="ProfilePassword" component={ChangePassword} />
@@ -143,7 +145,6 @@ export default function Screens() {
               <>
 
                 <Stack.Screen name="Login" component={Login} />
-                {/* <Stack.Screen name="Onboard" component={Onboard} /> */}
                 <Stack.Screen name="ForgotPasswordEmail" component={OtpSender} />
                 <Stack.Screen name="OtpVerify" component={OtpVerify} />
                 <Stack.Screen name="Register" component={Register} />

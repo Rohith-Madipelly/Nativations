@@ -403,7 +403,7 @@ const Profile = () => {
 
               <View style={{ marginBottom: 10 }}>
 
-                <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("SatyaSadhana") }}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("About_SatyaSadhana") }}>
 
                   {/* About */}
                   <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>

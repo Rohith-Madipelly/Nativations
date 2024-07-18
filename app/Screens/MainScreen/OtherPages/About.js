@@ -134,7 +134,7 @@ const apiName=PlaystoreAPI;
   }
 
   return (
-    // <ScrollView>
+   
     <View style={{ height: '100%' }}>
       <View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
         <LinearGradient style={{ height: "100%", }} colors={['rgba(20, 0, 255, 0.75)', 'rgba(255, 255, 255, 0.77)', '#FFF']}>

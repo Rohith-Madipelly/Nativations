@@ -5,7 +5,7 @@ import { UserGetProfileDetails, UserUpdatedProfileDetails, UserUpdatedProfilePic
 import Spinner from 'react-native-loading-spinner-overlay';
 import Feather from "react-native-vector-icons/Feather"
 import { StatusBar } from 'expo-status-bar';
-import * as ImagePicker from 'expo-image-picker';
+// import * as ImagePicker from 'expo-image-picker';
 
 import { Formik } from "formik";
 import { theme, typographyStyles } from "../../../Contants";
@@ -94,29 +94,29 @@ const Profile = () => {
   // Function to pick an image from device
 
 
-  const pickImage = async () => {
-    try {
-      await ImagePicker.requestMediaLibraryPermissionsAsync()
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
-      });
+  // const pickImage = async () => {
+  //   try {
+  //     await ImagePicker.requestMediaLibraryPermissionsAsync()
+  //     const result = await ImagePicker.launchImageLibraryAsync({
+  //       mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //       allowsEditing: true,
+  //       aspect: [1, 1],
+  //       quality: 1,
+  //     });
 
-      if (!result.cancelled) {
-        setProfilePic(result.assets[0].uri);
-        setTimeout(() => {
+  //     if (!result.cancelled) {
+  //       setProfilePic(result.assets[0].uri);
+  //       setTimeout(() => {
 
-          handleProfilePicUpdate(result.assets[0].uri)
-        }, 1000);
-      } else {
+  //         handleProfilePicUpdate(result.assets[0].uri)
+  //       }, 1000);
+  //     } else {
 
-      }
-    } catch (error) {
-      // console.error('Error picking an image:', error);
-    }
-  };
+  //     }
+  //   } catch (error) {
+  //     // console.error('Error picking an image:', error);
+  //   }
+  // };
 
 
 

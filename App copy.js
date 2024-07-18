@@ -12,7 +12,6 @@ import Toast from 'react-native-toast-message'
 
 import { Platform } from 'react-native';
 import * as FileSystem from 'expo-file-system';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // Path to the JKS file
 const jksFilePath = Platform.select({
@@ -63,12 +62,10 @@ export default function App() {
 
   return (
     <SafeAreaProvider> 
-            <GestureHandlerRootView style={{ flex: 1 }}>
       <Provider store={store}>
         <Screen />
         <Toast />
       </Provider>
-      </GestureHandlerRootView>
     </SafeAreaProvider>
   )
 }

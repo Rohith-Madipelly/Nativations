@@ -20,7 +20,10 @@ const ButtonTotal = ({ youtubeURL }) => {
     setDownloadProgress(progress);
   };
   const YoutubeDownloader = async () => {
+
     const basicInfo = await ytdl.getBasicInfo(youtubeURL);
+
+    console.log("basic info",basicInfo)
     
     const Videotitle123 = basicInfo.player_response.videoDetails.title;
     const videoUrls = await ytdl(youtubeURL, { quality: "highestaudio" });
@@ -32,6 +35,7 @@ const ButtonTotal = ({ youtubeURL }) => {
   async function download(URL_Download, filename) {
     // const URL_Download = "https://ads-book-s3.s3.ap-south-1.amazonaws.com/first.mp4"
     // const filename = "Hello 123456"
+    // console.log("Data vachinda ra ", URL_Download, "<><>", filename)
     console.log("Data vachinda ra ", URL_Download, "<><>", filename)
 
     setDownloadDisplay(true)

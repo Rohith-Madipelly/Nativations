@@ -198,13 +198,13 @@ const YoutudeScreen = ({ route }) => {
 
         {DataPage ? <View style={{ paddingTop: 20, flexDirection: 'row' }}>
           {/* <ButtonTotal youtubeURL={DataPageVideo} /> */}
-          <ButtonTotal youtubeURL={DataPage.videoUrl} />
+          <ButtonTotal youtubeURL={DataPage.youtubeUrl} />
         </View> : ""}
 
 
 
 
-        {relatedPosts.lenght === 0 ? <View><Snap_Carousel7 relatedPostsData={relatedPosts} /></View> : <View><Text>No Related Posts</Text></View>}
+        {relatedPosts?<View><Snap_Carousel7 relatedPostsData={relatedPosts} /></View> : <View><Text>No Related Posts</Text></View>}
         <View style={{ height: 20 }}>
 
         </View>
