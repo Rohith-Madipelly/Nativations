@@ -1,4 +1,4 @@
-import { Alert, Image, Pressable, SafeAreaView, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, Pressable, SafeAreaView, StyleSheet, Text, ToastAndroid, Touchable, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 // import MovingText from '../../Components/UI/Marquee'
@@ -18,13 +18,12 @@ import { GUEST_URL } from '../../Enviornment';
 import Snap_Carousel7 from '../../Components2/Snap_Carousel7';
 import { Button } from 'react-native';
 import OtherDownloads from '../../DownloadMain/OtherDownloads';
+import OtherDownloadBtn from '../../DownloadMain/OtherDownloadBtn.js';
+import NewToaster from '../../utils/NewToaster.js';
 const AudioScreen = ({ route }) => {
-    // const [id,setId]=useState('66965a4d4134e7280a13f2f4')
 
     const { id } = route.params
-    // const { id } = '66965a4d4134e7280a13f2f4'
 
-    console.log("hello", id)
     const [isPlaying, setIsPlaying] = useState(false)
     const [sound, setSound] = useState();
     const [spinnerBool, setSpinnerBool] = useState(true);
@@ -244,13 +243,17 @@ const AudioScreen = ({ route }) => {
                     <View style={{
                         width: '70%',
                         flexDirection: 'row',
-                        justifyContent: 'space-between', marginTop: 10
+                        justifyContent: 'space-between', marginTop: 10,
+
                     }}>
 
                         <View style={{ justifyContent: 'center' }}>
-                            <TouchableOpacity onPress={toggleMute}>
-                                {isMuted ? <Octicons name="mute" size={24} color="black" /> : <Octicons name="unmute" size={24} color="black" />}
-                            </TouchableOpacity>
+                            <ButtonC1Cricle
+                                styleData={{}}
+                                onPress={toggleMute}
+                            >
+                                {isMuted ? <Octicons name="mute" size={20} color="white" /> : <Octicons name="unmute" size={20} color="white" />}
+                            </ButtonC1Cricle>
                         </View>
                         <View>
                             <TouchableOpacity
@@ -261,10 +264,23 @@ const AudioScreen = ({ route }) => {
                             </TouchableOpacity>
                             {/* <Text>{isPlaying.toString()}</Text> */}
                         </View>
-                        <View>
+                        <View style={{ justifyContent: 'center' }}>
+                            <ButtonC1Cricle
+                                styleData={{}}
+                                onPress={() => { OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`) }}
+                            >
+                                <Feather name="arrow-down" size={20} color="white" />
+                            </ButtonC1Cricle>
 
+
+                            {/* <OtherDownloadBtn URL_Download={`${GUEST_URL}/${audio}`} filename={`${postDetails.title} : ${postDetails.type}`}>
+
+                            </OtherDownloadBtn> */}
 
                         </View>
+
+                        <Button onPress={()=>{NewToaster()}} title='Heloo'></Button>
+
 
                         {/* <View>
                             <TouchableOpacity onPress={() => { setPlaying(!isPlaying) }}>
@@ -272,14 +288,15 @@ const AudioScreen = ({ route }) => {
                             </TouchableOpacity>
                         </View> */}
                     </View>
-                    <View>
+
+                    {/* <View style={{marginTop:20}}>
                         <ButtonC1Cricle
                             styleData={{ marginLeft: 20 }}
-                            onPress={() => { OtherDownloads(`${GUEST_URL}/${audio}`,`${postDetails.title} : ${postDetails.type}`) }}
+                            onPress={() => { OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`) }}
                         >
                             <Feather name="arrow-down" size={20} color="white" />
                         </ButtonC1Cricle>
-                    </View>
+                    </View> */}
                     <View style={{ marginTop: 25 }}>
                         {relatedPosts ? <View>
                             <Snap_Carousel7 relatedPostsData={relatedPosts} />
@@ -288,10 +305,6 @@ const AudioScreen = ({ route }) => {
                         </View>}
                     </View>
                 </View>
-
-
-
-
             </LinearGradient>
         </SafeAreaView>
     )

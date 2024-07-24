@@ -43,6 +43,7 @@ const YoutudeScreen = ({ route }) => {
   const navigation = useNavigation();
   const [playing, setPlaying] = useState(false);
   const [title, setTitle] = useState("")
+  
   const onStateChange = useCallback((state) => {
     if (state === "ended") {
       setPlaying(false);
@@ -92,6 +93,7 @@ const YoutudeScreen = ({ route }) => {
 
   useEffect(() => {
     HomeData()
+    
   }, [id])
 
 

@@ -28,6 +28,7 @@ import AudioComponent from '../../Components/AudioComponent.js';
 import ButtonC1Cricle from '../../Components/UI/Button/ButtonC1Cricle.js'
 import OtherDownloads from '../../DownloadMain/OtherDownloads.js';
 import { GUEST_URL } from '../../Enviornment.js';
+import OtherDownloadBtn from '../../DownloadMain/OtherDownloadBtn.js';
 
 const VideoScreen = ({ route }) => {
   const { id } = route.params
@@ -184,13 +185,19 @@ const VideoScreen = ({ route }) => {
 
         {/* <Text>{type === "Video" ? <VideoComponent item={DataPage} /> : type === "Audio" ? <AudioComponent item={DataPage} /> : "ll"}</Text> */}
         <ButtonC1Cricle
-          styleData={{ marginLeft: 20,marginTop:25 }}
-          onPress={() => { OtherDownloads(`${GUEST_URL}/${DataPage.videoUrl}`,`${DataPage.title} : ${DataPage.type}`) }}
+          styleData={{ marginLeft: 20, marginTop: 25 }}
+          onPress={() => { OtherDownloads(`${GUEST_URL}/${DataPage.videoUrl}`, `${DataPage.title} : ${DataPage.type}`) }}
         >
-         
+
           <Feather name="arrow-down" size={20} color="white" />
         </ButtonC1Cricle>
 
+
+
+        {/* <OtherDownloadBtn
+          URL_Download={`${GUEST_URL}/${DataPage.videoUrl}`}
+          filename={`${DataPage.title} : ${DataPage.type}`}
+        /> */}
 
         {relatedPosts ? <View>
           <Snap_Carousel7 relatedPostsData={relatedPosts} />

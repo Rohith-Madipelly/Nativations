@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, Button, FlatList, Linking, TouchableOpacity, ScrollView, Platform, Image, RefreshControl } from 'react-native';
+import { View, Text, Button, FlatList, Linking, TouchableOpacity, ScrollView, Platform, Image, RefreshControl, Alert } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 
 import {
@@ -69,12 +69,65 @@ const DownloadFliesList = () => {
         console.log("selectedVideo", Platform.OS, selectedVideo)
     };
 
+    const Alerter = (item) => {
+        Alert.alert(
+            "Delete Video",
+            "Are you sure you want to delete this video?",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "OK", onPress: () => { handleDeleteItem(item) } }
+            ],
+            { cancelable: false }
+        );
+    }
+
+    const handleDeleteItem = async (filename) => {
+        const internalDirectory = FileSystem.documentDirectory;
+        const item = `${internalDirectory}${filename}`;
+        if (item) {
+            try {
+                await FileSystem.deleteAsync(item, { idempotent: true });
+                setSelectedVideo(null);
+                console.log("Video deleted successfully");
+                data()
+            } catch (error) {
+                console.log("Error deleting video:", error);
+            }
+        } else {
+            console.log("No video selected to delete");
+        }
+    };
     // Render each item in the list
     const renderItem = ({ item, index }) => {
 
         return (
-            <TouchableOpacity onPress={() => handleVideoPress(item)} style={{ display: 'flex', flexDirection: 'row', padding: 10, margin: 20, marginVertical: 10, backgroundColor: 'pink', borderWidth: 2, borderRadius: 20,paddingRight:20 }}>
-                <Text style={{ fontWeight: 900, }}>{index + 1})</Text><Text style={{marginLeft:5}}> {item}</Text>
+            <TouchableOpacity onPress={() => handleVideoPress(item)}
+                style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    padding: 10,
+                    margin: 20,
+                    marginVertical: 10,
+                    backgroundColor: 'pink',
+                    borderWidth: 2,
+                    borderRadius: 20,
+                    paddingRight: 20
+                }}>
+                <View style={{ flex: 0.1, alignItems: 'center', justifyContent: "center" }}>
+                    <Text style={{ fontWeight: 900, }}>{index + 1})</Text>
+                </View>
+
+                <View style={{ flex: 0.8, justifyContent: "center" }}>
+                    <Text style={{ marginLeft: 5 }}> {item}</Text>
+                </View>
+
+                <TouchableOpacity style={{ flex: 0.1, alignItems: 'center', justifyContent: "center" }} onPress={() => Alerter(item)}>
+                    <MaterialCommunityIcons name="delete" size={24} color="black" />
+                </TouchableOpacity>
             </TouchableOpacity>
         );
 

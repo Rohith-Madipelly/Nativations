@@ -1,13 +1,12 @@
+import { useState } from "react";
 import { saveFile } from "./SaveFile_To_Private";
 import * as FileSystem from 'expo-file-system';
+import { ToastAndroid } from "react-native";
 
 async function OtherDownloads(URL_Download, filename) {
-    // const URL_Download = "https://ads-book-s3.s3.ap-south-1.amazonaws.com/first.mp4"
-    // const filename = "Hello 123456"
-    // console.log("Data vachinda ra ", URL_Download, "<><>", filename)
     console.log("This the download URL > ", URL_Download, "<><>", filename)
+    ToastAndroid.show('Downloading started', ToastAndroid.SHORT);
 
-    // setDownloadDisplay(true)
     try {
       const DataDownload = FileSystem.createDownloadResumable(
         URL_Download,
@@ -15,17 +14,12 @@ async function OtherDownloads(URL_Download, filename) {
         {}, // Optional options object
         // callback // Progress callback
       );
-
       const result = await DataDownload.downloadAsync()
       const contentType = result.headers['Content-Type'];
       saveFile(result.uri, filename, contentType);
-
     } catch (e) {
       console.log("Error haa", e)
     }
-
-
-
   }
 
 

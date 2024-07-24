@@ -17,6 +17,7 @@ export const ToasterSender = ({ Message }) => {
     // For Android
     ToastAndroid.showWithGravityAndOffset(
       Message,
+      // "Hello",
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       25,
