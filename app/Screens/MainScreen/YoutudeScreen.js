@@ -168,7 +168,7 @@ const YoutudeScreen = ({ route }) => {
 
 
 
-        <View style={{ width: '100%', marginTop: 30 }}>
+        <View style={{ width: '100%', marginTop: 0 }}>
 
           <YoutubePlayer
             height={222}

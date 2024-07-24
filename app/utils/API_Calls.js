@@ -107,7 +107,7 @@ export const UserVerifyOtp = async (email, userOtp) => {
 
 // User Forgot OTP verifyotp API Call 
 export const ForgotApiPassRest = async (email, password) => {
-console.log(email, password)
+console.log(">>>>>>>>>>",email, password)
   const ReqData = {
     email: email,
     password: password

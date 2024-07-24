@@ -10,7 +10,7 @@ const CustomButton = ({ onPress, leftIcon, children ,bgColor,styleData}) => {
       {/* <Ionicons style={styles.icon} name={icon} size={18} color={Colors.white} /> */}
       <View style={{}}>{leftIcon}</View>
       <Text style={styles.text}>{children}</Text>
-    </Pressable>
+    </Pressable> 
   )
 }
 

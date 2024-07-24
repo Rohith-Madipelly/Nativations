@@ -1,4 +1,4 @@
-import { Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Alert } from 'react-native';
 import AuthComponent from './AuthComponent';
 import CustomButton from '../../Components/UI/Button/ButtonC1';
 import CustomTextInput from '../../Components/UI/Inputs/CustomTextInput';
@@ -19,7 +19,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import { RestPasswordschema } from '../../Fomik/schema/RestPassword.js';
+import { RestPasswordschema } from '../../Fomik/schema/RestPassword';
 import { ToasterMessage } from '../../utils/ToasterMessage.js';
 
 
@@ -27,8 +27,8 @@ export default function Login({ route }) {
 
     const { params } = route;
     const email = params?.email || '';
-    console.log("><>",email)
-    
+    console.log("><>", email)
+
     const [show, setShow] = useState()
     const [errorFormAPI, seterrorFormAPI] = useState("")
     const [spinnerBool, setSpinnerbool] = useState(false)
@@ -53,9 +53,8 @@ export default function Login({ route }) {
             if (res) {
                 const Message = res.data.message
                 ToasterMessage("success", `Success`, `${Message}`)
-                 navigation.navigate('Login') 
+                navigation.navigate('Login')
                 setTimeout(() => {
-
                     setSpinnerbool(false)
                 }, 50);
 
@@ -66,6 +65,7 @@ export default function Login({ route }) {
             if (error.response) {
                 if (error.response.status === 400) {
                     console.log("Error With 400.")
+                    Alert.alert(error.response.data.message)
                 }
                 else if (error.response.status === 401) {
                     seterrorFormAPI({ PasswordForm: `${error.response.data.message}` })
@@ -78,16 +78,16 @@ export default function Login({ route }) {
                     console.log("Internal Server Error", error.message)
                 }
                 else {
-                    console.log("An error occurred response.")
+                    console.log("An error occurred response.",error.response)
                 }
             }
             else if (error.request) {
                 console.log("No Response Received From the Server.")
                 if (error.request.status === 0) {
                     // console.log("error in request ",error.request.status)
-                    Alert.alert("No Network Found","Please Check your Internet Connection")
-                  }
-               
+                    Alert.alert("No Network Found", "Please Check your Internet Connection")
+                }
+
             }
             else {
                 console.log("Error in Setting up the Request.")
@@ -153,12 +153,12 @@ export default function Login({ route }) {
                                     <>
 
 
-
+                                  
 
                                         <CustomTextInput
                                             boxWidth={'80%'}
-                                            placeholder={'Enter Password'}
-                                            label={'Password'}
+                                            placeholder={'Enter new password'}
+                                            label={'New password'}
                                             name='Password'
                                             value={values.NewPassword}
                                             leftIcon={<Entypo name="lock" size={20} color="black" />}
@@ -186,8 +186,8 @@ export default function Login({ route }) {
 
                                         <CustomTextInput
                                             boxWidth={'80%'}
-                                            placeholder={'Enter Confirm Password'}
-                                            label={'Confirm Password'}
+                                            placeholder={'Enter confirm password'}
+                                            label={'Confirm password'}
                                             name='Confirm Password'
                                             value={values.ConfirmPassword}
                                             leftIcon={<Entypo name="lock" size={20} color="black" />}

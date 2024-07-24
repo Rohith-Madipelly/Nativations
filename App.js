@@ -7,7 +7,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { StatusBar } from 'expo-status-bar'
-import { SafeAreaProvider}  from 'react-native-safe-area-context'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
 import { Platform } from 'react-native';
@@ -62,12 +62,17 @@ export default function App() {
 
 
   return (
-    <SafeAreaProvider> 
-            <GestureHandlerRootView style={{ flex: 1 }}>
-      <Provider store={store}>
-        <Screen />
-        <Toast />
-      </Provider>
+    <SafeAreaProvider>
+      <GestureHandlerRootView style={{ flex: 1}}>
+        <StatusBar
+          animated={true}
+          backgroundColor="#006AFF"
+          barStyle={'dark-content'}
+        />
+        <Provider store={store}>
+          <Screen />
+          <Toast />
+        </Provider>
       </GestureHandlerRootView>
     </SafeAreaProvider>
   )

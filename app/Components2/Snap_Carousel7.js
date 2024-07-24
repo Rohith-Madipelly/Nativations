@@ -56,7 +56,7 @@ const Snap_Carousel7 = ({ relatedPostsData }) => {
                 <View key={item.id} style={{ width: 170, paddingHorizontal: 12, marginRight: 0 }}>
                   <TouchableOpacity onPress={() => { navigation.navigate('VideoScreen', { id: `${item.id}` }); }}>
 
-                    <Image source={{ uri: `${GUEST_URL}/thumbnail/${item.thumbnail}` }} style={{ width: '100%', height: '100%', borderRadius: 20, backgroundColor: 'red' }} />
+                    <Image source={{ uri: `${GUEST_URL}/${item.thumbnail}` }} style={{ width: '100%', height: '100%', borderRadius: 20, }} />
                   </TouchableOpacity>
                 </View>
               ))}

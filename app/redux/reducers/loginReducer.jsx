@@ -8,11 +8,11 @@ try {
 
 }
 
-const initialState = {
+const initialState = { 
   token: token || "",
   isLogin: token ? true : false,
 };
-
+ 
 
 
 const loginReducer = (state = initialState, action) => {

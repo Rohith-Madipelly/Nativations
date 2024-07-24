@@ -73,8 +73,8 @@ const DownloadFliesList = () => {
     const renderItem = ({ item, index }) => {
 
         return (
-            <TouchableOpacity onPress={() => handleVideoPress(item)} style={{ display: 'flex', flexDirection: 'row', padding: 10, margin: 20, marginVertical: 10, backgroundColor: 'pink', borderWidth: 2, borderRadius: 20 }}>
-                <Text style={{ fontWeight: 900, }}>{index + 1})</Text><Text> {item}</Text>
+            <TouchableOpacity onPress={() => handleVideoPress(item)} style={{ display: 'flex', flexDirection: 'row', padding: 10, margin: 20, marginVertical: 10, backgroundColor: 'pink', borderWidth: 2, borderRadius: 20,paddingRight:20 }}>
+                <Text style={{ fontWeight: 900, }}>{index + 1})</Text><Text style={{marginLeft:5}}> {item}</Text>
             </TouchableOpacity>
         );
 

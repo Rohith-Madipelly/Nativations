@@ -9,13 +9,15 @@ import { Feather, Octicons } from '@expo/vector-icons';
 import ProgressBar from '../../Components/UI/ProgressBar/ProgressBar';
 import { useNavigation } from '@react-navigation/native';
 
-
+import ButtonC1Cricle from '../../Components/UI/Button/ButtonC1Cricle.js'
 import { Audio } from 'expo-av';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { VideoPageData } from '../../utils/API_Calls';
 import { useSelector } from 'react-redux';
 import { GUEST_URL } from '../../Enviornment';
 import Snap_Carousel7 from '../../Components2/Snap_Carousel7';
+import { Button } from 'react-native';
+import OtherDownloads from '../../DownloadMain/OtherDownloads';
 const AudioScreen = ({ route }) => {
     // const [id,setId]=useState('66965a4d4134e7280a13f2f4')
 
@@ -71,10 +73,11 @@ const AudioScreen = ({ route }) => {
                 setThumbnail(res.data.postDetails.thumbnail)
                 setTitle(res.data.postDetails.title)
                 setAudio(res.data.postDetails.audioUrl)
+                // console.log(res.data.postDetails.audioUrl)
                 setRelatedPosts(res.data.relatedPosts)
 
                 setPostDetails(res.data.postDetails)
-               
+
             }
             else {
                 console.log("No Respones")
@@ -106,9 +109,6 @@ const AudioScreen = ({ route }) => {
 
 
 
-
-
-
     const LoadSound = async () => {
         console.log('Loading Sound');
         setSpinnerBool(true)
@@ -119,6 +119,7 @@ const AudioScreen = ({ route }) => {
 
             );
             setSound(sound)
+
 
             sound.setOnPlaybackStatusUpdate((status) => {
                 // console.log("ds")
@@ -176,11 +177,10 @@ const AudioScreen = ({ route }) => {
     };
 
     useEffect(() => {
-      if(audio)
-      {
-        LoadSound()
-      }
-       
+        if (audio) {
+            LoadSound()
+        }
+
     }, [audio])
 
 
@@ -263,6 +263,7 @@ const AudioScreen = ({ route }) => {
                         </View>
                         <View>
 
+
                         </View>
 
                         {/* <View>
@@ -270,6 +271,14 @@ const AudioScreen = ({ route }) => {
                                 {isPlaying ? <AntDesign name="play" size={40} color="black" /> : <AntDesign name="pausecircle" size={40} color="black" />}
                             </TouchableOpacity>
                         </View> */}
+                    </View>
+                    <View>
+                        <ButtonC1Cricle
+                            styleData={{ marginLeft: 20 }}
+                            onPress={() => { OtherDownloads(`${GUEST_URL}/${audio}`,`${postDetails.title} : ${postDetails.type}`) }}
+                        >
+                            <Feather name="arrow-down" size={20} color="white" />
+                        </ButtonC1Cricle>
                     </View>
                     <View style={{ marginTop: 25 }}>
                         {relatedPosts ? <View>

@@ -12,7 +12,7 @@ export const store=configureStore({reducer:loginReducer})
 // const rootReducer = combineReducers({
 //   login: loginReducer,
 //   Name:NameReducer,
-//   // Add other reducers here
+//   // Add other reducers here 
 // });
 
 // // Configure the Redux store with the combined reducer

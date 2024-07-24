@@ -25,7 +25,9 @@ import { getIdFromUrl } from '../../utils/getIdFromUrl.js';
 import Snap_Carousel7 from '../../Components2/Snap_Carousel7.js';
 import VideoComponent from '../../Components/VideoComponent.js';
 import AudioComponent from '../../Components/AudioComponent.js';
-
+import ButtonC1Cricle from '../../Components/UI/Button/ButtonC1Cricle.js'
+import OtherDownloads from '../../DownloadMain/OtherDownloads.js';
+import { GUEST_URL } from '../../Enviornment.js';
 
 const VideoScreen = ({ route }) => {
   const { id } = route.params
@@ -101,6 +103,7 @@ const VideoScreen = ({ route }) => {
 
       if (res) {
         console.log("data mes", res.data.postDetails.type)
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>", res.data.postDetails.title)
         setType(res.data.postDetails.type)
 
         setDataPage(res.data.postDetails)
@@ -164,13 +167,13 @@ const VideoScreen = ({ route }) => {
 
 
 
-        <View style={{ width: '100%', height: 280, marginTop: 30 }}>
+        <View style={{ width: '100%', height: 280, marginTop: 24 }}>
           {DataPage ? <VideoComponent DataPage={DataPage} /> : ""}
         </View>
 
 
         {DataPage ? <Text style={[styles.paragraphy_U11, { width: '90%', paddingBottom: 5 }]}>{DataPage.title}</Text> : ""}
-        {DataPage ? <Text style={[styles.paragraphy_U10, { width: '90%', paddingLeft: 5,marginBottom:25 }]}>{DataPage.description}</Text> : ""}
+        {DataPage ? <Text style={[styles.paragraphy_U10, { width: '90%', paddingLeft: 5, marginBottom: 25 }]}>{DataPage.description}</Text> : ""}
 
         {/* {DataPage ? <View style={{ paddingTop: 20, flexDirection: 'row' }}> */}
         {/* <ButtonTotal youtubeURL={DataPageVideo} /> */}
@@ -180,7 +183,13 @@ const VideoScreen = ({ route }) => {
 
 
         {/* <Text>{type === "Video" ? <VideoComponent item={DataPage} /> : type === "Audio" ? <AudioComponent item={DataPage} /> : "ll"}</Text> */}
-
+        <ButtonC1Cricle
+          styleData={{ marginLeft: 20,marginTop:25 }}
+          onPress={() => { OtherDownloads(`${GUEST_URL}/${DataPage.videoUrl}`,`${DataPage.title} : ${DataPage.type}`) }}
+        >
+         
+          <Feather name="arrow-down" size={20} color="white" />
+        </ButtonC1Cricle>
 
 
         {relatedPosts ? <View>
