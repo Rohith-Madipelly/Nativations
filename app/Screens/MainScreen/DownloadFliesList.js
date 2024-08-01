@@ -135,9 +135,9 @@ const DownloadFliesList = () => {
 
 
     return (
-        <View>
+        <View style={{flex:1}}>
             {/* <ScrollView> */}
-            <View style={{ marginBottom: 70 }}>
+            <View style={{ marginBottom: 0,flex:1 }}>
 
                 {selectedVideo ? (
                     <Video
@@ -158,7 +158,7 @@ const DownloadFliesList = () => {
                 ) : ""}
 
 
-                <View >
+                <View style={{flex:1}} >
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 12 }}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 0 }}>Download List :</Text>
                         <View>
@@ -170,7 +170,7 @@ const DownloadFliesList = () => {
                     </View>
 
 
-                    <ScrollView style={{ height: 400 }}>
+                    <ScrollView style={{flex:1}}>
                         {filteredFileList.length === 0 ? (
                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', padding: 10, paddingVertical: 50, margin: 20, marginVertical: 10, backgroundColor: 'pink' }}>
 

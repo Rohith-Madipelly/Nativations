@@ -21,7 +21,7 @@ const FormData = Yup.object().shape({
         .matches(/^[a-zA-Z ]*$/, "Name must contain only letters and spaces"),
 
     // >>>>>>>>>
-    gender: Yup.string().required("Gender is a required field").oneOf(["male", "female"], "Invalid gender"),
+    gender: Yup.string().required("Gender is a required field").oneOf(["Male", "Female"], "Invalid gender"),
 
     age: Yup.string()
         .trim()
@@ -103,12 +103,12 @@ const FormData = Yup.object().shape({
     courseDetails: Yup.string().oneOf(["10-Days", "20-Days", "30-Days", "50-Days", "60-Days", "Self-Course", "Service", "Courses"], "Invalid input"),
     triedAnyPractise: Yup.string(),
     practiseRegularly: Yup.string().oneOf(["yes", "no", "Courses"], "Invalid input"),
-    dailyHours: Yup.string(),
-    reason: Yup.string(),
-    changeInYourSelf: Yup.string(),
+
+
+
 
     FitnessCertificate: Yup.string(),
-    state: Yup.string().required("City is a required Field ").oneOf(["Kolkata", "Bikaner", "other"], "Invalid input"),
+    state: Yup.string().required("City is a required Field ").oneOf(["Kolkata", "Bikaner", "Other"], "Invalid input"),
 
 
 
@@ -119,19 +119,21 @@ const FormData = Yup.object().shape({
     courseDone: Yup.string().oneOf(["yes", "no"], "Invalid course done yes or no"),
 
     relation: Yup.string(),
-
-
     designation: Yup.string(),
     companyName: Yup.string(),
     companyAddress: Yup.string(),
-
-
     inPastOne: Yup.string(),
     inPresentOne: Yup.string(),
-
     inPastTwo: Yup.string(),
     inPresentTwo: Yup.string(),
 
+    otherState: Yup.string()
+        .when(['state'], ([state], schema) => {
+            if (state === "Other")
+                return schema
+                    .required('Other city is required')
+            return
+        }),
 
     FitnessCertificate: Yup.string()
         .when(['inPastTwo', 'inPresentTwo'], ([inPastTwo, inPresentTwo], schema) => {
@@ -144,12 +146,11 @@ const FormData = Yup.object().shape({
 
 
 
-
     regularMedicine: Yup.string().when('FitnessCertificate', ([FitnessCertificate], schema) => {
-       
+
         if (FitnessCertificate === "Yes")
             return schema
-            .required("Please select if taking any medicie regular")
+                .required("Please select if taking any medicie regular")
         return
     }),
 
@@ -169,5 +170,33 @@ const FormData = Yup.object().shape({
         return
     }),
 
+
+
+
+    medicineDose: Yup.string().when('FitnessCertificate', ([FitnessCertificate], schema) => {
+
+        if (FitnessCertificate === "Yes")
+            return schema
+                .required("Medicine dose is a required field")
+        return
+    }),
+
+    changeInYourSelf: Yup.string().when('practiseRegularly', ([practiseRegularly], schema) => {
+        if (practiseRegularly === "yes")
+            return schema.required("Required field")
+        return
+    }),
+    dailyHours: Yup.string().when('practiseRegularly', ([practiseRegularly], schema) => {
+        if (practiseRegularly === "yes")
+            return schema.required("Required field")
+        return
+    }),
+    reason: Yup.string().when('practiseRegularly', ([practiseRegularly], schema) => {
+        if (practiseRegularly === "yes")
+            return schema.required("Required field")
+        return
+    }),
+
+    
 });
 export { FormData }

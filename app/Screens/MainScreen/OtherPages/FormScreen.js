@@ -136,8 +136,8 @@ export default function FormScreen() {
 
   const genders = [
     { label: 'Select gender', value: 'N/A' },
-    { label: 'Male', value: 'male' },
-    { label: 'Female', value: 'female' },
+    { label: 'Male', value: 'Male' },
+    { label: 'Female', value: 'Female' },
   ];
 
   const Types = [
@@ -226,8 +226,8 @@ export default function FormScreen() {
 
   const languageData = [
     { label: 'Select', value: 'N/A' },
-    { label: 'Hindi', value: 'hindi' },
-    { label: 'English', value: 'english' },
+    { label: 'Hindi', value: 'Hindi' },
+    { label: 'English', value: 'English' },
     // { label: 'Kolkata', value: 'Kolkata' },
     // { label: 'Bikaner', value: 'Bikaner' },
     // { label: 'Other', value: 'other' },
@@ -237,7 +237,7 @@ export default function FormScreen() {
     { label: 'Select', value: 'N/A' },
     { label: 'Kolkata', value: 'Kolkata' },
     { label: 'Bikaner', value: 'Bikaner' },
-    { label: 'Other', value: 'other' },
+    { label: 'Other', value: 'Other' },
   ]
 
   const courseDoneList = [
@@ -390,12 +390,12 @@ export default function FormScreen() {
       const dataEngin = { category, courseId, courseName, courseDuration, from, to, date, firstName, lastName, gender, age, education, martialStatus, guardianName, language: `${otherLanguage ? otherLanguage : language}`, state: `${otherState ? otherState : state}`, mobileNumber, eMail, address, regularMedicine, brief, referenceFrom, oldStudent, docFitnessCertificate, psyschologicalAilment, physicalAilment, professionalDetails, familyPerson, knownPerson }
       setSpinnerbool(true)
       console.log(">>>>Tester", dataEngin.language)
-      console.log(">>>>Tester", dataEngin.state)
+      console.log(">>>>Tester.state>>>>>>>>>>>", dataEngin.state)
       console.log(">>>>Tester regularMedicine", regularMedicine)
       console.log(">>>>Tester", dataEngin)
       console.log("asdda")
       const res = await FormDataApi(dataEngin, tokenn)
-
+      // const res="d"
       if (res) {
         const Message = res.data.message
         showAlertAndNavigate(Message, "Home")
@@ -767,7 +767,7 @@ export default function FormScreen() {
                 // errorColor='magenta'
                 />
 
-                
+
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '80%' }}>
 
                   <CustomPicker
@@ -878,7 +878,7 @@ export default function FormScreen() {
                 // error="Please select a referenceFrom"
                 />
 
-                {values.state === 'other' && (
+                {values.state === 'Other' && (
 
                   <CustomTextInput
                     boxWidth={'80%'}
@@ -886,7 +886,8 @@ export default function FormScreen() {
                     name='Other city'
                     // value={values.personName}
                     value={otherState}
-                    onChangeText={handleOtherStateChange}
+                    onChangeText={(e) => { handleChange("otherState")(e); handleOtherStateChange(e), seterrorFormAPI(); }}
+                    // onChangeText={handleOtherStateChange}
                     placeholder="Other City"
                     onBlur={handleBlur("otherState")}
                     validate={handleBlur("otherState")}
@@ -1331,7 +1332,7 @@ export default function FormScreen() {
                   asterisksymbol={true}
                   boxWidth={'80%'}
                   label={'If yes, kindly bring a fitness certificate from your doctor'}
-                  name='Anyfitnesscertificate' 
+                  name='Anyfitnesscertificate'
                   // value={values.gender}
                   // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                   // bgColor='#e1f3f8'
@@ -1507,7 +1508,7 @@ export default function FormScreen() {
                     boxWidth={'80%'}
                     placeholder={'First course place'}
                     label={'First course place'}
-                    name='First Course Place'
+                    name='First course Place'
                     value={values.firstCoursePlace}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1524,9 +1525,9 @@ export default function FormScreen() {
 
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'First Assist Teacher'}
-                    label={'First Assist Teacher'}
-                    name='First asst Teacher'
+                    placeholder={'First assist teacher'}
+                    label={'First assist teacher'}
+                    name='First asst teacher'
                     value={values.firstAsstTeacher}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
@@ -1614,8 +1615,8 @@ export default function FormScreen() {
 
                   <CustomTextInput
                     boxWidth={'80%'}
-                    placeholder={'Last Assist Teacher'}
-                    label={'Last Assist Teacher'}
+                    placeholder={'Last assist teacher'}
+                    label={'Last assist teacher'}
                     name='last asst teacher'
                     value={values.lastAsstTeacher}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
@@ -1706,76 +1707,81 @@ export default function FormScreen() {
                     // pickerStyle={{ backgroundColor: '#f0f0f0' }}
                     error="Please select a practiseRegularly"
                   />
+                  {values.practiseRegularly === "yes" || values.practiseRegularly==="Courses"  ?
+                    <>
+                      <CustomTextInput
+                        placeholder={'How many hours daily? '}
+                        boxWidth={'80%'}
+                        label={'How many hours daily?'}
+                        name='Daily Hours'
+                        value={values.dailyHours}
+                        // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                        // bgColor='#e1f3f8'
+                        // bgColor="#B1B1B0"
+                        onChangeText={(e) => { handleChange("dailyHours")(e); seterrorFormAPI(); }}
+                        onBlur={handleBlur("dailyHours")}
 
-                  <CustomTextInput
-                    placeholder={'How many hours daily? '}
-                    boxWidth={'80%'}
-                    label={'How many hours daily?'}
-                    name='Daily Hours'
-                    value={values.dailyHours}
-                    // leftIcon={<FontAwesome name="user" size={20} color="black" />}
-                    // bgColor='#e1f3f8'
-                    // bgColor="#B1B1B0"
-                    onChangeText={(e) => { handleChange("dailyHours")(e); seterrorFormAPI(); }}
-                    onBlur={handleBlur("dailyHours")}
-
-                    validate={handleBlur("dailyHours")}
-                    outlined
-                    borderColor={`${(errors.dailyHours && touched.dailyHours) || (errorFormAPI && errorFormAPI.dailyHoursForm) ? "red" : "#ccc"}`}
-                    errorMessage={`${(errors.dailyHours && touched.dailyHours) ? `${errors.dailyHours}` : (errorFormAPI && errorFormAPI.dailyHoursForm) ? `${errorFormAPI.dailyHoursForm}` : ``}`}
-                  // errorColor='magenta'
-                  // numLines={2}
-                  />
-
-
-                  <CustomTextInput
-                    placeholder={'If no, What is the reason?'}
-                    boxWidth={'80%'}
-                    label={'Reason?'}
-                    name='Reason'
-                    value={values.reason}
-                    // leftIcon={<FontAwesome name="user" size={20} color="black" />}
-                    // bgColor='#e1f3f8'
-                    // bgColor="#B1B1B0"
-                    onChangeText={(e) => { handleChange("reason")(e); seterrorFormAPI(); }}
-                    onBlur={handleBlur("reason")}
-
-                    validate={handleBlur("reason")}
-                    outlined
-                    borderColor={`${(errors.reason && touched.reason) || (errorFormAPI && errorFormAPI.reasonForm) ? "red" : "#ccc"}`}
-                    errorMessage={`${(errors.reason && touched.reason) ? `${errors.reason}` : (errorFormAPI && errorFormAPI.reasonForm) ? `${errorFormAPI.reasonForm}` : ``}`}
-                    // errorColor='magenta'
-                    numLines={3}
-                  />
+                        validate={handleBlur("dailyHours")}
+                        outlined
+                        borderColor={`${(errors.dailyHours && touched.dailyHours) || (errorFormAPI && errorFormAPI.dailyHoursForm) ? "red" : "#ccc"}`}
+                        errorMessage={`${(errors.dailyHours && touched.dailyHours) ? `${errors.dailyHours}` : (errorFormAPI && errorFormAPI.dailyHoursForm) ? `${errorFormAPI.dailyHoursForm}` : ``}`}
+                      // errorColor='magenta'
+                      // numLines={2}
+                      />
 
 
-                  <CustomTextInput
-                    placeholder={'What changes have you noticed in yourself by the practice of meditation?'}
-                    boxWidth={'80%'}
-                    label={'What changes have you noticed in yourself by the practice of meditation?'}
-                    name='Change In YourSelf'
-                    value={values.changeInYourSelf}
-                    // leftIcon={<FontAwesome name="user" size={20} color="black" />}
-                    // bgColor='#e1f3f8'
-                    // bgColor="#B1B1B0"
-                    onChangeText={(e) => { handleChange("changeInYourSelf")(e); seterrorFormAPI(); }}
-                    onBlur={handleBlur("changeInYourSelf")}
+                      <CustomTextInput
+                        placeholder={'If no, What is the reason?'}
+                        boxWidth={'80%'}
+                        label={'If no, What is the reason?'}
+                        name='Reason'
+                        value={values.reason}
+                        // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                        // bgColor='#e1f3f8'
+                        // bgColor="#B1B1B0"
+                        onChangeText={(e) => { handleChange("reason")(e); seterrorFormAPI(); }}
+                        onBlur={handleBlur("reason")}
 
-                    validate={handleBlur("changeInYourSelf")}
-                    outlined
-                    borderColor={`${(errors.changeInYourSelf && touched.changeInYourSelf) || (errorFormAPI && errorFormAPI.changeInYourSelfForm) ? "red" : "#ccc"}`}
-                    errorMessage={`${(errors.changeInYourSelf && touched.changeInYourSelf) ? `${errors.changeInYourSelf}` : (errorFormAPI && errorFormAPI.changeInYourSelfForm) ? `${errorFormAPI.changeInYourSelfForm}` : ``}`}
-                    // errorColor='magenta'
-                    numLines={4}
-                  />
+                        validate={handleBlur("reason")}
+                        outlined
+                        borderColor={`${(errors.reason && touched.reason) || (errorFormAPI && errorFormAPI.reasonForm) ? "red" : "#ccc"}`}
+                        errorMessage={`${(errors.reason && touched.reason) ? `${errors.reason}` : (errorFormAPI && errorFormAPI.reasonForm) ? `${errorFormAPI.reasonForm}` : ``}`}
+                        // errorColor='magenta'
+                        numLines={3}
+                      />
+
+
+                      <CustomTextInput
+                        placeholder={'What changes have you noticed in yourself by the practice of meditation?'}
+                        boxWidth={'80%'}
+                        label={'What changes have you noticed in yourself by the practice of meditation?'}
+                        name='Change In YourSelf'
+                        value={values.changeInYourSelf}
+                        // leftIcon={<FontAwesome name="user" size={20} color="black" />}
+                        // bgColor='#e1f3f8'
+                        // bgColor="#B1B1B0"
+                        onChangeText={(e) => { handleChange("changeInYourSelf")(e); seterrorFormAPI(); }}
+                        onBlur={handleBlur("changeInYourSelf")}
+
+                        validate={handleBlur("changeInYourSelf")}
+                        outlined
+                        borderColor={`${(errors.changeInYourSelf && touched.changeInYourSelf) || (errorFormAPI && errorFormAPI.changeInYourSelfForm) ? "red" : "#ccc"}`}
+                        errorMessage={`${(errors.changeInYourSelf && touched.changeInYourSelf) ? `${errors.changeInYourSelf}` : (errorFormAPI && errorFormAPI.changeInYourSelfForm) ? `${errorFormAPI.changeInYourSelfForm}` : ``}`}
+                        // errorColor='magenta'
+                        numLines={4}
+                      />
+                    </> : ""
+                  }
                 </View>
 
 
-                {errors && (
+                {/* {errors && (
                   <Text style={{ color: 'red' }}>
                     {Object.values(errors).join('\n')}
                   </Text>
-                )}
+                )} */}
+
+
 
                 <CustomButton
                   onPress={ErrorChecker}

@@ -235,9 +235,13 @@ export default function Register() {
                                                 value={values.password}
                                                 leftIcon={<Entypo name="lock" size={20} color="black" />}
                                                 // bgColor='#e1f3f8'
+                                               
 
 
-                                                onChangeText={(e) => { handleChange("password")(e); seterrorFormAPI(); setShow({ ...setShow, password: false }); }}
+                                                onChangeText={(e) => {
+                                                    
+                                                    const trimmedValue = e.trim();
+                                                    handleChange("password")(trimmedValue); seterrorFormAPI(); setShow({ ...setShow, password: false }); }}
                                                 onBlur={handleBlur("password")}
 
                                                 rightIcon={<Pressable onPress={() => setShow({ ...setShow, password: !show?.password })}>

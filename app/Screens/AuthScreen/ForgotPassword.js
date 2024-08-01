@@ -163,7 +163,11 @@ export default function Login({ route }) {
                                             value={values.NewPassword}
                                             leftIcon={<Entypo name="lock" size={20} color="black" />}
                                             // bgColor='#e1f3f8'
-                                            onChangeText={(e) => { handleChange("NewPassword")(e); seterrorFormAPI(); }}
+                                            
+                                            onChangeText={(e) => {
+                                                const trimmedValue = e.trim();
+                                                
+                                                handleChange("NewPassword")(trimmedValue); seterrorFormAPI(); }}
                                             onBlur={handleBlur("NewPassword")}
                                             rightIcon={<Pressable onPress={() => setShow({ ...setShow, NewPassword: !show?.NewPassword })}>
                                                 {!show?.NewPassword ? (
@@ -192,7 +196,9 @@ export default function Login({ route }) {
                                             value={values.ConfirmPassword}
                                             leftIcon={<Entypo name="lock" size={20} color="black" />}
                                             // bgColor='#e1f3f8'
-                                            onChangeText={(e) => { handleChange("ConfirmPassword")(e); seterrorFormAPI(); }}
+                                            onChangeText={(e) => {
+                                                const trimmedValue = e.trim();
+                                                handleChange("ConfirmPassword")(trimmedValue); seterrorFormAPI(); }}
                                             onBlur={handleBlur("ConfirmPassword")}
                                             rightIcon={<Pressable onPress={() => setShow({ ...setShow, ConfirmPassword: !show?.ConfirmPassword })}>
                                                 {!show?.ConfirmPassword ? (

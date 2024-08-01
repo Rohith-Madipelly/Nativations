@@ -16,7 +16,7 @@ import { useState } from 'react';
 import { Formik } from "formik";
 import { loginSchema } from "../../Fomik/schema/signIn.js";
 
-import { UserLoginApi, UserVerifyOtp } from "../../utils/API_Calls";
+import { UserForgotOTPApi, UserLoginApi, UserVerifyOtp } from "../../utils/API_Calls";
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import { useNavigation } from '@react-navigation/native';
@@ -29,8 +29,7 @@ import { OTPSchema } from '../../Fomik/schema/OTPSchema.js';
 import { Email } from '../../Fomik/schema/Email.js';
 import { ToasterMessage } from '../../utils/ToasterMessage.js';
 
-
-export default function OtpVerify({ route }) { 
+export default function OtpVerify({ route }) {
 
 
 
@@ -40,7 +39,7 @@ export default function OtpVerify({ route }) {
     // email
     const [show, setShow] = useState()
     const [errorFormAPI, seterrorFormAPI] = useState("")
-    const [spinnerBool, setSpinnerbool] = useState(false) 
+    const [spinnerBool, setSpinnerbool] = useState(false)
 
     const navigation = useNavigation();
 
@@ -126,6 +125,92 @@ export default function OtpVerify({ route }) {
     }
 
 
+    const ResendOtp = async () => {
+
+        seterrorFormAPI()
+        try {
+          
+            setSpinnerbool(true)
+            const res = await UserForgotOTPApi(email)
+            console.log(">>",res.data.message)
+            if (res) {
+
+                ToasterMessage("success", `Success`, `${res.data.message}`)
+
+
+                setTimeout(() => {
+                    setSpinnerbool(false)
+                }, 50);
+
+
+            }
+
+        } catch (error) {
+            // {navigation.navigate('OtpVerify', { email: 'madipellyrohith@gmail.com' });}
+            if (error.response) {
+                console.log(error.data)
+                if (error.response.status === 400) {
+                    Alert.alert(error.response.data.message)
+                    console.log("Error With 400.")
+                }
+                else if (error.response.status === 401) {
+                    console.log("Error With 401.")
+
+                    seterrorFormAPI({ PasswordForm: `${error.response.data.message}` })
+                }
+                else if (error.response.status === 404) {
+                    console.log("Error With 404.")
+
+                    seterrorFormAPI({ EmailForm: `${error.response.data.message}` })
+                }
+
+                else if (error.response.status === 500) {
+                    Alert.alert(error.response.data.message)
+                    console.log("Internal Server Error", error.message)
+                }
+                else if (error.response.status === 429) {
+                    Alert.alert(error.response.data.message)
+                    console.log("Error With 429.", error)
+
+                    // {navigation.navigate('OtpVerify', { email: "madipellyrohith@gmail.com" });}
+                }
+                else {
+                    // {navigation.navigate('OtpVerify')}
+                    Alert.alert(error.response.data.message, "code")
+                    console.log("An error occurred response.")
+                }
+            }
+            else if (error.request) {
+                if (error.request.status === 0) {
+                    // console.log("error in request ",error.request.status)
+                    Alert.alert("No Network Found", "Please Check your Internet Connection")
+                }
+
+                console.log("No Response Received From the Server.")
+            }
+            else {
+                console.log("Error in Setting up the Request.")
+            }
+
+            //   ToasterSender("Error in Setting up the Request.")
+            //   ToasterSender({ Message: error.response.data.message })
+            // ToasterSender({ Message: error })
+
+            setSpinnerbool(false)
+
+            if (error) {
+
+                // message = error.message;
+                // seterrorFormAPI(message)
+                // "Email or Password does not match !"
+            }
+        }
+        finally {
+            setSpinnerbool(false)
+        }
+
+    }
+
     return (
         <>
             <Spinner
@@ -197,6 +282,14 @@ export default function OtpVerify({ route }) {
                                             // errorColor='magenta'
                                             outlined
                                         />
+
+
+
+                                        <TouchableOpacity style={{ width: '80%', alignItems: 'flex-end', marginBottom: 10 }} onPress={() => { ResendOtp() }}>
+                                            <Text>Resend otp</Text>
+                                        </TouchableOpacity>
+
+
 
 
                                         <CustomButton

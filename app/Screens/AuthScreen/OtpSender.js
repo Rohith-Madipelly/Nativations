@@ -14,7 +14,6 @@ import {
 
 import { useState } from 'react';
 import { Formik } from "formik";
-import { loginSchema } from "../../Fomik/schema/signIn.js";
 
 import { UserForgotOTPApi, UserLoginApi } from "../../utils/API_Calls";
 import Spinner from 'react-native-loading-spinner-overlay';

@@ -86,6 +86,7 @@ export const UserForgotOTPApi = async (email) => {
   const loginData = {
     email: email,
   };
+  console.log(loginData)
   return await axios.post(`${GUEST_URL}/otp`, loginData);
 };
 

@@ -45,9 +45,14 @@ export default function Login() {
         });
 
         return () => {
+            console.log("Hello")
             unsubscribe();
+            // seterrorFormAPI("");
         };
     }, []);
+
+
+
 
     function onchange(text, field) {
         setValues({ ...values, [field]: text });
@@ -197,12 +202,9 @@ export default function Login() {
                                     touched,
                                     errors,
                                     isValid,
+                                    resetForm, 
                                 }) => (
                                     <>
-
-
-
-
                                         <CustomTextInput
                                             boxWidth={'80%'}
                                             placeholder={'Enter Email or Phone Number'}
@@ -242,8 +244,17 @@ export default function Login() {
                                             // bgColor='#e1f3f8'
 
 
-                                            onChangeText={(e) => { handleChange("password")(e); seterrorFormAPI(); setShow({ ...setShow, password: false }); }}
+                                            // onChangeText={(e) => { handleChange("password")(e); seterrorFormAPI(); setShow({ ...setShow, password: false }); }}
                                             onBlur={handleBlur("password")}
+
+                                            onChangeText={(e) => {
+                                                // Trim the input value and update the form state
+                                                const trimmedValue = e.trim();
+                                                handleChange("password")(trimmedValue);
+                                                seterrorFormAPI(); 
+                                                setShow({ ...setShow, password: false });
+                                              }}
+                                             
 
                                             rightIcon={<Pressable onPress={() => setShow({ ...setShow, password: !show?.password })}>
 
@@ -275,17 +286,21 @@ export default function Login() {
                                         </CustomButton>
 
 
-
+                                        {/* <Button
+            onPress={() => resetForm()}
+            title="Reset"
+            color="#841584"
+        /> */}
 
                                         <View style={{}}>
-                                            <TouchableOpacity onPress={() => { navigation.navigate("ForgotPasswordEmail") }}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate("ForgotPasswordEmail"); seterrorFormAPI("");resetForm() }}>
                                                 <Text style={[styles.paragraphy, { color: 'black', marginTop: 20, fontWeight: '400' }]}>Forgot password?</Text>
                                             </TouchableOpacity>
                                         </View>
 
 
                                         <View style={{ width: '65%', textAlign: 'center', marginTop: 40 }}>
-                                            <TouchableOpacity onPress={() => { navigation.navigate("Register") }}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate("Register");resetForm() }}>
                                                 <Text style={[styles.paragraphy, { textAlign: 'center', color: '#7C7C7C', fontWeight: '400' }]}>Don’t have an account?
                                                     <Text style={[styles.underline, { color: '#006AFF' }]}> Sign Up</Text>
                                                 </Text>

@@ -9,7 +9,7 @@ const RestPasswordschema = Yup.object().shape({
 
     )
     .max(15, 'Password should not be more than 15 characters')
-    .required('Old password is required'),
+    .required('New password is required'),
 
     ConfirmPassword: Yup.string()
     .oneOf([Yup.ref('NewPassword'), null], 'Passwords must match')
@@ -20,7 +20,7 @@ const RestPasswordschema = Yup.object().shape({
       
     )
     .max(15, 'Password should not be more than 15 characters')
-    .required('New password is required'),
+    .required('Confirm password is required'),
 
 
 });
