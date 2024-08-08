@@ -72,46 +72,38 @@ const Snap_Carousel2 = ({ BannerData2, CarouselName }) => {
                 <Text style={[styles.Heading_U3]}>{CarouselName}</Text>
             </View>
 
-            <View style={{ marginTop: 10, display: 'flex', flexDirection: 'row' }}>
+            {!BannerData2.length == 0 ? <View style={{ marginTop: 10, display: 'flex', flexDirection: 'row' }}>
 
                 <TouchableOpacity onPress={goToPrev} style={{ justifyContent: 'center' }}>
                     <MaterialCommunityIcons name="arrow-left-drop-circle" size={30} color="black" />
                 </TouchableOpacity>
 
-                {/* <Carousel
-                    // ref={(c) => { this._carousel = c; }}
+
+
+                <Carousel
                     ref={carouselRef}
                     loop={true}
+
+                    // ref={carouselRef}
+                    width={width * 0.83}
+                    height={180}
+                    autoPlay={true}
                     data={BannerData2}
+                    scrollAnimationDuration={4000}
                     renderItem={RenderItem}
-                    sliderWidth={350}
-                    itemWidth={510}
-                    autoplay={false}
-                    // autoplayDelay={10000}
-                    autoplayInterval={50000}
-                /> */}
-
-                {BannerData2.length===0 ?
-                    <View style={{ height: 171, width: width * 0.78, marginHorizontal: 10, backgroundColor: '#E8E8E899', alignItems: 'center', justifyContent: 'center',borderRadius:15 }} >
-                        <Text>No posts available</Text>
-                    </View>
-                    : <Carousel
-                        ref={carouselRef}
-                        loop={true}
-
-                        // ref={carouselRef}
-                        width={width * 0.83}
-                        height={180}
-                        autoPlay={true}
-                        data={BannerData2}
-                        scrollAnimationDuration={4000}
-                        renderItem={RenderItem}
-                    />}
+                />
                 <TouchableOpacity onPress={goToNext} style={{ justifyContent: 'center' }}>
                     <MaterialCommunityIcons name="arrow-right-drop-circle" size={30} color="black" />
                 </TouchableOpacity>
 
-            </View>
+            </View> :
+                <View style={{ height: 171, width: width,alignItems: 'center', justifyContent: 'center' }}>
+                    <View style={{ height: 171, width: width * 0.78, marginHorizontal: 10, backgroundColor: '#E8E8E899', alignItems: 'center', justifyContent: 'center', borderRadius: 15 }} >
+                        <Text>No posts available</Text>
+                    </View>
+                </View>
+            }
+
         </View>
     )
 }

@@ -187,7 +187,7 @@ export default function FormScreen() {
 
     { label: 'Yes', value: 'yes' },
     { label: 'No', value: 'no' },
-    { label: 'Courses', value: 'Courses' },
+    // { label: 'Courses', value: 'Courses' },
   ];
 
   const regularMedicineData = [
@@ -870,6 +870,7 @@ export default function FormScreen() {
                   errorMessage={`${(errors.state && touched.state) ? `${errors.state}` : (errorFormAPI && errorFormAPI.stateForm) ? `${errorFormAPI.stateForm}` : ``}`}
                   // errorColor='magenta'
                   value={values.state}
+                  
                   items={stateData}
                   onValueChange={(itemValue) => handleChange("state")(itemValue)}
                   containerStyle={{ width: 200 }}
@@ -884,6 +885,7 @@ export default function FormScreen() {
                     boxWidth={'80%'}
                     label={'Other city'}
                     name='Other city'
+                    asterisksymbol
                     // value={values.personName}
                     value={otherState}
                     onChangeText={(e) => { handleChange("otherState")(e); handleOtherStateChange(e), seterrorFormAPI(); }}
@@ -1712,6 +1714,7 @@ export default function FormScreen() {
                       <CustomTextInput
                         placeholder={'How many hours daily? '}
                         boxWidth={'80%'}
+                        asterisksymbol
                         label={'How many hours daily?'}
                         name='Daily Hours'
                         value={values.dailyHours}
@@ -1736,6 +1739,7 @@ export default function FormScreen() {
                         label={'If no, What is the reason?'}
                         name='Reason'
                         value={values.reason}
+                        asterisksymbol
                         // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                         // bgColor='#e1f3f8'
                         // bgColor="#B1B1B0"
@@ -1757,6 +1761,7 @@ export default function FormScreen() {
                         label={'What changes have you noticed in yourself by the practice of meditation?'}
                         name='Change In YourSelf'
                         value={values.changeInYourSelf}
+                        asterisksymbol
                         // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                         // bgColor='#e1f3f8'
                         // bgColor="#B1B1B0"

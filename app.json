@@ -2,11 +2,10 @@
   "expo": {
     "name": "Satya Sadhna",
     "slug": "Navigations",
-    "version": "1.1.0",
+    "version": "1.2.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -24,7 +23,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "vardhaman.satyasadhnaOne"
+      "package": "vardhaman.satyasadhnaOne",
+      "versionCode": 6
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,7 +34,6 @@
         "projectId": "7c804e7a-7842-4219-9ab3-fb5aca0c2563"
       }
     },
-
     "plugins": [
       "expo-font"
     ]

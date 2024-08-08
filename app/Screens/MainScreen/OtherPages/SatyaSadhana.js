@@ -182,8 +182,8 @@ const SatyaSadhana = () => {
                         <View>
                             <Text style={{ fontWeight: 900, fontSize: 15, marginBottom: 10, marginTop: 10 }}>Guidelines for SATYA SADHNA meditation course</Text>
                             <View style={{ marginLeft: 5 }}>
-                                {Guidelines.map((Data) => (
-                                    <View style={{ margin: 5 }}><Text><Octicons name="dot-fill" size={15} color="black" style={{ marginRight: 10 }} /> <Text> </Text> {Data.Guidelines}</Text></View>
+                                {Guidelines.map((Data,index) => (
+                                    <View style={{ margin: 5 }} key={index}><Text><Octicons name="dot-fill" size={15} color="black" style={{ marginRight: 10 }} /> <Text> </Text> {Data.Guidelines}</Text></View>
                                 ))}
                             </View>
                         </View>
@@ -204,8 +204,8 @@ const SatyaSadhana = () => {
 
 
 
-                        {P5Data.map((DataP5) => (
-                            <View style={{ marginVertical: 10 }}>
+                        {P5Data.map((DataP5,index) => (
+                            <View style={{ marginVertical: 10 }} key={index}>
                                 <Text style={{ fontWeight: 900, textDecorationLine: 'underline', marginBottom: 10 }}>{DataP5.Heading}</Text>
                                 <Text style={{ marginLeft: 5 }}>{DataP5.RelatedData}</Text>
                             </View>

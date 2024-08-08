@@ -215,10 +215,15 @@ const AudioScreen = ({ route }) => {
 
                 </View>
                 <View style={{ height: 50 }}>
+                    <Pressable style={{ position: "absolute", top: '15%', left: 20, borderRadius: 50,marginTop:10 }} onPress={() => { navigation.goBack(); }}>
+                        <Feather name="arrow-left" size={27} color="black" />
+                    </Pressable>
+                </View>
+                {/* <View style={{ height: 50 }}>
                     <Pressable style={{ position: "absolute", top: '15%', left: 20, backgroundColor: '#3d423e', borderRadius: 50 }} onPress={() => { navigation.goBack(); }}>
                         <Feather name="arrow-left" size={35} color="white" />
                     </Pressable>
-                </View>
+                </View> */}
 
 
                 <View style={{ flex: 1, alignItems: 'center', paddingTop: 10, marginHorizontal: 18 }}>
