@@ -18,7 +18,7 @@ import {
 
 import Home from '../Screens/MainScreen/Home';
 import Profile from '../Screens/MainScreen/Profile';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Platform, Text, TouchableOpacity, View } from 'react-native';
 import DownloadFliesList from '../Screens/MainScreen/DownloadFliesList';
 import LiveScreen from '../Screens/MainScreen/LiveScreen';
 
@@ -34,7 +34,10 @@ const BottomTabScreen = ({ route }) => {
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         tabBarStyle: {
-          height: 55,
+          // height: 55,
+           // height: 55,
+          // flex: 0.102,
+          flex: Platform.OS === "ios" ? 0.08 : 0.102,
           backgroundColor: '#006AFF'
 
         },

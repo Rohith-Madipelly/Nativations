@@ -39,17 +39,17 @@ const Snap_Carousel1 = ({ BannerData }) => {
 
 
         return (
-            <Pressable onPress={() => { Navigationn() }} key={index} style={{justifyContent:'center',alignItems:'center'}}>
-                <View style={{width: '98%',justifyContent:'center',alignItems:'center',borderRadius: 20,overflow:'hidden'}} >
+            <Pressable onPress={() => { Navigationn() }} key={index} style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ width: '98%', justifyContent: 'center', alignItems: 'center', borderRadius: 20, overflow: 'hidden' }} >
                     {/* <Image source={{ uri: `${GUEST_URL}/${item.thumbnail}` }} style={{ width: '100%', height: 200, borderRadius: 20, resizeMode: 'contain', }} /> */}
 
 
                     <LoadingImage
                         source={{ uri: `${GUEST_URL}/${item.thumbnail}` }}
                         //   style={{ width: '100%', height: 240, }}
-                        style={{ width: '100%', height: 200, borderRadius: 20, resizeMode:'cover' }}
+                        style={{ width: '100%', height: 200, borderRadius: 20, resizeMode: 'cover' }}
                         loaderColor="#ff0000" // Optional: change loader color
-                        // resizeMode="contain"
+                    // resizeMode="contain"
                     />
 
 
@@ -81,10 +81,10 @@ const Snap_Carousel1 = ({ BannerData }) => {
                 autoplayDelay={4000}
             /> */}
             {BannerData.length === 0 ?
-                    <View style={{ height: 171, width: width * 0.78, marginHorizontal: 10, backgroundColor: '#E8E8E899', alignItems: 'center', justifyContent: 'center',borderRadius:15 }} >
-                        <Text>No posts available</Text>
-                    </View>
-                    :<Carousel
+                <View style={{ height: 171, width: width * 0.78, marginHorizontal: 10, backgroundColor: '#E8E8E899', alignItems: 'center', justifyContent: 'center', borderRadius: 15 }} >
+                    <Text>No posts available</Text>
+                </View>
+                : <Carousel
                     loop
                     // ref={carouselRef}
                     width={width * 0.9}
@@ -93,10 +93,10 @@ const Snap_Carousel1 = ({ BannerData }) => {
                     data={BannerData}
                     scrollAnimationDuration={4000}
                     renderItem={RenderItem}
-                /> }
-                <View>
-                    
-                    </View>
+                />}
+            <View>
+
+            </View>
 
         </View>
     )

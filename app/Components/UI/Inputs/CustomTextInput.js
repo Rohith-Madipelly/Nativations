@@ -29,8 +29,8 @@ const CustomTextInput = ({
     const backgroundColor = bgColor || 'white';
     const containerBorder = outlined ? styles.outlined : styles.standard;
     return (
-        <View style={{ padding: 0,width:boxWidth }}>
-            <Text style={styles.label}>{label} {asterisksymbol?<Text style={{color:'red'}}>*</Text>:""}</Text>
+        <View style={{ padding: 0, width: boxWidth }}>
+            <Text style={styles.label}>{label} {asterisksymbol ? <Text style={{ color: 'red' }}>*</Text> : ""}</Text>
             <View style={[styles.container, containerBorder, { borderColor: borderColor }, { backgroundColor: backgroundColor }]}>
                 <View style={{ paddingRight: 3 }}>
                     {leftIcon}
@@ -83,12 +83,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
 
 
+
         ...Platform.select({
             ios: {
                 shadowColor: 'black',
                 shadowOffset: { width: 0, height: 2 },
                 shadowOpacity: 0.2,
                 shadowRadius: 4,
+                paddingVertical: 15
             },
             android: {
                 elevation: 2,

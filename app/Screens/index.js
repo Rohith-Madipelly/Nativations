@@ -67,7 +67,6 @@ export default function Screens() {
         }
       }
       setAppIsReady(true);
-
     });
 
   }
