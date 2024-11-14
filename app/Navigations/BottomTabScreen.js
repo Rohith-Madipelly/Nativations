@@ -21,10 +21,34 @@ import Profile from '../Screens/MainScreen/Profile';
 import { Platform, Text, TouchableOpacity, View } from 'react-native';
 import DownloadFliesList from '../Screens/MainScreen/DownloadFliesList';
 import LiveScreen from '../Screens/MainScreen/LiveScreen';
+import LiveActive from '../assets/SVGS/LiveActive';
+import LiveIcon from '../assets/SVGS/LiveIcon';
+import HomeIcon from '../assets/SVGS/HomeIcon';
+import HomeActive from '../assets/SVGS/HomeActive';
+import ProfileIcon from '../assets/SVGS/ProfileIcon';
+import ProfileActive from '../assets/SVGS/ProfileActive';
+import Options from '../assets/SVGS/Navigation/Options';
+import BackIcons from '../assets/SVGS/Navigation/BackIcons';
 
 
 // import SideBar from '../Screens/Drawer/SideBar';
 
+
+const BottomTabConfig = {
+  headerShown: true,
+  headerBackVisible: true,
+  // headerTitle: 'Hello Rohith',
+  headerTitleAlign: 'center',
+  headerStyle: {
+    backgroundColor: 'white',
+  },
+  headerTintColor: '#030370',
+  headerTitleStyle: {
+    fontFamily: 'Gabarito-VariableFont',
+    fontSize: 20,
+    fontWeight: '600',
+  },
+}
 
 const Tab = createBottomTabNavigator();
 
@@ -34,63 +58,35 @@ const BottomTabScreen = ({ route }) => {
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         tabBarStyle: {
-          // height: 55,
-           // height: 55,
-          // flex: 0.102,
-          flex: Platform.OS === "ios" ? 0.08 : 0.102,
-          backgroundColor: '#006AFF'
-
+          flex: Platform.OS === "ios" ? 0.07 : 0.100,
+          backgroundColor: '#EEEEFF'
         },
 
         tabBarIcon: ({ focused, size, colour }) => {
           let iconName;
           if (route.name === "Home") {
+
             // iconName =  focused ?<FontAwesome6 name="house" size={24} color={colour} />:
-            size = focused ? size + 8 : size + 2;
-
+            size = focused ? size + 6 : size + 2;
 
             return (
-              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5 }}>
-                {/* {focused ? <FontAwesome6 name="house" size={20} color="Black" />:<FontAwesome6 name="house" size={20} color="White" />} */}
-                {focused ? <FontAwesome6 name="house" size={20} color={"white"} /> : <FontAwesome6 name="house" size={20} color={colour} />}
-                <Text style={{ fontSize: 12, marginTop: 5, color: focused ? "white" : "black" }}>Home</Text>
+              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5, }}>
+                {focused ? <HomeIcon /> :
+                  <HomeActive />
+                }
+                <Text style={{ fontSize: 12, marginTop: 5, width: '100%', color: focused ? "#030370" : "#64748B", fontWeight: focused ? 700 : 500 }}>Home</Text>
               </View>)
           }
 
-          else if (route.name === "Search") {
-            // iconName =  focused ?<Fontisto name="search" size={24} color={colour} />:<Fontisto name="search" size={20} color={colour} />
-            size = focused ? size + 8 : size + 2;
-            colour = focused ? "Black" : "White";
-            return (
-              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5 }}>
-                <Fontisto name="search" size={24} color={colour} />
-                <Text style={{ fontSize: 12, marginTop: 5, color: focused ? "white" : "black" }}>search</Text>
-              </View>)
-
-          }
-
-          else if (route.name === "Profile") {
-            // iconName =  focused ?<Fontisto name="search" size={24} color={colour} />:<Fontisto name="search" size={20} color={colour} />
-            size = focused ? size + 8 : size + 2;
-            colour = focused ? "Black" : "White";
-            return (
-              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5 }}>
-                {focused ? <FontAwesome name="user-circle-o" size={24} color={"white"} /> : <FontAwesome name="user-circle-o" size={24} color={colour} />}
-                <Text style={{ fontSize: 12, marginTop: 5, color: focused ? "white" : "black" }}>Profile</Text>
-              </View>)
-
-          }
 
 
 
           else if (route.name === "Live Page") {
-            // iconName =  focused ?<Fontisto name="search" size={24} color={colour} />:<Fontisto name="search" size={20} color={colour} />
             size = focused ? size + 8 : size + 2;
-
             return (
-              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5 }}>
-                {focused ? <MaterialIcons name="live-tv" size={24} color={"white"} /> : <MaterialIcons name="live-tv" size={24} color={colour} />}
-                <Text style={{ fontSize: 12, marginTop: 5, color: focused ? "white" : "black" }}>Live</Text>
+              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5, }}>
+                {focused ? <LiveActive /> : <LiveIcon />}
+                <Text style={{ fontSize: 12, marginTop: 5, width: '100%', color: focused ? "#030370" : "#64748B", fontWeight: focused ? 700 : 500 }}>Live</Text>
               </View>)
 
           }
@@ -100,12 +96,24 @@ const BottomTabScreen = ({ route }) => {
             size = focused ? size + 8 : size + 2;
 
             return (
-              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5 }}>
-                {focused ? <Feather name="download" size={24} color={"white"} /> : <Feather name="download" size={24} color={colour} />}
+              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5, }}>
+                {focused ? <Feather name="download" size={24} color="#030370" /> : <Feather name="download" size={24} color="#64748B" />}
 
-                <Text style={{ fontSize: 12, marginTop: 5, color: focused ? "white" : "black" }}>Downloads</Text>
+                <Text style={{ fontSize: 12, marginTop: 5, width: '100%', color: focused ? "#030370" : "#64748B", fontWeight: focused ? 700 : 500 }}>Downloads</Text>
               </View>)
 
+          }
+
+
+          else if (route.name === "Profile") {
+            // iconName =  focused ?<Fontisto name="search" size={24} color={colour} />:<Fontisto name="search" size={20} color={colour} />
+            size = focused ? size + 8 : size + 2;
+            colour = focused ? "Black" : "White";
+            return (
+              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5, }}>
+                {focused ? <ProfileActive /> : <ProfileIcon />}
+                <Text style={{ fontSize: 12, marginTop: 5, width: '100%', color: focused ? "#030370" : "#64748B", fontWeight: focused ? 700 : 500 }}>Profile</Text>
+              </View>)
           }
 
 
@@ -118,75 +126,68 @@ const BottomTabScreen = ({ route }) => {
         name="Home"
         component={Home}
         options={({ navigation }) => ({
-          headerShown: true,
-          headerBackVisible: true, 
-          headerStyle: {
-            backgroundColor: '#006BFF',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: '500',
-            fontSize: 20
-          },
+          ...BottomTabConfig,
           headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-              <Ionicons name="menu-outline" size={24} color="white" style={{ marginLeft: 10 }} />
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ marginLeft: 15 }}>
+              <Options />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ marginRight: 15 }}>
+              <View style={{}}></View>
             </TouchableOpacity>
           ),
         })}
       />
 
 
-      {/* <Tab.Screen name="Search" component={SearchScreen} options={{
-          headerShown: true, // Show the header
-          headerBackVisible: true, // Hide the back button
-        }}/> */}
+      <Tab.Screen name="Live Page" component={LiveScreen}
+        options={({ navigation }) => ({
+          ...BottomTabConfig,
+          // Live Channel
+            headerTitle: 'Live Channel',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ marginLeft: 15 }}>
+              <BackIcons/>
+            </TouchableOpacity>
+          ),
 
-      <Tab.Screen name="Live Page" component={LiveScreen} options={{
-        headerShown: true, // Show the header
-        headerBackVisible: true, // Hide the back button
-        headerStyle: {
-          backgroundColor: '#006BFF',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: '500',
-          fontSize: 20
-        },
-      }} />
+    
+          // headerShown: false,
+        })}
+      />
 
 
 
-      <Tab.Screen name="Downloads" component={DownloadFliesList} options={{
-        headerShown: true, // Show the header
-        headerBackVisible: true, // Hide the back button
-        headerStyle: {
-          backgroundColor: '#006BFF',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: '500',
-          fontSize: 20
-        },
-      }} />
+      <Tab.Screen name="Downloads" component={DownloadFliesList}
+        options={({ navigation }) => ({
+          ...BottomTabConfig,
 
-      <Tab.Screen name="Profile" component={Profile} options={{
-        headerShown: true, // Show the header
-        headerBackVisible: true, // Hide the back button
-        headerStyle: {
-          backgroundColor: '#006BFF',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: '500',
-          fontSize: 20
-        },
-      }} />
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ marginLeft: 15 }}>
+              <BackIcons/>
+            </TouchableOpacity>
+          ),
+
+        })}
+      />
+
+      <Tab.Screen name="Profile" component={Profile}
+        options={({ navigation }) => ({
+          ...BottomTabConfig,
+
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ marginLeft: 15 }}>
+              <BackIcons/>
+            </TouchableOpacity>
+          ),
+        })}
+      />
 
     </Tab.Navigator>
 
 
- 
+
   );
 };
 

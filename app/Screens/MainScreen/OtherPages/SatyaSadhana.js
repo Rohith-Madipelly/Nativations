@@ -221,6 +221,10 @@ const SatyaSadhana = () => {
                             Satya Sadhna Facebook Page.Twitter, Instagram .
 
                         </Text>
+
+
+                       <View style={{height:40,}}>
+                        </View>
                     </View>
                     <View style={{ height: 100 }}>
                         <Text>.</Text>

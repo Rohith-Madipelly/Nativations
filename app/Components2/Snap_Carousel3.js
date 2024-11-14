@@ -58,7 +58,7 @@ const Snap_Carousel3 = ({ BannerDataPravachan }) => {
     <View style={{ marginTop: 10 }}>
       <View style={{ marginHorizontal: 20, marginTop: 10, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
 
-        <Text style={[styles.Heading_U3]}>Pravachan</Text>
+        <Text style={[styles.Heading_U3]}>Pravachan / Videos</Text>
 
         {/* <TouchableOpacity onPress={goToNext}>
 
@@ -79,14 +79,13 @@ const Snap_Carousel3 = ({ BannerDataPravachan }) => {
             >
 
               {BannerDataPravachan.map(item => (
-                <View key={item.id} style={{ width: 170, paddingHorizontal: 12, marginRight: 0 }}>
+                <View key={item.id} style={{ width: "100%", paddingHorizontal: 12, marginRight: 0 }}>
                   <TouchableOpacity onPress={()=>{Navigationn(item)}}>
                     {/* <Image source={{ uri: `${GUEST_URL}/thumbnail/${item.thumbnail}` }} style={{ width: '100%', height: '100%', borderRadius: 20,  }} /> */}
 
-
                     <LoadingImage
                       source={{ uri: `${GUEST_URL}/${item.thumbnail}` }}
-                      //   style={{ width: '100%', height: 240, }}
+                        // style={{ width: '100%', height: 240, }}
                       style={{ width: '100%', height: '100%', borderRadius: 20, }}
                       loaderColor="#ff0000" // Optional: change loader color
                     // resizeMode="contain"

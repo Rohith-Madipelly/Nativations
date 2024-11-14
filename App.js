@@ -3,17 +3,13 @@ import React from 'react'
 import Screen from './app/Screens'
 import { store } from './app/redux/store'
 import { Provider } from 'react-redux'
-import Entypo from '@expo/vector-icons/Entypo';
-import * as SplashScreen from 'expo-splash-screen';
-import * as Font from 'expo-font';
-import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
 import { Platform } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
+import { ToastProvider } from 'react-native-toast-notifications'
 // Path to the JKS file
 const jksFilePath = Platform.select({
   // ios: `${FileSystem.documentDirectory}/path/to/your/file.jks`,
@@ -23,7 +19,7 @@ const jksFilePath = Platform.select({
 // Keep the splash screen visible while we fetch resources
 // SplashScreen.preventAutoHideAsync();
 export default function App() {
-  // <StatusBar translucent={true} backgroundColor="transparent" />
+
   // const [appIsReady, setAppIsReady] = useState(false);
   // useEffect(() => {
   //   async function prepare() {
@@ -63,16 +59,42 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <GestureHandlerRootView style={{ flex: 1}}>
-        <StatusBar
-          animated={true}
-          backgroundColor="#006AFF"
-          barStyle={'dark-content'}
-        />
-        <Provider store={store}>
-          <Screen />
-          <Toast />
-        </Provider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <ToastProvider
+
+renderType={{
+  custom_type: (toast) => (
+    <View style={{padding: 15, backgroundColor: 'grey'}}>
+      <Text>{toast.message}</Text>
+    </View>
+  )
+}}
+        
+        placement="bottom | top"
+          duration={5000}
+          animationType='slide-in | zoom-in'
+          animationDuration={250}
+          successColor="green"
+          dangerColor="red"
+          // dangerColor="red"
+          warningColor="orange"
+          normalColor="rgba(100, 116, 139, 1)"
+          // icon={<Icon />}
+          // successIcon={<SuccessIcon />}
+          // dangerIcon={<DangerIcon />}
+          // warningIcon={<WarningIcon />}
+          textStyle={{ fontSize: 20 }}
+          offset={50} // offset for both top and bottom toasts
+          offsetTop={30}
+          offsetBottom={160}
+          swipeEnabled={true}
+        // renderToast={(toastOptions) => JSX.Element}
+        >
+          <Provider store={store}>
+            <Screen />
+            <Toast />
+          </Provider>
+        </ToastProvider>
       </GestureHandlerRootView>
     </SafeAreaProvider>
   )

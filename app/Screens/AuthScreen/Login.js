@@ -1,15 +1,11 @@
-import { Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Alert } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import AuthComponent from './AuthComponent';
 import CustomButton from '../../Components/UI/Button/ButtonC1';
 import CustomTextInput from '../../Components/UI/Inputs/CustomTextInput';
 
 import {
     Entypo,
-    Feather,
-    AntDesign,
-    MaterialIcons,
-    Ionicons, FontAwesome,
-    MaterialCommunityIcons,
+    FontAwesome,
 } from "@expo/vector-icons";
 
 import { useEffect, useState } from 'react';
@@ -24,10 +20,10 @@ import { useDispatch } from 'react-redux';
 import { setToken } from '../../redux/actions/loginAction.jsx'
 
 import ASO from '../../utils/AsyncStorage_Calls.js'
-import { ToasterSender } from '../../utils/Toaster.js';
-import { ToasterMessage } from '../../utils/ToasterMessage.js';
 import { ErrorResPrinter } from '../../utils/ErrorResPrinter.js';
 import NetInfo from '@react-native-community/netinfo';
+import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar.js';
+import GlobalStyles from '../../Components/UI/GlobalStyles.js';
 
 export default function Login() {
 
@@ -88,7 +84,7 @@ export default function Login() {
                 ASO.setTokenJWT("Token", JSON.stringify(res.data.token), function (res, status) {
                     if (status) {
                         // console.warn(status, " status>>>>>.")
-                        ToasterMessage("success", `Success`, `${Message}`)
+                        // ToasterMessage("success", `Success`, `${Message}`)
                         // ToasterSender({ Message: `${Message}` })
                         dispatch(setToken(token));
                     }
@@ -101,7 +97,7 @@ export default function Login() {
 
 
             }
-            
+
 
         } catch (error) {
             console.log(error, "Find me")
@@ -127,12 +123,12 @@ export default function Login() {
             }
             else if (error.request) {
                 console.log("No Response Received From the Server.")
-                
-                    if (error.request.status === 0) {
-                      // console.log("error in request ",error.request.status)
-                      Alert.alert("No Network Found","Please Check your Internet Connection")
-                    }
-                 
+
+                if (error.request.status === 0) {
+                    // console.log("error in request ",error.request.status)
+                    Alert.alert("No Network Found", "Please Check your Internet Connection")
+                }
+
             }
             else {
                 console.log("Error in Setting up the Request.")
@@ -172,12 +168,13 @@ export default function Login() {
                 color={"#5F2404"}
                 animation={'fade'}
             />
+            
 
             <AuthComponent NameUnderLogo={"Satya Sadhna"} titleUnder={""} screenName={"LOGIN"}>
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
                     // behavior={Platform.OS === "ios" ? 100:0}
-                    keyboardVerticalOffset={5000} 
+                    keyboardVerticalOffset={5000}
                 // style={styles.container}
                 >
                     {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
@@ -202,7 +199,7 @@ export default function Login() {
                                     touched,
                                     errors,
                                     isValid,
-                                    resetForm, 
+                                    resetForm,
                                 }) => (
                                     <>
                                         <CustomTextInput
@@ -251,10 +248,10 @@ export default function Login() {
                                                 // Trim the input value and update the form state
                                                 const trimmedValue = e.trim();
                                                 handleChange("password")(trimmedValue);
-                                                seterrorFormAPI(); 
+                                                seterrorFormAPI();
                                                 setShow({ ...setShow, password: false });
-                                              }}
-                                             
+                                            }}
+
 
                                             rightIcon={<Pressable onPress={() => setShow({ ...setShow, password: !show?.password })}>
 
@@ -286,21 +283,16 @@ export default function Login() {
                                         </CustomButton>
 
 
-                                        {/* <Button
-            onPress={() => resetForm()}
-            title="Reset"
-            color="#841584"
-        /> */}
 
                                         <View style={{}}>
-                                            <TouchableOpacity onPress={() => { navigation.navigate("ForgotPasswordEmail"); seterrorFormAPI("");resetForm() }}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate("ForgotPasswordEmail"); seterrorFormAPI(""); resetForm() }}>
                                                 <Text style={[styles.paragraphy, { color: 'black', marginTop: 20, fontWeight: '400' }]}>Forgot password?</Text>
                                             </TouchableOpacity>
                                         </View>
 
 
                                         <View style={{ width: '65%', textAlign: 'center', marginTop: 40 }}>
-                                            <TouchableOpacity onPress={() => { navigation.navigate("Register");resetForm() }}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate("Register"); resetForm() }}>
                                                 <Text style={[styles.paragraphy, { textAlign: 'center', color: '#7C7C7C', fontWeight: '400' }]}>Don’t have an account?
                                                     <Text style={[styles.underline, { color: '#006AFF' }]}> Sign Up</Text>
                                                 </Text>
@@ -316,7 +308,7 @@ export default function Login() {
 
                             </Formik>
                         </View>
-                    </ScrollView> : <View style={{display:'flex', justifyContent:'center',alignItems:'center'}}>
+                    </ScrollView> : <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Text>No network found</Text>
                         <Text>Please check your internet connection</Text>
                     </View>}

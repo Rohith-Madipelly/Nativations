@@ -1,6 +1,6 @@
 import { Button, Image, ImageBackground, Keyboard, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native'
 import React from 'react'
-import { StatusBar } from 'expo-status-bar';
+
 
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -46,7 +46,7 @@ const AuthComponent = ({ NameUnderLogo, titleUnder, screenName, children }) => {
                         </View>
 
                     </View>
-                    <StatusBar style="auto" />
+                  
                 </LinearGradient>
     )
 }

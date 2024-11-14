@@ -12,6 +12,8 @@ import {
 } from "@expo/vector-icons";
 
 import { Video } from 'expo-av';
+import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar';
+import GlobalStyles from '../../Components/UI/GlobalStyles';
 
 const ignoreFileName = [".com.google.firebase.crashlytics.files.v2:host.exp.exponent", "RCTAsyncLocalStorage", "profileInstalled", "generatefid.lock", "ExperienceData", ".expo-internal", "PersistedInstallation.W0RFRkFVTFRd+MTozNjczMTUxNzQ2OTM6YW5kcm9pZDpmOTY4ZWZiYjQxZDFmYTdh.json", "profileinstaller_profileWrittenFor_lastUpdateTime.dat", "dev.expo.modules.core.logging.dev.expo.updates", "BridgeReactNativeDevBundle.js"];
 
@@ -137,6 +139,7 @@ const DownloadFliesList = () => {
     return (
         <View style={{flex:1}}>
             {/* <ScrollView> */}
+            <CustomStatusBar barStyle="dark-content" backgroundColor={GlobalStyles.CustomStatusBarMainColor} />
             <View style={{ marginBottom: 0,flex:1 }}>
 
                 {selectedVideo ? (

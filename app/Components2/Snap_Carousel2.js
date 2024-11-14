@@ -69,7 +69,7 @@ const Snap_Carousel2 = ({ BannerData2, CarouselName }) => {
         <View style={{ marginTop: 10, marginTop: 15 }}>
             <View style={{ marginLeft: 20 }}>
 
-                <Text style={[styles.Heading_U3]}>{CarouselName}</Text>
+                <Text style={[styles.Heading_U3,{}]}>{CarouselName}</Text>
             </View>
 
             {!BannerData2.length == 0 ? <View style={{ marginTop: 10, display: 'flex', flexDirection: 'row' }}>
@@ -87,7 +87,7 @@ const Snap_Carousel2 = ({ BannerData2, CarouselName }) => {
                     // ref={carouselRef}
                     width={width * 0.83}
                     height={180}
-                    autoPlay={true}
+                    // autoPlay={true}
                     data={BannerData2}
                     scrollAnimationDuration={4000}
                     renderItem={RenderItem}

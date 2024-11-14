@@ -1,6 +1,6 @@
 import { Button, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { StatusBar } from 'expo-status-bar';
+
 
 import { LinearGradient } from 'expo-linear-gradient';
 import image from '../../../assets/image/Logo120.png'
@@ -85,7 +85,7 @@ const Login = () => {
             
             <Text>Login</Text>
         </View> */}
-            <StatusBar style="auto" />
+  
         </LinearGradient>
     )
 }

@@ -18,11 +18,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 
 const About_Guruji = () => {
-    const [spinnerBool, setSpinnerbool] = useState(false)
-    const [data, setData] = useState("")
-    const [AppLink, setAppLink] = useState("")
-    // const [data, setData] = useState("")
-    const dispatch = useDispatch();
+
     let tokenn = useSelector((state) => state.token);
     const [isConnected, setIsConnected] = useState(true);
 
@@ -92,7 +88,7 @@ const About_Guruji = () => {
             <View style={{ position: 'relative', top: '10%', backgroundColor: 'pink', height: '100%', borderRadius: 30, overflow: 'scroll', backgroundColor: 'white' }}>
                 <Text style={{ fontWeight: 900, fontSize: 23, margin:20 }}>About GURUJI:ACHARYA SHRI JIN CHANDRA SURIJI</Text>
                 <ScrollView>
-                    <View style={{ margin: 15 }}>
+                    <View style={{ margin: 15,marginBottom:20 }}>
                         {/* <Text>{data}</Text> */}
                         <Text style={{ fontWeight: 900, fontSize: 15, marginBottom: 10 }}> Childhood</Text>
                         <Text style={{ marginBottom: 10, marginLeft: 10 }}>Shri Hansmukh Lal Golia and Smt Chandrakala Devi were very happy to have a child. They named him Devendra. Born in a religious family, child Devendra grew up with all the righteous influences. But early in his childhood, his mother passed away. The event changed the child's life forever. The effect of this sad event made Devendra too serious for his age. His father was worried to notice the sudden change in his son's state of mind and sent him to Jaipur, to his maternal family. Even this didn't bring any change in the child. The ephemeral nature of the world had made a deep impact on him. By coincidence, he had an audience with Sadhvi Shri Vinay Shriji. Her inspiration strengthened Devendra's yearning to discover the true.</Text>

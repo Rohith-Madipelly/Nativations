@@ -24,7 +24,7 @@ import ASO from '../../utils/AsyncStorage_Calls.js'
 import { ToasterSender } from '../../utils/Toaster.js';
 import { signupSchema } from '../../Fomik/schema/signUpSchema.js';
 import { LinearGradient } from 'expo-linear-gradient';
-import { StatusBar } from 'expo-status-bar';
+
 
 
 export default function Register() {
@@ -339,7 +339,7 @@ export default function Register() {
                     </View>
 
                 </View>
-                <StatusBar style="auto" />
+         
                 </KeyboardAvoidingView>
             </LinearGradient>
 

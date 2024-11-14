@@ -22,6 +22,8 @@ import { OpenStore } from '../../utils/OpenStore';
 import onShare from '../../utils/ShareBtn';
 import NetInfo from '@react-native-community/netinfo';
 import { LogOutHandle123 } from '../../utils/LogOut';
+import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar';
+import GlobalStyles from '../../Components/UI/GlobalStyles';
 
 
 const Profile = () => {
@@ -211,15 +213,17 @@ const Profile = () => {
         color={"#5F2404"}
         animation={'fade'}
       />
-      <ScrollView style={[{ borderTopRightRadius: 25, borderTopLeftRadius: 25, backgroundColor: "#FFF" }]}
+      <ScrollView style={[{ 
+        // borderTopRightRadius: 25, borderTopLeftRadius: 25,
+       backgroundColor: "#FFF" }]}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
           />
         }
-
       >
+        <CustomStatusBar barStyle="dark-content" backgroundColor={GlobalStyles.CustomStatusBarMainColor} />
         <View style={[{ paddingLeft: 29, paddingTop: 30, paddingRight: 20 }]}>
 
 

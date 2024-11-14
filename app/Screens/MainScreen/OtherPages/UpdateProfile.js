@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserGetProfileDetails, UserUpdatedProfileDetails, UserUpdatedProfilePic, UserUpdatedProfilePic123 } from '../../../utils/API_Calls'
 import Spinner from 'react-native-loading-spinner-overlay';
 import Feather from "react-native-vector-icons/Feather"
-import { StatusBar } from 'expo-status-bar';
+
 // import * as ImagePicker from 'expo-image-picker';
 
 import { Formik } from "formik";
@@ -354,13 +354,13 @@ const Profile = () => {
       
         }}>
 
-          <TouchableOpacity onPress={() => { navigation.goBack(); }}>
+          {/* <TouchableOpacity onPress={() => { navigation.goBack(); }}>
             <Feather name="arrow-left" style={{
               fontSize: 25,
               marginLeft: 2,
               color: 'black'
             }} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
 
           {/* <TouchableOpacity onPress={() => { pickImage() }} style={{ backgroundColor: '' }}>

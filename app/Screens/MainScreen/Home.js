@@ -16,8 +16,22 @@ import { useNavigation } from '@react-navigation/native';
 import { LogOutHandle123 } from '../../utils/LogOut';
 import { useDispatch } from 'react-redux';
 import { ErrorResPrinter } from '../../utils/ErrorResPrinter';
+import { ImageBackground } from 'react-native';
+import Entypo from '@expo/vector-icons/Entypo';
+import Metrics from '../../utils/ResposivesUtils/Metrics';
+import { Touchable } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import LoadingImage from '../../Components/ImageConatiners/LoadingImage';
+import ProfileActive from '../../assets/SVGS/ProfileActive';
+import FormDataIcons from '../../assets/SVGS/Home/FormDataIcons';
+import Donation from '../../assets/SVGS/Home/Donation';
+import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar';
 
 
+import { useToast } from "react-native-toast-notifications";
+import MusicList from '../../Components2/Music/MusicList';
+import QuoteOfDay from '../../Components2/Quote/QuoteOfDay';
+import { FontAwesome5 } from '@expo/vector-icons';
 const Home = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
   const [isData, setIsData] = useState()
@@ -31,6 +45,9 @@ const Home = () => {
   const [isConnected, setIsConnected] = useState(true);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  const toast = useToast();
+
 
   const logoutValidation = async () => {
     console.log("dasda")
@@ -86,7 +103,7 @@ const Home = () => {
   useEffect(() => {
     if (isConnected) {
 
-    
+
       HomeData()
     }
   }, [isConnected])
@@ -160,10 +177,10 @@ const Home = () => {
   if (!isConnected) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} >
-      <Text>No network found</Text>
-      <Text>Please check your internet connection</Text>
-      <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
-    </View>
+        <Text>No network found</Text>
+        <Text>Please check your internet connection</Text>
+        <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
+      </View>
     );
   } else {
   }
@@ -171,57 +188,211 @@ const Home = () => {
 
   return (
     // <SafeAreaView>
-      <View style={{ paddingTop: 0, marginBottom:0}}>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-          }
-        >
+    <View style={{ paddingTop: 0, marginBottom: 0, backgroundColor: 'white' }}>
+      <CustomStatusBar barStyle="dark-content" backgroundColor="white" />
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
 
-          {isConnected ? <View>
-
-
-            {isData ? <View >
-              <View style={{height:20}}>
-                </View>
-
-              <Snap_Carousel1 BannerData={Banners} />
-
-              <Snap_Carousel2 BannerData2={meditationTracks} CarouselName={'Meditation Tracks'}/>
+        {isConnected ? <View>
 
 
-              <Snap_Carousel3 BannerDataPravachan={pravachan} />
-
-              <Snap_Carousel2 BannerData2={previousEvents} CarouselName={'Previous Event Videos'}/>
-
-              
-
-              <Snap_Carousel5 BannerDataBajana={bhanaja} /> 
-
-              <Snap_Carousel2 BannerData2={upComingEvents} CarouselName={'Upcoming Events'}/>
-
-              {/*<Snap_Carousel6 Up_Coming_EventsData={upComingEvents} />*/}
-              <View style={{height:20}}>
-                </View>
-
-            </View> :
-              <View>
-                <Text>No Data Found</Text>
-              </View>}
-          </View> : (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-              <Text>No network found</Text>
-              <Text>Please check your internet connection</Text>
-              <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
+          {isData ? <View >
+            <View style={{ height: 20 }}>
             </View>
-          )}
 
-        </ScrollView>
+            {/* Parent View */}
+            <TouchableOpacity style={{ maxHeight: Metrics.height * 0.12, minHeight: 120, backgroundColor: '#030370', padding: 10, marginHorizontal: 10, borderRadius: 13 }} onPress={() => { navigation.navigate("About_SatyaSadhana") }}>
+              <ImageBackground
+                style={{ position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', width: '100%', height: '100%' }}
+                // contentFit="fixed"
+                blurRadius={0.2}
+                resizeMode='fill'
+                source={require("../../assets/image/Home/Vector.png")}
+              >
+                <View style={{ width: '100%', margin: 5, marginTop: 10, marginLeft: 7 }}>
+                  <Text style={{ fontFamily: 'VIVALDII', color: 'white', fontSize: Metrics.rfv(29) }}>Satya Sadhna Meditation</Text>
+                  <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'white', fontSize: Metrics.rfv(15), }}>The path to peace of mind & eternal bliss</Text>
+                </View>
 
-      </View>
+                <TouchableOpacity style={{ flexDirection: 'row', margin: 5, marginLeft: 7 }} onPress={() => { navigation.navigate("About_SatyaSadhana") }}>
+                  <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'white', fontSize: Metrics.rfv(10) }}>Learn More</Text><Entypo name="chevron-right" size={Metrics.rfv(12)} color="white" />
+                </TouchableOpacity>
+              </ImageBackground>
+            </TouchableOpacity>
+
+
+
+
+            <View style={{ maxHeight: Metrics.height * 0.12, minHeight: Metrics.width * 0.26, flexDirection: 'row', justifyContent: 'space-evenly', padding: 5, marginHorizontal: 5, borderRadius: 13, marginTop: 5, }}>
+
+              <TouchableOpacity style={{ flex: 0.23, }}
+                onPress={() => {
+                  navigation.navigate("FormScreen")
+                }}
+              >
+
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
+                  <FormDataIcons />
+                </View>
+
+                <View style={{ marginTop: 5 }}>
+                  <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Register</Text>
+                </View>
+              </TouchableOpacity>
+
+
+
+
+              <TouchableOpacity style={{ flex: 0.23, }}
+                onPress={() => {
+                  navigation.navigate("Donation")
+                }}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
+                  <Donation />
+                </View>
+                <View style={{ marginTop: 5 }}>
+                  <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Donation</Text>
+                </View>
+              </TouchableOpacity>
+
+
+              <TouchableOpacity style={{
+                flex: 0.23,
+              }}
+
+              >
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
+                  <Donation />
+                </View>
+                <View style={{ marginTop: 5 }}>
+                  <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Donation</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={{
+                flex: 0.23,
+              }}
+                onPress={() => {
+                  toast.hideAll(); console.log("dwchjbdc"); toast.show("Task finished successfully", {
+                    type: "custom_type",
+                    placement: "top",
+                    duration: 4000,
+                    offset: 10,
+                    animationType: "slide-in",
+                  });
+                }}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
+                  {/* <Donation /> */}
+                  <FontAwesome5 name="share-square" size={24} color="rgba(3, 3, 112, 1)" />
+                </View>
+                <View style={{ marginTop: 5 }}>
+                  <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Share our app</Text>
+                </View>
+              </TouchableOpacity>
+
+            </View>
+
+
+
+            <View style={{ position: 'relative', marginTop: 20 }} onPress={() => { navigation.navigate("About_Guruji") }}>
+              <View style={{ flexDirection: 'row', maxHeight: Metrics.height * 0.12, minHeight: 120, backgroundColor: 'rgba(168, 168, 255, 0.19)', padding: 5, marginHorizontal: 10, borderRadius: 13, }}>
+                <View
+                  style={{ width: '60%', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', width: '100%', height: '100%' }}
+                >
+                  <View style={{ width: '65%', margin: 5, marginTop: 10, marginLeft: 7 }}>
+                    <Text style={{ fontFamily: 'Gabarito-VariableFont', fontSize: Metrics.rfv(18), color: '#030370', }}>About Acharya Ji</Text>
+                    <Text style={{ fontFamily: 'Gabarito-VariableFont', fontSize: Metrics.rfv(11), color: '#030370', marginBottom: 5 }}>Acharya Jin Chandra Suriji himself started  practicing meditation from the initial days of his Acharyapad.</Text>
+                  </View>
+
+                  <TouchableOpacity style={{ flexDirection: 'row', margin: 5, marginLeft: 7 }} onPress={() => { navigation.navigate("About_Guruji") }}>
+                    <Text style={{ fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(10) }}>Learn More</Text><Entypo name="chevron-right" size={Metrics.rfv(12)} color="#030370" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View style={{ width: '40%', position: 'absolute', bottom: 0, right: 3 }}>
+                <LoadingImage
+                  source={require("../../assets/image/Home/AboutImage.png")}
+                  // style={{ minHeight: Metrics.height * 0.18, minHeight: 260, }}
+                  style={{ minHeight: Metrics.height * 0.18 }}
+                  loaderColor="#ff0000"
+                  resizeMode='contain'
+                />
+              </View>
+            </View>
+
+            {/* <View style={{ position: 'relative',marginTop:2 }}>
+
+              <View style={{ maxHeight: Metrics.height * 0.12, minHeight:  Metrics.height * 0.12, backgroundColor: 'rgba(168, 168, 255, 0.19)', padding: 10, marginHorizontal: 10, borderRadius: 13, marginTop: 10 }}>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ width: '60%', backgroundColor: 'red' }}>
+                    <Text>shdvhjvc</Text>
+                  </View>
+
+                </View>
+
+              </View>
+
+              <View style={{ width: '40%', justifyContent: 'center', alignItems: 'center',position:'absolute',top:-10,bottom:5 ,right:5}}>
+               
+
+                <LoadingImage
+                  source={require("../../assets/image/Home/AboutImage.png")}
+       
+                  style={{  height: '105%' }}
+                  loaderColor="#ff0000" 
+                
+                />
+              </View>
+            </View> */}
+
+            {/* <MusicList Data={meditationTracks}/> */}
+
+            {/* <QuoteOfDay/> */}
+            <Snap_Carousel2 BannerData2={meditationTracks} CarouselName={'Meditation Tracks'} />
+
+            <View style={{ height: 20 }}>
+
+
+            </View>
+
+
+
+            <Snap_Carousel3 BannerDataPravachan={pravachan} />
+
+            <Snap_Carousel2 BannerData2={previousEvents} CarouselName={'Previous Event Videos'} />
+
+
+
+            <Snap_Carousel5 BannerDataBajana={bhanaja} />
+
+            <Snap_Carousel2 BannerData2={upComingEvents} CarouselName={'Upcoming Events'} />
+            <Snap_Carousel1 BannerData={Banners} />
+            {/*<Snap_Carousel6 Up_Coming_EventsData={upComingEvents} />*/}
+            <View style={{ height: 20 }}>
+            </View>
+
+          </View> :
+            <View>
+              <Text>No Data Found</Text>
+            </View>}
+        </View> : (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+            <Text>No network found</Text>
+            <Text>Please check your internet connection</Text>
+            <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
+          </View>
+        )}
+
+      </ScrollView>
+
+    </View>
 
 
 

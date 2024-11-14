@@ -3,6 +3,7 @@ import {Alert, Share, View, Button} from 'react-native';
 
 
   const onShare = async (messageData) => {
+  
     try {
       const result = await Share.share({
         message:messageData

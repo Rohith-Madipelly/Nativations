@@ -8,6 +8,8 @@ import { Feather } from '@expo/vector-icons';
 import { getIdFromUrl } from '../../utils/getIdFromUrl';
 import CustomButton from '../../Components/UI/Button/ButtonC1Cricle';
 import NetInfo from '@react-native-community/netinfo';
+import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar';
+import GlobalStyles from '../../Components/UI/GlobalStyles';
 const LiveScreen = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
   let tokenn = useSelector((state) => state.token);
@@ -26,7 +28,7 @@ const LiveScreen = () => {
 
   const [livePage, setLivePage] = useState()
   const [VideoID, setVideoID] = useState()
- 
+
   const [relatedPosts, setRelatedPosts] = useState()
 
 
@@ -42,7 +44,7 @@ const LiveScreen = () => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    if(isConnected){
+    if (isConnected) {
       HomeData()
     }
 
@@ -81,14 +83,14 @@ const LiveScreen = () => {
   }
   catch (err) {
     console.log("Error in token quotes", err)
-     if (err.response.status === 500) {
+    if (err.response.status === 500) {
       console.log("Internal Server Error", err.message)
-  }
+    }
   }
 
 
   useEffect(() => {
-    if(isConnected){
+    if (isConnected) {
       HomeData()
     }
   }, [isConnected])
@@ -105,7 +107,7 @@ const LiveScreen = () => {
         setLivePage(res.data)
         console.log("Data", res.data)
         console.log("Data", res.data.description)
-        console.log("Data", res.data.liveUrl)
+        console.log("Data >>", res.data.liveUrl)
         console.log("Data", res.data.title)
 
         setVideoID(getIdFromUrl(res.data.liveUrl))
@@ -123,9 +125,9 @@ const LiveScreen = () => {
 
       if (error.response) {
         if (error.response.status === 401) {
-            console.log("Error With 400.>>>>>>>>>>>>>>>>>>>>>>>>>>>>",error.response.status)
-            // ErrorResPrinter("Failed Please Login again ")
-            Alert.alert('something went wrong', 'Please Login again',
+          console.log("Error With 400.>>>>>>>>>>>>>>>>>>>>>>>>>>>>", error.response.status)
+          // ErrorResPrinter("Failed Please Login again ")
+          Alert.alert('something went wrong', 'Please Login again',
             [{ text: 'NO', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
             {
               text: 'YES', onPress: () => {
@@ -136,14 +138,14 @@ const LiveScreen = () => {
             }]
           )
         }
-        else if(error.response.status === 500) {
+        else if (error.response.status === 500) {
           console.log("Internal Server Error", error.message)
+        }
       }
-      }
-      else if(error.request){
+      else if (error.request) {
         // Alert.alert("Something Went Wrong")
       }
-      else{
+      else {
         Alert.alert("Error in Setting up the Request")
       }
 
@@ -172,10 +174,10 @@ const LiveScreen = () => {
   if (!isConnected) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} >
-      <Text>No network found</Text>
-      <Text>Please check your internet connection</Text>
-      <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
-    </View>
+        <Text>No network found</Text>
+        <Text>Please check your internet connection</Text>
+        <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
+      </View>
     );
   } else {
   }
@@ -183,14 +185,15 @@ const LiveScreen = () => {
 
 
   return (
-    <ScrollView        
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-          }
-        >
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }
+    >
+      <CustomStatusBar barStyle="dark-content" backgroundColor={GlobalStyles.CustomStatusBarMainColor} />
       {!livePage ? <View style={{ backgroundColor: 'black', height: 202, justifyContent: 'center', alignItems: 'center', margin: 5, marginTop: 10 }}>
         <Text style={{ color: 'white', fontSize: 25 }}>Live Screen</Text>
         <Text style={{ color: 'white' }}>Currently live was ended or not avaliable </Text>
@@ -199,21 +202,21 @@ const LiveScreen = () => {
         <YoutubePlayer
           height={222}
           play={playing}
-          // videoId={ScreenData.VideoID}
-          videoId={VideoID}
+          // videoId={ScreenData.VideoID} yUNu2bMUEfg
+          videoId={VideoID || "Wr4iJon5zC8"}
           onChangeState={onStateChange}
           showinfo={false}
           controls={1}
         />
-        <View style={{width:'100%',justifyContent:'center',alignItems:'center'}}>
-        <View style={{width:'50%'}}>
+        <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ width: '50%' }}>
 
-          <CustomButton
-            onPress={togglePlaying}
-            styleData={{ paddingHorizontal: 10, marginVertical: 5 }}>
-            {playing ? "pause" : "Watch Live"}
-          </CustomButton>
-        </View>
+            <CustomButton
+              onPress={togglePlaying}
+              styleData={{ paddingHorizontal: 10, marginVertical: 5 }}>
+              {playing ? "pause" : "Watch Live"}
+            </CustomButton>
+          </View>
         </View>
 
       </View>}

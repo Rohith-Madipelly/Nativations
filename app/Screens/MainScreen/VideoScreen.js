@@ -168,7 +168,7 @@ const VideoScreen = ({ route }) => {
 
 
 
-        <View style={{ width: '100%', height: 280, marginTop: 24 }}>
+        <View style={{ width: '100%', height: 280 }}>
           {DataPage ? <VideoComponent DataPage={DataPage} /> : ""}
         </View>
 

@@ -1,6 +1,5 @@
 import {ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { StatusBar } from 'expo-status-bar';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -26,7 +25,7 @@ const OtherComponent = ({ screenName, children }) => {
                 </View>
 
             </View>
-            <StatusBar style="auto" />
+           
         </LinearGradient>
     )
 }

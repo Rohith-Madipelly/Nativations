@@ -68,7 +68,9 @@ const AudioScreen = ({ route }) => {
             const res = await VideoPageData(tokenn, id)
 
             if (res) {
+                console.log(">>>>>>>>>>>>>>>>")
                 console.log("data mes", res.data.postDetails)
+                console.log(">>>>>>>>>>>>>>>>")
                 setThumbnail(res.data.postDetails.thumbnail)
                 setTitle(res.data.postDetails.title)
                 setAudio(res.data.postDetails.audioUrl)
@@ -101,7 +103,9 @@ const AudioScreen = ({ route }) => {
 
 
 
-
+    useEffect(() => {
+        console.log("dcghs", sound)
+    }, [sound])
 
 
 
@@ -112,16 +116,32 @@ const AudioScreen = ({ route }) => {
         console.log('Loading Sound');
         setSpinnerBool(true)
         try {
-            const { sound } = await Audio.Sound.createAsync(
-                { uri: `${GUEST_URL}/${audio}` },
-                // require('./assets/Hello.mp3')
 
+            await Audio.setAudioModeAsync({
+                playsInSilentModeIOS: true,
+                staysActiveInBackground: false,
+                shouldDuckAndroid: false
+            })
+
+
+            const { sound, status } = await Audio.Sound.createAsync(
+                { uri: `${GUEST_URL}/${audio}` },
+                { shouldPlay: true, isLooping: false },
+                onPlaybackStatusUpdate,
+                // require('./assets/Hello.mp3')
             );
+
+
+
             setSound(sound)
+
+            console.log("GJhgs", status, sound)
+
+            onPlaybackStatusUpdate(status)
 
 
             sound.setOnPlaybackStatusUpdate((status) => {
-                // console.log("ds")
+                console.log("ds")
             });
             sound.setOnPlaybackStatusUpdate(updateStatus);
         } catch (error) {
@@ -134,7 +154,9 @@ const AudioScreen = ({ route }) => {
         console.log('Unloading Sound');
     }
 
-
+const onPlaybackStatusUpdate=async(status)=>{
+console.log(status,"xsahvgx")
+}
 
 
     async function playSound() {
@@ -215,7 +237,7 @@ const AudioScreen = ({ route }) => {
 
                 </View>
                 <View style={{ height: 50 }}>
-                    <Pressable style={{ position: "absolute", top: '15%', left: 20, borderRadius: 50,marginTop:10 }} onPress={() => { navigation.goBack(); }}>
+                    <Pressable style={{ position: "absolute", top: '15%', left: 20, borderRadius: 50, marginTop: 10 }} onPress={() => { navigation.goBack(); }}>
                         <Feather name="arrow-left" size={27} color="black" />
                     </Pressable>
                 </View>
@@ -237,14 +259,14 @@ const AudioScreen = ({ route }) => {
                     </View>
 
 
-                    {/* <View style={{ width: '80%', marginTop: 10, overflow: 'hidden', marginBottom: 10 }}>
+                    <View style={{ width: '80%', marginTop: 10, overflow: 'hidden', marginBottom: 10 }}>
                         <ProgressBar progressData={postion} />
                         <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row' }}>
                             <Text>{(status.positionMillis / 1000).toFixed(2)} sec</Text>
-                           
+
                             <Text>{(status.durationMillis / 1000).toFixed(0)} sec</Text>
                         </View>
-                    </View> */}
+                    </View>
                     <View style={{
                         width: '70%',
                         flexDirection: 'row',

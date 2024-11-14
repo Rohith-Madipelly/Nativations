@@ -8,8 +8,13 @@ export const Colors = {
 
   primary700: '#0570c9',
   primary800: '#003b88',
-  primary900: '#006AFF',
+  primary900: '#030370',
   accent500: '#e6b30b',
   gray700: '#221c30',
-  white: '#fff5ee'
+  gray800:'#8B8BA9',
+  
+  white: '#fff5ee',
+
+  primaryColorApp:'#030370',
+
 };
