@@ -40,7 +40,7 @@ const Snap_Carousel5 = ({ BannerDataBajana }) => {
     <View style={{ marginTop: 10 }}>
       <View style={{ marginHorizontal: 20, marginTop: 10, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
 
-        <Text style={[styles.Heading_U3]}>Bhajana</Text>
+        <Text style={[styles.Heading_U3]}>Bhajans</Text>
 
         {/* <Entypo name="chevron-small-right" size={20} color="black" /> */}
 

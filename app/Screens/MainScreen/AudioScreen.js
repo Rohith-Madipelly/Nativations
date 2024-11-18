@@ -1,9 +1,9 @@
-import { Alert, Image, Pressable, SafeAreaView, StyleSheet, Text, ToastAndroid, Touchable, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, Platform, Pressable, SafeAreaView, StyleSheet, Text, ToastAndroid, Touchable, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 // import MovingText from '../../Components/UI/Marquee'
 import Marquee from '../../Components/UI/Marquee'
-
+import Slider from '@react-native-community/slider';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Feather, Octicons } from '@expo/vector-icons';
 import ProgressBar from '../../Components/UI/ProgressBar/ProgressBar';
@@ -20,19 +20,19 @@ import { Button } from 'react-native';
 import OtherDownloads from '../../DownloadMain/OtherDownloads';
 import OtherDownloadBtn from '../../DownloadMain/OtherDownloadBtn.js';
 import NewToaster from '../../utils/NewToaster.js';
+import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar.js';
+import { CustomAlerts_Continue } from '../../utils/CustomReuseAlerts.js';
+import LoadingImage from '../../Components/ImageConatiners/LoadingImage.js';
 const AudioScreen = ({ route }) => {
 
-    const { id } = route.params
+    const { id, download } = route.params
 
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [sound, setSound] = useState();
+
+    const [currentSound, setCurrentSound] = useState();
     const [spinnerBool, setSpinnerBool] = useState(true);
-    const [status, setStatus] = useState({});
 
     const [isMuted, setIsMuted] = useState(false);
 
-    const [postion, setPostion] = useState(0);
-    const [Timer, setTimer] = useState(0);
     let tokenn = useSelector((state) => state.token);
     const navigation = useNavigation();
 
@@ -44,6 +44,13 @@ const AudioScreen = ({ route }) => {
     const [audio, setAudio] = useState()
     const [postDetails, setPostDetails] = useState()
 
+    const [currentTime, setCurrentTime] = useState(0)
+    const [totalDuration, setTotalDuration] = useState(0)
+
+    const [isPlaying, setIsPlaying] = useState(false)
+
+    const [progress, setProgress] = useState()
+    const [sliderData, setSliderData] = useState()
     // >>>>>>>>>>>>>>>>>>
 
     try {
@@ -58,26 +65,44 @@ const AudioScreen = ({ route }) => {
 
     useEffect(() => {
         HomeData()
+        if (download) {
+            setTimeout(() => {
+                // Alert.alert('Want to download the track')
+                CustomAlerts_Continue(
+                    `Download`,
+                    `Would you like to save this track for offline listening?`,
+                    // `Applying for ${data.jobTitle}`,
+                    // data.jobTitle,
+                    () => {
+                        // OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`)
+                    }
+                )
+            }, 200)
+        }
     }, [id])
 
 
     const HomeData = async () => {
         setSpinnerBool(true)
-        // console.log("fshjjb")
         try {
             const res = await VideoPageData(tokenn, id)
 
             if (res) {
-                console.log(">>>>>>>>>>>>>>>>")
-                console.log("data mes", res.data.postDetails)
-                console.log(">>>>>>>>>>>>>>>>")
+                // console.log(">>>>>>>>>>>>>>>>")
+                console.log("data mes", res.data)
+                // setTrackData(res.data)
+                // console.log(">>>>>>>>>>>>>>>>")
                 setThumbnail(res.data.postDetails.thumbnail)
                 setTitle(res.data.postDetails.title)
                 setAudio(res.data.postDetails.audioUrl)
-                // console.log(res.data.postDetails.audioUrl)
                 setRelatedPosts(res.data.relatedPosts)
-
                 setPostDetails(res.data.postDetails)
+
+
+                // setTimeout(()=>{
+                //     console.log("LoadSound")
+                //     LoadSound()
+                // },2000)
 
             }
             else {
@@ -90,9 +115,7 @@ const AudioScreen = ({ route }) => {
                 console.log("Error in fetching", error)
             }, 1000);
 
-            // setTimeout(() => {
-            //   setSpinnerbool(false)
-            // }, 5000)
+
         }
         finally {
             // setSpinnerBool(false)
@@ -102,13 +125,18 @@ const AudioScreen = ({ route }) => {
 
 
 
-
-    useEffect(() => {
-        console.log("dcghs", sound)
-    }, [sound])
-
-
-
+    // TODO: check whenever expo-av updates. setOnPlaybackStatusUpdate works incorrectly: onPlaybackStatusUpdate is not called during playing audio.
+    //   useEffect(() => {
+    //     if (Platform.OS === 'android' && soundRef.current) {
+    //       const intervalId = setInterval(() => {
+    //         const updatePlaybackStatus = async () => {
+    //           await soundRef.current?.getStatusAsync();
+    //         };
+    //         updatePlaybackStatus();
+    //       }, 500);
+    //       return () => clearInterval(intervalId);
+    //     }
+    //   }, [soundRef.current]);
 
 
 
@@ -131,19 +159,19 @@ const AudioScreen = ({ route }) => {
                 // require('./assets/Hello.mp3')
             );
 
+            setCurrentSound(sound)
+
+            console.log(">Started Data ...........createAsync", status, "sound>>>>>>>>", sound)
+
+            onPlaybackStatusUpdate(status);
+            setIsPlaying(status.isLoaded)
+            await sound.playAsync()
 
 
-            setSound(sound)
-
-            console.log("GJhgs", status, sound)
-
-            onPlaybackStatusUpdate(status)
-
-
-            sound.setOnPlaybackStatusUpdate((status) => {
-                console.log("ds")
-            });
-            sound.setOnPlaybackStatusUpdate(updateStatus);
+            // sound.setOnPlaybackStatusUpdate((status) => {
+            //     console.log("ds")
+            // });
+            // sound.setOnPlaybackStatusUpdate(updateStatus);
         } catch (error) {
             console.log(error.message)
             Alert.alert(`${GUEST_URL}/${audio}`, error.message)
@@ -154,16 +182,23 @@ const AudioScreen = ({ route }) => {
         console.log('Unloading Sound');
     }
 
-const onPlaybackStatusUpdate=async(status)=>{
-console.log(status,"xsahvgx")
-}
+    const onPlaybackStatusUpdate = async (status) => {
+        if (status.isLoaded && status.isPlaying) {
+            const progress = status.positionMillis / status.durationMillis;
+            // console.log(progress)
+            setProgress(progress)
+            setSliderData(status.positionMillis)
+            setCurrentTime(status.positionMillis)
+            setTotalDuration(status.durationMillis)
+        }
+    }
 
 
     async function playSound() {
-        if (sound) {
+        if (currentSound) {
             console.log('isPlaying Sound');
-            await sound.playAsync();
-            setIsPlaying(true);
+            await currentSound.playAsync();
+            // setIsPlaying(true);
         }
         else {
             LoadSound()
@@ -173,29 +208,46 @@ console.log(status,"xsahvgx")
 
     async function pauseSound() {
         console.log("dsmhjb")
-        if (sound) {
-            await sound.pauseAsync();
+        if (currentSound) {
+            await currentSound.pauseAsync();
         }
+
+
         setIsPlaying(false);
     };
 
+    async function handlePlayPause() {
+        if (currentSound) {
+            if (isPlaying) {
+                await currentSound.pauseAsync();
+            } else {
+                await currentSound.playAsync();
+            }
+            setIsPlaying(!isPlaying)
+        }
+
+    }
     async function toggleMute() {
-        if (sound) {
-            await sound.setIsMutedAsync(!isMuted);
+        if (currentSound) {
+            await currentSound.setIsMutedAsync(!isMuted);
             setIsMuted(!isMuted);
         }
     };
 
     async function stopSound() {
-        if (sound) {
-            await sound.stopAsync();
+        if (currentSound) {
+            await currentSound.stopAsync();
         }
         setIsPlaying(false);
     };
 
-    const updateStatus = (status) => {
-        setStatus(status);
-    };
+
+
+    const skipTo = async (value) => {
+        // console.log(currentSound)
+        // currentSound.setPositionAsync(value);
+        await currentSound.setPositionAsync(value);
+    }
 
     useEffect(() => {
         if (audio) {
@@ -206,8 +258,8 @@ console.log(status,"xsahvgx")
 
 
     useEffect(() => {
-        return sound ? () => { sound.unloadAsync(); } : undefined;
-    }, [sound]);
+        return currentSound ? () => { currentSound.unloadAsync(); } : undefined;
+    }, [currentSound]);
 
 
     if (spinnerBool) {
@@ -218,10 +270,20 @@ console.log(status,"xsahvgx")
         />
     }
 
+    const circleSize = 12;
+
+
+    const formatTime = (time) => {
+        const minutes = Math.floor(time / 60000);
+        const secound = Math.floor((time % 60000) / 1000);
+        return `${minutes}:${secound < 10 ? "0" : ""}${secound}`
+    }
+
 
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            <CustomStatusBar barStyle="dark-content" backgroundColor="rgba(20, 0, 230, 0.5)" />
             <Spinner
                 visible={spinnerBool}
                 color={"#5F2404"}
@@ -233,9 +295,6 @@ console.log(status,"xsahvgx")
             >
 
 
-                <View style={{ height: 25 }}>
-
-                </View>
                 <View style={{ height: 50 }}>
                     <Pressable style={{ position: "absolute", top: '15%', left: 20, borderRadius: 50, marginTop: 10 }} onPress={() => { navigation.goBack(); }}>
                         <Feather name="arrow-left" size={27} color="black" />
@@ -249,22 +308,83 @@ console.log(status,"xsahvgx")
 
 
                 <View style={{ flex: 1, alignItems: 'center', paddingTop: 10, marginHorizontal: 18 }}>
-                    <Image
+
+                    <LoadingImage
                         source={{ uri: `${GUEST_URL}/${thumbnail}` }}
-                        style={{ width: '90%', height: 250, opacity: 0.8, borderRadius: 15 }}
+                        style={{ width: '90%', height: 250,  borderRadius: 15 }}
                         resizeMode='cover'
+                        loaderColor="#4A3AFF"
+
                     />
                     <View style={{ width: '80%', marginTop: 10, overflow: 'hidden', marginBottom: 10 }}>
-                        <Marquee text={title} />
+                        {/* <Marquee text={title} /> */}
+                        <Text numberOfLines={2} style={{ alignSelf: 'center' }}>{title}</Text>
                     </View>
 
 
                     <View style={{ width: '80%', marginTop: 10, overflow: 'hidden', marginBottom: 10 }}>
-                        <ProgressBar progressData={postion} />
-                        <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row' }}>
-                            <Text>{(status.positionMillis / 1000).toFixed(2)} sec</Text>
+                        {/* <ProgressBar progressData={postion} /> */}
+                        {/* 
+                        <View style={{
+                            width: '100%',
+                            marginTop: 10,
+                            height: 3,
+                            backgroundColor: 'gray',
+                            borderRadius: 5
+                        }}>
 
-                            <Text>{(status.durationMillis / 1000).toFixed(0)} sec</Text>
+                            <View
+                                style={[styles.progressBar, { width: `${progress * 100}%` }]} />
+
+                            <View style={[{ position: 'absolute', top: -5, width: circleSize, height: circleSize, borderRadius: circleSize / 2, backgroundColor: 'white' }, { left: `${progress * 100}%`, marginLeft: -circleSize / 2 }]} />
+                        </View> */}
+
+                        <View>
+                            <Slider
+                                style={{ width: '100%', height: 40, marginHorizontal: 0, paddingHorizontal: 0 }}
+                                step={1}
+                                minimumValue={0}
+                                maximumValue={totalDuration}
+                                // minimumTrackTintColor="#4A3AFF"
+                                minimumTrackTintColor="#4A3AFF"
+                                maximumTrackTintColor="#B0B0C1"
+                                thumbTintColor="#4A3AFF"
+                                value={sliderData}
+                                onValueChange={(e) => {
+                                    console.log("W", e)
+                                    skipTo(e)
+                                    setProgress(e)
+                                    setSliderData(e)
+
+                                    // callback(RangeData[e],e) 
+                                }}
+
+                                // <Text>{formatTime(currentTime)}</Text>
+                                // <Text>{formatTime(totalDuration)}</Text>
+                                // snapped={true}
+                                // lowerLimit={1}
+                                // upperLimit={64}
+                                // onSlidingStart={(e)=>{console.log("onSliding Started ",e)}}
+                                // onValueChange={(e)=>{console.log("onValue Change ",e)}}
+                                // onSlidingComplete={(e)=>{console.log(e)}}
+
+                                tapToSeek={true}
+
+                            // vertical
+                            // inverted
+                            // disabled
+                            // maximumTrackImage={require('../assets/favicon.png')}
+                            // minimumTrackImage={require('../assets/favicon.png')}
+                            // thumbImage={require('../assets/favicon.png')}
+
+                            // trackImage={require('../assets/favicon.png')}
+                            />
+                        </View>
+
+                        <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row' }}>
+                            <Text>{formatTime(currentTime)}</Text>
+
+                            <Text>{formatTime(totalDuration)}</Text>
                         </View>
                     </View>
                     <View style={{
@@ -285,10 +405,13 @@ console.log(status,"xsahvgx")
                         <View>
                             <TouchableOpacity
                                 // title={isPlaying ? "Pause" : "Play"}
-                                onPress={isPlaying ? pauseSound : playSound}
+                                // onPress={isPlaying ? pauseSound : playSound}
+                                onPress={handlePlayPause}
                             >
-                                {!isPlaying ? <AntDesign name="play" size={50} color="black" /> : <AntDesign name="pausecircle" size={50} color="black" />}
+                                {isPlaying ? <AntDesign name="pausecircle" size={50} color="#030370" /> : <AntDesign name="play" size={50} color="#030370" />}
                             </TouchableOpacity>
+
+                            {/* <Text>{isPlaying.toString()}</Text> */}
                             {/* <Text>{isPlaying.toString()}</Text> */}
                         </View>
                         <View style={{ justifyContent: 'center' }}>
@@ -339,4 +462,9 @@ console.log(status,"xsahvgx")
 
 export default AudioScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    progressBar: {
+        height: '100%',
+        backgroundColor: 'white'
+    }
+})

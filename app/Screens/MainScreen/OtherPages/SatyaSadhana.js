@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome, Octicons } from '@expo/vector-icons';
+import CustomStatusBar from '../../../Components/UI/StatusBar/CustomStatusBar';
 
 const SatyaSadhana = () => {
     const [spinnerBool, setSpinnerbool] = useState(false)
@@ -107,6 +108,13 @@ const SatyaSadhana = () => {
     return (
         // <ScrollView>
         <View style={{ height: '100%' }}>
+
+                 <CustomStatusBar
+                //   barStyle="dark-content"
+                  barStyle="light"
+                  backgroundColor="rgba(20, 0, 255, 0.75)" />
+
+
             <View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
                 <LinearGradient style={{ height: "100%", }} colors={['rgba(20, 0, 255, 0.75)', 'rgba(255, 255, 255, 0.77)', '#FFF']}>
                     {/* background */}

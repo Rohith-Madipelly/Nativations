@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Button, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import Metrics from '../../utils/ResposivesUtils/Metrics'
@@ -7,15 +7,28 @@ import MusicIcon from '../../assets/SVGS/MusicPlayer/MusicIcon'
 import DownloadIcon from '../../assets/SVGS/MusicPlayer/DownloadIcon'
 import Play_Circle from '../../assets/SVGS/MusicPlayer/Play_Circle'
 import SkeletonLoader2 from '../../Components/UI/Loadings/SkeletonLoader'
+import { useNavigation } from '@react-navigation/native'
 
-const MusicList = ({ Data }) => {
+const MusicList = ({ Data, ClickAction }) => {
+    const navigation = useNavigation()
 
     const [loadingList, setLoadingList] = useState(true)
     // console.log(Data)
     // const Data = []
 
+    const [visibleItems, setVisibleItems] = useState(3);
 
+    const handleShowMore = () => {
+        if (visibleItems === 3) {
+            setVisibleItems(5); // Expand to show 5 items
+        } else {
+            navigation.navigate("TracksAudios", { data: Data }); // Navigate to another page
+        }
+    };
 
+    const handleShowLess = () => {
+        setVisibleItems(3);
+    };
     useEffect(() => {
         if (Data && Data.length <= 0) {
             console.log("Empty")
@@ -41,7 +54,7 @@ const MusicList = ({ Data }) => {
                     }}>Satya Sadhna Tracks / Bhajan</Text>
                 </View>
 
-                <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} onPress={() => { console.log("View all") }}>
+                <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} onPress={() => { navigation.navigate("TracksAudios", { data: Data }); }}>
                     <Text style={{
                         color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(14),
                         fontWeight: '600'
@@ -55,25 +68,24 @@ const MusicList = ({ Data }) => {
                 {/* {Data&&Data.map((index,data))} */}
 
                 <ScrollView>
-                    {Data && Data.map((item, index) => (
+                    {Data && Data.slice(0, visibleItems).map((item, index) => (
                         <View key={index} style={{ width: "100%", height: 'auto', justifyContent: 'flex-start', flexDirection: 'row', marginVertical: 5, borderBottomColor: '#DADADA', borderBottomWidth: 1, marginBottom: 10, paddingBottom: 10 }}>
                             <View style={{ width: 'auto', height: 'auto', width: '10%', marginVertical: 4 }}>
                                 <MusicIcon />
                             </View>
                             <View style={{ alignItems: 'flex-start', gap: 2, width: '70%' }}>
-                                <Text style={{
+                                <Text numberOfLines={2} style={{
                                     fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(16)
-
-                                }}>{item.id}</Text>
+                                }}>{item.title || item.id}</Text>
                                 <Text>{item.type}</Text>
                             </View>
 
                             <View style={{ justifyContent: 'flex-end', gap: 2, flexDirection: 'row', alignItems: 'center', width: "20%" }}>
-                                <TouchableOpacity style={{ padding: 1 }}>
+                                <TouchableOpacity style={{ padding: 1 }} onPress={() => { ClickAction(item, false); }}>
                                     <Play_Circle />
                                 </TouchableOpacity>
 
-                                <TouchableOpacity style={{ padding: 1 }}>
+                                <TouchableOpacity style={{ padding: 1 }} onPress={() => { ClickAction(item, true); }}>
                                     <DownloadIcon />
                                 </TouchableOpacity>
 
@@ -82,6 +94,37 @@ const MusicList = ({ Data }) => {
                     ))}
 
 
+
+                    <View style={{ flex: 1, justifyContent: 'space-evenly', alignItems: 'center',flexDirection:'row' }}>
+
+
+                    {visibleItems === 5  && (
+                            <Pressable
+                                // title={isExpanded ? "Show Less" : "Show More"}
+                                onPress={handleShowLess}
+                                style={{ justifyContent: 'center', alignItems: 'center' }}
+                            >
+                                <Text style={{ fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(16) }}>
+                                    {visibleItems === 5 ? "Show less":"" }
+                                </Text>
+                            </Pressable>
+                        )}
+
+
+
+                        {Data.length > 3 && (
+                            <Pressable
+                                // title={isExpanded ? "Show Less" : "Show More"}
+                                onPress={handleShowMore}
+                                style={{ justifyContent: 'center', alignItems: 'center' }}
+                            >
+                                <Text style={{ fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(16) }}>
+                                    {visibleItems === 3 ? "Show More" : "View All"}
+                                </Text>
+                            </Pressable>
+                        )}
+                    </View>
+        
                     {loadingList ? <SkeletonLoader2
                         style={{
                             width: '100%',
@@ -93,9 +136,11 @@ const MusicList = ({ Data }) => {
                     >
                     </SkeletonLoader2> : ""}
 
-                    {!loadingList && Data && Data.length <= 0 && <View style={{width:'100%',width: '100%',
-                            height: Metrics.rfv(30),justifyContent:"center",alignItems:'center'}}>
-                        <Text> No songs found</Text>
+                    {!loadingList && Data && Data.length <= 0 && <View style={{
+                        width: '100%', width: '100%',
+                        height: Metrics.rfv(30), justifyContent: "center", alignItems: 'center'
+                    }}>
+                 <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(18)}}>No Tracks Available</Text>
                     </View>}
 
                 </ScrollView>

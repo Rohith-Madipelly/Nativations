@@ -24,6 +24,8 @@ import NetInfo from '@react-native-community/netinfo';
 import { LogOutHandle123 } from '../../utils/LogOut';
 import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar';
 import GlobalStyles from '../../Components/UI/GlobalStyles';
+import NoInternetImage from '../../assets/SVGS/UIScrees/NoInternetImage';
+import Metrics from '../../utils/ResposivesUtils/Metrics';
 
 
 const Profile = () => {
@@ -198,8 +200,9 @@ const Profile = () => {
   if (!isConnected) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} >
-        <Text>No network found</Text>
-        <Text>Please check your internet connection</Text>
+        <NoInternetImage />
+        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(20), marginTop: 18 }}>No network found</Text>
+        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(18) }}>Please check your internet connection</Text>
         <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
       </View>
     );
@@ -213,9 +216,10 @@ const Profile = () => {
         color={"#5F2404"}
         animation={'fade'}
       />
-      <ScrollView style={[{ 
+      <ScrollView style={[{
         // borderTopRightRadius: 25, borderTopLeftRadius: 25,
-       backgroundColor: "#FFF" }]}
+        backgroundColor: "#FFF"
+      }]}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -278,7 +282,7 @@ const Profile = () => {
               </View>
             </View>
           </TouchableOpacity>
-          
+
           <View style={styles.Heading_u2}>
             <View>
 

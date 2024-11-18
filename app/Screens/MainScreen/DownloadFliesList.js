@@ -137,7 +137,7 @@ const DownloadFliesList = () => {
 
 
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1,backgroundColor:'white'}}>
             {/* <ScrollView> */}
             <CustomStatusBar barStyle="dark-content" backgroundColor={GlobalStyles.CustomStatusBarMainColor} />
             <View style={{ marginBottom: 0,flex:1 }}>

@@ -32,7 +32,7 @@ import OtherDownloadBtn from '../../DownloadMain/OtherDownloadBtn.js';
 
 const VideoScreen = ({ route }) => {
   const { id } = route.params
-  // console.log("adsd>>>>", id)
+  console.log("adsd>>>>", id)
 
 
   const [DataPage, setDataPage] = useState()

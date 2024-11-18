@@ -43,6 +43,7 @@ export default function FormScreen() {
     if (Object.values(errors).length === 0) {
       handleSubmit();
     } else {
+      console.log(Object.values(errors).join(', '))
       // Display errors in an alert
       // alert(Object.values(errors).join(', '));
       alert("Please fill in the mandatory fields");
@@ -133,132 +134,121 @@ export default function FormScreen() {
 
 
   const categoryData_0 = [
-    { label: 'Select Category', value: 'N/A' },
-    { label: 'For New Students', value: 'For New Students' },
-    { label: 'For Old Students', value: 'For Old Students' },
-    { label: 'For Children/Teens', value: 'For Children/Teens' },
-    { label: 'For Executives', value: 'For Executives' },
-  ];
-
-  const categoryData = [
-    { label: 'Select Category', value: 'N/A' },
-    { label: 'For New Students', value: 'For New Students' },
-    { label: 'For Old Students', value: 'For Old Students' },
-    { label: 'For Children/Teens', value: 'For Children/Teens' },
-    { label: 'For Executives', value: 'For Executives' },
+    // { title: 'Select Category', value: 'N/A' },
+    { title: 'For New Students', value: 'For New Students' },
+    { title: 'For old students', value: 'For Old Students' },
+    { title: 'For Children/Teens', value: 'For Children/Teens' },
+    { title: 'For Executives', value: 'For Executives' },
   ];
 
 
-  const genders = [
-    { label: 'Select gender', value: 'N/A' },
-    { label: 'Male', value: 'Male' },
-    { label: 'Female', value: 'Female' },
-  ];
 
   const Types = [
-    { label: 'Select Type', value: 'N/A' },
-    { label: 'Attend', value: 'Attend' },
-    { label: 'Serve', value: 'Serve' },
+    { title: 'Select Type', value: 'N/A' },
+    { title: 'Attend', value: 'Attend' },
+    { title: 'Serve', value: 'Serve' },
   ];
 
   const AllcoursesforDrops = [
-    { label: 'Select Type', value: '' },
+
+
+    // { title: 'Select Type', value: '' },
     ...data.map(course => ({
-      label: course.courseName,
+      title: course.courseName,
       value: course._id
     }))
   ];
-
+// console.log("data",data)
 
 
   const martialStatus = [
-    { label: 'Select', value: 'N/A' },
-    { label: 'Single', value: 'Single' },
-    { label: 'Married', value: 'Married' },
-    { label: 'Widower', value: 'Widower' },
-    { label: 'Widow', value: 'Widow' },
-    { label: 'Separated', value: 'Separated' },
-    { label: 'Divorced', value: 'Divorced' },
+    // { label: 'Select', value: 'N/A' },
+    { title: 'Single', value: 'Single' },
+    { title: 'Married', value: 'Married' },
+    { title: 'Widower', value: 'Widower' },
+    { title: 'Widow', value: 'Widow' },
+    { title: 'Separated', value: 'Separated' },
+    { title: 'Divorced', value: 'Divorced' },
   ];
 
   const courseDetailsData = [
     // "10-Days", "20-Days", "30-Days", "50-Days", "60-Days", "Self-Course", "Service", "Courses", "N/A"
-    { label: 'Select course details', value: '' },
-    { label: '10-Days', value: '10-Days' },
-    { label: '20-Days', value: '20-Days' },
-    { label: '30-Days', value: '30-Days' },
-    { label: '40-Days', value: '40-Days' },
-    { label: '50-Days', value: '50-Days' },
-    { label: '60-Days', value: '60-Days' },
-    { label: 'Self-Course', value: 'Self-Course' },
-    { label: 'Service', value: 'Service' },
-    { label: 'Courses', value: 'Courses' },
+    // { title: 'Select course details', value: '' },
+    { title: '10-Days', value: '10-Days' },
+    { title: '20-Days', value: '20-Days' },
+    { title: '30-Days', value: '30-Days' },
+    { title: '40-Days', value: '40-Days' },
+    { title: '50-Days', value: '50-Days' },
+    { title: '60-Days', value: '60-Days' },
+    { title: 'Self-Course', value: 'Self-Course' },
+    { title: 'Service', value: 'Service' },
+    { title: 'Courses', value: 'Courses' },
   ];
 
 
   const practiseRegularlyData = [
     // "10-Days", "20-Days", "30-Days", "50-Days", "60-Days", "Self-Course", "Service", "Courses", "N/A"
-    { label: 'Select course details', value: '' },
+    // { title: 'Select course details', value: '' },
 
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' },
+    { title: 'yes', value: 'yes' },
+    { title: 'no', value: 'no' },
     // { label: 'Courses', value: 'Courses' },
   ];
 
   const regularMedicineData = [
-    { label: 'Select', value: 'N/A' },
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' },
+    // { title: 'Select', value: 'N/A' },
+    { title: 'Yes', value: 'yes' },
+    { title: 'No', value: 'no' },
   ];
 
   const FitnessCertificateData = [
-    { label: 'Select', value: 'N/A' },
-    { label: 'Yes', value: 'Yes' },
-    { label: 'No', value: 'No' },
+    // { title: 'Select', value: 'N/A' },
+    { title: 'Yes', value: 'Yes' },
+    { title: 'No', value: 'No' },
   ];
   const inPastTwoData = [
-    { label: 'Select', value: 'N/A' },
-    { label: 'Yes', value: 'Yes' },
-    { label: 'No', value: 'No' },
+    // { title: 'Select', value: 'N/A' },
+    { title: 'Yes', value: 'Yes' },
+    { title: 'No', value: 'No' },
   ];
 
   const inPresentTwoData = [
-    { label: 'Select', value: 'N/A' },
-    { label: 'Yes', value: 'Yes' },
-    { label: 'No', value: 'No' },
+    // { title: 'Select', value: 'N/A' },
+    { title: 'Yes', value: 'Yes' },
+    { title: 'No', value: 'No' },
   ];
 
 
   const referenceFromData = [
-    { label: 'Select', value: 'N/A' },
-    { label: 'Friend', value: 'Friend' },
-    { label: 'News-Paper', value: 'News-Paper' },
-    { label: 'TV', value: 'TV' },
-    { label: 'Lectures', value: 'Lectures' },
-    { label: 'Others', value: 'Others' },
+    // { label: 'Select', value: 'N/A' },
+    { title: 'Friend', value: 'Friend' },
+    { title: 'News-Paper', value: 'News-Paper' },
+    { title: 'TV', value: 'TV' },
+    { title: 'Lectures', value: 'Lectures' },
+    { title: 'Others', value: 'Others' },
   ];
 
 
   const languageData = [
-    { label: 'Select', value: 'N/A' },
-    { label: 'Hindi', value: 'Hindi' },
-    { label: 'English', value: 'English' },
+    // { title: 'Select', value: 'N/A' },
+    { title: 'Hindi', value: 'Hindi' },
+    { title: 'English', value: 'English' },
     // { label: 'Kolkata', value: 'Kolkata' },
     // { label: 'Bikaner', value: 'Bikaner' },
     // { label: 'Other', value: 'other' },
   ]
 
   const stateData = [
-    { label: 'Select', value: 'N/A' },
-    { label: 'Kolkata', value: 'Kolkata' },
-    { label: 'Bikaner', value: 'Bikaner' },
-    { label: 'Other', value: 'Other' },
+    // { title: 'Select', value: 'N/A' },
+    { title: 'Kolkata', value: 'Kolkata' },
+    { title: 'Bikaner', value: 'Bikaner' },
+    { title: 'Other', value: 'Other' },
   ]
 
   const courseDoneList = [
-    { label: 'Select', value: 'N/A' },
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' },
+    // { label: 'Select', value: 'N/A' },
+    { title: 'yes', value: 'yes' },
+    { title: 'no', value: 'no' },
   ];
   // Get the All Courses Avaliable for user
   const GetData = async () => {
@@ -280,6 +270,8 @@ export default function FormScreen() {
 
   // When user Selects Course Fetch the Course Information
   const fetchUserData = async (id) => {
+
+  
     if (id === 'N/A') {
       return
     }
@@ -564,45 +556,36 @@ export default function FormScreen() {
           <ScrollView style={{ height: 800 }}>
             <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 50 }}>
               <>
-                <CustomPicker
-                  placeholder={'Enter your category'}
-                  asterisksymbol={true}
-                  boxWidth={'80%'}
-                  label={'Category'}
-                  name='category'
-                  onChangeText={(e) => { handleChange("category")(e); seterrorFormAPI(); }}
-                  onBlur={handleBlur("category")}
-                  validate={handleBlur("category")}
-                  outlined
-                  borderColor={`${(errors.category && touched.category) || (errorFormAPI && errorFormAPI.categoryForm) ? "red" : "#ccc"}`}
-                  errorMessage={`${(errors.category && touched.category) ? `${errors.category}` : (errorFormAPI && errorFormAPI.categoryForm) ? `${errorFormAPI.categoryForm}` : ``}`}
-                  value={values.category}
-                  items={categoryData}
-                  onValueChange={(itemValue) => handleChange("category")(itemValue)}
-                  containerStyle={{ width: 200 }}
-                  labelStyle={{ color: 'blue' }}
-                  error="Please select a category"
-                />
+
 
 
                 <CustomDropdown
                   boxWidth={'80%'}
-                  label={"Gender"}
-
-                  DropDownData={genderData}
-                  DropDownHeigth={200}
-                  value={values.gender}
+                  label={'Category'}
                   name='category'
-                  onChangeText={(e) => { handleChange("category")(e); seterrorFormAPI(); }}
+                  // placeholder={'Enter your category'}
+                  asterisksymbol={true}
+                  DropDownData={categoryData_0}
+                  DropDownHeigth={200}
+                  value={values.category}
+                  onChange={(e) => {
+                    handleChange("category")(e);
+                    seterrorFormAPI();
+                  }}
+                  // onChangeText={(e) => { handleChange("category")(e); seterrorFormAPI(); }}
                   onBlur={handleBlur("category")}
                   validate={handleBlur("category")}
                   outlined
                   borderColor={`${(errors.category && touched.category) || (errorFormAPI && errorFormAPI.categoryForm) ? "red" : "#ccc"}`}
                   errorMessage={`${(errors.category && touched.category) ? `${errors.category}` : (errorFormAPI && errorFormAPI.categoryForm) ? `${errorFormAPI.categoryForm}` : ``}`}
+                // errorColor='magenta'
                 />
+
+
+
                 {values.category === "For old students" && (
-                  <CustomPicker
-                    placeholder={'Select type'}
+                  <CustomDropdown
+                    // placeholder={'Select type'}
                     asterisksymbol={true}
                     boxWidth={'80%'}
                     label={'Type'}
@@ -611,18 +594,18 @@ export default function FormScreen() {
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
                     // bgColor="#B1B1B0"
-                    onChangeText={(e) => { handleChange("Type")(e); seterrorFormAPI(); }}
+                    onChange={(e) => { handleChange("Type")(e); seterrorFormAPI(); }}
                     onBlur={handleBlur("Type")}
                     validate={handleBlur("Type")}
                     outlined
                     borderColor={`${(errors.Type && touched.Type) || (errorFormAPI && errorFormAPI.TypeForm) ? "red" : "#ccc"}`}
                     errorMessage={`${(errors.Type && touched.Type) ? `${errors.Type}` : (errorFormAPI && errorFormAPI.TypeForm) ? `${errorFormAPI.TypeForm}` : ``}`}
                     value={values.Type}
-                    items={Types}
-                    onValueChange={(itemValue) => {
-                      handleChange("Type")(itemValue);
-                      // Make API call here passing the selected item's ID value
-                    }}
+                    DropDownData={Types}
+                    // onValueChange={(itemValue) => {
+                    //   handleChange("Type")(itemValue);
+                    //   // Make API call here passing the selected item's ID value
+                    // }}
 
                     containerStyle={{ width: 200 }}
                     labelStyle={{ color: 'blue' }}
@@ -632,13 +615,13 @@ export default function FormScreen() {
 
 
 
-                <CustomPicker
-                  placeholder={'Enter your course '}
+                <CustomDropdown
+                  // placeholder={'Enter your course '}
                   asterisksymbol={true}
                   boxWidth={'80%'}
                   label={'Select course'}
                   name='Courses'
-                  onChangeText={(e) => { handleChange("Courses")(e); seterrorFormAPI(); }}
+                  onChange={(e, b) => { handleChange("Courses")(e); fetchUserData(b); seterrorFormAPI(); }}
                   onBlur={handleBlur("Courses")}
                   validate={handleBlur("Courses")}
                   outlined
@@ -647,13 +630,13 @@ export default function FormScreen() {
                   errorMessage={`${(errors.Courses) ? `${errors.Courses}` : (errorFormAPI && errorFormAPI.CoursesForm) ? `${errorFormAPI.CoursesForm}` : ``}`}
 
                   value={values.Courses}
-                  items={AllcoursesforDrops}
-                  onValueChange={
-                    (itemValue) => {
-                      handleChange("Courses")(itemValue);
-                      fetchUserData(itemValue)
-                    }
-                  }
+                  DropDownData={AllcoursesforDrops}
+                  // onValueChange={
+                  //   (itemValue) => {
+                  //     handleChange("Courses")(itemValue);
+                  //     fetchUserData(itemValue)
+                  //   }
+                  // }
                   containerStyle={{ width: 200 }}
                   labelStyle={{ color: 'blue' }}
                   error="Please select a courses"
@@ -725,10 +708,11 @@ export default function FormScreen() {
                     // bgColor='#e1f3f8'
                     // bgColor="#B1B1B0"
 
-
+                    borderColor={`${(errors.city && touched.city) || (errorFormAPI && errorFormAPI.cityForm) ? "red" : "#ccc"}`}
+                    errorMessage={`${(errors.city && touched.city) ? `${errors.city}` : (errorFormAPI && errorFormAPI.cityForm) ? `${errorFormAPI.cityForm}` : ``}`}
+                   
                     outlined
-                    borderColor={`${(errors.courseName && touched.courseName) || (errorFormAPI && errorFormAPI.courseNameForm) ? "red" : "#ccc"}`}
-
+                
                     editable={false}
                   />
 
@@ -796,74 +780,45 @@ export default function FormScreen() {
                 />
 
 
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '80%' }}>
+                {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '80%' }}> */}
 
-                  {/* <CustomPicker
-                    placeholder={'Enter your gender'}
-                    asterisksymbol={true}
-                    boxWidth={'60%'}
-                    label={'Gender'}
-                    name='gender'
-                    // value={values.gender}
-                    // leftIcon={<FontAwesome name="user" size={20} color="black" />}
-                    // bgColor='#e1f3f8'
-                    // bgColor="#B1B1B0"
-                    onChangeText={(e) => { handleChange("gender")(e); seterrorFormAPI(); }}
-                    onBlur={handleBlur("gender")}
 
-                    validate={handleBlur("gender")}
-                    outlined
-                    borderColor={`${(errors.gender && touched.gender) || (errorFormAPI && errorFormAPI.genderForm) ? "red" : "#ccc"}`}
-                    errorMessage={`${(errors.gender && touched.gender) ? `${errors.gender}` : (errorFormAPI && errorFormAPI.genderForm) ? `${errorFormAPI.genderForm}` : ``}`}
-                    // errorColor='magenta'
-                    value={values.gender}
-                    items={genders}
-                    onValueChange={(itemValue) => handleChange("gender")(itemValue)}
-                    containerStyle={{ width: 200 }}
-                    labelStyle={{ color: 'blue' }}
-                    // pickerStyle={{ backgroundColor: '#f0f0f0' }}
-                    error="Please select a gender"
-                  /> */}
-                  <CustomDropdown
-                    boxWidth={'60%'}
-                    label={"Gender"}
-                    // placeholder={'Select'}
-                    name='gender'
-                    DropDownData={genderData}
-                    DropDownHeigth={200}
-                    value={values.gender}
-                    // bgColor='#e1f3f8'
-                    // onChange={setCategoriesData}
+                <CustomDropdown
+                  boxWidth={'80%'}
+                  label={"Gender"}
+                  name='gender'
+                  DropDownData={genderData}
+                  DropDownHeigth={200}
+                  value={values.gender}
+                  onChange={(e) => {
+                    handleChange("gender")(e);
+                    seterrorFormAPI();
+                  }}
+                  outlined
+                  borderColor={`${(errors.gender && touched.gender) || (errorFormAPI && errorFormAPI.genderForm) ? "red" : "#ccc"}`}
+                  errorMessage={`${(errors.gender && touched.gender) ? `${errors.gender}` : (errorFormAPI && errorFormAPI.genderForm) ? `${errorFormAPI.genderForm}` : ``}`}
+                // errorColor='magenta'
+                />
 
-                    onChange={(e) => {
-                      handleChange("gender")(e);
-                      seterrorFormAPI();
-                    }}
-                    outlined
-                    borderColor={`${(errors.gender && touched.gender) || (errorFormAPI && errorFormAPI.genderForm) ? "red" : "#ccc"}`}
-                    errorMessage={`${(errors.gender && touched.gender) ? `${errors.gender}` : (errorFormAPI && errorFormAPI.genderForm) ? `${errorFormAPI.genderForm}` : ``}`}
-                  // errorColor='magenta'
-                  />
-                  <CustomTextInput
-                    boxWidth={'30%'}
-                    placeholder={'Age'}
-                    asterisksymbol={true}
-                    label={'Your age'}
-                    name='Age'
-                    value={values.age}
-                    keyboardType="numeric"
-                    // leftIcon={<FontAwesome name="phone" size={20} color="black" />}
-                    onChangeText={(e) => { handleChange("age")(e); seterrorFormAPI(); }}
-                    onBlur={handleBlur("age")}
-                    validate={handleBlur("age")}
-                    outlined
-                    borderColor={`${(errors.age && touched.age) || (errorFormAPI && errorFormAPI.age) ? "red" : "#ccc"}`}
-                    errorMessage={`${(errors.age && touched.age) ? `${errors.age}` : (errorFormAPI && errorFormAPI.age) ? `${errorFormAPI.age}` : ``}`}
-                  // errorColor='magenta'
-                  />
 
-                </View>
-
+                {/* </View> */}
+                <CustomTextInput
+                  boxWidth={'80%'}
+                  placeholder={'Age'}
+                  asterisksymbol={true}
+                  label={'Your age'}
+                  name='Age'
+                  value={values.age}
+                  keyboardType="numeric"
+                  // leftIcon={<FontAwesome name="phone" size={20} color="black" />}
+                  onChangeText={(e) => { handleChange("age")(e); seterrorFormAPI(); }}
+                  onBlur={handleBlur("age")}
+                  validate={handleBlur("age")}
+                  outlined
+                  borderColor={`${(errors.age && touched.age) || (errorFormAPI && errorFormAPI.age) ? "red" : "#ccc"}`}
+                  errorMessage={`${(errors.age && touched.age) ? `${errors.age}` : (errorFormAPI && errorFormAPI.age) ? `${errorFormAPI.age}` : ``}`}
+                // errorColor='magenta'
+                />
 
 
 
@@ -900,15 +855,17 @@ export default function FormScreen() {
                   errorMessage={`${(errors.education && touched.education) ? `${errors.education}` : (errorFormAPI && errorFormAPI.educationForm) ? `${errorFormAPI.educationForm}` : ``}`}
                 />
 
+
                 {/* <Text>{errors.state}</Text> */}
-                <CustomPicker
-                  placeholder={'Enter your city'}
+                <CustomDropdown
+                  // placeholder={'Enter your city'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
                   label={'City'}
                   name='city'
 
-                  onChangeText={(e) => { handleChange("state")(e); seterrorFormAPI(); }}
+                  DropDownData={stateData}
+                  onChange={(e) => { handleChange("state")(e); seterrorFormAPI(); }}
                   onBlur={handleBlur("state")}
 
                   validate={handleBlur("state")}
@@ -918,7 +875,6 @@ export default function FormScreen() {
                   // errorColor='magenta'
                   value={values.state}
 
-                  items={stateData}
                   onValueChange={(itemValue) => handleChange("state")(itemValue)}
                   containerStyle={{ width: 200 }}
                   labelStyle={{ color: 'blue' }}
@@ -982,20 +938,20 @@ export default function FormScreen() {
                   borderColor={`${(errors.guardianName && touched.guardianName) || (errorFormAPI && errorFormAPI.guardianNameForm) ? "red" : "#ccc"}`}
                   errorMessage={`${(errors.guardianName && touched.guardianName) ? `${errors.guardianName}` : (errorFormAPI && errorFormAPI.guardianNameForm) ? `${errorFormAPI.guardianNameForm}` : ``}`}
                 />
-                <CustomPicker
-                  placeholder={'Marital status'}
+                <CustomDropdown
+                  // placeholder={'Marital status'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
                   label={'Marital status'}
                   name='Maritalstatus'
-                  onChangeText={(e) => { handleChange("martialStatus")(e); seterrorFormAPI(); }}
+                  onChange={(e) => { handleChange("martialStatus")(e); seterrorFormAPI(); }}
                   onBlur={handleBlur("martialStatus")}
                   validate={handleBlur("martialStatus")}
                   outlined
                   borderColor={`${(errors.martialStatus) || (errorFormAPI && errorFormAPI.martialStatusForm) ? "red" : "#ccc"}`}
                   errorMessage={`${(errors.martialStatus) ? `${errors.martialStatus}` : (errorFormAPI && errorFormAPI.martialStatusForm) ? `${errorFormAPI.genderForm}` : ``}`}
                   value={values.martialStatus}
-                  items={martialStatus}
+                  DropDownData={martialStatus}
                   onValueChange={(itemValue) => handleChange("martialStatus")(itemValue)}
                   containerStyle={{ width: 200 }}
                   labelStyle={{ color: 'blue' }}
@@ -1003,14 +959,14 @@ export default function FormScreen() {
                 />
 
 
-                <CustomPicker
-                  placeholder={'Enter your language'}
+                <CustomDropdown
+                  // placeholder={'Enter your language'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
                   label={'Language'}
                   name='language'
 
-                  onChangeText={(e) => { handleChange("language")(e); seterrorFormAPI(); }}
+                  onChange={(e) => { handleChange("language")(e); seterrorFormAPI(); }}
                   onBlur={handleBlur("language")}
 
                   validate={handleBlur("language")}
@@ -1019,7 +975,7 @@ export default function FormScreen() {
                   errorMessage={`${(errors.language && touched.language) ? `${errors.language}` : (errorFormAPI && errorFormAPI.languageForm) ? `${errorFormAPI.languageForm}` : ``}`}
                   // errorColor='magenta'
                   value={values.language}
-                  items={languageData}
+                  DropDownData={languageData}
                   onValueChange={(itemValue) => handleChange("language")(itemValue)}
                   containerStyle={{ width: 200 }}
                   labelStyle={{ color: 'blue' }}
@@ -1150,17 +1106,19 @@ export default function FormScreen() {
     // errorColor='magenta'
     /> */}
 
-                  <CustomPicker
+
+        
+                  <CustomDropdown
                     //  asterisksymbol={true}
                     boxWidth={'80%'}
-                    placeholder={'Has anyone in the family done a course?'}
+                    // placeholder={'Has anyone in the family done a course?'}
                     label={'Has anyone in the family done a course?'}
                     name='Family Person course Done'
 
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
                     // bgColor="#B1B1B0"
-                    onChangeText={(e) => { handleChange("courseDone")(e); seterrorFormAPI(); }}
+                    onChange={(e) => { handleChange("courseDone")(e); seterrorFormAPI(); }}
                     onBlur={handleBlur("courseDone")}
 
                     validate={handleBlur("courseDone")}
@@ -1169,7 +1127,7 @@ export default function FormScreen() {
                     errorMessage={`${(errors.courseDone && touched.courseDone) ? `${errors.courseDone}` : (errorFormAPI && errorFormAPI.courseDoneForm) ? `${errorFormAPI.courseDoneForm}` : ``}`}
                     // errorColor='magenta'
                     value={values.courseDone}
-                    items={courseDoneList}
+                    DropDownData={courseDoneList}
                     onValueChange={(itemValue) => handleChange("courseDone")(itemValue)}
                     containerStyle={{ width: 200 }}
                     labelStyle={{ color: 'blue' }}
@@ -1315,16 +1273,19 @@ export default function FormScreen() {
                 <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
 
 
-                  <CustomPicker
+
+
+                  <CustomDropdown
                     boxWidth={'80%'}
-                    placeholder={'In past '}
+                    // placeholder={'In past '}
                     label={'In past '}
                     name='Psyschological ailment in past'
                     // value={values.gender}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
                     // bgColor="#B1B1B0"
-                    onChangeText={(e) => { handleChange("inPastTwo")(e); seterrorFormAPI(); }}
+                    DropDownData={inPastTwoData}
+                    onChange={(e) => { handleChange("inPastTwo")(e); seterrorFormAPI(); }}
 
                     onBlur={handleBlur("inPastTwo")}
 
@@ -1335,7 +1296,7 @@ export default function FormScreen() {
                     errorMessage={`${(errors.inPastTwo && touched.inPastTwo) ? `${errors.inPastTwo}` : (errorFormAPI && errorFormAPI.inPastTwoForm) ? `${errorFormAPI.inPastTwoForm}` : ``}`}
                     // errorColor='magenta'
                     value={values.inPastTwo}
-                    items={inPastTwoData}
+
                     onValueChange={(itemValue) => handleChange("inPastTwo")(itemValue)}
                     containerStyle={{ width: 200 }}
                     labelStyle={{ color: 'blue' }}
@@ -1343,17 +1304,20 @@ export default function FormScreen() {
                   // error="Please select a gender"
                   />
 
-                  <CustomPicker
+                  <CustomDropdown
                     boxWidth={'80%'}
-                    placeholder={'In present'}
+                    // placeholder={'In present'}
                     label={'In present '}
                     name='In present '
+
+
 
                     // value={values.gender}
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
                     // bgColor="#B1B1B0"
-                    onChangeText={(e) => { handleChange("inPresentTwo")(e); seterrorFormAPI(); }}
+                    DropDownData={inPresentTwoData}
+                    onChange={(e) => { handleChange("inPresentTwo")(e); seterrorFormAPI(); }}
                     onBlur={handleBlur("inPresentTwo")}
 
                     validate={handleBlur("inPresentTwo")}
@@ -1362,7 +1326,7 @@ export default function FormScreen() {
                     errorMessage={`${(errors.inPresentTwo && touched.inPresentTwo) ? `${errors.inPresentTwo}` : (errorFormAPI && errorFormAPI.inPresentTwoForm) ? `${errorFormAPI.inPresentTwoForm}` : ``}`}
                     // errorColor='magenta'
                     value={values.inPresentTwo}
-                    items={inPresentTwoData}
+             
                     onValueChange={(itemValue) => handleChange("inPresentTwo")(itemValue)}
                     containerStyle={{ width: 200 }}
                     labelStyle={{ color: 'blue' }}
@@ -1378,8 +1342,8 @@ export default function FormScreen() {
                 {/* <Text> is present {values.inPresentTwo}</Text> */}
                 {/* <Text> is inPast {values.inPastTwo}</Text> */}
                 {/* <Text style={{ fontWeight: 800, fontSize: 15, marginTop: 5, marginBottom: 5 }}>------- Fitness Certificate -------</Text> */}
-                {values.inPresentTwo === "Yes" || values.inPastTwo === "Yes" ? <CustomPicker
-                  placeholder={'If yes, kindly bring a fitness certificate from your doctor'}
+                {values.inPresentTwo === "Yes" || values.inPastTwo === "Yes" ? <CustomDropdown
+                  // placeholder={'If yes, kindly bring a fitness certificate from your doctor'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
                   label={'If yes, kindly bring a fitness certificate from your doctor'}
@@ -1388,7 +1352,11 @@ export default function FormScreen() {
                   // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                   // bgColor='#e1f3f8'
                   // bgColor="#B1B1B0"
-                  onChangeText={(e) => { handleChange("FitnessCertificate")(e); seterrorFormAPI(); }}
+
+                  
+                  // onChange={(e) => { handleChange("inPresentTwo")(e); seterrorFormAPI(); }}
+
+                  onChange={(e) => { handleChange("FitnessCertificate")(e); seterrorFormAPI(); }}
                   onBlur={handleBlur("FitnessCertificate")}
 
                   validate={handleBlur("FitnessCertificate")}
@@ -1397,7 +1365,7 @@ export default function FormScreen() {
                   errorMessage={`${(errors.FitnessCertificate && touched.FitnessCertificate) ? `${errors.FitnessCertificate}` : (errorFormAPI && errorFormAPI.FitnessCertificateForm) ? `${errorFormAPI.FitnessCertificateForm}` : ``}`}
                   // errorColor='magenta'
                   value={values.FitnessCertificate}
-                  items={FitnessCertificateData}
+                  DropDownData={FitnessCertificateData}
                   onValueChange={(itemValue) => handleChange("FitnessCertificate")(itemValue)}
                   containerStyle={{ width: 200 }}
                   labelStyle={{ color: 'blue' }}
@@ -1452,8 +1420,8 @@ export default function FormScreen() {
 
 
                 {values.FitnessCertificate === "Yes" ?
-                  <CustomPicker
-                    placeholder={'If taking any medicine regularly have you brought it with you?'}
+                  <CustomDropdown
+                    // placeholder={'If taking any medicine regularly have you brought it with you?'}
                     asterisksymbol={true}
                     boxWidth={'80%'}
                     label={'If taking any medicine regularly have you brought it with you?'}
@@ -1462,7 +1430,7 @@ export default function FormScreen() {
                     // leftIcon={<FontAwesome name="user" size={20} color="black" />}
                     // bgColor='#e1f3f8'
                     // bgColor="#B1B1B0"
-                    onChangeText={(e) => { handleChange("regularMedicine")(e); seterrorFormAPI(); }}
+                    onChange={(e) => { handleChange("regularMedicine")(e); seterrorFormAPI(); }}
                     onBlur={handleBlur("regularMedicine")}
 
                     validate={handleBlur("regularMedicine")}
@@ -1471,7 +1439,7 @@ export default function FormScreen() {
                     errorMessage={`${(errors.regularMedicine && touched.regularMedicine) ? `${errors.regularMedicine}` : (errorFormAPI && errorFormAPI.regularMedicineForm) ? `${errorFormAPI.regularMedicineForm}` : ``}`}
                     // errorColor='magenta'
                     value={values.regularMedicine}
-                    items={regularMedicineData}
+                    DropDownData={regularMedicineData}
                     onValueChange={(itemValue) => handleChange("regularMedicine")(itemValue)}
                     containerStyle={{ width: 200 }}
                     labelStyle={{ color: 'blue' }}
@@ -1479,14 +1447,14 @@ export default function FormScreen() {
                   // error="Please select a gender"
                   /> : ""}
 
-                <CustomPicker
+                <CustomDropdown
                   // placeholder={'Referred by'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
                   label={'How did you learn about this course'}
                   name='Referred By'
 
-                  onChangeText={(e) => { handleChange("referenceFrom")(e); seterrorFormAPI(); }}
+                  onChange={(e) => { handleChange("referenceFrom")(e); seterrorFormAPI(); }}
                   onBlur={handleBlur("referenceFrom")}
 
                   validate={handleBlur("referenceFrom")}
@@ -1495,7 +1463,7 @@ export default function FormScreen() {
                   errorMessage={`${(errors.referenceFrom && touched.referenceFrom) ? `${errors.referenceFrom}` : (errorFormAPI && errorFormAPI.referenceFromForm) ? `${errorFormAPI.referenceFromForm}` : ``}`}
                   // errorColor='magenta'
                   value={values.referenceFrom}
-                  items={referenceFromData}
+                  DropDownData={referenceFromData}
                   onValueChange={(itemValue) => handleChange("referenceFrom")(itemValue)}
                   containerStyle={{ width: 200 }}
                   labelStyle={{ color: 'blue' }}
@@ -1507,7 +1475,7 @@ export default function FormScreen() {
                 <Text>medical Dose</Text>
                 <Text>medical name</Text> */}
                 <CustomTextInput
-                  // placeholder={'Enter more information data'}
+                  placeholder={'Enter more information data'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
                   label={'Brief personal background aim of joining the course'}
@@ -1683,13 +1651,16 @@ export default function FormScreen() {
                   // errorColor='magenta'
                   />
 
-                  <CustomPicker
-                    placeholder={'Enter course details'}
+
+
+
+                  <CustomDropdown
+                    // placeholder={'Enter course details'}
                     boxWidth={'80%'}
                     label={'Course details'}
                     name='Course Details'
 
-                    onChangeText={(e) => { handleChange("courseDetails")(e); seterrorFormAPI(); }}
+                    onChange={(e) => { handleChange("courseDetails")(e); seterrorFormAPI(); }}
                     onBlur={handleBlur("courseDetails")}
 
                     validate={handleBlur("courseDetails")}
@@ -1698,7 +1669,7 @@ export default function FormScreen() {
                     errorMessage={`${(errors.courseDetails && touched.courseDetails) ? `${errors.courseDetails}` : (errorFormAPI && errorFormAPI.courseDetailsForm) ? `${errorFormAPI.courseDetailsForm}` : ``}`}
                     // errorColor='magenta'
                     value={values.courseDetails}
-                    items={courseDetailsData}
+                    DropDownData={courseDetailsData}
                     onValueChange={(itemValue) => handleChange("courseDetails")(itemValue)}
                     containerStyle={{ width: 200 }}
                     labelStyle={{ color: 'blue' }}
@@ -1716,7 +1687,7 @@ export default function FormScreen() {
 
 
                   <CustomTextInput
-                    placeholder={'Have you tried any practice since the last course?'}
+                    // placeholder={'Have you tried any practice since the last course?'}
                     boxWidth={'80%'}
                     label={'Have you tried any practice since the last course?'}
                     name='Tried Any Practise'
@@ -1736,13 +1707,13 @@ export default function FormScreen() {
                   />
 
 
-                  <CustomPicker
-                    placeholder={'Do you practice this technique regularly?'}
+                  <CustomDropdown
+                    // placeholder={'Do you practice this technique regularly?'}
                     boxWidth={'80%'}
                     label={'Do you practice this technique regularly?'}
                     name='Practise regularly'
 
-                    onChangeText={(e) => { handleChange("practiseRegularly")(e); seterrorFormAPI(); }}
+                    onChange={(e) => { handleChange("practiseRegularly")(e); seterrorFormAPI(); }}
                     onBlur={handleBlur("practiseRegularly")}
 
                     validate={handleBlur("practiseRegularly")}
@@ -1751,7 +1722,7 @@ export default function FormScreen() {
                     errorMessage={`${(errors.practiseRegularly && touched.practiseRegularly) ? `${errors.practiseRegularly}` : (errorFormAPI && errorFormAPI.practiseRegularlyForm) ? `${errorFormAPI.practiseRegularlyForm}` : ``}`}
                     // errorColor='magenta'
                     value={values.practiseRegularly}
-                    items={practiseRegularlyData}
+                    DropDownData={practiseRegularlyData}
                     onValueChange={(itemValue) => handleChange("practiseRegularly")(itemValue)}
                     containerStyle={{ width: 200 }}
                     labelStyle={{ color: 'blue' }}

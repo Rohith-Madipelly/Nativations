@@ -44,6 +44,9 @@ import { useFonts } from 'expo-font';
 import Donation from "./MainScreen/OtherPages/Donation";
 import BackIcons from "../assets/SVGS/Navigation/BackIcons";
 import { TouchableOpacity } from "react-native";
+import QuotesScreen from "./MainScreen/QuotesScreen";
+import TracksAudios from "./MainScreen/TracksAudios";
+import TracksListByCategory from "./MainScreen/TracksListByCategory";
 
 
 // SplashScreen.preventAutoHideAsync();
@@ -188,33 +191,45 @@ export default function Screens() {
                       headerShown: false,
                     }}
                   />
-                  <Stack.Screen name="VideoScreen" component={VideoScreen} />
-                  <Stack.Screen name="AudioScreen" component={AudioScreen} />
+                  <Stack.Screen name="VideoScreen" component={VideoScreen} options={{
+                    headerShown: false,
+                  }} />
+                  <Stack.Screen name="AudioScreen" component={AudioScreen} options={{
+                    headerShown: false,
+                  }} />
                   <Stack.Screen name="YoutudeScreen" component={YoutudeScreen} />
+                  <Stack.Screen name="Quotes" component={QuotesScreen}
+                    options={customHeaderOptions} />
 
 
+                  <Stack.Screen name="TracksAudios" component={TracksAudios}
+                    options={customHeaderOptions} />
 
-                  <Stack.Screen name="FormScreen" component={FormScreen} 
-                     options={{
+                  <Stack.Screen name="TracksListByCategory" component={TracksListByCategory}
+                    options={customHeaderOptions} />
+
+
+                  <Stack.Screen name="FormScreen" component={FormScreen}
+                    options={{
                       headerShown: false,
-                    }}/>
+                    }} />
                   <Stack.Screen name="Donation" component={Donation}
                     options={customHeaderOptions}
                   />
 
 
 
-                  <Stack.Screen name="About_Guruji" component={About_Guruji} 
-                  // options={customHeaderOptions} 
-                  options={{
-                    headerShown: false,
-                  }}/>
+                  <Stack.Screen name="About_Guruji" component={About_Guruji}
+                    // options={customHeaderOptions} 
+                    options={{
+                      headerShown: false,
+                    }} />
 
-                  <Stack.Screen name="About_SatyaSadhana" component={SatyaSadhana} 
-                  // options={customHeaderOptions} 
-                  options={{
-                    headerShown: false,
-                  }}/>
+                  <Stack.Screen name="About_SatyaSadhana" component={SatyaSadhana}
+                    // options={customHeaderOptions} 
+                    options={{
+                      headerShown: false,
+                    }} />
 
                   <Stack.Screen name="FullProfile" component={UpdateProfile}
                     options={customHeaderOptions} />
@@ -223,21 +238,21 @@ export default function Screens() {
                     options={customHeaderOptions} />
 
                   <Stack.Screen name="ProfilePassword" component={ChangePassword}
-                    options={customHeaderOptions} 
-                    // options={{
-                    //   headerShown: false,
-                    // }}
-                    />
+                    options={customHeaderOptions}
+                  // options={{
+                  //   headerShown: false,
+                  // }}
+                  />
 
                   <Stack.Screen name="About" component={About}
                     options={customHeaderOptions} />
 
-                  <Stack.Screen name="Help" component={Help} 
+                  <Stack.Screen name="Help" component={Help}
                     options={customHeaderOptions} />
 
 
                   <Stack.Screen name="Privacy Policy" component={PrivacyPolicy}
-                  options={customHeaderOptions}/>
+                    options={customHeaderOptions} />
                 </Stack.Group>
               </>
             ) : (

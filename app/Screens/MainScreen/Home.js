@@ -32,10 +32,15 @@ import { useToast } from "react-native-toast-notifications";
 import MusicList from '../../Components2/Music/MusicList';
 import QuoteOfDay from '../../Components2/Quote/QuoteOfDay';
 import { FontAwesome5 } from '@expo/vector-icons';
+import QuoteIconColorHome from '../../assets/SVGS/Home/QuoteIconColorHome';
+import onShare from '../../utils/ShareBtn';
+import TracksIcons from '../../assets/SVGS/Home/TracksIcons';
+import NoInternetImage from '../../assets/SVGS/UIScrees/NoInternetImage';
 const Home = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
   const [isData, setIsData] = useState()
   const [Banners, setBanners] = useState()
+  const [Quote, setQuote] = useState()
   const [meditationTracks, setMeditationTracks] = useState()
   const [pravachan, setPravachan] = useState()
   const [previousEvents, setPreviousEvents] = useState()
@@ -48,6 +53,22 @@ const Home = () => {
 
   const toast = useToast();
 
+
+
+  const NavigationTo = (item, download) => {
+    if (item.type == "Youtube" || item.type == undefined) {
+      navigation.navigate('YoutudeScreen', { id: `${item.id}`, download: download })
+      // console.log("chgchgcjyhcjhc", item.id)
+    }
+    else if (item.type == "Audio") {
+      console.log("this is Audio ")
+      navigation.navigate('AudioScreen', { id: `${item.id}`, download: download })
+    }
+    else if (item.type == "Video") {
+      // console.log("video")
+      navigation.navigate('VideoScreen', { id: `${item.id}`, download: download })
+    }
+  }
 
   const logoutValidation = async () => {
     console.log("dasda")
@@ -114,7 +135,7 @@ const Home = () => {
     try {
       const res = await HomePageData(tokenn)
       if (res) {
-
+        setQuote(res.data.recentQoute.quote)
         setIsData(true)
         setBanners(res.data.banners)
         setMeditationTracks(res.data.meditationTracks)
@@ -177,8 +198,9 @@ const Home = () => {
   if (!isConnected) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} >
-        <Text>No network found</Text>
-        <Text>Please check your internet connection</Text>
+        <NoInternetImage/>
+        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(20),marginTop:18}}>No network found</Text>
+        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(18)}}>Please check your internet connection</Text>
         <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
       </View>
     );
@@ -262,39 +284,54 @@ const Home = () => {
               </TouchableOpacity>
 
 
-              <TouchableOpacity style={{
-                flex: 0.23,
-              }}
 
-              >
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
-                  <Donation />
-                </View>
-                <View style={{ marginTop: 5 }}>
-                  <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Donation</Text>
-                </View>
-              </TouchableOpacity>
 
               <TouchableOpacity style={{
                 flex: 0.23,
               }}
                 onPress={() => {
-                  toast.hideAll(); console.log("dwchjbdc"); toast.show("Task finished successfully", {
-                    type: "custom_type",
-                    placement: "top",
-                    duration: 4000,
-                    offset: 10,
-                    animationType: "slide-in",
-                  });
-                }}>
+                  navigation.navigate("Quotes")
+                }}
+              >
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
                   {/* <Donation /> */}
+                  <QuoteIconColorHome />
+                </View>
+                <View style={{ marginTop: 5 }}>
+                  <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Quotes</Text>
+                </View>
+              </TouchableOpacity>
+
+
+
+              <TouchableOpacity style={{ flex: 0.23, }}
+                onPress={() => {
+                  navigation.navigate("TracksAudios")
+                }}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
+                  <TracksIcons />
+                </View>
+                <View style={{ marginTop: 5 }}>
+                  <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>
+                    All Tracks
+                    {/* Tracks & Audios */}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+
+              {/* <TouchableOpacity style={{
+                flex: 0.23,
+              }}
+                onPress={() => {
+                  onShare("https://play.google.com/store/apps/details?id=vardhaman.satyasadhnaOne&hl=en")
+                }}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
                   <FontAwesome5 name="share-square" size={24} color="rgba(3, 3, 112, 1)" />
                 </View>
                 <View style={{ marginTop: 5 }}>
                   <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Share our app</Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
             </View>
 
@@ -352,9 +389,12 @@ const Home = () => {
               </View>
             </View> */}
 
-            {/* <MusicList Data={meditationTracks}/> */}
+            <MusicList Data={meditationTracks} ClickAction={(item, download) => {
+              console.log("Helo", item);
+              NavigationTo(item, download)
+            }} />
 
-            {/* <QuoteOfDay/> */}
+            <QuoteOfDay Quote={Quote||"If you want peace then calm your desires"} isQuoteOfDay={true} />
             <Snap_Carousel2 BannerData2={meditationTracks} CarouselName={'Meditation Tracks'} />
 
             <View style={{ height: 20 }}>
@@ -379,7 +419,7 @@ const Home = () => {
             </View>
 
           </View> :
-            <View>
+            <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', height: "100%" }}>
               <Text>No Data Found</Text>
             </View>}
         </View> : (
@@ -390,6 +430,10 @@ const Home = () => {
           </View>
         )}
 
+
+<View style={{height:70}}>
+  <Text></Text>
+</View>
       </ScrollView>
 
     </View>

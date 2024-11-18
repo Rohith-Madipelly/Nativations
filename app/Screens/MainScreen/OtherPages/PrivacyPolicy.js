@@ -14,6 +14,7 @@ import { PrivacyPolicyAPI} from '../../../utils/API_Calls'
 import NetInfo from '@react-native-community/netinfo';
 import OtherComponent from './OtherComponent';
 import { LinearGradient } from 'expo-linear-gradient';
+import CustomStatusBar from '../../../Components/UI/StatusBar/CustomStatusBar';
 
 
 
@@ -66,7 +67,7 @@ const PrivacyPolicy = () => {
     try {
       const res = await PrivacyPolicyAPI(tokenn)
       if (res) {
-        console.log(">>>", res.data)
+        // console.log(">>>", res.data)
         setData(res.data.privacyPolicy)
         setSpinnerbool(false)
       }
@@ -109,10 +110,12 @@ const PrivacyPolicy = () => {
       />
     )
   }
-
+  
   return (
     // <ScrollView>
     <View style={{ height: '100%' }}>
+
+<CustomStatusBar barStyle="dark-content" backgroundColor="white" />
       <View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
         <LinearGradient style={{ height: "100%", }} colors={['rgba(20, 0, 255, 0.75)', 'rgba(255, 255, 255, 0.77)', '#FFF']}>
           {/* background */}

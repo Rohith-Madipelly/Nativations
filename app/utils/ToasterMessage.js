@@ -17,3 +17,14 @@ export const ToasterMessage=(type,textH1,textH2)=>{
 
 // You Can Call this by 
 // ToasterMessage("success", `Success`, `${Message}`)
+
+
+
+
+         // toast.hideAll(); console.log("dwchjbdc"); toast.show("Task finished successfully", {
+                  //   type: "custom_type",
+                  //   placement: "top",
+                  //   duration: 4000,
+                  //   offset: 10,
+                  //   animationType: "slide-in",
+                  // });

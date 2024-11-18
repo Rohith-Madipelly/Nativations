@@ -27,6 +27,26 @@ export const HomePageData = async (token) => {
 };
 
 
+// ALL_QUOTES_API
+export const ALL_QUOTES_API = async (token) => {
+  return await axios.get(`${GUEST_URL}/user/quotes`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+};
+
+
+
+// ALL_QUOTES_API
+export const CATEGORY_POSTS_API = async (token) => {
+  return await axios.get(`${GUEST_URL}/user/categories`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+};
+
 // User Form Data API Call 
 export const FormDataApi = async (loginData, token) => {
 

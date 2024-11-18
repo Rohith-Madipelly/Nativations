@@ -97,7 +97,7 @@ const Snap_Carousel2 = ({ BannerData2, CarouselName }) => {
                 </TouchableOpacity>
 
             </View> :
-                <View style={{ height: 171, width: width,alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ height: 171, width: width,alignItems: 'center', justifyContent: 'center',marginTop:10 }}>
                     <View style={{ height: 171, width: width * 0.78, marginHorizontal: 10, backgroundColor: '#E8E8E899', alignItems: 'center', justifyContent: 'center', borderRadius: 15 }} >
                         <Text>No posts available</Text>
                     </View>

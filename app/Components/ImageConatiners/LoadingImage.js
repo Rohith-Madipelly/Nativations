@@ -4,16 +4,17 @@ import PropTypes from 'prop-types'
 
 const LoadingImage = ({ source, style, loaderColor = '#0000ff', ...props }) => {
   const [loading, setLoading] = useState(true)
-
+  const [imageUri, setImageUri] = useState( source );
   return (
     <View style={[styles.container, style]}>
       {loading && <ActivityIndicator style={styles.loader} size="large" color={loaderColor} />}
       {/* {loading === true ? <ActivityIndicator style={styles.loader} size="large" color={loaderColor} /> : */}
         <Image
           style={[styles.image, style]}
-          source={source}
+          source={imageUri}
           onLoadStart={() => setLoading(true)}
           onLoadEnd={() => setLoading(false)}
+          onError={() => setImageUri(require('../../assets/SVGS/UIScrees//Group 164.png') )}
           {...props}
         />
     </View>

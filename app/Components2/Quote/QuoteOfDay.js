@@ -8,8 +8,11 @@ import DownloadIcon from '../../assets/SVGS/MusicPlayer/DownloadIcon'
 import Play_Circle from '../../assets/SVGS/MusicPlayer/Play_Circle'
 import QuoteIcon from '../../assets/SVGS/MusicPlayer/QuoteIcon'
 import SkeletonLoader2 from '../../Components/UI/Loadings/SkeletonLoader'
+import { useNavigation } from '@react-navigation/native'
 
-const QuoteOfDay = ({ Data }) => {
+const QuoteOfDay = ({ Quote ,isQuoteOfDay,bgColor}) => {
+
+    const navigation=useNavigation()
 
     const [loadingList,setLoadingList]=useState(false)
     // console.log(Data)
@@ -31,9 +34,9 @@ const QuoteOfDay = ({ Data }) => {
             <TouchableOpacity style={{
                 maxHeight: Metrics.height * 0.12,
                 minHeight: 120,
-                backgroundColor: 'rgba(168, 168, 255, 0.30)',
+                backgroundColor: bgColor?bgColor:'rgba(168, 168, 255, 0.30)',
                 padding: 10, marginHorizontal: 10, borderRadius: 13
-            }} onPress={() => { navigation.navigate("About_SatyaSadhana") }}>
+            }} onPress={() => { navigation.navigate("Quotes") }}>
                 <ImageBackground
                     style={{ position: 'relative', display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}
                     // contentFit="fixed"
@@ -46,9 +49,9 @@ const QuoteOfDay = ({ Data }) => {
                     </View>
 
 
-                    <View style={{ top: 10, width: '75%' }}>
-                        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(29) }}>Quote of the day</Text>
-                        <Text numberOfLines={3} style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(139, 139, 169, 1)', fontSize: Metrics.rfv(14) }}>If you want peace then calm your desires</Text>
+                    <View style={{  width: '82%',alignSelf:'center'}}>
+                        {isQuoteOfDay?<Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(20) }}>{isQuoteOfDay?"Quote of the day":""}</Text>:""}
+                        <Text numberOfLines={3} style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(139, 139, 169, 1)', fontSize: Metrics.rfv(14) }}>{Quote?Quote:"No Quote"}</Text>
                         {loadingList ? <SkeletonLoader2
                         style={{
                             width: '100%',

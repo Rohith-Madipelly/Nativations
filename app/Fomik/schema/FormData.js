@@ -108,7 +108,8 @@ const FormData = Yup.object().shape({
 
 
     FitnessCertificate: Yup.string(),
-    state: Yup.string().required("City is a required Field ").oneOf(["Kolkata", "Bikaner", "Other"], "Invalid input"),
+    state: Yup.string().required("City is a required Field "),
+    // .oneOf(["Kolkata", "Bikaner", "Other"], "Invalid input"),
 
 
 
@@ -116,7 +117,7 @@ const FormData = Yup.object().shape({
     personName: Yup.string(),
     personRelation: Yup.string(),
 
-    courseDone: Yup.string().oneOf(["yes", "no"], "Invalid course done yes or no"),
+    courseDone: Yup.string().oneOf(["yes", "o"], "Invalid course done yes or no"),
 
     relation: Yup.string(),
     designation: Yup.string(),

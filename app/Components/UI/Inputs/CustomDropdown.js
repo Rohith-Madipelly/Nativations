@@ -31,9 +31,10 @@ const CustomDropdown = ({
     selectedValue,
     DropDownData,
     DropDownHeigth,
+
 }) => {
     
-  
+  console.log(onChange)
 
     const backgroundColor = bgColor || 'white';
     const containerBorder = styles.outlined;
@@ -41,12 +42,17 @@ const CustomDropdown = ({
     return (
         // <View style={[{ padding: 0, width: boxWidth, }, style, styles.boxHeight]}>
         <View style={[{ padding: 0, width: boxWidth}, style, styles.boxHeight]}>
-            {label ? <Text style={styles.label}>{label}</Text> : ""}
+            {label ? <Text style={styles.label}>{label} {asterisksymbol?<Text style={{color:'red'}}>*</Text>:""}</Text> : ""}
 
             <SelectDropdown
                 data={DropDownData}
                 onSelect={(selectedItem, index) => {
-                    onChange(selectedItem.title)
+                    if(selectedItem.value){
+                        onChange(selectedItem.title,selectedItem.value)
+                    }
+                    else{
+                        onChange(selectedItem.title)      
+                    }
                     // console.log("selected item", selectedItem, index);
                 }}
 
@@ -91,7 +97,7 @@ const CustomDropdown = ({
                 // showsVerticalScrollIndicator={false}
                 dropdownStyle={styles.dropdownMenuStyle}
             />
-            <Text style={{ color: errorColor, marginLeft: 15,fontSize: 12, }}>{errorMessage}</Text>
+            <Text style={{ color: errorColor, marginLeft: 15 }}>{errorMessage}</Text>
         </View>
     );
 };
@@ -102,10 +108,9 @@ export default CustomDropdown;
 const styles = StyleSheet.create({
 
     label: {
-        fontWeight: '500',
+        fontWeight: '600',
         marginBottom: 4,
-        textTransform: 'none',
-        fontFamily: 'BalooTamma2-Bold',
+        textTransform: 'capitalize'
     },
     container: {
         padding: 10,

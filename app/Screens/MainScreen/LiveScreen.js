@@ -10,6 +10,8 @@ import CustomButton from '../../Components/UI/Button/ButtonC1Cricle';
 import NetInfo from '@react-native-community/netinfo';
 import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar';
 import GlobalStyles from '../../Components/UI/GlobalStyles';
+import NoInternetImage from '../../assets/SVGS/UIScrees/NoInternetImage';
+import Metrics from '../../utils/ResposivesUtils/Metrics';
 const LiveScreen = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
   let tokenn = useSelector((state) => state.token);
@@ -103,13 +105,7 @@ const LiveScreen = () => {
       const res = await LivePageData(tokenn)
 
       if (res) {
-
         setLivePage(res.data)
-        console.log("Data", res.data)
-        console.log("Data", res.data.description)
-        console.log("Data >>", res.data.liveUrl)
-        console.log("Data", res.data.title)
-
         setVideoID(getIdFromUrl(res.data.liveUrl))
       }
       else {
@@ -174,8 +170,9 @@ const LiveScreen = () => {
   if (!isConnected) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} >
-        <Text>No network found</Text>
-        <Text>Please check your internet connection</Text>
+               <NoInternetImage/>
+        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(20),marginTop:18}}>No network found</Text>
+        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(18)}}>Please check your internet connection</Text>
         <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
       </View>
     );
@@ -203,7 +200,8 @@ const LiveScreen = () => {
           height={222}
           play={playing}
           // videoId={ScreenData.VideoID} yUNu2bMUEfg
-          videoId={VideoID || "Wr4iJon5zC8"}
+          // videoId={VideoID || "Wr4iJon5zC8"}
+          videoId={VideoID}
           onChangeState={onStateChange}
           showinfo={false}
           controls={1}
@@ -217,6 +215,10 @@ const LiveScreen = () => {
               {playing ? "pause" : "Watch Live"}
             </CustomButton>
           </View>
+
+          <Text style={{width:"90%",fontSize:20,fontWeight:700}} >{livePage.title}</Text>
+          <Text style={{width:"90%"}} numberOfLines={6}><Text style={{fontWeight:600}}>Description : </Text>{livePage.description}</Text>
+          
         </View>
 
       </View>}
