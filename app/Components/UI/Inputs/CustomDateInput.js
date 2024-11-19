@@ -38,28 +38,47 @@ const CustomDateInput = ({
     setMode(modeToShow);
   };
 
+
+
+  const DateForm = (input) => {
+    if (!isNaN(Date.parse(input))) {
+
+      console.log(new Date(input).toLocaleDateString());
+      return new Date(input).toLocaleDateString()
+    } else {
+      console.log('none');
+      return input
+    }
+
+
+  }
+
+
+  console.log("date", date)
   return (
-    <TouchableOpacity style={[{ padding: 0, width: boxWidth,overflow:'hidden' }]} 
-    // onPress={() => showMode("date")}
-    onPress={() => !disabled && showMode("date")} // Disable onPress if disabled prop is true
-    disabled={disabled}
-    
+    <TouchableOpacity style={[{ padding: 0, width: boxWidth, overflow: 'hidden' }]}
+      // onPress={() => showMode("date")}
+      onPress={() => {
+        setDate()
+        !disabled && showMode("date")}} // Disable onPress if disabled prop is true
+      disabled={disabled}
+
     >
-      <Text style={styles.label}>{label} {asterisksymbol?<Text style={{color:'red'}}>*</Text>:""}</Text>
+      <Text style={styles.label}>{label} {asterisksymbol ? <Text style={{ color: 'red' }}>*</Text> : ""}</Text>
       <View style={[styles.container, containerBorder, { borderColor: borderColor }, { backgroundColor: bgColor }]}>
         {leftIcon ? <View style={{ paddingRight: 0 }}>{leftIcon}</View> : null}
-        <TextInput
+        {!show && ( <TextInput
           placeholder={placeholder ? placeholder : label ? `Enter ${label}` : ''}
-          value={date ? date.toLocaleDateString() : ''}
-          onChange={()=>{console.log("ashvdj")}}
+          value={date ? DateForm(date) : ''}
+          onChange={() => { console.log("ashvdj") }}
           editable={false}
           onPress={() => showMode("date")} // Use onPress instead of onPressIn for TextInput
           onBlur={onBlur}
-          style={{ flex: 1,color:'black' }}
-        />
+          style={{ flex: 1, color: 'black' }}
+        />)}
         {show && (
           <DateTimePicker
-          style={{}}
+            style={{}}
             value={date || new Date()} // Pass date or current date if not provided
             mode={mode}
             // display={"spinner"}
@@ -69,9 +88,9 @@ const CustomDateInput = ({
             minimumDate={minimumDate}
             maximumDate={maximumDate}
             onChange={onChange}
-           
+
           />
-  
+
         )}
 
 

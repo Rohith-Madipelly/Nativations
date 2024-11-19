@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from '../../../redux/actions/loginAction.jsx'
 
 import ASO from '../../../utils/AsyncStorage_Calls.js'
-import { ToasterSender } from '../../../utils/Toaster.js';
+import { ToasterSender } from '../../../utils/Toasters/Toaster.js';
 import { ChangePassword } from '../../../Fomik/schema/ChangePassword.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

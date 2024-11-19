@@ -24,6 +24,8 @@ import { ErrorResPrinter } from '../../utils/ErrorResPrinter.js';
 import NetInfo from '@react-native-community/netinfo';
 import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar.js';
 import GlobalStyles from '../../Components/UI/GlobalStyles.js';
+import { ToasterSender } from '../../utils/Toasters/Toaster.js';
+
 
 export default function Login() {
 
@@ -83,27 +85,22 @@ export default function Login() {
 
                 ASO.setTokenJWT("Token", JSON.stringify(res.data.token), function (res, status) {
                     if (status) {
-                        // console.warn(status, " status>>>>>.")
-                        // ToasterMessage("success", `Success`, `${Message}`)
-                        // ToasterSender({ Message: `${Message}` })
+                        ToasterSender({ Message: `${Message}` })
                         dispatch(setToken(token));
                     }
                 })
 
                 setTimeout(() => {
-
                     setSpinnerbool(false)
                 }, 50);
-
 
             }
 
 
         } catch (error) {
-            console.log(error, "Find me")
+
             if (error.response) {
                 if (error.response.status === 400) {
-
                     console.log("Error With 400.")
                 }
                 else if (error.response.status === 401) {
@@ -299,8 +296,6 @@ export default function Login() {
 
                                             </TouchableOpacity>
                                         </View>
-
-
                                     </>
 
                                 )}

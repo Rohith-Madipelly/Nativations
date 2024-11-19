@@ -34,7 +34,7 @@ const CustomDropdown = ({
 
 }) => {
     
-  console.log(onChange)
+
 
     const backgroundColor = bgColor || 'white';
     const containerBorder = styles.outlined;

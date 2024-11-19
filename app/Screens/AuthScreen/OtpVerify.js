@@ -24,10 +24,10 @@ import { useDispatch } from 'react-redux';
 import { setToken } from '../../redux/actions/loginAction.jsx'
 
 import ASO from '../../utils/AsyncStorage_Calls.js'
-import { ToasterSender } from '../../utils/Toaster.js';
+import { ToasterSender } from '../../utils/Toasters/Toaster.js';
 import { OTPSchema } from '../../Fomik/schema/OTPSchema.js';
 import { Email } from '../../Fomik/schema/Email.js';
-import { ToasterMessage } from '../../utils/ToasterMessage.js';
+
 
 export default function OtpVerify({ route }) {
 
@@ -62,9 +62,7 @@ export default function OtpVerify({ route }) {
             console.log(res)
             if (res) {
                 const Message = res.data.message;
-                // { navigation.navigate('Login') }
-                ToasterMessage("success", `Success`, `${Message}`)
-                // { navigation.navigate('ForgotPassword') }
+
                 { navigation.navigate('ForgotPassword', { email: email }); }
                 setTimeout(() => {
 
@@ -135,7 +133,7 @@ export default function OtpVerify({ route }) {
             console.log(">>",res.data.message)
             if (res) {
 
-                ToasterMessage("success", `Success`, `${res.data.message}`)
+                ToasterSender("success", `Success`, `${res.data.message}`)
 
 
                 setTimeout(() => {

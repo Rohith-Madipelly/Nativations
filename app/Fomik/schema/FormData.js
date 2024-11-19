@@ -117,7 +117,7 @@ const FormData = Yup.object().shape({
     personName: Yup.string(),
     personRelation: Yup.string(),
 
-    courseDone: Yup.string().oneOf(["yes", "o"], "Invalid course done yes or no"),
+    courseDone: Yup.string().oneOf(["yes", "no"], "Invalid course done yes or no"),
 
     relation: Yup.string(),
     designation: Yup.string(),

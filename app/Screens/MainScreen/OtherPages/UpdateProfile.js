@@ -13,7 +13,7 @@ import { theme, typographyStyles } from "../../../Contants";
 import { useNavigation } from '@react-navigation/native';
 
 import { ProfileUpdatedSchema } from '../../../Fomik/schema/ProfileUpdatedSchema';
-import { ToasterSender } from '../../../utils/Toaster';
+import { ToasterSender } from '../../../utils/Toasters/Toaster';
 
 import NetInfo from '@react-native-community/netinfo';
 import CustomTextInput from '../../../Components/UI/Inputs/CustomTextInput';

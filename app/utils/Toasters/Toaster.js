@@ -25,6 +25,7 @@ export const ToasterSender = ({ Message }) => {
     );
   } else if (Platform.OS === 'ios') {
     // For iOS
-    ToastiOS.show(Message, ToastiOS.LONG);
+    console.log(Message)
+    // ToastiOS.show(Message, ToastiOS.LONG);
   }
 };

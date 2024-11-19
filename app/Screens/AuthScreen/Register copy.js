@@ -21,7 +21,7 @@ import { useDispatch } from 'react-redux';
 import { setToken } from '../../redux/actions/loginAction.jsx'
 
 import ASO from '../../utils/AsyncStorage_Calls.js'
-import { ToasterSender } from '../../utils/Toaster.js';
+import { ToasterSender } from '../../utils/Toasters/Toaster.js';
 import { signupSchema } from '../../Fomik/schema/signUpSchema.js';
 
 

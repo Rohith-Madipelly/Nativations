@@ -20,7 +20,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import { RestPasswordschema } from '../../Fomik/schema/RestPassword';
-import { ToasterMessage } from '../../utils/ToasterMessage.js';
+import { ToasterSender } from '../../utils/Toasters/Toaster';
+
 
 
 export default function Login({ route }) {
@@ -52,7 +53,7 @@ export default function Login({ route }) {
             console.log(res)
             if (res) {
                 const Message = res.data.message
-                ToasterMessage("success", `Success`, `${Message}`)
+                ToasterSender("success", `Success`, `${Message}`)
                 navigation.navigate('Login')
                 setTimeout(() => {
                     setSpinnerbool(false)

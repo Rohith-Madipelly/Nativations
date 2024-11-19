@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
-import { ToasterSender } from '../utils/Toaster';
+import { ToasterSender } from '../utils/Toasters/Toaster';
 
 
 

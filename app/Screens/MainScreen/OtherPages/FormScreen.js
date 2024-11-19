@@ -1,4 +1,4 @@
-import { Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Alert } from 'react-native';
+import { Keyboard,RefreshControl, KeyboardAvoidingView, Platform, Pressable, ScrollView, Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Alert } from 'react-native';
 import AuthComponent from '../../AuthScreen/AuthComponent.js';
 // import CustomButton from '../../Components/UI/Button/ButtonC1';
 import CustomButton from '../../../Components/UI/Button/ButtonC1.js';
@@ -29,6 +29,7 @@ import CustomDateInput from '../../../Components/UI/Inputs/CustomDateInput.js';
 import CustomPicker from '../../../Components/UI/Inputs/CustomPicker.js';
 import { DateConvert } from '../../../utils/DateConvert.js';
 import CustomDropdown from '../../../Components/UI/Inputs/CustomDropdown.js';
+import { useCallback } from 'react';
 
 
 export default function FormScreen() {
@@ -201,6 +202,7 @@ export default function FormScreen() {
     { title: 'No', value: 'no' },
   ];
 
+  const [refreshing, setRefreshing] = useState(false);
   const FitnessCertificateData = [
     // { title: 'Select', value: 'N/A' },
     { title: 'Yes', value: 'Yes' },
@@ -264,7 +266,10 @@ export default function FormScreen() {
       console.log(error)
     }
   }
-
+  const onRefresh = useCallback(() => {
+    GetFormData()
+    GetData()
+}, []);
 
 
 
@@ -553,7 +558,14 @@ export default function FormScreen() {
         // style={styles.container}
         >
           {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
-          <ScrollView style={{ height: 800 }}>
+          <ScrollView style={{ height: 800 }} 
+              refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }
+          >
             <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 50 }}>
               <>
 
@@ -1584,7 +1596,6 @@ export default function FormScreen() {
                       maximumDate={new Date(2100, 10, 20)}
                     />
 
-
                     <CustomDateInput
                       placeholder={'Last course date'}
                       label={'Last course date'}
@@ -1603,8 +1614,8 @@ export default function FormScreen() {
                       borderColor={`${(errors.dateLastCourse && touched.dateLastCourse) || (errorFormAPI && errorFormAPI.dateLastCourseForm) ? "red" : "#ccc"}`}
                       errorMessage={`${(errors.dateLastCourse && touched.dateLastCourse) ? `${errors.dateLastCourse}` : (errorFormAPI && errorFormAPI.dateLastCourseForm) ? `${errorFormAPI.dateLastCourseForm}` : ``}`}
                       // errorColor='magenta'
-                      minimumDate={minvalueofcourseDate}
-                      maximumDate={new Date(2100, 10, 20)}
+                      // minimumDate={minvalueofcourseDate?minvalueofcourseDate:""}
+                      // maximumDate={new Date(2100, 10, 20)}
                     />
 
                   </View>
