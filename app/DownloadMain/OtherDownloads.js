@@ -5,7 +5,7 @@ import { ToastAndroid } from "react-native";
 
 async function OtherDownloads(URL_Download, filename) {
     console.log("This the download URL > ", URL_Download, "<><>", filename)
-    ToastAndroid.show('Downloading started', ToastAndroid.SHORT);
+    // ToastAndroid.show('Downloading started', ToastAndroid.SHORT);
 
     try {
       const DataDownload = FileSystem.createDownloadResumable(
@@ -16,6 +16,11 @@ async function OtherDownloads(URL_Download, filename) {
       );
       const result = await DataDownload.downloadAsync()
       const contentType = result.headers['Content-Type'];
+
+
+      console.log("Tester >",result.uri, "Tester >", filename,"Tester >", contentType);
+
+      
       saveFile(result.uri, filename, contentType);
     } catch (e) {
       console.log("Error haa", e)

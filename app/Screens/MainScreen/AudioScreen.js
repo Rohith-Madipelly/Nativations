@@ -1,5 +1,5 @@
 import { Alert, Image, Platform, Pressable, SafeAreaView, StyleSheet, Text, ToastAndroid, Touchable, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 // import MovingText from '../../Components/UI/Marquee'
 import Marquee from '../../Components/UI/Marquee'
@@ -61,7 +61,10 @@ const AudioScreen = ({ route }) => {
     catch (err) {
         console.log("Error in token quotes", err)
     }
+    
 
+
+    
 
     useEffect(() => {
         HomeData()
@@ -281,6 +284,7 @@ const AudioScreen = ({ route }) => {
 
 
 
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <CustomStatusBar barStyle="dark-content" backgroundColor="rgba(20, 0, 230, 0.5)" />
@@ -448,10 +452,10 @@ const AudioScreen = ({ route }) => {
                         </ButtonC1Cricle>
                     </View> */}
                     <View style={{ marginTop: 25 }}>
-                        {relatedPosts ? <View>
+                        {relatedPosts && relatedPosts.length>0 ? <View>
                             <Snap_Carousel7 relatedPostsData={relatedPosts} />
-                        </View> : <View>
-                            <Text>No Related Posts</Text>
+                        </View> : <View style={{margin:20}}>
+                            {/* <Text>No Related Posts</Text> */}
                         </View>}
                     </View>
                 </View>

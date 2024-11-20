@@ -395,7 +395,7 @@ const Home = () => {
             }} />
 
             <QuoteOfDay Quote={Quote||"If you want peace then calm your desires"} isQuoteOfDay={true} />
-            <Snap_Carousel2 BannerData2={meditationTracks} CarouselName={'Meditation Tracks'} />
+            {/* <Snap_Carousel2 BannerData2={meditationTracks} CarouselName={'Meditation Tracks'} /> */}
 
             <View style={{ height: 20 }}>
 
@@ -404,16 +404,16 @@ const Home = () => {
 
 
 
-            <Snap_Carousel3 BannerDataPravachan={pravachan} />
+            {/* <Snap_Carousel3 BannerDataPravachan={pravachan} /> */}
 
-            <Snap_Carousel2 BannerData2={previousEvents} CarouselName={'Previous Event Videos'} />
+            <Snap_Carousel2 BannerData2={previousEvents} CarouselName={'Pravachan / Event Videos'} />
 
 
 
             <Snap_Carousel5 BannerDataBajana={bhanaja} />
 
             <Snap_Carousel2 BannerData2={upComingEvents} CarouselName={'Upcoming Events'} />
-            <Snap_Carousel1 BannerData={Banners} />
+            {/* <Snap_Carousel1 BannerData={Banners} /> */}
             {/*<Snap_Carousel6 Up_Coming_EventsData={upComingEvents} />*/}
             <View style={{ height: 20 }}>
             </View>

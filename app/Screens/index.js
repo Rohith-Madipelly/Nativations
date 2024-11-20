@@ -195,6 +195,8 @@ export default function Screens() {
                   /> */}
 
                   <Stack.Screen name="BottomTabScreen" component={BottomTabScreen}
+
+                  
                     options={{
                       headerShown: false,
                     }}

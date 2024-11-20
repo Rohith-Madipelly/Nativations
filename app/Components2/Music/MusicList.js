@@ -50,8 +50,8 @@ const MusicList = ({ Data, ClickAction }) => {
             <View style={{ flex: 0.2, width: '100%', justifyContent: 'space-between', flexDirection: 'row', gap: 10 }}>
                 <View style={{ width: '70%' }}>
                     <Text style={{
-                        fontFamily: 'Gabarito-VariableFont', color: 'rgba(100, 116, 139, 1)', fontSize: Metrics.rfv(18)
-                    }}>Satya Sadhna Tracks / Bhajan</Text>
+                        fontFamily: 'Gabarito-VariableFont', color: 'rgba(100, 116, 139, 1)', fontSize: Metrics.rfv(16)
+                    }}>Satya Sadhna Tracks</Text>
                 </View>
 
                 <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} onPress={() => { navigation.navigate("TracksAudios", { data: Data }); }}>
@@ -95,12 +95,9 @@ const MusicList = ({ Data, ClickAction }) => {
 
 
 
-                    <View style={{ flex: 1, justifyContent: 'space-evenly', alignItems: 'center',flexDirection:'row' }}>
-
-
+                    {/* <View style={{ flex: 1, justifyContent: 'space-evenly', alignItems: 'center',flexDirection:'row' }}>
                     {visibleItems === 5  && (
                             <Pressable
-                                // title={isExpanded ? "Show Less" : "Show More"}
                                 onPress={handleShowLess}
                                 style={{ justifyContent: 'center', alignItems: 'center' }}
                             >
@@ -109,12 +106,8 @@ const MusicList = ({ Data, ClickAction }) => {
                                 </Text>
                             </Pressable>
                         )}
-
-
-
                         {Data.length > 3 && (
                             <Pressable
-                                // title={isExpanded ? "Show Less" : "Show More"}
                                 onPress={handleShowMore}
                                 style={{ justifyContent: 'center', alignItems: 'center' }}
                             >
@@ -123,7 +116,7 @@ const MusicList = ({ Data, ClickAction }) => {
                                 </Text>
                             </Pressable>
                         )}
-                    </View>
+                    </View> */}
         
                     {loadingList ? <SkeletonLoader2
                         style={{
