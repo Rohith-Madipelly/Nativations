@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 7.2.0"
+    "version": ">= 7.2.0",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -9,20 +10,22 @@
     },
     "preview": {
       "distribution": "internal",
-
       "android": {
         "buildType": "apk",
         "gradleCommand": ":app:assembleRelease"
       }
     },
-
     "production": {
-      "autoIncrement":true
+      "autoIncrement": true
     }
   },
   "submit": {
     "production": {
-      
+      "ios":{
+        "appleId":"kushlayatan.rahul@gmail.com",
+        "ascAppId":"6633435695",
+        "appleTeamId":"PNUF99XR6F"
+      }
     }
   }
 }

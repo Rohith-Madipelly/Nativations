@@ -101,10 +101,10 @@ export default function Screens() {
 
 
 
-  console.log("Cs", appIsReady)
+  // console.log("Cs", appIsReady)
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady && fontsLoaded) {
-      console.log("Cs")
+      // console.log("Cs")
       await SplashScreen.hideAsync();
     }
   }, [appIsReady, fontsLoaded]);
