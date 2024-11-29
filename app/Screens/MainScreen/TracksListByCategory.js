@@ -180,8 +180,9 @@ const TracksListByCategory = ({ navigation, route }) => {
       // console.log("chgchgcjyhcjhc", item.id)
     }
     else if (item.type == "Audio") {
-      console.log("this is Audio ",`${item.id}`)
-      navigation.navigate('AudioScreen', { id: `${item.id}`, download: download })
+        console.log(item)
+      console.log("this is Audio >>>",`${item._id}`)
+      navigation.navigate('AudioScreen', { id: `${item._id}`, download: download })
     }
     else if (item.type == "Video") {
       console.log("video",`${item._id}`)

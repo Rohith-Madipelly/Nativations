@@ -1,4 +1,4 @@
-import { Alert, Image, Platform, Pressable, SafeAreaView, StyleSheet, Text, ToastAndroid, Touchable, TouchableOpacity, View } from 'react-native'
+import { Alert, Dimensions, Image, Platform, Pressable, SafeAreaView, StyleSheet, Text, ToastAndroid, Touchable, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 // import MovingText from '../../Components/UI/Marquee'
@@ -23,10 +23,15 @@ import NewToaster from '../../utils/NewToaster.js';
 import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar.js';
 import { CustomAlerts_Continue } from '../../utils/CustomReuseAlerts.js';
 import LoadingImage from '../../Components/ImageConatiners/LoadingImage.js';
+
 const AudioScreen = ({ route }) => {
 
     const { id, download } = route.params
+    const { width, height } = Dimensions.get('screen')
 
+    if (!id) {
+        console.log("Not respose ...")
+    }
 
     const [currentSound, setCurrentSound] = useState();
     const [spinnerBool, setSpinnerBool] = useState(true);
@@ -61,10 +66,10 @@ const AudioScreen = ({ route }) => {
     catch (err) {
         console.log("Error in token quotes", err)
     }
-    
 
 
-    
+
+
 
     useEffect(() => {
         HomeData()
@@ -87,6 +92,7 @@ const AudioScreen = ({ route }) => {
 
     const HomeData = async () => {
         setSpinnerBool(true)
+        console.log("ajhjh", id)
         try {
             const res = await VideoPageData(tokenn, id)
 
@@ -197,17 +203,7 @@ const AudioScreen = ({ route }) => {
     }
 
 
-    async function playSound() {
-        if (currentSound) {
-            console.log('isPlaying Sound');
-            await currentSound.playAsync();
-            // setIsPlaying(true);
-        }
-        else {
-            LoadSound()
-        }
 
-    }
 
     async function pauseSound() {
         console.log("dsmhjb")
@@ -315,7 +311,7 @@ const AudioScreen = ({ route }) => {
 
                     <LoadingImage
                         source={{ uri: `${GUEST_URL}/${thumbnail}` }}
-                        style={{ width: '90%', height: 250,  borderRadius: 15 }}
+                        style={{ width: '90%', height: height * 0.4, borderRadius: 15 }}
                         resizeMode='cover'
                         loaderColor="#4A3AFF"
 
@@ -452,9 +448,9 @@ const AudioScreen = ({ route }) => {
                         </ButtonC1Cricle>
                     </View> */}
                     <View style={{ marginTop: 25 }}>
-                        {relatedPosts && relatedPosts.length>0 ? <View>
+                        {relatedPosts && relatedPosts.length > 0 ? <View>
                             <Snap_Carousel7 relatedPostsData={relatedPosts} />
-                        </View> : <View style={{margin:20}}>
+                        </View> : <View style={{ margin: 20 }}>
                             {/* <Text>No Related Posts</Text> */}
                         </View>}
                     </View>

@@ -1,4 +1,4 @@
-import { Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Alert } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Alert, Dimensions } from 'react-native';
 import AuthComponent from './AuthComponent.js';
 import CustomButton from '../../Components/UI/Button/ButtonC1.js';
 import CustomTextInput from '../../Components/UI/Inputs/CustomTextInput.js';
@@ -113,9 +113,9 @@ export default function Register() {
                 console.log("No Response Received From the Server.")
                 if (error.request.status === 0) {
                     // console.log("error in request ",error.request.status)
-                    Alert.alert("No Network Found","Please Check your Internet Connection")
-                  }
-               
+                    Alert.alert("No Network Found", "Please Check your Internet Connection")
+                }
+
             }
             else {
                 Alert.alert(error.data.message)
@@ -135,7 +135,7 @@ export default function Register() {
             setSpinnerbool(false)
         }
     }
-
+    const { width, height } = Dimensions.get('screen')
 
     return (
         <>
@@ -176,7 +176,10 @@ export default function Register() {
                                     isValid,
                                 }) => (
                                     <>
+                                        <View style={{ height: height > 1000 ? height * 0.1 : height * 0.035 }}>
 
+
+                                        </View>
 
 
 
@@ -285,7 +288,7 @@ export default function Register() {
 
                                         <View style={{ width: '65%', textAlign: 'center', marginTop: 20 }}>
                                             <TouchableOpacity onPress={() => { navigation.navigate("Login") }}>
-                                                <Text style={[styles.paragraphy, { textAlign: 'center', color: '#7C7C7C', fontWeight: '400' }]}>Already have an account?
+                                                <Text style={[styles.paragraphy, { textAlign: 'center', color: 'white', fontWeight: '400' }]}>Already have an account?
                                                     <Text style={[styles.underline, { color: '#006AFF' }]}> Login</Text>
                                                 </Text>
 

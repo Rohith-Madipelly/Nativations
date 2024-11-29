@@ -16,7 +16,13 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "vardhaman.satyasadhnaOne"
+      "bundleIdentifier": "vardhaman.satyasadhnaOne",
+        "infoPlist": {
+          "UIBackgroundModes": [
+            "audio"
+          ]
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -35,7 +41,8 @@
       }
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-audio"
     ]
   }
 }

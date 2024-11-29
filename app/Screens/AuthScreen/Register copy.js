@@ -284,7 +284,7 @@ export default function Register() {
 
                                             <View style={{ width: '65%', textAlign: 'center', marginTop: 20 }}>
                                                 <TouchableOpacity onPress={() => { navigation.navigate("Login") }}>
-                                                    <Text style={[styles.paragraphy, { textAlign: 'center', color: '#7C7C7C', fontWeight: '400' }]}>Already have an account?
+                                                    <Text style={[styles.paragraphy, { textAlign: 'center', color: 'white', fontWeight: '400' }]}>Already have an account?
                                                         <Text style={[styles.underline, { color: '#006AFF' }]}> Login</Text>
                                                     </Text>
 

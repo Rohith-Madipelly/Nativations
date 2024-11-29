@@ -1,4 +1,4 @@
-import { Keyboard,RefreshControl, KeyboardAvoidingView, Platform, Pressable, ScrollView, Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Alert } from 'react-native';
+import { Keyboard,RefreshControl, KeyboardAvoidingView, Platform, Pressable, ScrollView, Button, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Alert, Dimensions } from 'react-native';
 import AuthComponent from '../../AuthScreen/AuthComponent.js';
 // import CustomButton from '../../Components/UI/Button/ButtonC1';
 import CustomButton from '../../../Components/UI/Button/ButtonC1.js';
@@ -548,6 +548,7 @@ export default function FormScreen() {
     )
   }
 
+  const {width,height}=Dimensions.get('screen')
   return (
     <>
       <MainComponent NameUnderLogo={"Satya Sadhna"} titleUnder={""} screenName={"Form"}>
@@ -558,7 +559,7 @@ export default function FormScreen() {
         // style={styles.container}
         >
           {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
-          <ScrollView style={{ height: 800 }} 
+          <ScrollView style={{ height: height }} 
               refreshControl={
                 <RefreshControl
                     refreshing={refreshing}

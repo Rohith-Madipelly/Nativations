@@ -18,7 +18,7 @@ import {
 
 import Home from '../Screens/MainScreen/Home';
 import Profile from '../Screens/MainScreen/Profile';
-import { Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Platform, Text, TouchableOpacity, View } from 'react-native';
 import DownloadFliesList from '../Screens/MainScreen/DownloadFliesList';
 import LiveScreen from '../Screens/MainScreen/LiveScreen';
 import LiveActive from '../assets/SVGS/LiveActive';
@@ -29,6 +29,7 @@ import ProfileIcon from '../assets/SVGS/ProfileIcon';
 import ProfileActive from '../assets/SVGS/ProfileActive';
 import Options from '../assets/SVGS/Navigation/Options';
 import BackIcons from '../assets/SVGS/Navigation/BackIcons';
+import Metrics from '../utils/ResposivesUtils/Metrics';
 
 
 // import SideBar from '../Screens/Drawer/SideBar';
@@ -52,29 +53,33 @@ const BottomTabConfig = {
 
 const Tab = createBottomTabNavigator();
 
+const {width,height}=Dimensions.get('screen')
 const BottomTabScreen = ({ route }) => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
+        tabBarPosition: 'left' ,
         tabBarStyle: {
           flex: Platform.OS === "ios" ? 0.07 : 0.100,
-          backgroundColor: '#EEEEFF'
+          backgroundColor: '#EEEEFF',
+
         },
+        tabBarItemStyle: {
+          width: 120, // Customize the width of each tab
+          // backgroundColor:"red",
 
+        },
+        // tabBarBackground: () => (
+        //   <BlurView tint="light" intensity={100} style={StyleSheet.absoluteFill} />
+        // ),
         tabBarIcon: ({ focused, size, colour }) => {
-          let iconName;
+      
           if (route.name === "Home") {
-
-            // iconName =  focused ?<FontAwesome6 name="house" size={24} color={colour} />:
-            size = focused ? size + 6 : size + 2;
-
             return (
-              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5, }}>
-                {focused ? <HomeIcon /> :
-                  <HomeActive />
-                }
-                <Text style={{ fontSize: 12, marginTop: 5, width: '100%', color: focused ? "#030370" : "#64748B", fontWeight: focused ? 700 : 500 }}>Home</Text>
+              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5,width:Metrics.rfv(90) }}>
+                {focused ? <HomeIcon /> :<HomeActive />}
+                <Text style={{ fontSize: Metrics.rfv(12), marginTop: Metrics.rfv(5), width: '100%', color: focused ? "#030370" : "#64748B", fontWeight: focused ? 700 : 500,textAlign:'center' }}>Home</Text>
               </View>)
           }
 
@@ -82,37 +87,28 @@ const BottomTabScreen = ({ route }) => {
 
 
           else if (route.name === "Live Page") {
-            size = focused ? size + 8 : size + 2;
             return (
-              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5, }}>
+              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5,width:Metrics.rfv(90) }}>
                 {focused ? <LiveActive /> : <LiveIcon />}
-                <Text style={{ fontSize: 12, marginTop: 5, width: '100%', color: focused ? "#030370" : "#64748B", fontWeight: focused ? 700 : 500 }}>Live</Text>
+                <Text style={{ fontSize: Metrics.rfv(12), marginTop: Metrics.rfv(5), width: '100%', color: focused ? "#030370" : "#64748B", fontWeight: focused ? 700 : 500,textAlign:'center' }}>Live</Text>
               </View>)
-
           }
 
           else if (route.name === "Downloads") {
-            // iconName =  focused ?<Fontisto name="search" size={24} color={colour} />:<Fontisto name="search" size={20} color={colour} />
-            size = focused ? size + 8 : size + 2;
-
             return (
-              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5, }}>
-                {focused ? <Feather name="download" size={24} color="#030370" /> : <Feather name="download" size={24} color="#64748B" />}
-
-                <Text style={{ fontSize: 12, marginTop: 5, width: '100%', color: focused ? "#030370" : "#64748B", fontWeight: focused ? 700 : 500 }}>Downloads</Text>
+              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5,width:Metrics.rfv(90)}}>
+                         {/* {focused ? <LiveActive /> : <LiveIcon />} */}
+               {focused ? <Feather name="download" size={24} color="#030370" /> : <Feather name="download" size={24} color="#64748B" />}
+                <Text style={{ fontSize: Metrics.rfv(12), marginTop: Metrics.rfv(5), width: '100%', color: focused ? "#030370" : "#64748B", fontWeight: focused ? 700 : 500 ,textAlign:'center'}}>Downloads</Text>
               </View>)
-
           }
 
 
           else if (route.name === "Profile") {
-            // iconName =  focused ?<Fontisto name="search" size={24} color={colour} />:<Fontisto name="search" size={20} color={colour} />
-            size = focused ? size + 8 : size + 2;
-            colour = focused ? "Black" : "White";
             return (
-              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5, }}>
+              <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 5,width:Metrics.rfv(90)}}>
                 {focused ? <ProfileActive /> : <ProfileIcon />}
-                <Text style={{ fontSize: 12, marginTop: 5, width: '100%', color: focused ? "#030370" : "#64748B", fontWeight: focused ? 700 : 500 }}>Profile</Text>
+                <Text style={{ fontSize: Metrics.rfv(12,700), marginTop: Metrics.rfv(5), width: '100%', color: focused ? "#030370" : "#64748B", fontWeight: focused ? 700 : 500,textAlign:'center' }}>Profile</Text>
               </View>)
           }
 
@@ -145,14 +141,14 @@ const BottomTabScreen = ({ route }) => {
         options={({ navigation }) => ({
           ...BottomTabConfig,
           // Live Channel
-            headerTitle: 'Live Channel',
+          headerTitle: 'Live Channel',
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ marginLeft: 15 }}>
-              <BackIcons/>
+              <BackIcons />
             </TouchableOpacity>
           ),
 
-    
+
           // headerShown: false,
         })}
       />
@@ -165,7 +161,7 @@ const BottomTabScreen = ({ route }) => {
 
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ marginLeft: 15 }}>
-              <BackIcons/>
+              <BackIcons />
             </TouchableOpacity>
           ),
 
@@ -178,7 +174,7 @@ const BottomTabScreen = ({ route }) => {
 
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ marginLeft: 15 }}>
-              <BackIcons/>
+              <BackIcons />
             </TouchableOpacity>
           ),
         })}
@@ -192,22 +188,3 @@ const BottomTabScreen = ({ route }) => {
 };
 
 export default BottomTabScreen;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

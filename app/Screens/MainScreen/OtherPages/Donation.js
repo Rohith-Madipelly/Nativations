@@ -4,6 +4,7 @@ import BackIcons from '../../../assets/SVGS/Navigation/BackIcons';
 import { TouchableOpacity } from 'react-native';
 import { Colors } from '../../../Contants/Colors';
 import LoadingImage from '../../../Components/ImageConatiners/LoadingImage';
+import Metrics from '../../../utils/ResposivesUtils/Metrics';
 
 const Donation = ({ navigation }) => {
 
@@ -11,7 +12,7 @@ const Donation = ({ navigation }) => {
     <ScrollView style={styles.container}>
 
       <View style={{ marginBottom: 10 }}>
-        <Text style={{ textAlign: 'justify', fontSize: 14, fontFamily: 'Gabarito-VariableFont' }}>
+        <Text style={{ textAlign: 'justify', fontSize:Metrics.rfv(16), fontFamily: 'Gabarito-VariableFont' }}>
           सत्य साधना केंद्र, नाल-बीकानेर व खेयादा-कोलकाता में सत्य साधना शिविरों के निःशुल्क संचालन, प्रबंधन और आवास, भोजन आदि
           मूलभूत सुविधाएँ आपकी सेवा और दान से संभव होती है | सत्य साधना जैसी
           महान विधि का लाभ पूरा विश्व ले सके इसके लिए आप भी योगदान दे सकते
@@ -49,7 +50,7 @@ const Donation = ({ navigation }) => {
 
           <LoadingImage
             source={require('../../../assets/image/Donation/Donation1.png')}
-            style={{ width: '90%', height: 120, marginTop: 10 }}
+            style={{ width: '90%', height: Metrics.rfv(120), marginTop: Metrics.rfv(10) }}
             resizeMode={'contain'}
           />
 
@@ -72,7 +73,7 @@ const Donation = ({ navigation }) => {
 
           <LoadingImage
             source={require('../../../assets/image/Donation/Donation2.png')}
-            style={{ width: '90%', height: 120, marginTop: 10 }}
+            style={{ width: '90%', height: Metrics.rfv(120), marginTop: Metrics.rfv(10) }}
             resizeMode={'contain'}
           />
 
@@ -102,31 +103,31 @@ export default Donation
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, backgroundColor: 'white', padding: 15
+    flex: 1, backgroundColor: 'white', padding: Metrics.rfv(15)
   },
   TextStyleA1: {
     textAlign: 'justify',
-    fontSize: 14,
+    fontSize: Metrics.rfv(14),
     fontFamily: 'Gabarito-VariableFont',
     width: '99%',
     color: Colors.gray800
   },
   TextStyleA2: {
-    fontSize: 13,
+    fontSize: Metrics.rfv(13),
     fontFamily: 'Gabarito-VariableFont',
     color: Colors.primaryColorApp,
     fontWeight: '400',
     width: '99%',
     textDecorationLine: 'underline',
-    marginBottom: 7
+    marginBottom: Metrics.rfv(7)
   },
   TextStyleA3: {
-    fontSize: 12,
+    fontSize: Metrics.rfv(12),
     fontFamily: 'Gabarito-VariableFont',
     color: Colors.gray700,
     fontWeight: '500',
     width: '99%',
-    lineHeight: 16.8,
+    lineHeight: Metrics.rfv(16.8),
   }
 
 })

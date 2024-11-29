@@ -1,14 +1,14 @@
-import { Button, Image, ImageBackground, Keyboard, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native'
+import { Button, Image, ImageBackground, Keyboard, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback, Dimensions } from 'react-native'
 import React from 'react'
 import { StatusBar } from 'expo-status-bar';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
-
+const {width,height}=Dimensions.get('screen')
 
 const MainComponent = ({screenName, children }) => {
     return (
-                <LinearGradient style={{ height: 880 }} colors={['rgba(20, 0, 255, 0.91)', 'rgba(255, 255, 255, 0.77)', '#FFF']}>
+                <LinearGradient style={{ height: height }} colors={['rgba(20, 0, 255, 0.91)', 'rgba(255, 255, 255, 0.77)', '#FFF']}>
 
                     <View style={{ marginTop: '19%' }}>
 

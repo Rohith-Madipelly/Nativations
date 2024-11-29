@@ -39,19 +39,16 @@ const Snap_Carousel2 = ({ BannerData2, CarouselName }) => {
         }
 
         return (
-            <Pressable onPress={() => { Navigationn() }} styles={{ justifyContent: 'center', }}>
-                <View style={{ height: 171, width: width * 0.78, marginHorizontal: 10 }} >
-                    {/* <Image source={{ uri: `${GUEST_URL}/thumbnail/${item.thumbnail}` }} style={{ width: width * 0.78, height: 171, borderRadius: 20 }} /> */}
-
+            <Pressable onPress={() => { Navigationn() }} styles={{ }}>
+          
+                <View style={{width:'100%',height:'100%',alignSelf:'center'}} >
                     <LoadingImage
                         source={{ uri: `${GUEST_URL}/${item.thumbnail}` }}
                         //   style={{ width: '100%', height: 240, }}
-                        style={{ width: width * 0.78, height: 175, borderRadius: 20 }}
+                        style={{ width: '100%', height: '100%', borderRadius: 20 }}
                         loaderColor="#ff0000" // Optional: change loader color
                         resizeMode='cover'
                     />
-
-
                 </View>
             </Pressable>
         );
@@ -65,39 +62,43 @@ const Snap_Carousel2 = ({ BannerData2, CarouselName }) => {
         carouselRef.current.prev();
     }
 
+    
+
     return (
         <View style={{ marginTop: 10, marginTop: 15 }}>
             <View style={{ marginLeft: 20 }}>
 
-                <Text style={[styles.Heading_U3,{}]}>{CarouselName}</Text>
+                <Text style={[styles.Heading_U3, {}]}>{CarouselName}</Text>
             </View>
 
-            {!BannerData2.length == 0 ? <View style={{ marginTop: 10, display: 'flex', flexDirection: 'row' }}>
+            {!BannerData2.length == 0 ? <View style={{ marginTop: 10,flexDirection: 'row',alignSelf:'center'}}>
 
-                <TouchableOpacity onPress={goToPrev} style={{ justifyContent: 'center' }}>
+                <TouchableOpacity onPress={goToPrev} style={{ width: 35,height:height*0.20,justifyContent:'center',alignItems:'center'}}>
                     <MaterialCommunityIcons name="arrow-left-drop-circle" size={30} color="black" />
                 </TouchableOpacity>
+
 
 
 
                 <Carousel
                     ref={carouselRef}
                     loop={true}
-
                     // ref={carouselRef}
-                    width={width * 0.83}
-                    height={180}
+                    width={width-80}
+                    height={height*0.20}
                     // autoPlay={true}
+                    
                     data={BannerData2}
                     scrollAnimationDuration={4000}
                     renderItem={RenderItem}
                 />
-                <TouchableOpacity onPress={goToNext} style={{ justifyContent: 'center' }}>
+
+                <TouchableOpacity onPress={goToNext} style={{ width: 35,height:height*0.20,justifyContent:'center',alignItems:'center'}}>
                     <MaterialCommunityIcons name="arrow-right-drop-circle" size={30} color="black" />
                 </TouchableOpacity>
 
             </View> :
-                <View style={{ height: 171, width: width,alignItems: 'center', justifyContent: 'center',marginTop:10 }}>
+                <View style={{ height: 171, width: width, alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
                     <View style={{ height: 171, width: width * 0.78, marginHorizontal: 10, backgroundColor: '#E8E8E899', alignItems: 'center', justifyContent: 'center', borderRadius: 15 }} >
                         <Text>No posts available</Text>
                     </View>

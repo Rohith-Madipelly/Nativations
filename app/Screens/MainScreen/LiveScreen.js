@@ -1,4 +1,4 @@
-import { Button, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Button, Dimensions, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { LivePageData } from '../../utils/API_Calls';
@@ -77,7 +77,7 @@ const LiveScreen = () => {
 
 
 
-
+const {width,height}=Dimensions.get('screen')
   try {
     if (tokenn != null) {
       tokenn = tokenn.replaceAll('"', '');
@@ -197,7 +197,7 @@ const LiveScreen = () => {
 
       </View> : <View style={{ width: '100%' }}>
         <YoutubePlayer
-          height={222}
+          height={height}
           play={playing}
           // videoId={ScreenData.VideoID} yUNu2bMUEfg
           // videoId={VideoID || "Wr4iJon5zC8"}
