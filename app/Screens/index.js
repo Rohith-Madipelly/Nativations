@@ -187,13 +187,14 @@ export default function Screens() {
             {user ? (
               <>
                 <Stack.Group options={defaultHeaderOptions}>
-{/* 
+
                 <Stack.Screen name="Test" component={Test}
                     options={{
                       headerShown: false,
                     }}
-                  /> */}
+                  />
 
+ 
                   <Stack.Screen name="BottomTabScreen" component={BottomTabScreen}
 
                   

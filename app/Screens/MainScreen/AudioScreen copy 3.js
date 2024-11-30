@@ -104,7 +104,6 @@ const AudioScreen = ({ route }) => {
                 setThumbnail(res.data.postDetails.thumbnail)
                 setTitle(res.data.postDetails.title)
                 setAudio(res.data.postDetails.audioUrl)
-                console.log("audio",`${GUEST_URL}/${audio}`)
                 setRelatedPosts(res.data.relatedPosts)
                 setPostDetails(res.data.postDetails)
 

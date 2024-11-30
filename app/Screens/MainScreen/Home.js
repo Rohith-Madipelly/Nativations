@@ -36,6 +36,7 @@ import QuoteIconColorHome from '../../assets/SVGS/Home/QuoteIconColorHome';
 import onShare from '../../utils/ShareBtn';
 import TracksIcons from '../../assets/SVGS/Home/TracksIcons';
 import NoInternetImage from '../../assets/SVGS/UIScrees/NoInternetImage';
+
 const Home = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
   const [isData, setIsData] = useState()

@@ -1,39 +1,22 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import CustomDateInput from '../../../Components/UI/Inputs/CustomDateInput';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { View, StyleSheet, Button } from 'react-native';
+import { useAudioPlayer } from 'expo-audio';
 
-const Test = () => {
+export default function App() {
+  const player = useAudioPlayer("https://www.satyasadhna.com/upload/audios/1731759861954.mp3");
 
-    const [values, setValues] = useState()
-    return (
-        <View>
-            <Text>Test</Text>
-            <CustomDateInput
-                placeholder={'Last course date'}
-                label={'Last course date'}
-                name='Last course date'
-                // value={values.dateLastCourse}
-                //   leftIcon={<MaterialIcons name="date-range" size={20} color="black" />}
-                // bgColor='#e1f3f8'
-                // bgColor="#B1B1B0"
-
-                // onChangeText={onChangeText}
-                //   onChangeText={(e) => { handleChange("dateLastCourse")(e); seterrorFormAPI(); }}
-                //   onBlur={handleBlur("dateLastCourse")}
-                // validate={handleBlur("dateLastCourse")}
-                boxWidth={"40%"}
-                outlined
-                // borderColor={`${(errors.dateLastCourse && touched.dateLastCourse) || (errorFormAPI && errorFormAPI.dateLastCourseForm) ? "red" : "#ccc"}`}
-                // errorMessage={`${(errors.dateLastCourse && touched.dateLastCourse) ? `${errors.dateLastCourse}` : (errorFormAPI && errorFormAPI.dateLastCourseForm) ? `${errorFormAPI.dateLastCourseForm}` : ``}`}
-                // errorColor='magenta'
-                // minimumDate={minvalueofcourseDate}
-                maximumDate={new Date(2100, 10, 20)}
-            />
-        </View>
-    )
+  return (
+    <View style={styles.container}>
+      <Button title="Play Sound" onPress={() => player.play()} />
+    </View>
+  );
 }
 
-export default Test
-
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
+    padding: 10,
+  },
+});

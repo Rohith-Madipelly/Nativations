@@ -15,6 +15,7 @@ import NetInfo from '@react-native-community/netinfo';
 import OtherComponent from './OtherComponent';
 import { LinearGradient } from 'expo-linear-gradient';
 import CustomStatusBar from '../../../Components/UI/StatusBar/CustomStatusBar';
+import Metrics from '../../../utils/ResposivesUtils/Metrics';
 
 
 
@@ -88,30 +89,30 @@ const About_Guruji = () => {
                 </LinearGradient>
             </View>
             <View style={{ position: 'relative', top: '10%', backgroundColor: 'pink', height: '100%', borderRadius: 30, overflow: 'scroll', backgroundColor: 'white' }}>
-                <Text style={{ fontWeight: 900, fontSize: 23, margin:20 }}>About GURUJI:ACHARYA SHRI JIN CHANDRA SURIJI</Text>
+                <Text style={{ fontWeight: 900, fontSize: Metrics.rfv(23), margin:20 }}>About GURUJI:ACHARYA SHRI JIN CHANDRA SURIJI</Text>
                 <ScrollView>
                     <View style={{ margin: 15,marginBottom:20 }}>
                         {/* <Text>{data}</Text> */}
-                        <Text style={{ fontWeight: 900, fontSize: 15, marginBottom: 10 }}> Childhood</Text>
-                        <Text style={{ marginBottom: 10, marginLeft: 10 }}>Shri Hansmukh Lal Golia and Smt Chandrakala Devi were very happy to have a child. They named him Devendra. Born in a religious family, child Devendra grew up with all the righteous influences. But early in his childhood, his mother passed away. The event changed the child's life forever. The effect of this sad event made Devendra too serious for his age. His father was worried to notice the sudden change in his son's state of mind and sent him to Jaipur, to his maternal family. Even this didn't bring any change in the child. The ephemeral nature of the world had made a deep impact on him. By coincidence, he had an audience with Sadhvi Shri Vinay Shriji. Her inspiration strengthened Devendra's yearning to discover the true.</Text>
-                        <Text style={{ fontWeight: 900, fontSize: 15, marginBottom: 10 }}>Younger Days</Text>
-                        <Text style={{ marginBottom: 10, marginLeft: 10 }}>
+                        <Text style={{ fontWeight: 900, fontSize: Metrics.rfv(15), marginBottom: 10 }}> Childhood</Text>
+                        <Text style={{ marginBottom: 10, marginLeft: 10,fontSize: Metrics.rfv(12) }}>Shri Hansmukh Lal Golia and Smt Chandrakala Devi were very happy to have a child. They named him Devendra. Born in a religious family, child Devendra grew up with all the righteous influences. But early in his childhood, his mother passed away. The event changed the child's life forever. The effect of this sad event made Devendra too serious for his age. His father was worried to notice the sudden change in his son's state of mind and sent him to Jaipur, to his maternal family. Even this didn't bring any change in the child. The ephemeral nature of the world had made a deep impact on him. By coincidence, he had an audience with Sadhvi Shri Vinay Shriji. Her inspiration strengthened Devendra's yearning to discover the true.</Text>
+                        <Text style={{ fontWeight: 900, fontSize: Metrics.rfv(15), marginBottom: 10 }}>Younger Days</Text>
+                        <Text style={{ marginBottom: 10, marginLeft: 10,fontSize: Metrics.rfv(12) }}>
                             At the young age of 15, he was initiated as Yati by Acharya Shri Dharnendra Suriji and given the name Chandroday Gani. Child Devendra and after initiation Chandroday Gani learned Satva Sadhana under the able guidance of guru.
                         </Text>
 
 
 
-                        <Text style={{ fontWeight: 900, fontSize: 15, marginBottom: 10 }}>Adulthood Period</Text>
-                        <Text style={{ marginBottom: 10, marginLeft: 10 }}>
+                        <Text style={{ fontWeight: 900, fontSize: Metrics.rfv(15), marginBottom: 10 }}>Adulthood Period</Text>
+                        <Text style={{ marginBottom: 10, marginLeft: 10,fontSize: Metrics.rfv(12) }}>
                             On the insistence of followers, he journeyed to foreign countries in the year 1975. He has been to Thailand, Hong Kong, Japan, the United States of America, Canada and England, etc. His simple explanation of the deep and complicated philosophical thoughts was easily understood and highly valued by the people in those countries. In the Jain society, Bara Upasara has its own importance, and Jains around the world are aware of its importance. Bara Upasara is famous for one of the traditions in Jain culture known as 'Khatargacha' and has its own honor and respect in the Jain society. Satya Sadhna is the identity of Bara Upasara. Paryushana is even celebrated by practicing Satya Sadhna, the way it should actually be practiced. Bara Upasara is as an ideal place for Satya Sadhna. From ten-day courses and one-day courses to courses for children (Bal Shivir), Bara Upasara is bustling with activities.
                         </Text>
 
 
 
 
-                        <Text style={{ fontWeight: 900, fontSize: 15, marginBottom: 10 }}>His Meditation Phase</Text>
-                        <Text style={{ marginBottom: 10, marginLeft: 10 }}>
-                            Acharya Shri Jin Chandra Suriji started practicing meditation from the initial days of his childhood. And later on, named it Satya Sadhna. He felt Satya Sadhna deserved to be spread and propagated to a larger section of society because of its immense benefit to the world. Thus was born Kushlayatan, at Nal, Bikaner as it is called, today houses the Satya Sadhna Kendra (Meditation Centre), Kushla Vidyapeeth (School), the Kushla Aushdhalay (Health Centre), and a bird sanctuary.Another meditation centre at Khyeda-West Bengal, near Kolkatta
+                        <Text style={{ fontWeight: 900, fontSize: Metrics.rfv(15), marginBottom: 10 }}>His Meditation Phase</Text>
+                        <Text style={{ marginBottom: 10, marginLeft: 10,fontSize: Metrics.rfv(12) }}>
+                            Acharya Shri Jin Chandra Suriji started practicing meditation from the initial days of his childhood. And later on, named it Satya Sadhna. He felt Satya Sadhna deserved to be spread and propagated to a larger section of society because of its immense benefit to the world. Thus was born Kushlayatan, at Nal, Bikaner as it is called, today houses the Satya Sadhna Kendra (Meditation Centre), Kushla Vidyapeeth (School), the Kushla Aushdhalay (Health Centre), and a bird sanctuary.Another meditation centre at Khyeda-West Bengal, near Kolkatta.
                         </Text>
                     </View>
                     <View style={{ height: 100 }}>
