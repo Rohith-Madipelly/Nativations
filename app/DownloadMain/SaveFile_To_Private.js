@@ -55,7 +55,7 @@ export async function saveFile(uri, filename, mimetype) {
       const internalDirectory = FileSystem.documentDirectory;
       console.log(internalDirectory, "<1>")
       console.log(uri, "<2>")
-      const pinnn = uri + ".mov"
+      const pinnn = uri + ".mp4"
       console.log("<d,>",pinnn)
       let uriString = pinnn.toString();
 

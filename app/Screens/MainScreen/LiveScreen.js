@@ -12,6 +12,7 @@ import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar';
 import GlobalStyles from '../../Components/UI/GlobalStyles';
 import NoInternetImage from '../../assets/SVGS/UIScrees/NoInternetImage';
 import Metrics from '../../utils/ResposivesUtils/Metrics';
+import Spinner from 'react-native-loading-spinner-overlay';
 const LiveScreen = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
   let tokenn = useSelector((state) => state.token);
@@ -77,7 +78,7 @@ const LiveScreen = () => {
 
 
 
-const {width,height}=Dimensions.get('screen')
+  const { width, height } = Dimensions.get('screen')
   try {
     if (tokenn != null) {
       tokenn = tokenn.replaceAll('"', '');
@@ -99,7 +100,7 @@ const {width,height}=Dimensions.get('screen')
 
   const HomeData = async () => {
 
-    // setSpinnerbool(true)
+    setSpinnerbool(true)
 
     try {
       const res = await LivePageData(tokenn)
@@ -148,31 +149,20 @@ const {width,height}=Dimensions.get('screen')
 
     }
     finally {
-      // setSpinnerbool(false)
-      setRefreshing(false)
+      setSpinnerbool(false)
+      // setRefreshing(false)
 
     }
   }
 
-  if (spinnerBool) {
-    return (
-      <SafeAreaView>
-        <Spinner
-          visible={spinnerBool}
-          color={"#5F2404"}
-          animation={'fade'}
-        />
-      </SafeAreaView>
-    );
-  } else {
-  }
+
 
   if (!isConnected) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} >
-               <NoInternetImage/>
-        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(20),marginTop:18}}>No network found</Text>
-        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(18)}}>Please check your internet connection</Text>
+        <NoInternetImage />
+        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(20), marginTop: 18 }}>No network found</Text>
+        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(18) }}>Please check your internet connection</Text>
         <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
       </View>
     );
@@ -190,22 +180,35 @@ const {width,height}=Dimensions.get('screen')
         />
       }
     >
+      <Spinner
+        visible={spinnerBool}
+        color={"#5F2404"}
+        animation={'fade'}
+      />
       <CustomStatusBar barStyle="dark-content" backgroundColor={GlobalStyles.CustomStatusBarMainColor} />
       {!livePage ? <View style={{ backgroundColor: 'black', height: 202, justifyContent: 'center', alignItems: 'center', margin: 5, marginTop: 10 }}>
         <Text style={{ color: 'white', fontSize: 25 }}>Live Screen</Text>
         <Text style={{ color: 'white' }}>Currently live was ended or not avaliable </Text>
 
       </View> : <View style={{ width: '100%' }}>
-        <YoutubePlayer
-          height={height}
-          play={playing}
-          // videoId={ScreenData.VideoID} yUNu2bMUEfg
-          // videoId={VideoID || "Wr4iJon5zC8"}
-          videoId={VideoID}
-          onChangeState={onStateChange}
-          showinfo={false}
-          controls={1}
-        />
+        <View style={{ flex: 1 }}>
+          {/* <Text>{height}</Text> */}
+
+          <YoutubePlayer
+            height={
+              height >= 1000 ? height * 0.44 : height * 0.28}
+            play={playing}
+            // videoId={ScreenData.VideoID} yUNu2bMUEfg
+            // videoId={VideoID || "Wr4iJon5zC8"}
+            videoId={VideoID || "Wr4iJon5zC8"}
+            onChangeState={onStateChange}
+            showinfo={true}
+            controls={1}
+            onReady={(e) => { console.log("Jhgfc", e) }}
+            style={{}}
+            contentScale={0.9}
+          />
+        </View>
         <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
           <View style={{ width: '50%' }}>
 
@@ -216,9 +219,9 @@ const {width,height}=Dimensions.get('screen')
             </CustomButton>
           </View>
 
-          <Text style={{width:"90%",fontSize:20,fontWeight:700}} >{livePage.title}</Text>
-          <Text style={{width:"90%"}} numberOfLines={6}><Text style={{fontWeight:600}}>Description : </Text>{livePage.description}</Text>
-          
+          <Text style={{ width: "90%", fontSize: 20, fontWeight: 700 }} >{livePage.title}</Text>
+          <Text style={{ width: "90%" }} numberOfLines={6}><Text style={{ fontWeight: 600 }}>Description : </Text>{livePage.description}</Text>
+
         </View>
 
       </View>}

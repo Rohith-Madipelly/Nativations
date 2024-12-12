@@ -61,16 +61,15 @@ export default function App() {
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <ToastProvider
+          // renderType={{
+          //   custom_type: (toast) => (
+          //     <View style={{ padding: 15, backgroundColor: 'grey' }}>
+          //       <Text>{toast.message}</Text>
+          //     </View>
+          //   )
+          // }}
 
-renderType={{
-  custom_type: (toast) => (
-    <View style={{padding: 15, backgroundColor: 'grey'}}>
-      <Text>{toast.message}</Text>
-    </View>
-  )
-}}
-        
-        placement="bottom | top"
+          placement="bottom | top"
           duration={5000}
           animationType='slide-in | zoom-in'
           animationDuration={250}

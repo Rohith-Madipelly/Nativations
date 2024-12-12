@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Image, ActivityIndicator } from 'react-native'
 import PropTypes from 'prop-types'
 
 const LoadingImage = ({ source, style, loaderColor = '#0000ff', ...props }) => {
   const [loading, setLoading] = useState(true)
   const [imageUri, setImageUri] = useState( source );
+  useEffect(()=>{
+    setImageUri(source)
+  },[source])
   return (
     <View style={[styles.container, style]}>
       {loading && <ActivityIndicator style={styles.loader} size="large" color={loaderColor} />}

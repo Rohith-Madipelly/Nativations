@@ -1,5 +1,5 @@
 import { Alert, Dimensions, Image, Platform, Pressable, SafeAreaView, StyleSheet, Text, ToastAndroid, Touchable, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 // import MovingText from '../../Components/UI/Marquee'
 import Marquee from '../../Components/UI/Marquee'
@@ -14,7 +14,7 @@ import { Audio } from 'expo-av';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { VideoPageData } from '../../utils/API_Calls';
 import { useSelector } from 'react-redux';
-import { BASE_URL, GUEST_URL } from '../../Enviornment';
+import { GUEST_URL } from '../../Enviornment';
 import Snap_Carousel7 from '../../Components2/Snap_Carousel7';
 import { Button } from 'react-native';
 import OtherDownloads from '../../DownloadMain/OtherDownloads';
@@ -23,11 +23,6 @@ import NewToaster from '../../utils/NewToaster.js';
 import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar.js';
 import { CustomAlerts_Continue } from '../../utils/CustomReuseAlerts.js';
 import LoadingImage from '../../Components/ImageConatiners/LoadingImage.js';
-import PauseIcon from '../../assets/SVGS/MusicPlayer/Player/Pause.js';
-import PlayIcon from '../../assets/SVGS/MusicPlayer/Player/PlayIcon.js';
-import UnMuteIcon from '../../assets/SVGS/MusicPlayer/Player/UnMuteIcon.js';
-import MuteIcon from '../../assets/SVGS/MusicPlayer/Player/MuteIcon.js';
-import Metrics from '../../utils/ResposivesUtils/Metrics.js';
 
 const AudioScreen = ({ route }) => {
 
@@ -37,16 +32,11 @@ const AudioScreen = ({ route }) => {
     if (!id) {
         console.log("Not respose ...")
     }
-    const [thumbnail, setThumbnail] = useState("")
 
-    const [sound, setSound] = useState(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [isMuted, setIsMuted] = useState(false);
-    const [currentTime, setCurrentTime] = useState(0);
-    const [totalDuration, setTotalDuration] = useState(0);
+    const [currentSound, setCurrentSound] = useState();
     const [spinnerBool, setSpinnerBool] = useState(true);
 
-    // const [isMuted, setIsMuted] = useState(false);
+    const [isMuted, setIsMuted] = useState(false);
 
     let tokenn = useSelector((state) => state.token);
     const navigation = useNavigation();
@@ -54,18 +44,18 @@ const AudioScreen = ({ route }) => {
     const [relatedPosts, setRelatedPosts] = useState()
 
 
-
+    const [thumbnail, setThumbnail] = useState("")
     const [title, setTitle] = useState()
     const [audio, setAudio] = useState()
     const [postDetails, setPostDetails] = useState()
 
-    // const [currentTime, setCurrentTime] = useState(0)
-    // const [totalDuration, setTotalDuration] = useState(0)
+    const [currentTime, setCurrentTime] = useState(0)
+    const [totalDuration, setTotalDuration] = useState(0)
 
-    // const [isPlaying, setIsPlaying] = useState(false)
+    const [isPlaying, setIsPlaying] = useState(false)
 
-
-    // const [sliderData, setSliderData] = useState(0)
+    const [progress, setProgress] = useState()
+    const [sliderData, setSliderData] = useState()
     // >>>>>>>>>>>>>>>>>>
 
     try {
@@ -92,7 +82,7 @@ const AudioScreen = ({ route }) => {
                     // `Applying for ${data.jobTitle}`,
                     // data.jobTitle,
                     () => {
-                        OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`)
+                        // OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`)
                     }
                 )
             }, 200)
@@ -106,18 +96,23 @@ const AudioScreen = ({ route }) => {
         try {
             const res = await VideoPageData(tokenn, id)
 
-            if (res.data) {
+            if (res) {
+                // console.log(">>>>>>>>>>>>>>>>")
+                console.log("data mes", res.data)
+                // setTrackData(res.data)
+                // console.log(">>>>>>>>>>>>>>>>")
+                setThumbnail(res.data.postDetails.thumbnail)
+                setTitle(res.data.postDetails.title)
+                setAudio(res.data.postDetails.audioUrl)
+                console.log("audio",`${GUEST_URL}/${audio}`)
+                setRelatedPosts(res.data.relatedPosts)
+                setPostDetails(res.data.postDetails)
 
-                setTimeout(() => {
-                    // console.log("data mes >>", res.data)
-                    setThumbnail(`${BASE_URL}/${res.data.postDetails.thumbnail}`)
-                    setTitle(res.data.postDetails.title)
-                    setAudio(`${BASE_URL}/${res.data.postDetails.audioUrl}`)
-                    // console.log("audio >>", `${GUEST_URL}/${audio}`)
-                    setRelatedPosts(res.data.relatedPosts)
-                    setPostDetails(res.data.postDetails)
-                    loadAudio(`${BASE_URL}/${res.data.postDetails.audioUrl}`);
-                }, 500)
+
+                // setTimeout(()=>{
+                //     console.log("LoadSound")
+                //     LoadSound()
+                // },2000)
 
             }
             else {
@@ -134,81 +129,110 @@ const AudioScreen = ({ route }) => {
         }
         finally {
             // setSpinnerBool(false)
-            // setSpinnerBool(false)
             //   setRefreshing(false);
         }
     }
 
-    useEffect(() => {
-        return () => {
-            if (sound) {
-                sound.unloadAsync(); // Unload the sound when the component unmounts
-            }
-        };
-    }, [sound]);
 
-    const loadAudio = async (audioUrlx) => {
+
+    const LoadSound = async () => {
+        console.log('Loading Sound');
+        setSpinnerBool(true);
         try {
-            const { sound: newSound, status } = await Audio.Sound.createAsync(
-                { uri: audioUrlx },
-                { shouldPlay: true, isMuted: isMuted },
+            await Audio.setAudioModeAsync({
+                playsInSilentModeIOS: true,
+                staysActiveInBackground: false,
+                shouldDuckAndroid: false,
+            });
+    
+            const { sound, status } = await Audio.Sound.createAsync(
+                { uri: `${GUEST_URL}/${audio}` },
+                { shouldPlay: true, isLooping: false },
                 onPlaybackStatusUpdate
             );
-            setSound(newSound);
+    
+            setCurrentSound(sound);
             onPlaybackStatusUpdate(status);
-            // playPauseAudio()
-            setTimeout(() => {
-                playPauseAudio()
-                setIsPlaying(true);
-            }, 100);
+            setIsPlaying(status.isLoaded);
+            await sound.playAsync();
         } catch (error) {
-            console.log('Error loading audio:', error);
+            console.error('Error loading sound:', error.message);
+            Alert.alert('Audio Error', 'Could not load the audio track. Please try again.');
         } finally {
-            setSpinnerBool(false)
-
+            setSpinnerBool(false);
         }
     };
+    
 
-    const playPauseAudio = async () => {
-        console.log("playPauseAudio ,,", sound)
-        if (!sound) {
-            await loadAudio(audio);
-            // playPauseAudio() 
+    const onPlaybackStatusUpdate = async (status) => {
+        if (status.isLoaded && status.isPlaying) {
+            const progress = status.positionMillis / status.durationMillis;
+            // console.log(progress)
+            setProgress(progress)
+            setSliderData(status.positionMillis)
+            setCurrentTime(status.positionMillis)
+            setTotalDuration(status.durationMillis)
         }
-        console.log(">>>>><", audio)
-        if (sound) {
+    }
+
+
+
+
+    async function pauseSound() {
+        console.log("dsmhjb")
+        if (currentSound) {
+            await currentSound.pauseAsync();
+        }
+
+
+        setIsPlaying(false);
+    };
+
+    async function handlePlayPause() {
+        if (currentSound) {
             if (isPlaying) {
-                await sound.pauseAsync();
-                setIsPlaying(false);
+                await currentSound.pauseAsync();
             } else {
-                await sound.playAsync();
-                setIsPlaying(true);
+                await currentSound.playAsync();
             }
-        } else {
-            console.log("fjbc")
-            // playPauseAudio()
+            setIsPlaying(!isPlaying)
         }
-    };
 
-    const toggleMute = async () => {
-        if (sound) {
-            await sound.setIsMutedAsync(!isMuted);
+    }
+    async function toggleMute() {
+        if (currentSound) {
+            await currentSound.setIsMutedAsync(!isMuted);
             setIsMuted(!isMuted);
         }
     };
 
-    const onPlaybackStatusUpdate = (status) => {
-        if (status.isLoaded) {
-            setCurrentTime(status.positionMillis);
-            setTotalDuration(status.durationMillis);
+    async function stopSound() {
+        if (currentSound) {
+            await currentSound.stopAsync();
         }
+        setIsPlaying(false);
     };
 
-    const audiox = 'https://www.satyasadhna.com/upload/audios/1733752486383.mp3';
+
+
+    const skipTo = async (value) => {
+        // console.log(currentSound)
+        // currentSound.setPositionAsync(value);
+        await currentSound.setPositionAsync(value);
+    }
 
     useEffect(() => {
-        loadAudio(audio);
-    }, []);
+        if (audio) {
+            LoadSound()
+        }
+
+    }, [audio])
+
+
+    useEffect(() => {
+        return currentSound ? () => { currentSound.unloadAsync(); } : undefined;
+    }, [currentSound]);
+
 
     if (spinnerBool) {
         return <Spinner
@@ -223,16 +247,11 @@ const AudioScreen = ({ route }) => {
 
     const formatTime = (time) => {
         const minutes = Math.floor(time / 60000);
-        const seconds = Math.floor((time % 60000) / 1000);
-        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    };
-    const handleSliderChange = async (value) => {
-        if (sound) {
-            const seekPosition = value * totalDuration;
-            await sound.setPositionAsync(seekPosition);
-            setCurrentTime(seekPosition);
-        }
-    };
+        const secound = Math.floor((time % 60000) / 1000);
+        return `${minutes}:${secound < 10 ? "0" : ""}${secound}`
+    }
+
+
 
 
     return (
@@ -264,13 +283,14 @@ const AudioScreen = ({ route }) => {
                 <View style={{ flex: 1, alignItems: 'center', paddingTop: 10, marginHorizontal: 18 }}>
 
                     <LoadingImage
-                        source={{ uri: `${thumbnail}` }}
+                        source={{ uri: `${GUEST_URL}/${thumbnail}` }}
                         style={{ width: '90%', height: height * 0.4, borderRadius: 15 }}
-                        // resizeMode='cover'
+                        resizeMode='cover'
                         loaderColor="#4A3AFF"
-                        resizeMode='contain'
+
                     />
                     <View style={{ width: '80%', marginTop: 10, overflow: 'hidden', marginBottom: 10 }}>
+                        {/* <Marquee text={title} /> */}
                         <Text numberOfLines={2} style={{ alignSelf: 'center' }}>{title}</Text>
                     </View>
 
@@ -293,7 +313,7 @@ const AudioScreen = ({ route }) => {
                         </View> */}
 
                         <View>
-                            {/* <Slider
+                            <Slider
                                 style={{ width: '100%', height: 40, marginHorizontal: 0, paddingHorizontal: 0 }}
                                 step={1}
                                 minimumValue={0}
@@ -304,76 +324,106 @@ const AudioScreen = ({ route }) => {
                                 thumbTintColor="#4A3AFF"
                                 value={sliderData}
                                 onValueChange={(e) => {
-                                    // console.log("W", e)
+                                    console.log("W", e)
                                     skipTo(e)
                                     setProgress(e)
-                                    // setSliderData(e)
+                                    setSliderData(e)
 
                                     // callback(RangeData[e],e) 
                                 }}
+
+                                // <Text>{formatTime(currentTime)}</Text>
+                                // <Text>{formatTime(totalDuration)}</Text>
+                                // snapped={true}
+                                // lowerLimit={1}
+                                // upperLimit={64}
+                                // onSlidingStart={(e)=>{console.log("onSliding Started ",e)}}
+                                // onValueChange={(e)=>{console.log("onValue Change ",e)}}
+                                // onSlidingComplete={(e)=>{console.log(e)}}
+
                                 tapToSeek={true}
-                            /> */}
 
+                            // vertical
+                            // inverted
+                            // disabled
+                            // maximumTrackImage={require('../assets/favicon.png')}
+                            // minimumTrackImage={require('../assets/favicon.png')}
+                            // thumbImage={require('../assets/favicon.png')}
 
-                            <Slider
-                                style={styles.slider}
-                                minimumValue={0}
-                                maximumValue={1}
-                                value={currentTime / totalDuration || 0}
-                                minimumTrackTintColor="#6200ee"
-                                maximumTrackTintColor="#d3d3d3"
-                                thumbTintColor="#6200ee"
-                                onValueChange={handleSliderChange}
+                            // trackImage={require('../assets/favicon.png')}
                             />
                         </View>
 
                         <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row' }}>
-                            <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
-                            <Text style={styles.timeText}>{formatTime(totalDuration)}</Text>
+                            <Text>{formatTime(currentTime)}</Text>
+
+                            <Text>{formatTime(totalDuration)}</Text>
                         </View>
                     </View>
                     <View style={{
                         width: '70%',
                         flexDirection: 'row',
                         justifyContent: 'space-between', marginTop: 10,
+
                     }}>
-                        {/* <View style={{ justifyContent: 'center' }}>
+
+                        <View style={{ justifyContent: 'center' }}>
                             <ButtonC1Cricle
                                 styleData={{}}
-                                onPress={() => { toggleMute }}
+                                onPress={toggleMute}
                             >
                                 {isMuted ? <Octicons name="mute" size={20} color="white" /> : <Octicons name="unmute" size={20} color="white" />}
                             </ButtonC1Cricle>
+                        </View>
+                        <View>
+                            <TouchableOpacity
+                                // title={isPlaying ? "Pause" : "Play"}
+                                // onPress={isPlaying ? pauseSound : playSound}
+                                onPress={handlePlayPause}
+                            >
+                                {isPlaying ? <AntDesign name="pausecircle" size={50} color="#030370" /> : <AntDesign name="play" size={50} color="#030370" />}
+                            </TouchableOpacity>
+
+                            {/* <Text>{isPlaying.toString()}</Text> */}
+                            {/* <Text>{isPlaying.toString()}</Text> */}
+                        </View>
+                        <View style={{ justifyContent: 'center' }}>
+                            <ButtonC1Cricle
+                                styleData={{}}
+                                onPress={() => { OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`) }}
+                            >
+                                <Feather name="arrow-down" size={20} color="white" />
+                            </ButtonC1Cricle>
+
+
+                            {/* <OtherDownloadBtn URL_Download={`${GUEST_URL}/${audio}`} filename={`${postDetails.title} : ${postDetails.type}`}>
+
+                            </OtherDownloadBtn> */}
+
+                        </View>
+
+                        {/* <Button onPress={()=>{NewToaster()}} title='Heloo'></Button> */}
+
+
+                        {/* <View>
+                            <TouchableOpacity onPress={() => { setPlaying(!isPlaying) }}>
+                                {isPlaying ? <AntDesign name="play" size={40} color="black" /> : <AntDesign name="pausecircle" size={40} color="black" />}
+                            </TouchableOpacity>
                         </View> */}
-
-
-                        <TouchableOpacity style={[styles.button, {}]} onPress={toggleMute}>
-                            {isMuted ? <UnMuteIcon /> : <MuteIcon />}
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={[styles.button, {
-                            borderRadius: Metrics.rfv(25),
-                            width: Metrics.rfv(50),
-                            height: Metrics.rfv(50),
-                        }]} onPress={playPauseAudio}>
-                            {isPlaying ? <PauseIcon /> : <PlayIcon />}
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={[styles.button, {}]} onPress={() => {
-                            OtherDownloads(`${GUEST_URL}/${audio}`, `${title} : ${postDetails.type}`)
-                        }}>
-                            <Feather name="arrow-down" size={20} color="white" />
-                        </TouchableOpacity>
-
-
-
-
                     </View>
 
+                    {/* <View style={{marginTop:20}}>
+                        <ButtonC1Cricle
+                            styleData={{ marginLeft: 20 }}
+                            onPress={() => { OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`) }}
+                        >
+                            <Feather name="arrow-down" size={20} color="white" />
+                        </ButtonC1Cricle>
+                    </View> */}
                     <View style={{ marginTop: 25 }}>
                         {relatedPosts && relatedPosts.length > 0 ? <View>
                             <Snap_Carousel7 relatedPostsData={relatedPosts} />
-                        </View> : <View style={{ margin: 20, }}>
+                        </View> : <View style={{ margin: 20 }}>
                             {/* <Text>No Related Posts</Text> */}
                         </View>}
                     </View>
@@ -389,22 +439,5 @@ const styles = StyleSheet.create({
     progressBar: {
         height: '100%',
         backgroundColor: 'white'
-    },
-    timeContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-    },
-    timeText: {
-        fontSize: 16,
-    },
-    button: {
-        backgroundColor: '#030370',
-        borderRadius: Metrics.rfv(20),
-        width: Metrics.rfv(40),
-        height: Metrics.rfv(40),
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center'
     }
 })

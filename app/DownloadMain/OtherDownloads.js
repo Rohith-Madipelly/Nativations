@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { saveFile } from "./SaveFile_To_Private";
 import * as FileSystem from 'expo-file-system';
-import { ToastAndroid } from "react-native";
+import { Platform, ToastAndroid } from "react-native";
 
 async function OtherDownloads(URL_Download, filename) {
     console.log("This the download URL > ", URL_Download, "<><>", filename)
@@ -17,7 +17,8 @@ async function OtherDownloads(URL_Download, filename) {
       const result = await DataDownload.downloadAsync()
       const contentType = result.headers['Content-Type'];
 
-
+const da=Platform.OS
+console.log(da,"dwdw")
       console.log("Tester >",result.uri, "Tester >", filename,"Tester >", contentType);
 
       

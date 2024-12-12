@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, Button, FlatList, Linking, TouchableOpacity, ScrollView, Platform, Image, RefreshControl, Alert } from 'react-native';
+import { View, Text, Button, FlatList, Linking, TouchableOpacity, ScrollView, Platform, Image, RefreshControl, Alert, StyleSheet } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 
 import {
@@ -104,21 +104,26 @@ const DownloadFliesList = () => {
         }
     };
     // Render each item in the list
+
+
+    console.log("dd",filteredFileList)
     const renderItem = ({ item, index }) => {
 
         return (
+            <View style={styles.shadowStyle}>
             <TouchableOpacity onPress={() => handleVideoPress(item)}
-                style={{
+                style={[{
                     display: 'flex',
                     flexDirection: 'row',
                     padding: 10,
                     margin: 20,
                     marginVertical: 10,
-                    backgroundColor: 'pink',
-                    borderWidth: 2,
+                    // backgroundColor: 'pink',
+                    // borderWidth: 2,
                     borderRadius: 20,
-                    paddingRight: 20
-                }}>
+                    paddingRight: 20,
+                    backgroundColor: 'rgba(168, 168, 255, 0.19)'
+                }]}>
                 <View style={{ flex: 0.1, alignItems: 'center', justifyContent: "center" }}>
                     <Text style={{ fontWeight: 900, }}>{index + 1})</Text>
                 </View>
@@ -131,6 +136,7 @@ const DownloadFliesList = () => {
                     <MaterialCommunityIcons name="delete" size={24} color="black" />
                 </TouchableOpacity>
             </TouchableOpacity>
+            </View>
         );
 
     };
@@ -162,7 +168,7 @@ const DownloadFliesList = () => {
 
 
                 <View style={{flex:1}} >
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 12 }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 12,marginBottom:0 }}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 0 }}>Download List :</Text>
                         <View>
                             <TouchableOpacity style={{ padding: 10, paddingTop: 0 }} onPress={data}>
@@ -175,12 +181,13 @@ const DownloadFliesList = () => {
 
                     <ScrollView style={{flex:1}}>
                         {filteredFileList.length === 0 ? (
-                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', padding: 10, paddingVertical: 50, margin: 20, marginVertical: 10, backgroundColor: 'pink' }}>
-
+                            <View style={{flex:1, flexDirection: 'row', justifyContent: 'center', padding: 10, paddingVertical: 50, margin: 20, marginVertical: 10,  backgroundColor: 'rgba(168, 168, 255, 0.19)'}}>
                                 <Text>No downloads</Text>
                             </View>
                         ) : (
                             <View>
+
+               
 
                                 <FlatList
                                     data={filteredFileList}
@@ -204,3 +211,20 @@ const DownloadFliesList = () => {
 };
 
 export default DownloadFliesList;
+
+
+const styles = StyleSheet.create({
+    shadowStyle: {
+      ...Platform.select({
+        ios: {
+          shadowColor: 'black',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.2,
+          shadowRadius: 4,
+        },
+        android: {
+          elevation: 6,
+        },
+      }),
+    },
+    })

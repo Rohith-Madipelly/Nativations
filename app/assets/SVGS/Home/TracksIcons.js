@@ -4,8 +4,8 @@ import Svg, { Path } from "react-native-svg"
 function TracksIcons(props) {
   return (
     <Svg
-      width={16}
-      height={22}
+      width={props.width}
+      height={props.height}
       viewBox="0 0 12 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

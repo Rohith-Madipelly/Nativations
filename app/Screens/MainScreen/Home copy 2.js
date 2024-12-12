@@ -229,7 +229,7 @@ const Home = () => {
             <View style={{ height: 20 }}>
             </View>
 
-            {/* About Satya sadhna */}
+            {/* Parent View */}
             <TouchableOpacity style={{ maxHeight: Metrics.height * 0.12, minHeight: 120, backgroundColor: '#030370', padding: 10, marginHorizontal: 10, borderRadius: 13 }} onPress={() => { navigation.navigate("About_SatyaSadhana") }}>
               <ImageBackground
                 style={{ position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', width: '100%', height: '100%' }}
@@ -252,11 +252,7 @@ const Home = () => {
 
 
 
-            <View style={{ 
-              height: Metrics.rfv(100,700),
-              // maxHeight: Metrics.height * 0.12, 
-              // minHeight: Metrics.rfv(100,700),
-               flexDirection: 'row', justifyContent: 'space-evenly', padding: 5, marginHorizontal: 5, borderRadius: 13, marginTop: 5 ,gap:3}}>
+            <View style={{ maxHeight: Metrics.height * 0.12, minHeight: Metrics.width * 0.26, flexDirection: 'row', justifyContent: 'space-evenly', padding: 5, marginHorizontal: 5, borderRadius: 13, marginTop: 5, }}>
 
               <TouchableOpacity style={{ flex: 0.23, }}
                 onPress={() => {
@@ -265,7 +261,7 @@ const Home = () => {
               >
 
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
-                  <FormDataIcons height={Metrics.rfv(25,700)} width={Metrics.rfv(25)}/>
+                  <FormDataIcons />
                 </View>
 
                 <View style={{ marginTop: 5 }}>
@@ -273,19 +269,23 @@ const Home = () => {
                 </View>
               </TouchableOpacity>
 
+
+
+
               <TouchableOpacity style={{ flex: 0.23, }}
                 onPress={() => {
                   navigation.navigate("Donation")
                 }}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
-                  <Donation  height={Metrics.rfv(25,700)} width={Metrics.rfv(25)}/>
+                  <Donation />
                 </View>
                 <View style={{ marginTop: 5 }}>
                   <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Donation</Text>
                 </View>
               </TouchableOpacity>
 
-       
+
+
 
               <TouchableOpacity style={{
                 flex: 0.23,
@@ -296,19 +296,21 @@ const Home = () => {
               >
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
                   {/* <Donation /> */}
-                  <QuoteIconColorHome  height={Metrics.rfv(20)} width={Metrics.rfv(22)}/>
+                  <QuoteIconColorHome />
                 </View>
                 <View style={{ marginTop: 5 }}>
                   <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Quotes</Text>
                 </View>
               </TouchableOpacity>
 
+
+
               <TouchableOpacity style={{ flex: 0.23, }}
                 onPress={() => {
                   navigation.navigate("TracksAudios")
                 }}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
-                  <TracksIcons  height={Metrics.rfv(25,700)} width={Metrics.rfv(25)} />
+                  <TracksIcons />
                 </View>
                 <View style={{ marginTop: 5 }}>
                   <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>
@@ -334,14 +336,9 @@ const Home = () => {
 
             </View>
 
-{/* <View>
-  <Text>cdnsvcjh</Text>
-  <Button title='ajs' onPress={()=>{
-     toast.show("Hello World");
-    console.log("c")}}></Button>
-  </View> */}
 
-            <View style={{ position: 'relative', marginTop:  Metrics.rfv(30)}} onPress={() => { navigation.navigate("About_Guruji") }}>
+
+            <View style={{ position: 'relative', marginTop: 20 }} onPress={() => { navigation.navigate("About_Guruji") }}>
               <View style={{ flexDirection: 'row', maxHeight: Metrics.height * 0.12, minHeight: 120, backgroundColor: 'rgba(168, 168, 255, 0.19)', padding: 5, marginHorizontal: 10, borderRadius: 13, }}>
                 <View
                   style={{ width: '60%', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', width: '100%', height: '100%' }}
@@ -361,7 +358,7 @@ const Home = () => {
                 <LoadingImage
                   source={require("../../assets/image/Home/AboutImage.png")}
                   // style={{ minHeight: Metrics.height * 0.18, minHeight: 260, }}
-                  style={{ minHeight: Metrics.height * 0.18,maxHeight:Metrics.height * 0.18 }}
+                  style={{ minHeight: Metrics.height * 0.18 }}
                   loaderColor="#ff0000"
                   resizeMode='contain'
                 />

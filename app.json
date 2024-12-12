@@ -1,14 +1,15 @@
 {
   "expo": {
+    "newArchEnabled": true,
     "name": "Satya Sadhna",
     "slug": "Navigations",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "cover",
+      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -17,12 +18,12 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "vardhaman.satyasadhnaOne",
-        "infoPlist": {
-          "UIBackgroundModes": [
-            "audio"
-          ]
-        }
-      
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIBackgroundModes": [
+          "audio"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -41,8 +42,23 @@
       }
     },
     "plugins": [
-      "expo-font",
-      "expo-audio"
-    ]
+      "expo-font"
+    ],
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": [
+          "react-native-loading-spinner-overlay",
+          "react-native-snap-carousel",
+          "@reduxjs/toolkit",
+          "doctor",
+          "form-data",
+          "react-native-select-dropdown",
+          "react-native-ytdl",
+          "react-redux",
+          "yup"
+        ],
+        "listUnknownPackages": false
+      }
+    }
   }
 }

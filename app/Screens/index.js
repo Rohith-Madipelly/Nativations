@@ -48,6 +48,7 @@ import QuotesScreen from "./MainScreen/QuotesScreen";
 import TracksAudios from "./MainScreen/TracksAudios";
 import TracksListByCategory from "./MainScreen/TracksListByCategory";
 import Test from "./MainScreen/OtherPages/Test";
+import TestingAudio from "./MainScreen/TestingAudio";
 
 
 // SplashScreen.preventAutoHideAsync();
@@ -188,16 +189,17 @@ export default function Screens() {
               <>
                 <Stack.Group options={defaultHeaderOptions}>
 
-                <Stack.Screen name="Test" component={Test}
+                  {/* <Stack.Screen name="Test" component={Test}
                     options={{
                       headerShown: false,
                     }}
-                  />
-
- 
+                  /> */}
+                  {/* <Stack.Screen name="TestingAudio" component={TestingAudio} options={{
+                    headerShown: false,
+                  }} /> */}
                   <Stack.Screen name="BottomTabScreen" component={BottomTabScreen}
 
-                  
+
                     options={{
                       headerShown: false,
                     }}
