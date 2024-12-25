@@ -1,5 +1,5 @@
 import { Alert, Dimensions, Image, Platform, Pressable, SafeAreaView, StyleSheet, Text, ToastAndroid, Touchable, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 // import MovingText from '../../Components/UI/Marquee'
 import Marquee from '../../Components/UI/Marquee'
@@ -7,7 +7,7 @@ import Slider from '@react-native-community/slider';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Feather, Octicons } from '@expo/vector-icons';
 import ProgressBar from '../../Components/UI/ProgressBar/ProgressBar';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import ButtonC1Cricle from '../../Components/UI/Button/ButtonC1Cricle.js'
 import { Audio } from 'expo-av';
@@ -29,6 +29,11 @@ import UnMuteIcon from '../../assets/SVGS/MusicPlayer/Player/UnMuteIcon.js';
 import MuteIcon from '../../assets/SVGS/MusicPlayer/Player/MuteIcon.js';
 import Metrics from '../../utils/ResposivesUtils/Metrics.js';
 
+
+import * as FileSystem from 'expo-file-system';
+import * as MediaLibrary from 'expo-media-library';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const AudioScreen = ({ route }) => {
 
     const { id, download } = route.params
@@ -38,15 +43,12 @@ const AudioScreen = ({ route }) => {
         console.log("Not respose ...")
     }
     const [thumbnail, setThumbnail] = useState("")
-
     const [sound, setSound] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [totalDuration, setTotalDuration] = useState(0);
     const [spinnerBool, setSpinnerBool] = useState(true);
-
-    // const [isMuted, setIsMuted] = useState(false);
 
     let tokenn = useSelector((state) => state.token);
     const navigation = useNavigation();
@@ -59,14 +61,6 @@ const AudioScreen = ({ route }) => {
     const [audio, setAudio] = useState()
     const [postDetails, setPostDetails] = useState()
 
-    // const [currentTime, setCurrentTime] = useState(0)
-    // const [totalDuration, setTotalDuration] = useState(0)
-
-    // const [isPlaying, setIsPlaying] = useState(false)
-
-
-    // const [sliderData, setSliderData] = useState(0)
-    // >>>>>>>>>>>>>>>>>>
 
     try {
         if (tokenn != null) {
@@ -98,6 +92,65 @@ const AudioScreen = ({ route }) => {
             }, 200)
         }
     }, [id])
+
+    const [downloadedFiles, setDownloadedFiles] = useState([]);
+    const [downloadLoading, setDownloadLoading] = useState([]);
+
+    const fetchDownloads = async () => {
+        const files = await AsyncStorage.getItem('SatyaSadhnaDownload');
+        console.log("files",files)
+        setDownloadedFiles(files ? JSON.parse(files) : []);
+    };
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchDownloads();
+        }, [])
+    )
+
+    const downloadAudio = async (audioUrl, fileName, id) => {
+        setDownloadLoading(true)
+        try {
+            // Check if the file is already downloaded
+            const isAlreadyDownloaded = downloadedFiles.some(file => file.id === id);
+            if (isAlreadyDownloaded) {
+                Alert.alert('Already downloaded', 'This file has already been downloaded.');
+                return;
+            }
+
+            const { status } = await MediaLibrary.requestPermissionsAsync();
+            if (status !== 'granted') {
+                Alert.alert('Permission denied', 'Cannot download without media library access.');
+                return;
+            }
+
+            const fileUri = FileSystem.documentDirectory + fileName;
+            const { uri } = await FileSystem.downloadAsync(audioUrl, fileUri);
+
+            // Add the new file to the downloaded files list
+            const newDownload = {
+                id: id,
+                name: fileName,
+                musicURL: uri,
+                fileType: 'audio',
+            };
+            const updatedFiles = [...downloadedFiles, newDownload];
+
+            // Save the updated files list to AsyncStorage
+            await AsyncStorage.setItem('SatyaSadhnaDownload', JSON.stringify(updatedFiles));
+
+            setDownloadedFiles(updatedFiles);
+            Alert.alert('Download complete', 'The file has been downloaded successfully.');
+        } catch (error) {
+            console.error('Error downloading file:', error);
+        }
+        finally {
+            setDownloadLoading(false)
+        }
+    };
+
+
+
 
 
     const HomeData = async () => {
@@ -151,16 +204,11 @@ const AudioScreen = ({ route }) => {
         try {
             const { sound: newSound, status } = await Audio.Sound.createAsync(
                 { uri: audioUrlx },
-                { shouldPlay: true, isMuted: isMuted },
+                { shouldPlay: false, isMuted: isMuted },
                 onPlaybackStatusUpdate
             );
             setSound(newSound);
             onPlaybackStatusUpdate(status);
-            // playPauseAudio()
-            setTimeout(() => {
-                playPauseAudio()
-                setIsPlaying(true);
-            }, 100);
         } catch (error) {
             console.log('Error loading audio:', error);
         } finally {
@@ -168,6 +216,8 @@ const AudioScreen = ({ route }) => {
 
         }
     };
+
+
 
     const playPauseAudio = async () => {
         console.log("playPauseAudio ,,", sound)
@@ -226,7 +276,7 @@ const AudioScreen = ({ route }) => {
         const seconds = Math.floor((time % 60000) / 1000);
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
-    const handleSliderChange = async (value) => {
+    const handleSliderChangexx = async (value) => {
         if (sound) {
             const seekPosition = value * totalDuration;
             await sound.setPositionAsync(seekPosition);
@@ -234,12 +284,21 @@ const AudioScreen = ({ route }) => {
         }
     };
 
+    const handleSliderChange = async (value) => {
+        if (sound) {
+            const seekPosition = value * totalDuration; // Calculate the target position in milliseconds
+            await sound.setPositionAsync(seekPosition); // Seek to the target position
+            setCurrentTime(seekPosition); // Update the current time
+        }
+    };
+
+
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <CustomStatusBar barStyle="dark-content" backgroundColor="rgba(20, 0, 230, 0.5)" />
             <Spinner
-                visible={spinnerBool}
+                visible={spinnerBool||downloadLoading}
                 color={"#5F2404"}
                 animation={'fade'}
             />
@@ -247,18 +306,11 @@ const AudioScreen = ({ route }) => {
                 style={{ flex: 1 }}
                 colors={['rgba(20, 0, 255, 0.5)', 'rgba(255, 255, 255, 0.3)', '#FFF']}
             >
-
-
                 <View style={{ height: 50 }}>
                     <Pressable style={{ position: "absolute", top: '15%', left: 20, borderRadius: 50, marginTop: 10 }} onPress={() => { navigation.goBack(); }}>
                         <Feather name="arrow-left" size={27} color="black" />
                     </Pressable>
                 </View>
-                {/* <View style={{ height: 50 }}>
-                    <Pressable style={{ position: "absolute", top: '15%', left: 20, backgroundColor: '#3d423e', borderRadius: 50 }} onPress={() => { navigation.goBack(); }}>
-                        <Feather name="arrow-left" size={35} color="white" />
-                    </Pressable>
-                </View> */}
 
 
                 <View style={{ flex: 1, alignItems: 'center', paddingTop: 10, marginHorizontal: 18 }}>
@@ -276,55 +328,19 @@ const AudioScreen = ({ route }) => {
 
 
                     <View style={{ width: '80%', marginTop: 10, overflow: 'hidden', marginBottom: 10 }}>
-                        {/* <ProgressBar progressData={postion} /> */}
-                        {/* 
-                        <View style={{
-                            width: '100%',
-                            marginTop: 10,
-                            height: 3,
-                            backgroundColor: 'gray',
-                            borderRadius: 5
-                        }}>
 
-                            <View
-                                style={[styles.progressBar, { width: `${progress * 100}%` }]} />
-
-                            <View style={[{ position: 'absolute', top: -5, width: circleSize, height: circleSize, borderRadius: circleSize / 2, backgroundColor: 'white' }, { left: `${progress * 100}%`, marginLeft: -circleSize / 2 }]} />
-                        </View> */}
 
                         <View>
-                            {/* <Slider
-                                style={{ width: '100%', height: 40, marginHorizontal: 0, paddingHorizontal: 0 }}
-                                step={1}
-                                minimumValue={0}
-                                maximumValue={totalDuration}
-                                // minimumTrackTintColor="#4A3AFF"
-                                minimumTrackTintColor="#4A3AFF"
-                                maximumTrackTintColor="#B0B0C1"
-                                thumbTintColor="#4A3AFF"
-                                value={sliderData}
-                                onValueChange={(e) => {
-                                    // console.log("W", e)
-                                    skipTo(e)
-                                    setProgress(e)
-                                    // setSliderData(e)
-
-                                    // callback(RangeData[e],e) 
-                                }}
-                                tapToSeek={true}
-                            /> */}
-
-
                             <Slider
-                                style={styles.slider}
                                 minimumValue={0}
                                 maximumValue={1}
                                 value={currentTime / totalDuration || 0}
                                 minimumTrackTintColor="#6200ee"
                                 maximumTrackTintColor="#d3d3d3"
                                 thumbTintColor="#6200ee"
-                                onValueChange={handleSliderChange}
+                                onSlidingComplete={handleSliderChange}
                             />
+
                         </View>
 
                         <View style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row' }}>
@@ -337,16 +353,6 @@ const AudioScreen = ({ route }) => {
                         flexDirection: 'row',
                         justifyContent: 'space-between', marginTop: 10,
                     }}>
-                        {/* <View style={{ justifyContent: 'center' }}>
-                            <ButtonC1Cricle
-                                styleData={{}}
-                                onPress={() => { toggleMute }}
-                            >
-                                {isMuted ? <Octicons name="mute" size={20} color="white" /> : <Octicons name="unmute" size={20} color="white" />}
-                            </ButtonC1Cricle>
-                        </View> */}
-
-
                         <TouchableOpacity style={[styles.button, {}]} onPress={toggleMute}>
                             {isMuted ? <UnMuteIcon /> : <MuteIcon />}
                         </TouchableOpacity>
@@ -360,7 +366,8 @@ const AudioScreen = ({ route }) => {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={[styles.button, {}]} onPress={() => {
-                            OtherDownloads(`${GUEST_URL}/${audio}`, `${title} : ${postDetails.type}`)
+                          
+                            downloadAudio(`${audio}`, `${title}` + '.mp3', id)
                         }}>
                             <Feather name="arrow-down" size={20} color="white" />
                         </TouchableOpacity>

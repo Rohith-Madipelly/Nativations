@@ -4,8 +4,8 @@ import Svg, { Path } from "react-native-svg"
 function MusicIcon(props) {
   return (
     <Svg
-      width={20}
-      height={30}
+      width={25}
+      height={25}
       viewBox="0 0 14 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

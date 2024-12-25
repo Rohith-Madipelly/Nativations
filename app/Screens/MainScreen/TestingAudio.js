@@ -74,13 +74,16 @@ const AudioPlayer = () => {
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
+
+
     const handleSliderChange = async (value) => {
         if (sound) {
-            const seekPosition = value * totalDuration;
-            await sound.setPositionAsync(seekPosition);
-            setCurrentTime(seekPosition);
+            const seekPosition = value * totalDuration; // Calculate the target position in milliseconds
+            await sound.setPositionAsync(seekPosition); // Seek to the target position
+            setCurrentTime(seekPosition); // Update the current time
         }
     };
+
 
     return (
         <View style={styles.container}>
@@ -95,6 +98,7 @@ const AudioPlayer = () => {
             </TouchableOpacity>
 
             <View style={styles.sliderContainer}>
+
                 <Slider
                     style={styles.slider}
                     minimumValue={0}
@@ -103,8 +107,9 @@ const AudioPlayer = () => {
                     minimumTrackTintColor="#6200ee"
                     maximumTrackTintColor="#d3d3d3"
                     thumbTintColor="#6200ee"
-                    onValueChange={handleSliderChange}
+                    onSlidingComplete={handleSliderChange} // Update only when sliding is complete
                 />
+
                 <View style={styles.timeContainer}>
                     <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
                     <Text style={styles.timeText}>{formatTime(totalDuration)}</Text>

@@ -34,7 +34,7 @@ const DownloadFliesList = () => {
     const [downloadedFiles, setDownloadedFiles] = useState([]);
     const [songData, setSongData] = useState({})
 
-    const [isLooping, setIsLooping] = useState(false);
+
 
     const DeleteAlert = (item) => {
         Alert.alert(
@@ -93,7 +93,7 @@ const DownloadFliesList = () => {
 
 
     const onPlaybackStatusUpdate = (status) => {
-        // console.log(status.isPlaying, "onPlaybackStatusUpdate")
+        console.log(status.isPlaying, "onPlaybackStatusUpdate")
 
         if (status.isLoaded) {
             setCurrentTime(status.positionMillis);
@@ -119,7 +119,7 @@ const DownloadFliesList = () => {
                 { shouldPlay: true, isMuted: isMuted },
                 onPlaybackStatusUpdate
             );
-            // await sound.setIsLoopingAsync(isLooping);
+
             setSound(newSound);
             setIsPlaying(true);
         } catch (error) {
@@ -162,12 +162,7 @@ const DownloadFliesList = () => {
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
-    // const toggleLoop = () => {
-    //     setIsLooping((prevState) => !prevState);
-    //     if (sound) {
-    //       sound.setIsLoopingAsync(!isLooping); // Update the looping mode if sound is already loaded
-    //     }
-    //   };
+
 
     return (
         <View style={{
@@ -180,77 +175,62 @@ const DownloadFliesList = () => {
             {/* <ScrollView> */}
             <CustomStatusBar barStyle="dark-content" backgroundColor={GlobalStyles.CustomStatusBarMainColor} />
 
+            <View style={{ backgroundColor: '#EEEEFF', padding: 10, borderRadius: 15 }}>
+                <View style={{}}>
+                    {isPlaying ? <Image
+                        source={require('../../assets/MusicPlaying.gif')}
+                        style={{ width: 40, height: 40, alignSelf: 'center' }}
+                    /> :
+                        <View style={{ width: 40, height: 40, alignSelf: 'center', flexDirection: 'row', gap: 2.6, paddingLeft: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
+                            <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
+                            <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
+                            <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
+                            <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
+                        </View>}
 
-            {songData && songData?.fileType === "audio" ? <>
-                {/* Audio Offline */}
-                <View style={{ backgroundColor: '#EEEEFF', padding: 10, borderRadius: 15 }}>
+                </View>
 
-                    <View style={{}}>
-                        {isPlaying ? <Image
-                            source={require('../../assets/MusicPlaying.gif')}
-                            style={{ width: 40, height: 40, alignSelf: 'center' }}
-                        /> :
-                            <View style={{ width: 40, height: 40, alignSelf: 'center', flexDirection: 'row', gap: 2.6, paddingLeft: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
-                                <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
-                                <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
-                                <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
-                                <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
-                            </View>}
+                <Text style={{ textAlign: 'center' }}>{songData.name}</Text>
+                <Slider
+                    minimumValue={0}
+                    maximumValue={1}
+                    value={currentTime / totalDuration || 0}
+                    minimumTrackTintColor="#6200ee"
+                    maximumTrackTintColor="#d3d3d3"
+                    thumbTintColor="#6200ee"
+                    onSlidingComplete={handleSliderChange}
+                />
 
-                    </View>
+                <View style={styles.timeContainer}>
+                    <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
+                    <Text style={styles.timeText}>{formatTime(totalDuration)}</Text>
+                </View>
 
-                    <Text style={{ textAlign: 'center' }}>{songData.name}</Text>
-                    <Slider
-                        minimumValue={0}
-                        maximumValue={1}
-                        value={currentTime / totalDuration || 0}
-                        minimumTrackTintColor="#6200ee"
-                        maximumTrackTintColor="#d3d3d3"
-                        thumbTintColor="#6200ee"
-                        onSlidingComplete={handleSliderChange}
-                    />
 
-                    <View style={styles.timeContainer}>
-                        <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
-                        <Text style={styles.timeText}>{formatTime(totalDuration)}</Text>
-                    </View>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between', marginTop: 10,
+                }}>
+                    <TouchableOpacity style={[styles.button, {
 
+                    }]} onPress={toggleMute}>
+                        {isMuted ? <MuteIcon /> : <UnMuteIcon />}
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={[styles.button, {
+                    }]} onPress={playPauseAudio}>
+                        {isPlaying ? <PauseIcon /> : <PlayIcon />}
+                    </TouchableOpacity>
 
                     <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between', marginTop: 10,
+                        width: 40,
+                        height: 40,
                     }}>
-                        <TouchableOpacity style={[styles.button, {
 
-                        }]} onPress={toggleMute}>
-                            {isMuted ? <MuteIcon /> : <UnMuteIcon />}
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={[styles.button, {
-                        }]} onPress={playPauseAudio}>
-                            {isPlaying ? <PauseIcon /> : <PlayIcon />}
-                        </TouchableOpacity>
-
-
-                        {/* <Button
-                        title={`Turn Looping ${isLooping ? 'Off' : 'On'}`}
-                        onPress={toggleLoop}
-                    /> */}
-                        <View style={{
-                            width: 40,
-                            height: 40,
-                        }}>
-
-                        </View>
                     </View>
                 </View>
-            </> : <>
-                {songData && songData?.fileType === "video" && <View style={{ backgroundColor: '#EEEEFF', padding: 10, borderRadius: 15 }}>
-
-                </View>}
-            </>}
-
+            </View>
             <View style={{ flex: 1, marginTop: 10 }}>
                 <Text>All Downloads</Text>
                 <FlatList

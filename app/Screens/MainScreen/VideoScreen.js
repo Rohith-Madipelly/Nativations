@@ -199,11 +199,11 @@ const VideoScreen = ({ route }) => {
           filename={`${DataPage.title} : ${DataPage.type}`}
         /> */}
 
-        {relatedPosts ? <View>
+        {/* {relatedPosts ? <View>
           <Snap_Carousel7 relatedPostsData={relatedPosts} />
         </View> : <View>
           <Text>No Related Posts</Text>
-        </View>}
+        </View>} */}
         <View style={{ height: 20 }}>
 
         </View>

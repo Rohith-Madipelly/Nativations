@@ -4,8 +4,8 @@ import Svg, { Mask, Path, G } from "react-native-svg"
 function PlayIcon(props) {
   return (
     <Svg
-      width={40}
-      height={40}
+    width={35}
+    height={35}
       viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -19,8 +19,8 @@ function PlayIcon(props) {
         maskUnits="userSpaceOnUse"
         x={0}
         y={0}
-        width={40}
-        height={40}
+        width={35}
+        height={35}
       >
         <Path
           transform="matrix(-1 0 0 1 40 0)"

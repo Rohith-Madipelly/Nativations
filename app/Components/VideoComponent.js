@@ -1,11 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { Video } from 'expo-av';
+// import { Video } from 'expo-video';
 import { BASE_URL } from '../Enviornment';
 import CustomButton from './UI/Button/ButtonC1Cricle';
 
 const VideoComponent = ({ DataPage }) => {
 
+
+  console.log("dwd",`${BASE_URL}/${DataPage.videoUrl}` )
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef(null)
 

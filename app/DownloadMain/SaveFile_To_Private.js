@@ -36,7 +36,7 @@ export async function saveFile(uri, filename, mimetype) {
 
       console.log('Download complete. File saved at:', savedUri);
       // NewToaster()
-      ToastAndroid.show('Download complete. File saved ', ToastAndroid.SHORT);
+      // ToastAndroid.show('Download complete. File saved ', ToastAndroid.SHORT);
     } catch (error) {
       console.error('Error saving file:', error);
     }

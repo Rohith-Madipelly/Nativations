@@ -4,8 +4,8 @@ import Svg, { Mask, Path, G } from "react-native-svg"
 function PauseIcon(props) {
   return (
     <Svg
-      width={40}
-      height={40}
+      width={35}
+      height={35}
       viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -19,8 +19,8 @@ function PauseIcon(props) {
         maskUnits="userSpaceOnUse"
         x={0}
         y={0}
-        width={40}
-        height={40}
+        width={35}
+        height={35}
       >
         <Path fill="#D9D9D9" d="M0 0H40V40H0z" />
       </Mask>

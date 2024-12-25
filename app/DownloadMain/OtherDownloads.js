@@ -4,29 +4,29 @@ import * as FileSystem from 'expo-file-system';
 import { Platform, ToastAndroid } from "react-native";
 
 async function OtherDownloads(URL_Download, filename) {
-    console.log("This the download URL > ", URL_Download, "<><>", filename)
-    // ToastAndroid.show('Downloading started', ToastAndroid.SHORT);
+  console.log("This the download URL > ", URL_Download, "<><>", filename)
+  // ToastAndroid.show('Downloading started', ToastAndroid.SHORT);
 
-    try {
-      const DataDownload = FileSystem.createDownloadResumable(
-        URL_Download,
-        FileSystem.documentDirectory + filename, // Destination file path
-        {}, // Optional options object
-        // callback // Progress callback
-      );
-      const result = await DataDownload.downloadAsync()
-      const contentType = result.headers['Content-Type'];
+  try {
+    const DataDownload = FileSystem.createDownloadResumable(
+      URL_Download,
+      FileSystem.documentDirectory + filename, // Destination file path
+      {}, // Optional options object
+      // callback // Progress callback
+    );
+    const result = await DataDownload.downloadAsync()
+    const contentType = result.headers['Content-Type'];
 
-const da=Platform.OS
-console.log(da,"dwdw")
-      console.log("Tester >",result.uri, "Tester >", filename,"Tester >", contentType);
+    const da = Platform.OS
+    console.log(da, "dwdw")
+    console.log("Tester >", result.uri, "Tester >", filename, "Tester >", contentType);
 
-      
-      saveFile(result.uri, filename, contentType);
-    } catch (e) {
-      console.log("Error haa", e)
-    }
+
+    saveFile(result.uri, filename, contentType);
+  } catch (e) {
+    console.log("Error haa", e)
   }
+}
 
 
 

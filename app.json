@@ -19,10 +19,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "vardhaman.satyasadhnaOne",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false,
-        "UIBackgroundModes": [
-          "audio"
-        ]
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
       }
     },
     "android": {
@@ -42,7 +41,8 @@
       }
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-video"
     ],
     "doctor": {
       "reactNativeDirectoryCheck": {
