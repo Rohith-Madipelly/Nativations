@@ -41,8 +41,9 @@ import MuteIcon from '../../assets/SVGS/MusicPlayer/Player/MuteIcon.js';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CustomAlerts_Continue } from '../../utils/CustomReuseAlerts.js';
 const VideoScreen = ({ route }) => {
-  const { id } = route.params
+  const { id, download } = route.params
 
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -119,9 +120,9 @@ const VideoScreen = ({ route }) => {
   }
 
 
-  useEffect(() => {
-    HomeData()
-  }, [])
+  // useEffect(() => {
+  //   HomeData()
+  // }, [])
 
   useEffect(() => {
     HomeData()
@@ -145,6 +146,24 @@ const VideoScreen = ({ route }) => {
         setRelatedPosts(res.data.relatedPosts)
         setTitle(res.data.postDetails.title)
         setVideoID(getIdFromUrl(res.data.postDetails.videoUrl))
+
+
+        if (download) {
+          // Alert.alert('Want to download the track')
+          CustomAlerts_Continue(
+            `Download`,
+            `Would you like to save this track for offline listening?`,
+            // `Applying for ${data.jobTitle}`,
+            // data.jobTitle,
+            () => {
+              setTimeout(() => {
+                downloadFile(`${BASE_URL}/${res.data.postDetails.videoUrl}`, `${res.data.postDetails.title}` + '.mp4', id)
+                // downloadFile(`${BASE_URL}/${DataPage.videoUrl}`, `${DataPage?.title}` + '.mp4', `${DataPage?._id}`)
+
+              }, 700)
+            }
+          )
+        }
 
       }
       else {
@@ -204,7 +223,11 @@ const VideoScreen = ({ route }) => {
       // Check if the file is already downloaded
       const isAlreadyDownloaded = downloadedFiles.some(file => file.id === id);
       if (isAlreadyDownloaded) {
-        Alert.alert('Already downloaded', 'This file has already been downloaded.');
+        Alert.alert('Already downloaded', 'This file has already been downloaded.',
+          [
+          { text: 'go to downloads', onPress: () => navigation.navigate('Downloads') },
+          { text: 'OK', onPress: () => { } }
+        ]);
         return;
       }
 
@@ -227,13 +250,24 @@ const VideoScreen = ({ route }) => {
         fileURL: uri,
         fileType: "video", // "audio" or "video"
       };
-      const updatedFiles = [...downloadedFiles, newDownload];
+
+
+      const filesx = await AsyncStorage.getItem('SatyaSadhnaDownload');
+      var data = JSON.parse(filesx)
+      // const updatedFiles = [...downloadedFiles, newDownload];
+      const updatedFiles = [...data, newDownload];
 
       // Save the updated files list to AsyncStorage
       await AsyncStorage.setItem('SatyaSadhnaDownload', JSON.stringify(updatedFiles));
 
       setDownloadedFiles(updatedFiles);
-      Alert.alert('Download complete', `The ${fileType} file has been downloaded successfully.`);
+      // Alert.alert('Download complete', `The ${fileType} file has been downloaded successfully.`);
+
+      Alert.alert('Download complete', `The ${fileType} file has been downloaded successfully.`,
+        [
+          { text: 'go to downloads', onPress: () => navigation.navigate('Downloads') },
+          { text: 'OK', onPress: () => { } }
+        ]);
     } catch (error) {
       console.error(`Error downloading ${fileType} file:`, error);
     } finally {

@@ -8,12 +8,12 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { Feather, Octicons } from '@expo/vector-icons';
 import ProgressBar from '../../Components/UI/ProgressBar/ProgressBar';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-
+import ASO from '../../utils/AsyncStorage_Calls.js'
 import ButtonC1Cricle from '../../Components/UI/Button/ButtonC1Cricle.js'
 import { Audio } from 'expo-av';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { VideoPageData } from '../../utils/API_Calls';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BASE_URL, GUEST_URL } from '../../Enviornment';
 import Snap_Carousel7 from '../../Components2/Snap_Carousel7';
 import { Button } from 'react-native';
@@ -34,6 +34,7 @@ import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { setDownloadList, setToken } from '../../redux/actions/loginAction.jsx';
 const AudioScreen = ({ route }) => {
 
     const { id, download } = route.params
@@ -51,6 +52,7 @@ const AudioScreen = ({ route }) => {
     const [spinnerBool, setSpinnerBool] = useState(true);
 
     let tokenn = useSelector((state) => state.token);
+    let listData = useSelector((state) => state.list);
     const navigation = useNavigation();
 
     const [relatedPosts, setRelatedPosts] = useState()
@@ -71,59 +73,33 @@ const AudioScreen = ({ route }) => {
         console.log("Error in token quotes", err)
     }
 
-    const [downloadedFiles, setDownloadedFiles] = useState([]);
-    const [downloadLoading, setDownloadLoading] = useState([]);
-
-    const fetchDownloads = async () => {
-        const files = await AsyncStorage.getItem('SatyaSadhnaDownload');
-        console.log(files)
-        setTimeout(() => {
-            // setDownloadedFiles(files ? JSON.parse(files) : []);
-            setDownloadedFiles(JSON.parse(files));
-        }, 200);
-    };
-
-    useEffect(() => {
-        // setTimeout(() => {
-        fetchDownloads()
-        console.log("downloadedFiles", downloadedFiles)
-
-        //    }, 2000);
-    }, [])
 
 
 
 
     useEffect(() => {
         HomeData()
-        //     if (download) {
-
-        //             // Alert.alert('Want to download the track')
-        //             CustomAlerts_Continue(
-        //                 `Download`,
-        //                 `Would you like to save this track for offline listening?`,
-        //                 // `Applying for ${data.jobTitle}`,
-        //                 // data.jobTitle,
-        //                 () => {
-        //                     setTimeout(() => {
-        //                     console.log("ef",`${audio}`, `${title}` + '.mp3', id)
-        //                     downloadAudio(`${audio}`, `${title}` + '.mp3', id)
-        //                     // OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`)
-        //                 }, 2000)
-        //                 }
-        //             )
-
-        //     }
     }, [id])
 
+    const dispatch = useDispatch()
+    const [downloadedFiles, setDownloadedFiles] = useState([]);
+    const [downloadLoading, setDownloadLoading] = useState([]);
 
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         fetchDownloads();
-    //     }, [])
-    // );
+    const fetchDownloads = async () => {
+        const files = await AsyncStorage.getItem('SatyaSadhnaDownload');
+        console.log("files", files)
+        setDownloadedFiles(files ? JSON.parse(files) : []);
+    };
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchDownloads();
+        }, [])
+    )
+
     const downloadAudio = async (audioUrl, fileName, id) => {
-        fetchDownloads();
+
+        setDownloadLoading(true)
         try {
             // Check if the file is already downloaded
             const isAlreadyDownloaded = downloadedFiles.some(file => file.id === id);
@@ -137,10 +113,10 @@ const AudioScreen = ({ route }) => {
                 Alert.alert('Permission denied', 'Cannot download without media library access.');
                 return;
             }
-            setDownloadLoading(true)
+
             const fileUri = FileSystem.documentDirectory + fileName;
             const { uri } = await FileSystem.downloadAsync(audioUrl, fileUri);
-            console.log("hvdsjyfvjsyvf", downloadedFiles)
+
             // Add the new file to the downloaded files list
             const newDownload = {
                 id: id,
@@ -148,13 +124,24 @@ const AudioScreen = ({ route }) => {
                 musicURL: uri,
                 fileType: 'audio',
             };
-            const updatedFiles = [...downloadedFiles, newDownload];
+            const filesx = await AsyncStorage.getItem('SatyaSadhnaDownload');
+            var data = JSON.parse(filesx)
+            // const updatedFiles = [...downloadedFiles, newDownload];
+            const updatedFiles = [...data, newDownload];
+
 
             // Save the updated files list to AsyncStorage
             await AsyncStorage.setItem('SatyaSadhnaDownload', JSON.stringify(updatedFiles));
 
             setDownloadedFiles(updatedFiles);
-            Alert.alert('Download complete', 'The file has been downloaded successfully.');
+            // ok mean nothing 
+            //go to donewload
+            Alert.alert('Download complete', 'The file has been downloaded successfully.',
+                [
+                    { text: 'go to downloads', onPress: () => navigation.navigate('Downloads') },
+                    { text: 'OK', onPress: () => {}}
+                ]);
+
         } catch (error) {
             console.error('Error downloading file:', error);
         }
@@ -168,6 +155,7 @@ const AudioScreen = ({ route }) => {
 
 
     const HomeData = async () => {
+        fetchDownloads()
         setSpinnerBool(true)
         console.log("ajhjh", id)
         try {
@@ -196,10 +184,9 @@ const AudioScreen = ({ route }) => {
                         // data.jobTitle,
                         () => {
                             setTimeout(() => {
-                                // console.log("ef",`${BASE_URL}/${res.data.postDetails.audioUrl}`, `${res.data.postDetails.title}` + '.mp3', id)
                                 downloadAudio(`${BASE_URL}/${res.data.postDetails.audioUrl}`, `${res.data.postDetails.title}` + '.mp3', id)
-                                // OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`)
-                            }, 200)
+
+                            }, 700)
                         }
                     )
 

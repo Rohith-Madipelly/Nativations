@@ -39,10 +39,13 @@ const DownloadFliesList = () => {
     const [isVideoPlaying, setIsVideoPlaying] = useState(false);
     const [isVideoLoaded, setIsVideoLoaded] = useState(false)
     const videoRef = useRef(null);
+
     const fetchDownloads = async () => {
         const files = await AsyncStorage.getItem('SatyaSadhnaDownload');
+        console.log("files", files);
         setDownloadedFiles(files ? JSON.parse(files) : []);
-    };
+        // setDownloadedFiles(files ? JSON.parse(files) : []);
+      };
     const DeleteAlert = (item) => {
         Alert.alert(
             "Delete Video",
@@ -61,15 +64,15 @@ const DownloadFliesList = () => {
 
 
     const deleteAudio = async (id) => {
-
-        if (songData && songData.id === id) {
+ 
+        if(songData&&songData.id===id){
             await sound.pauseAsync();
             setIsPlaying(false);
             await sound.unloadAsync();
             setSongData("")
         }
 
-        if (videoData && videoData?.id === id) {
+        if(videoData&&videoData?.id===id){
             // await sound.pauseAsync();
             setIsVideoPlaying(false);
             // await sound.unloadAsync();
@@ -82,21 +85,24 @@ const DownloadFliesList = () => {
                 return;
             }
 
-            console.log("DeleteAudio 1")
-
+            console.log("DeleteAudio 1",fileToDelete)
+if(fileToDelete.musicURL){
             // Delete the file from the file system
             await FileSystem.deleteAsync(fileToDelete.musicURL);
-
+}else{
+    
+    await FileSystem.deleteAsync(fileToDelete.fileURL);
+}
             console.log("DeleteAudio 2")
             // Update the downloaded files list
-
+            
         } catch (error) {
             console.error('Error deleting file:', error);
         }
-        finally {
+        finally{
             const updatedFiles = downloadedFiles.filter(file => file.id !== id);
 
-            console.log("updatedFiles", updatedFiles)
+            console.log("updatedFiles",updatedFiles)
 
             console.log("DeleteAudio 3")
             // Save the updated list to AsyncStorage
@@ -111,7 +117,7 @@ const DownloadFliesList = () => {
 
 
 
-
+  
 
 
     useFocusEffect(
@@ -139,7 +145,7 @@ const DownloadFliesList = () => {
 
     const loadAudio = async (audioUrl, local = false) => {
         try {
-
+      
             if (sound) {
                 await sound.unloadAsync(); // Unload any previous sound
             }
@@ -181,9 +187,9 @@ const DownloadFliesList = () => {
                 await sound.pauseAsync();
                 setIsPlaying(false);
             } else {
-                console.log(status.positionMillis / status.durationMillis > 0.998)
+                console.log(status.positionMillis/status.durationMillis>0.998)
 
-                if (status.positionMillis / status.durationMillis > 0.998) {
+                if(status.positionMillis/status.durationMillis>0.998){
                     await sound.setPositionAsync(0);
                 }
                 await sound.playAsync();
@@ -203,7 +209,7 @@ const DownloadFliesList = () => {
 
 
 
-
+ 
     return (
         <View style={{
             flex: 1,
@@ -288,7 +294,7 @@ const DownloadFliesList = () => {
                     </View>}
                 </>}
             </View>
-            {/* {console.log(videoData?.fileURL)} */}
+{/* {console.log(videoData?.fileURL)} */}
             {videoData && <View>
                 <Video
                     ref={videoRef}
@@ -324,7 +330,7 @@ const DownloadFliesList = () => {
                             onPress={() => {
 
                                 if (item.fileType === "video") {
-                                    console.log("kkkk", item)
+                                    console.log("kkkk",item)
                                     setVideoData(item)
                                     setSongData("")
                                     if (isPlaying) {

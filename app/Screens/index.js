@@ -1,11 +1,11 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState, useMemo, useEffect, useCallback } from "react";
 
 
 import ASO from "../utils/AsyncStorage_Calls";
 import { useSelector, useDispatch } from "react-redux";
-import { setToken } from '../redux/actions/loginAction'
+import { setDownloadList, setToken } from '../redux/actions/loginAction'
 
 
 import VideoScreen from './MainScreen/VideoScreen';
@@ -37,7 +37,7 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import ErrorBoundary from "react-native-error-boundary";
 import NetInfo from '@react-native-community/netinfo';
-import { Alert, View, Text } from "react-native";
+import { Alert, View, Text, Pressable } from "react-native";
 import AudioScreen from "./MainScreen/AudioScreen";
 import YoutudeScreen from "./MainScreen/YoutudeScreen";
 import { useFonts } from 'expo-font';
@@ -49,6 +49,7 @@ import TracksAudios from "./MainScreen/TracksAudios";
 import TracksListByCategory from "./MainScreen/TracksListByCategory";
 import Test from "./MainScreen/OtherPages/Test";
 import TestingAudio from "./MainScreen/TestingAudio";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 // SplashScreen.preventAutoHideAsync();
@@ -70,6 +71,19 @@ export default function Screens() {
   // Method to verifiy where user is login or not from async-storage
   const verifyToken = async () => {
 
+
+    ASO.getTokenJWT('SatyaSadhnaDownloadList', (error, token) => {
+      if (error) {
+        console.error('Error getting token:', error);
+      } else {
+        if (token != null) {
+          dispatch(setDownloadList(token));
+        }
+      }
+    });
+
+
+
     ASO.getTokenJWT('Token', (error, token) => {
       if (error) {
         console.error('Error getting token:', error);
@@ -80,7 +94,6 @@ export default function Screens() {
       }
       setAppIsReady(true);
     });
-
   }
 
 
@@ -134,6 +147,17 @@ export default function Screens() {
     headerBackTitleVisible: false,
   });
 
+
+
+const CustomBackButton = () => {
+  const navigation = useNavigation();
+  return (
+    <TouchableOpacity onPress={() =>{console.log("sjdhcg"), navigation.goBack()}} style={{ marginLeft: 10 }}>
+     <BackIcons />
+    </TouchableOpacity>
+  );
+};
+
   const customHeaderOptions = ({ navigation }) => ({
     // headerShadowVisible: false,
     // headerTitle: 'Hello Rohith',
@@ -157,11 +181,17 @@ export default function Screens() {
 
 
 
-    headerLeft: () => (
-      <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 5, padding: 10 }}>
-        <BackIcons />
-      </TouchableOpacity>
-    ),
+    // headerLeft: () => <CustomBackButton/>,
+
+    
+
+    // headerLeft: () => (
+    //   <Pressable onPress={(e) => {
+    //     console.log("jhagfcvhj")
+    //     navigation.goBack()}} style={{ marginLeft: 5, padding: 10, }}>
+    //     <BackIcons />
+    //   </Pressable>
+    // ),
 
   });
 
@@ -239,10 +269,11 @@ export default function Screens() {
 
 
                   <Stack.Screen name="About_Guruji" component={About_Guruji}
-                    // options={customHeaderOptions} 
-                    options={{
-                      headerShown: false,
-                    }} />
+                    options={customHeaderOptions} 
+                    // options={{
+                    //   headerShown: false,
+                    // }} 
+                    />
 
                   <Stack.Screen name="About_SatyaSadhana" component={SatyaSadhana}
                     // options={customHeaderOptions} 

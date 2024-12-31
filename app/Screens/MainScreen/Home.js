@@ -97,8 +97,9 @@ const Home = () => {
 
 
   let tokenn = useSelector((state) => state.token);
+  let list = useSelector((state) => state.list);
 
-
+  console.log("list", list)
   const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
@@ -199,9 +200,9 @@ const Home = () => {
   if (!isConnected) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} >
-        <NoInternetImage/>
-        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(20),marginTop:18}}>No network found</Text>
-        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(18)}}>Please check your internet connection</Text>
+        <NoInternetImage />
+        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(20), marginTop: 18 }}>No network found</Text>
+        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(18) }}>Please check your internet connection</Text>
         <Button title='go to Downloads' onPress={() => { navigation.navigate("Downloads") }}></Button>
       </View>
     );
@@ -252,11 +253,12 @@ const Home = () => {
 
 
 
-            <View style={{ 
-              height: Metrics.rfv(100,700),
+            <View style={{
+              height: Metrics.rfv(100, 700),
               // maxHeight: Metrics.height * 0.12, 
               // minHeight: Metrics.rfv(100,700),
-               flexDirection: 'row', justifyContent: 'space-evenly', padding: 5, marginHorizontal: 5, borderRadius: 13, marginTop: 5 ,gap:3}}>
+              flexDirection: 'row', justifyContent: 'space-evenly', padding: 5, marginHorizontal: 5, borderRadius: 13, marginTop: 5, gap: 3
+            }}>
 
               <TouchableOpacity style={{ flex: 0.23, }}
                 onPress={() => {
@@ -265,7 +267,7 @@ const Home = () => {
               >
 
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
-                  <FormDataIcons height={Metrics.rfv(25,700)} width={Metrics.rfv(25)}/>
+                  <FormDataIcons height={Metrics.rfv(25, 700)} width={Metrics.rfv(25)} />
                 </View>
 
                 <View style={{ marginTop: 5 }}>
@@ -278,14 +280,14 @@ const Home = () => {
                   navigation.navigate("Donation")
                 }}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
-                  <Donation  height={Metrics.rfv(25,700)} width={Metrics.rfv(25)}/>
+                  <Donation height={Metrics.rfv(25, 700)} width={Metrics.rfv(25)} />
                 </View>
                 <View style={{ marginTop: 5 }}>
                   <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Donation</Text>
                 </View>
               </TouchableOpacity>
 
-       
+
 
               <TouchableOpacity style={{
                 flex: 0.23,
@@ -296,7 +298,7 @@ const Home = () => {
               >
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
                   {/* <Donation /> */}
-                  <QuoteIconColorHome  height={Metrics.rfv(20)} width={Metrics.rfv(22)}/>
+                  <QuoteIconColorHome height={Metrics.rfv(20)} width={Metrics.rfv(22)} />
                 </View>
                 <View style={{ marginTop: 5 }}>
                   <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Quotes</Text>
@@ -308,7 +310,7 @@ const Home = () => {
                   navigation.navigate("TracksAudios")
                 }}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(168, 168, 255, 0.19)', borderRadius: 13, }}>
-                  <TracksIcons  height={Metrics.rfv(25,700)} width={Metrics.rfv(25)} />
+                  <TracksIcons height={Metrics.rfv(25, 700)} width={Metrics.rfv(25)} />
                 </View>
                 <View style={{ marginTop: 5 }}>
                   <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>
@@ -334,14 +336,14 @@ const Home = () => {
 
             </View>
 
-{/* <View>
+            {/* <View>
   <Text>cdnsvcjh</Text>
   <Button title='ajs' onPress={()=>{
      toast.show("Hello World");
     console.log("c")}}></Button>
   </View> */}
 
-            <View style={{ position: 'relative', marginTop:  Metrics.rfv(30)}} onPress={() => { navigation.navigate("About_Guruji") }}>
+            <View style={{ position: 'relative', marginTop: Metrics.rfv(30) }} onPress={() => { navigation.navigate("About_Guruji") }}>
               <View style={{ flexDirection: 'row', maxHeight: Metrics.height * 0.12, minHeight: 120, backgroundColor: 'rgba(168, 168, 255, 0.19)', padding: 5, marginHorizontal: 10, borderRadius: 13, }}>
                 <View
                   style={{ width: '60%', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', width: '100%', height: '100%' }}
@@ -361,7 +363,7 @@ const Home = () => {
                 <LoadingImage
                   source={require("../../assets/image/Home/AboutImage.png")}
                   // style={{ minHeight: Metrics.height * 0.18, minHeight: 260, }}
-                  style={{ minHeight: Metrics.height * 0.18,maxHeight:Metrics.height * 0.18 }}
+                  style={{ minHeight: Metrics.height * 0.18, maxHeight: Metrics.height * 0.18 }}
                   loaderColor="#ff0000"
                   resizeMode='contain'
                 />
@@ -398,7 +400,7 @@ const Home = () => {
               NavigationTo(item, download)
             }} />
 
-            <QuoteOfDay Quote={Quote||"If you want peace then calm your desires"} isQuoteOfDay={true} />
+            <QuoteOfDay Quote={Quote || "If you want peace then calm your desires"} isQuoteOfDay={true} />
             {/* <Snap_Carousel2 BannerData2={meditationTracks} CarouselName={'Meditation Tracks'} /> */}
 
             <View style={{ height: 20 }}>
@@ -435,9 +437,9 @@ const Home = () => {
         )}
 
 
-<View style={{height:70}}>
-  <Text></Text>
-</View>
+        <View style={{ height: 70 }}>
+          <Text></Text>
+        </View>
       </ScrollView>
 
     </View>

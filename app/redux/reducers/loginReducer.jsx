@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const token=""
+const token = ""
 try {
   token = AsyncStorage.getItem('SatyaSadhna:' + 'Token');
   // console.log(token);
@@ -8,23 +8,27 @@ try {
 
 }
 
-const initialState = { 
+const initialState = {
+  list:[],
   token: token || "",
   isLogin: token ? true : false,
 };
- 
+
 
 
 const loginReducer = (state = initialState, action) => {
-
+  console.log("list", action.list)
   switch (action.type) {
     case "SET_TOKEN":
-
-      // console.log("logred>>", action.token)
       return {
         ...state,
         token: action.token,
         isLogin: action.token ? true : false,
+      };
+    case "SET_DOWNLOADLIST":
+      return {
+        ...state,
+        list: action.list
       };
     default:
       return state;
