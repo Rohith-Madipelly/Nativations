@@ -71,54 +71,59 @@ const AudioScreen = ({ route }) => {
         console.log("Error in token quotes", err)
     }
 
+    const [downloadedFiles, setDownloadedFiles] = useState([]);
+    const [downloadLoading, setDownloadLoading] = useState([]);
+
+    const fetchDownloads = async () => {
+        const files = await AsyncStorage.getItem('SatyaSadhnaDownload');
+        console.log(files)
+        setTimeout(() => {
+            // setDownloadedFiles(files ? JSON.parse(files) : []);
+            setDownloadedFiles(JSON.parse(files));
+        }, 200);
+    };
+
+    useEffect(() => {
+        // setTimeout(() => {
+        fetchDownloads()
+        console.log("downloadedFiles", downloadedFiles)
+
+        //    }, 2000);
+    }, [])
 
 
 
 
     useEffect(() => {
         HomeData()
-    //     if (download) {
+        //     if (download) {
 
-    //             // Alert.alert('Want to download the track')
-    //             CustomAlerts_Continue(
-    //                 `Download`,
-    //                 `Would you like to save this track for offline listening?`,
-    //                 // `Applying for ${data.jobTitle}`,
-    //                 // data.jobTitle,
-    //                 () => {
-    //                     setTimeout(() => {
-    //                     console.log("ef",`${audio}`, `${title}` + '.mp3', id)
-    //                     downloadAudio(`${audio}`, `${title}` + '.mp3', id)
-    //                     // OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`)
-    //                 }, 2000)
-    //                 }
-    //             )
-      
-    //     }
+        //             // Alert.alert('Want to download the track')
+        //             CustomAlerts_Continue(
+        //                 `Download`,
+        //                 `Would you like to save this track for offline listening?`,
+        //                 // `Applying for ${data.jobTitle}`,
+        //                 // data.jobTitle,
+        //                 () => {
+        //                     setTimeout(() => {
+        //                     console.log("ef",`${audio}`, `${title}` + '.mp3', id)
+        //                     downloadAudio(`${audio}`, `${title}` + '.mp3', id)
+        //                     // OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`)
+        //                 }, 2000)
+        //                 }
+        //             )
+
+        //     }
     }, [id])
 
-    const [downloadedFiles, setDownloadedFiles] = useState([]);
-    const [downloadLoading, setDownloadLoading] = useState([]);
 
-    const fetchDownloads = async () => {
-        const files = await AsyncStorage.getItem('SatyaSadhnaDownload');
-        console.log("files>>>",files)
-        console.log("files>>>",   JSON.parse(files))
-     
-        // setDownloadedFiles(files ? JSON.parse(files) : []);
-        // setDownloadedFiles(files ? JSON.parse(files) : []);
-        // setDownloadedFiles(files ? [files] : []);
-        console.log("downloadedFiles.....",downloadedFiles)
-    };
-
-    useFocusEffect(
-        useCallback(() => {
-            fetchDownloads();
-        }, [])
-    )
-
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         fetchDownloads();
+    //     }, [])
+    // );
     const downloadAudio = async (audioUrl, fileName, id) => {
-      
+        fetchDownloads();
         try {
             // Check if the file is already downloaded
             const isAlreadyDownloaded = downloadedFiles.some(file => file.id === id);
@@ -135,9 +140,7 @@ const AudioScreen = ({ route }) => {
             setDownloadLoading(true)
             const fileUri = FileSystem.documentDirectory + fileName;
             const { uri } = await FileSystem.downloadAsync(audioUrl, fileUri);
-
-            console.log("downloadedFiles......",downloadedFiles)
-
+            console.log("hvdsjyfvjsyvf", downloadedFiles)
             // Add the new file to the downloaded files list
             const newDownload = {
                 id: id,
@@ -147,12 +150,10 @@ const AudioScreen = ({ route }) => {
             };
             const updatedFiles = [...downloadedFiles, newDownload];
 
-            console.log("df,,jbnj",updatedFiles)
             // Save the updated files list to AsyncStorage
             await AsyncStorage.setItem('SatyaSadhnaDownload', JSON.stringify(updatedFiles));
 
             setDownloadedFiles(updatedFiles);
-            fetchDownloads();
             Alert.alert('Download complete', 'The file has been downloaded successfully.');
         } catch (error) {
             console.error('Error downloading file:', error);
@@ -195,14 +196,14 @@ const AudioScreen = ({ route }) => {
                         // data.jobTitle,
                         () => {
                             setTimeout(() => {
-                            // console.log("ef",`${BASE_URL}/${res.data.postDetails.audioUrl}`, `${res.data.postDetails.title}` + '.mp3', id)
-                            downloadAudio(`${BASE_URL}/${res.data.postDetails.audioUrl}`, `${res.data.postDetails.title}` + '.mp3', id)
-                            // OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`)
-                        }, 200)
+                                // console.log("ef",`${BASE_URL}/${res.data.postDetails.audioUrl}`, `${res.data.postDetails.title}` + '.mp3', id)
+                                downloadAudio(`${BASE_URL}/${res.data.postDetails.audioUrl}`, `${res.data.postDetails.title}` + '.mp3', id)
+                                // OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`)
+                            }, 200)
                         }
                     )
-          
-            }
+
+                }
 
             }
             else {
@@ -330,7 +331,7 @@ const AudioScreen = ({ route }) => {
         <SafeAreaView style={{ flex: 1 }}>
             <CustomStatusBar barStyle="dark-content" backgroundColor="rgba(20, 0, 230, 0.5)" />
             <Spinner
-                visible={spinnerBool||downloadLoading}
+                visible={spinnerBool || downloadLoading}
                 color={"#5F2404"}
                 animation={'fade'}
             />
@@ -398,7 +399,7 @@ const AudioScreen = ({ route }) => {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={[styles.button, {}]} onPress={() => {
-                          
+
                             downloadAudio(`${audio}`, `${title}` + '.mp3', id)
                         }}>
                             <Feather name="arrow-down" size={20} color="white" />

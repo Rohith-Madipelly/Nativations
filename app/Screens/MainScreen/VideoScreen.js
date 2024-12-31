@@ -199,8 +199,7 @@ const VideoScreen = ({ route }) => {
 
 
   const downloadFile = async (fileUrl, fileName, id) => {
-    console.log("hfdhyefsa")
-    setDownloadLoading(true);
+
     try {
       // Check if the file is already downloaded
       const isAlreadyDownloaded = downloadedFiles.some(file => file.id === id);
@@ -214,6 +213,9 @@ const VideoScreen = ({ route }) => {
         Alert.alert('Permission denied', 'Cannot download without media library access.');
         return;
       }
+
+
+      setDownloadLoading(true);
 
       const fileUri = FileSystem.documentDirectory + fileName;
       const { uri } = await FileSystem.downloadAsync(fileUrl, fileUri);
@@ -315,7 +317,7 @@ const VideoScreen = ({ route }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.button, {}]} onPress={() => {
-// console.log("whjvfjjhs ....",`${BASE_URL}/${DataPage.videoUrl}`)
+              // console.log("whjvfjjhs ....",`${BASE_URL}/${DataPage.videoUrl}`)
               downloadFile(`${BASE_URL}/${DataPage.videoUrl}`, `${DataPage?.title}` + '.mp4', `${DataPage?._id}`)
             }}>
               <Feather name="arrow-down" size={20} color="white" />
