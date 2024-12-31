@@ -204,12 +204,18 @@ export default function Screens() {
                       headerShown: false,
                     }}
                   />
-                  <Stack.Screen name="VideoScreen" component={VideoScreen} options={{
-                    headerShown: false,
-                  }} />
-                  <Stack.Screen name="AudioScreen" component={AudioScreen} options={{
-                    headerShown: false,
-                  }} />
+                  <Stack.Screen name="VideoScreen" component={VideoScreen}
+                    options={customHeaderOptions}
+                  // options={{
+                  //   headerShown: false,
+                  // }} 
+                  />
+                  <Stack.Screen name="AudioScreen" component={AudioScreen}
+                    //  options={customHeaderOptions}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
                   <Stack.Screen name="YoutudeScreen" component={YoutudeScreen} />
                   <Stack.Screen name="Quotes" component={QuotesScreen}
                     options={customHeaderOptions} />

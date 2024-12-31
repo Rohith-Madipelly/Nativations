@@ -15,7 +15,7 @@ import { View, Text, Linking, Platform } from 'react-native';
 //       alert('Please check for the App Store'),
 //     );
 //   }
-// };
+// }; 
 
 export const OpenStore = (PACKAGE_NAME) => {
   if (Platform.OS !== 'ios') {

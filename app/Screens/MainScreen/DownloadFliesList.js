@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Platform, Alert, StyleSheet } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, Platform, Alert, StyleSheet, Dimensions } from 'react-native';
 
 import { Image } from 'expo-image';
-import { MaterialCommunityIcons, } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons, } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
+import { Video } from 'expo-av';
 
 import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar';
 import GlobalStyles from '../../Components/UI/GlobalStyles';
@@ -35,7 +35,10 @@ const DownloadFliesList = () => {
     const [songData, setSongData] = useState({})
 
     const [isLooping, setIsLooping] = useState(false);
-
+    const [videoData, setVideoData] = useState(null)
+    const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+    const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+    const videoRef = useRef(null);
     const DeleteAlert = (item) => {
         Alert.alert(
             "Delete Video",
@@ -54,6 +57,20 @@ const DownloadFliesList = () => {
 
 
     const deleteAudio = async (id) => {
+ 
+        if(songData&&songData.id===id){
+            await sound.pauseAsync();
+            setIsPlaying(false);
+            await sound.unloadAsync();
+            setSongData("")
+        }
+
+        if(videoData&&videoData?.id===id){
+            // await sound.pauseAsync();
+            setIsVideoPlaying(false);
+            // await sound.unloadAsync();
+            setVideoData("")
+        }
         try {
             const fileToDelete = downloadedFiles.find(file => file.id === id);
             if (!fileToDelete) {
@@ -61,19 +78,29 @@ const DownloadFliesList = () => {
                 return;
             }
 
+            console.log("DeleteAudio 1")
+
             // Delete the file from the file system
             await FileSystem.deleteAsync(fileToDelete.musicURL);
 
+            console.log("DeleteAudio 2")
             // Update the downloaded files list
-            const updatedFiles = downloadedFiles.filter(file => file.id !== id);
-
-            // Save the updated list to AsyncStorage
-            await AsyncStorage.setItem('downloadedFiles12', JSON.stringify(updatedFiles));
-
-            setDownloadedFiles(updatedFiles);
-            Alert.alert('File deleted', 'The file has been deleted successfully.');
+            
         } catch (error) {
             console.error('Error deleting file:', error);
+        }
+        finally{
+            const updatedFiles = downloadedFiles.filter(file => file.id !== id);
+
+            console.log("updatedFiles",updatedFiles)
+
+            console.log("DeleteAudio 3")
+            // Save the updated list to AsyncStorage
+            await AsyncStorage.setItem('SatyaSadhnaDownload', JSON.stringify(updatedFiles));
+
+            console.log("DeleteAudio 4")
+            setDownloadedFiles(updatedFiles);
+            Alert.alert('File deleted', 'The file has been deleted successfully.');
         }
     };
 
@@ -81,7 +108,6 @@ const DownloadFliesList = () => {
 
     const fetchDownloads = async () => {
         const files = await AsyncStorage.getItem('SatyaSadhnaDownload');
-        console.log("files", files)
         setDownloadedFiles(files ? JSON.parse(files) : []);
     };
 
@@ -104,6 +130,7 @@ const DownloadFliesList = () => {
         }
         if (status.isPlaying) {
             setIsPlaying(true)
+            setIsVideoPlaying(true)
         }
     };
 
@@ -162,96 +189,121 @@ const DownloadFliesList = () => {
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
-    // const toggleLoop = () => {
-    //     setIsLooping((prevState) => !prevState);
-    //     if (sound) {
-    //       sound.setIsLoopingAsync(!isLooping); // Update the looping mode if sound is already loaded
-    //     }
-    //   };
 
+
+
+ 
     return (
         <View style={{
             flex: 1,
             backgroundColor: 'white',
             flex: 1,
             // marginTop: 70,
-            paddingHorizontal: 18
+            // paddingHorizontal: 18
         }}>
             {/* <ScrollView> */}
             <CustomStatusBar barStyle="dark-content" backgroundColor={GlobalStyles.CustomStatusBarMainColor} />
 
+            <View style={{
+                paddingHorizontal: 18
+            }}>
+                {songData && songData?.fileType === "audio" ? <>
+                    {/* Audio Offline */}
+                    <View style={{ backgroundColor: '#EEEEFF', padding: 10, borderRadius: 15 }}>
 
-            {songData && songData?.fileType === "audio" ? <>
-                {/* Audio Offline */}
-                <View style={{ backgroundColor: '#EEEEFF', padding: 10, borderRadius: 15 }}>
+                        <View style={{}}>
+                            {isPlaying ? <Image
+                                source={require('../../assets/MusicPlaying.gif')}
+                                style={{ width: 40, height: 40, alignSelf: 'center' }}
+                            /> :
+                                <View style={{ width: 40, height: 40, alignSelf: 'center', flexDirection: 'row', gap: 2.6, paddingLeft: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
+                                    <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
+                                    <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
+                                    <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
+                                    <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
+                                </View>}
 
-                    <View style={{}}>
-                        {isPlaying ? <Image
-                            source={require('../../assets/MusicPlaying.gif')}
-                            style={{ width: 40, height: 40, alignSelf: 'center' }}
-                        /> :
-                            <View style={{ width: 40, height: 40, alignSelf: 'center', flexDirection: 'row', gap: 2.6, paddingLeft: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
-                                <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
-                                <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
-                                <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
-                                <Text style={{ width: 5, height: 5, backgroundColor: '#030370', borderRadius: 2.5 }}> </Text>
-                            </View>}
+                        </View>
 
-                    </View>
+                        <Text style={{ textAlign: 'center' }}>{songData.name}</Text>
+                        <Slider
+                            minimumValue={0}
+                            maximumValue={1}
+                            value={currentTime / totalDuration || 0}
+                            minimumTrackTintColor="#6200ee"
+                            maximumTrackTintColor="#d3d3d3"
+                            thumbTintColor="#6200ee"
+                            onSlidingComplete={handleSliderChange}
+                        />
 
-                    <Text style={{ textAlign: 'center' }}>{songData.name}</Text>
-                    <Slider
-                        minimumValue={0}
-                        maximumValue={1}
-                        value={currentTime / totalDuration || 0}
-                        minimumTrackTintColor="#6200ee"
-                        maximumTrackTintColor="#d3d3d3"
-                        thumbTintColor="#6200ee"
-                        onSlidingComplete={handleSliderChange}
-                    />
-
-                    <View style={styles.timeContainer}>
-                        <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
-                        <Text style={styles.timeText}>{formatTime(totalDuration)}</Text>
-                    </View>
-
-
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between', marginTop: 10,
-                    }}>
-                        <TouchableOpacity style={[styles.button, {
-
-                        }]} onPress={toggleMute}>
-                            {isMuted ? <MuteIcon /> : <UnMuteIcon />}
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={[styles.button, {
-                        }]} onPress={playPauseAudio}>
-                            {isPlaying ? <PauseIcon /> : <PlayIcon />}
-                        </TouchableOpacity>
+                        <View style={styles.timeContainer}>
+                            <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
+                            <Text style={styles.timeText}>{formatTime(totalDuration)}</Text>
+                        </View>
 
 
-                        {/* <Button
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between', marginTop: 10,
+                        }}>
+                            <TouchableOpacity style={[styles.button, {
+
+                            }]} onPress={toggleMute}>
+                                {isMuted ? <MuteIcon /> : <UnMuteIcon />}
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={[styles.button, {
+                            }]} onPress={playPauseAudio}>
+                                {isPlaying ? <PauseIcon /> : <PlayIcon />}
+                            </TouchableOpacity>
+
+
+                            {/* <Button
                         title={`Turn Looping ${isLooping ? 'Off' : 'On'}`}
                         onPress={toggleLoop}
                     /> */}
-                        <View style={{
-                            width: 40,
-                            height: 40,
-                        }}>
+                            <View style={{
+                                width: 40,
+                                height: 40,
+                            }}>
 
+                            </View>
                         </View>
                     </View>
-                </View>
-            </> : <>
-                {songData && songData?.fileType === "video" && <View style={{ backgroundColor: '#EEEEFF', padding: 10, borderRadius: 15 }}>
+                </> : <>
+                    {songData && songData?.fileType === "video" && <View style={{ backgroundColor: '#EEEEFF', padding: 10, borderRadius: 15 }}>
 
-                </View>}
-            </>}
+                    </View>}
+                </>}
+            </View>
+{/* {console.log(videoData?.fileURL)} */}
+            {videoData && <View>
+                <Video
+                    ref={videoRef}
+                    source={{
+                        uri: `${videoData?.fileURL}`,
+                        // uri: 'https://www.satyasadhna.com/upload/videos/1735145757433.mp4'
+                    }}
+                    style={styles.video}
+                    useNativeControls
+                    // useNativeControls={false}
+                    resizeMode="contain"
+                    onPlaybackStatusUpdate={(status) => {
+                        console.log("onPlaybackStatusUpdate", status)
+                        if (status.isLoaded) {
+                            setIsVideoLoaded(true)
+                        }
+                        setIsVideoPlaying(status.isPlaying)
+                    }}
+                />
+                {!isVideoLoaded &&
+                    <View style={[styles.video, { position: 'absolute', top: 0, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }]}>
+                        <Text style={{ color: 'white' }}>Loading.....</Text>
+                    </View>}
+            </View>}
 
-            <View style={{ flex: 1, marginTop: 10 }}>
+            <View style={{ flex: 1, marginTop: 10, paddingHorizontal: 18 }}>
                 <Text>All Downloads</Text>
                 <FlatList
                     data={downloadedFiles}
@@ -259,24 +311,42 @@ const DownloadFliesList = () => {
                     renderItem={({ item, index }) => (
                         <TouchableOpacity
                             onPress={() => {
-                                console.log("dcd >>>", item.musicURL)
-                                loadAudio(item.musicURL)
-                                setSongData(item)
-                                console.log("Ready to Play")
+
+                                if (item.fileType === "video") {
+                                    console.log("kkkk",item)
+                                    setVideoData(item)
+                                    setSongData("")
+                                    if (isPlaying) {
+                                        playPauseAudio()
+                                    }
+
+                                } else {
+                                    loadAudio(item.musicURL)
+                                    setSongData(item)
+                                    setVideoData("")
+                                }
                             }}
                             style={[styles.listItem, { borderBottomColor: '#DADADA', borderBottomWidth: 1, borderBottomWidth: downloadedFiles.length === index ? 1 : 0 }]}
                         >
                             {/* <Text style={styles.listIndex}>{index + 1})</Text> */}
                             <View style={{ width: 'auto', height: 'auto', marginVertical: 4, marginRight: 10 }}>
 
-                                {songData.id === item.id && isPlaying ? <Image
-                                    source={require('../../assets/MusicPlaying.gif')}
-                                    style={{ width: 25, height: 25 }}
-                                /> : <MusicIcon />}
+                                {item.fileType == "audio" ? <>
+                                    {songData.id === item.id && isPlaying ? <Image
+                                        source={require('../../assets/MusicPlaying.gif')}
+                                        style={{ width: 25, height: 25 }}
+                                    /> : <MusicIcon />}
+                                </> : <>
+                                    {songData.id === item.id && isPlaying ? <Image
+                                        source={require('../../assets/MusicPlaying.gif')}
+                                        style={{ width: 25, height: 25 }}
+                                    /> : <MaterialIcons name="videocam" size={24} color="#030370" />}
+                                </>}
+
                             </View>
                             <View style={[{ alignItems: 'flex-start', gap: 1.3, width: '77%' }, styles.listName]}>
                                 <Text style={[{ fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(16) },]} numberOfLines={2}>{item.name}</Text>
-                                {item.type ? <Text>{item.type}</Text> : ""}
+                                {/* {item.type ? <Text>{item.type}x</Text> : ""} */}
                             </View>
 
                             <TouchableOpacity
@@ -317,6 +387,11 @@ const styles = StyleSheet.create({
             },
         }),
     },
+    video: {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').width * (9 / 16), // 16:9 aspect ratio
+    },
+
 
     listItem: {
         flexDirection: 'row',

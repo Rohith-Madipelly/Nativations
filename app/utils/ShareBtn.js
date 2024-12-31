@@ -10,7 +10,7 @@ import {Alert, Share, View, Button} from 'react-native';
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
-          // shared with activity type of result.activityType
+          // shared with activity type of result.activityType 
         } else {
           // shared
         }

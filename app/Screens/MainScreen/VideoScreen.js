@@ -1,4 +1,4 @@
-import { Button, Dimensions, Pressable, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Button, Dimensions, Pressable, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 
 import React, { useState, useCallback, useRef, useLayoutEffect, useEffect } from "react";
@@ -14,7 +14,7 @@ import {
 
 import CustomButton from '../../Components/UI/Button/ButtonC1Cricle.js';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import DownloaderVideo from '../../Download/DownloadVideo.js';
 import ButtonTotal from '../../DownloadMain/ButtonTotal.js';
@@ -27,13 +27,45 @@ import VideoComponent from '../../Components/VideoComponent.js';
 import AudioComponent from '../../Components/AudioComponent.js';
 import ButtonC1Cricle from '../../Components/UI/Button/ButtonC1Cricle.js'
 import OtherDownloads from '../../DownloadMain/OtherDownloads.js';
-import { GUEST_URL } from '../../Enviornment.js';
+import { BASE_URL, GUEST_URL } from '../../Enviornment.js';
 import OtherDownloadBtn from '../../DownloadMain/OtherDownloadBtn.js';
+import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar.js';
+import { Video } from 'expo-av';
+import Metrics from '../../utils/ResposivesUtils/Metrics.js';
+import PlayIcon from '../../assets/SVGS/MusicPlayer/Player/PlayIcon.js';
+import PauseIcon from '../../assets/SVGS/MusicPlayer/Player/Pause.js';
+import UnMuteIcon from '../../assets/SVGS/MusicPlayer/Player/UnMuteIcon.js';
+import MuteIcon from '../../assets/SVGS/MusicPlayer/Player/MuteIcon.js';
 
+
+import * as FileSystem from 'expo-file-system';
+import * as MediaLibrary from 'expo-media-library';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const VideoScreen = ({ route }) => {
   const { id } = route.params
-  console.log("adsd>>>>", id)
 
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+
+
+  const [downloadedFiles, setDownloadedFiles] = useState([]);
+  const [downloadLoading, setDownloadLoading] = useState(false);
+
+  const fetchDownloads = async () => {
+    const files = await AsyncStorage.getItem('SatyaSadhnaDownload');
+    console.log("files", files);
+    setDownloadedFiles(files ? JSON.parse(files) : []);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchDownloads();
+    }, [])
+  );
+
+
+  const [isMuted, setIsMuted] = useState(false);
 
   const [DataPage, setDataPage] = useState()
   const [VideoID, setVideoID] = useState()
@@ -52,7 +84,7 @@ const VideoScreen = ({ route }) => {
   }, []);
 
 
-  const togglePlaying = useCallback(() => {
+  const togglePlayingss = useCallback(() => {
     setPlaying((prev) => !prev);
   }, []);
 
@@ -96,6 +128,8 @@ const VideoScreen = ({ route }) => {
   }, [id])
 
 
+  // console.log("djhfv",`${BASE_URL}/${DataPage.videoUrl}`)
+
   const HomeData = async () => {
     setSpinnerbool(true)
 
@@ -103,15 +137,15 @@ const VideoScreen = ({ route }) => {
       const res = await VideoPageData(tokenn, id)
 
       if (res) {
-        console.log("data mes", res.data.postDetails.type)
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>", res.data.postDetails.title)
+
+
         setType(res.data.postDetails.type)
 
         setDataPage(res.data.postDetails)
         setRelatedPosts(res.data.relatedPosts)
         setTitle(res.data.postDetails.title)
         setVideoID(getIdFromUrl(res.data.postDetails.videoUrl))
-        console.log(res.data.postDetails.title)
+
       }
       else {
         console.log("No Respones")
@@ -123,9 +157,7 @@ const VideoScreen = ({ route }) => {
         console.log("Error in fetching", error)
       }, 1000);
 
-      // setTimeout(() => {
-      //   setSpinnerbool(false)
-      // }, 5000)
+
     }
     finally {
       setSpinnerbool(false)
@@ -147,74 +179,166 @@ const VideoScreen = ({ route }) => {
   }
 
 
+  const togglePlaying = () => {
+    if (playing) {
+      videoRef.current.pauseAsync();
+    } else {
+      videoRef.current.playAsync();
+    }
+    setPlaying(!playing);
+  };
+
+
+  const toggleMute = async () => {
+    if (videoRef.current) {
+      await videoRef.current.setIsMutedAsync(!isMuted);
+      setIsMuted(!isMuted);
+    }
+  };
+
+
+
+  const downloadFile = async (fileUrl, fileName, id) => {
+    console.log("hfdhyefsa")
+    setDownloadLoading(true);
+    try {
+      // Check if the file is already downloaded
+      const isAlreadyDownloaded = downloadedFiles.some(file => file.id === id);
+      if (isAlreadyDownloaded) {
+        Alert.alert('Already downloaded', 'This file has already been downloaded.');
+        return;
+      }
+
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission denied', 'Cannot download without media library access.');
+        return;
+      }
+
+      const fileUri = FileSystem.documentDirectory + fileName;
+      const { uri } = await FileSystem.downloadAsync(fileUrl, fileUri);
+
+      // Add the new file to the downloaded files list
+      const newDownload = {
+        id: id,
+        name: fileName,
+        fileURL: uri,
+        fileType: "video", // "audio" or "video"
+      };
+      const updatedFiles = [...downloadedFiles, newDownload];
+
+      // Save the updated files list to AsyncStorage
+      await AsyncStorage.setItem('SatyaSadhnaDownload', JSON.stringify(updatedFiles));
+
+      setDownloadedFiles(updatedFiles);
+      Alert.alert('Download complete', `The ${fileType} file has been downloaded successfully.`);
+    } catch (error) {
+      console.error(`Error downloading ${fileType} file:`, error);
+    } finally {
+      setDownloadLoading(false);
+    }
+  };
+
+
+
+  console.log(DataPage, "DataPage")
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-        />
-      }
-    >
-      <SafeAreaView style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+    <View>
+      <CustomStatusBar barStyle="dark-content" backgroundColor="white" />
+      <Spinner
+        visible={spinnerBool || downloadLoading}
+        color={"#5F2404"}
+        animation={'fade'}
+      />
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
       >
-        <Spinner
-          visible={spinnerBool}
-          color={"#5F2404"}
-          animation={'fade'}
-        />
+        <View style={{ flex: 1 }}>
+          <Video
+            ref={videoRef}
+            source={{
+              uri: `${BASE_URL}/${DataPage?.videoUrl}`,
+            }}
+            style={styles.video}
+            useNativeControls
+            // useNativeControls={false}
+            resizeMode="contain"
+            onPlaybackStatusUpdate={(status) => {
+              console.log("onPlaybackStatusUpdate", status)
+              if (status.isLoaded) {
+                setIsVideoLoaded(true)
+              }
+              setIsPlaying(status.isPlaying)
+            }}
+          />
+          {!isVideoLoaded &&
+            <View style={[styles.video, { position: 'absolute', top: 0, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }]}>
+              <Text style={{ color: 'white' }}>Loading.....</Text>
+            </View>}
+
+          <View style={{ marginHorizontal: 17 }}>
+            {DataPage ? <Text style={[{
+              fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(16), textAlign: 'center', marginTop: 10
+            }]} numberOfLines={2} >{DataPage.title}</Text> : <Text>"....."</Text>}
+
+
+            {DataPage ? <Text style={[{
+              fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12), marginTop: 10
+            }]}
+              numberOfLines={3}
+            >{DataPage.description}</Text> : <Text>"....."</Text>}
+          </View>
+
+          <View style={{
+            width: '70%',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: 10,
+            alignSelf: 'center'
+          }}>
+            <TouchableOpacity style={[styles.button, {}]} onPress={() => { toggleMute() }}>
+              {isMuted ? <MuteIcon /> : <UnMuteIcon />}
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.button, {
+              borderRadius: Metrics.rfv(25),
+              width: Metrics.rfv(50),
+              height: Metrics.rfv(50),
+            }]} onPress={() => { togglePlaying() }}>
+              {isPlaying ? <PauseIcon /> : <PlayIcon />}
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.button, {}]} onPress={() => {
+// console.log("whjvfjjhs ....",`${BASE_URL}/${DataPage.videoUrl}`)
+              downloadFile(`${BASE_URL}/${DataPage.videoUrl}`, `${DataPage?.title}` + '.mp4', `${DataPage?._id}`)
+            }}>
+              <Feather name="arrow-down" size={20} color="white" />
+            </TouchableOpacity>
 
 
 
 
-        <View style={{ width: '100%', height: 280 }}>
-          {DataPage ? <VideoComponent DataPage={DataPage} /> : ""}
+          </View>
         </View>
-
-
-        {DataPage ? <Text style={[styles.paragraphy_U11, { width: '90%', paddingBottom: 5 }]}>{DataPage.title}</Text> : ""}
-        {DataPage ? <Text style={[styles.paragraphy_U10, { width: '90%', paddingLeft: 5, marginBottom: 25 }]}>{DataPage.description}</Text> : ""}
-
-        {/* {DataPage ? <View style={{ paddingTop: 20, flexDirection: 'row' }}> */}
-        {/* <ButtonTotal youtubeURL={DataPageVideo} /> */}
-        {/* <ButtonTotal youtubeURL={DataPage.videoUrl} />
-        </View> : ""} */}
-
-
-
-        {/* <Text>{type === "Video" ? <VideoComponent item={DataPage} /> : type === "Audio" ? <AudioComponent item={DataPage} /> : "ll"}</Text> */}
-        <ButtonC1Cricle
-          styleData={{ marginLeft: 20, marginTop: 25 }}
-          onPress={() => { OtherDownloads(`${GUEST_URL}/${DataPage.videoUrl}`, `${DataPage.title} : ${DataPage.type}`) }}
-        >
-
-          <Feather name="arrow-down" size={20} color="white" />
-        </ButtonC1Cricle>
-
-
-
-        {/* <OtherDownloadBtn
-          URL_Download={`${GUEST_URL}/${DataPage.videoUrl}`}
-          filename={`${DataPage.title} : ${DataPage.type}`}
-        /> */}
-
-        {/* {relatedPosts ? <View>
-          <Snap_Carousel7 relatedPostsData={relatedPosts} />
-        </View> : <View>
-          <Text>No Related Posts</Text>
-        </View>} */}
-        <View style={{ height: 20 }}>
-
-        </View>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </View>
   )
 }
 
 export default VideoScreen
 
 const styles = StyleSheet.create({
+
+  video: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').width * (9 / 16), // 16:9 aspect ratio
+  },
 
   paragraphy_U10: {
     fontSize: 12,
@@ -231,13 +355,14 @@ const styles = StyleSheet.create({
   paragraphy_U11: {
     fontSize: 16,
     fontWeight: '500'
-
-    //   color: #000;
-    // font-family: Jost;
-    // font-size: 10px;
-    // font-style: normal;
-    // font-weight: 300;
-    // line-height: 130%; /* 13px */
+  },
+  button: {
+    backgroundColor: '#030370',
+    borderRadius: Metrics.rfv(20),
+    width: Metrics.rfv(40),
+    height: Metrics.rfv(40),
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center'
   }
-
 })

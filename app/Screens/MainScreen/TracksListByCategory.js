@@ -1,4 +1,4 @@
-import { View, Text, Alert, ScrollView } from 'react-native'
+import { View, Text, Alert, ScrollView, Pressable, FlatList } from 'react-native'
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import DownloadIcon from '../../assets/SVGS/MusicPlayer/DownloadIcon'
 import Play_Circle from '../../assets/SVGS/MusicPlayer/Play_Circle'
@@ -13,6 +13,7 @@ import { ALL_QUOTES_API, CATEGORY_POSTS_API } from '../../utils/API_Calls'
 import MusicList from '../../Components2/Music/MusicList'
 import { RefreshControl } from 'react-native'
 import NoTrackAvailable from '../../assets/SVGS/UIScrees/NoTrackAvailable'
+import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar'
 
 const TracksListByCategory = ({ navigation, route }) => {
 
@@ -169,26 +170,27 @@ const TracksListByCategory = ({ navigation, route }) => {
     }
 
 
-   const  ClickAction=(item, download)=>{
-    NavigationTo(item, download)
-   }
+    const ClickAction = (item, download) => {
+        console.log("hgvdg")
+    //     NavigationTo(item, download)
+    // }
 
-   const NavigationTo = (item, download) => {
-    console.log("::",item)
-    if (item.type == "Youtube" || item.type == undefined) {
-      navigation.navigate('YoutudeScreen', { id: `${item.id}`, download: download })
-      // console.log("chgchgcjyhcjhc", item.id)
+    // const NavigationTo = (item, download) => {
+
+       if (item.type == "Audio") {
+            console.log(item)
+            console.log("this is Audio >>>", `${item._id}`)
+            navigation.navigate('AudioScreen', { id: `${item._id}`, download: download })
+        }
+        else if (item.type == "Video") {
+            console.log("video", `${item._id}`)
+            navigation.navigate('VideoScreen', { id: `${item._id}`, download: download })
+        }
+        else if (item.type == "Youtube" || item.type == undefined) {
+            navigation.navigate('YoutudeScreen', { id: `${item.id}`, download: download })
+             // console.log("chgchgcjyhcjhc", item.id)
+        }
     }
-    else if (item.type == "Audio") {
-        console.log(item)
-      console.log("this is Audio >>>",`${item._id}`)
-      navigation.navigate('AudioScreen', { id: `${item._id}`, download: download })
-    }
-    else if (item.type == "Video") {
-      console.log("video",`${item._id}`)
-      navigation.navigate('VideoScreen', { id: `${item._id}`, download: download })
-    }
-  }
 
 
     useEffect(() => {
@@ -200,106 +202,90 @@ const TracksListByCategory = ({ navigation, route }) => {
         <View style={{
             flex: 1,
             backgroundColor: 'white',
-            paddingHorizontal: 17
+            // paddingHorizontal: 17,
+            justifyContent: "flex-start"
         }}>
+      <CustomStatusBar barStyle="dark-content" backgroundColor="white" />
 
 
-            <View style={{ marginVertical: 10, }}>
-                <ScrollView
-                      refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    }>
-                    {trackListData && trackListData.map((item, index) => (
-                        <View key={index} style={{ width: "100%", height: 'auto', justifyContent: 'flex-start', flexDirection: 'row', marginVertical: 5, borderBottomColor: '#DADADA', borderBottomWidth: 1, marginBottom: 10, paddingBottom: 10 }}>
-                            <View style={{ width: 'auto', height: 'auto', width: '10%', marginVertical: 4 }}>
-                                <MusicIcon />
-                            </View>
-                            <View style={{ alignItems: 'flex-start', gap: 2, width: '70%' }}>
-                                <Text numberOfLines={2} style={{
-                                    fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(16)
-                                }}>{item.title || item.id}</Text>
-                                <Text>{item.type}</Text>
-                            </View>
-
-                            <View style={{ justifyContent: 'flex-end', gap: 2, flexDirection: 'row', alignItems: 'center', width: "20%" }}>
-                                <TouchableOpacity style={{ padding: 1 }} onPress={() => { ClickAction(item, false); }}>
-                                    <Play_Circle />
-                                </TouchableOpacity>
-
-                                <TouchableOpacity style={{ padding: 1 }} onPress={() => { ClickAction(item, true); }}>
-                                    <DownloadIcon />
-                                </TouchableOpacity>
-
-                            </View>
-                        </View>
-                    ))}
-
-
-
-                    <View style={{ flex: 1, justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'row' }}>
-
-                        {/* 
-                    {visibleItems === 5  && (
-                            <Pressable
-                                // title={isExpanded ? "Show Less" : "Show More"}
-                                onPress={handleShowLess}
-                                style={{ justifyContent: 'center', alignItems: 'center' }}
-                            >
-                                <Text style={{ fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(16) }}>
-                                    {visibleItems === 5 ? "Show less":"" }
-                                </Text>
-                            </Pressable>
-                        )} */}
-
-
-
-                        {/* {Data.length > 3 && (
-                            <Pressable
-                                // title={isExpanded ? "Show Less" : "Show More"}
-                                onPress={handleShowMore}
-                                style={{ justifyContent: 'center', alignItems: 'center' }}
-                            >
-                                <Text style={{ fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(16) }}>
-                                    {visibleItems === 3 ? "Show More" : "View All"}
-                                </Text>
-                            </Pressable>
-                        )} */}
-                    </View>
-
-                    {loadingList ? <SkeletonLoader2
+            {loadingList ?
+                <View style={{ marginTop: 20 ,paddingHorizontal: 17,}}>
+                    <SkeletonLoader2
                         style={{
+
                             width: '100%',
                             height: Metrics.rfv(30),
                             borderRadius: 5,
-                            marginBottom: 10,
+
                         }}
-                    // visible={!allBranchesData}
                     >
-                    </SkeletonLoader2> : ""}
+                    </SkeletonLoader2>
+                    
+                    <SkeletonLoader2
+                        style={{
 
-                    {!loadingList && trackListData && trackListData.length <= 0 && <View style={{
-                        width: '100%', flex:1,justifyContent:'center',alignItems:'center',
-                        height: Metrics.height-90, justifyContent: "center", alignItems: 'center',
-                    }}>
-                       
-                        <NoTrackAvailable/>
-                        <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(18),marginTop:18}}>No Tracks Available</Text>
-                    </View>}
+                            width: '100%',
+                            height: Metrics.rfv(30),
+                            borderRadius: 5,
+                            marginTop:10
 
-                </ScrollView>
-            </View>
+                        }}
+                    >
+                    </SkeletonLoader2>
+                    </View> : ""}
 
+            <FlatList
+                style={{ flex: 1,paddingHorizontal: 17,marginTop:10 }}
+                data={trackListData}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item, index }) => (
+                    <View key={index} style={{ width: "100%", height: 'auto', justifyContent: 'flex-start', flexDirection: 'row', marginVertical: 5, borderBottomColor: '#DADADA', borderBottomWidth: 1, marginBottom: 10, paddingBottom: 10 }}>
+                        <View style={{ width: 'auto', height: 'auto', width: '10%', marginVertical: 4 }}>
+                            <MusicIcon />
+                        </View>
+                        <View style={{ alignItems: 'flex-start', gap: 2, width: '70%' }}>
+                            <Text numberOfLines={2} style={{
+                                fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(16)
+                            }}>{item.title || item.id}</Text>
+                            <Text>{item.type}</Text>
+                        </View>
 
+                        <View style={{ justifyContent: 'flex-end', gap: 2, flexDirection: 'row', alignItems: 'center', width: "20%" }}>
+                            <TouchableOpacity style={{ padding: 1, padding: 10, paddingLeft: 30 }} onPress={() => { ClickAction(item, false); }}>
+                                <Play_Circle />
+                            </TouchableOpacity>
 
+                            <TouchableOpacity style={{ padding: 1 }} onPress={() => { ClickAction(item, true); }}>
+                                <DownloadIcon />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )}
 
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
 
+                ListEmptyComponent={(
+                    <>
+                    {!loadingList &&
+                        <View style={{
+                            flex: 1,
+                            // alignSelf:"center",
+                            height: Metrics.height,
+                            justifyContent: 'center', alignItems: 'center'
+                        }}>
 
+                            <NoTrackAvailable />
+                            <Text style={{ fontFamily: 'Gabarito-VariableFont', color: 'rgba(3, 3, 112, 1)', fontSize: Metrics.rfv(18), marginTop: 18 }}>No Tracks Available</Text>
 
-
-
+                        </View>}
+                    </>
+                )}
+            />
 
         </View>
     )

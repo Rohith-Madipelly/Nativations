@@ -77,20 +77,24 @@ const AudioScreen = ({ route }) => {
 
     useEffect(() => {
         HomeData()
-        if (download) {
-            setTimeout(() => {
-                // Alert.alert('Want to download the track')
-                CustomAlerts_Continue(
-                    `Download`,
-                    `Would you like to save this track for offline listening?`,
-                    // `Applying for ${data.jobTitle}`,
-                    // data.jobTitle,
-                    () => {
-                        OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`)
-                    }
-                )
-            }, 200)
-        }
+    //     if (download) {
+
+    //             // Alert.alert('Want to download the track')
+    //             CustomAlerts_Continue(
+    //                 `Download`,
+    //                 `Would you like to save this track for offline listening?`,
+    //                 // `Applying for ${data.jobTitle}`,
+    //                 // data.jobTitle,
+    //                 () => {
+    //                     setTimeout(() => {
+    //                     console.log("ef",`${audio}`, `${title}` + '.mp3', id)
+    //                     downloadAudio(`${audio}`, `${title}` + '.mp3', id)
+    //                     // OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`)
+    //                 }, 2000)
+    //                 }
+    //             )
+      
+    //     }
     }, [id])
 
     const [downloadedFiles, setDownloadedFiles] = useState([]);
@@ -98,8 +102,13 @@ const AudioScreen = ({ route }) => {
 
     const fetchDownloads = async () => {
         const files = await AsyncStorage.getItem('SatyaSadhnaDownload');
-        console.log("files",files)
-        setDownloadedFiles(files ? JSON.parse(files) : []);
+        console.log("files>>>",files)
+        console.log("files>>>",   JSON.parse(files))
+     
+        // setDownloadedFiles(files ? JSON.parse(files) : []);
+        // setDownloadedFiles(files ? JSON.parse(files) : []);
+        // setDownloadedFiles(files ? [files] : []);
+        console.log("downloadedFiles.....",downloadedFiles)
     };
 
     useFocusEffect(
@@ -109,7 +118,7 @@ const AudioScreen = ({ route }) => {
     )
 
     const downloadAudio = async (audioUrl, fileName, id) => {
-        setDownloadLoading(true)
+      
         try {
             // Check if the file is already downloaded
             const isAlreadyDownloaded = downloadedFiles.some(file => file.id === id);
@@ -123,9 +132,11 @@ const AudioScreen = ({ route }) => {
                 Alert.alert('Permission denied', 'Cannot download without media library access.');
                 return;
             }
-
+            setDownloadLoading(true)
             const fileUri = FileSystem.documentDirectory + fileName;
             const { uri } = await FileSystem.downloadAsync(audioUrl, fileUri);
+
+            console.log("downloadedFiles......",downloadedFiles)
 
             // Add the new file to the downloaded files list
             const newDownload = {
@@ -136,10 +147,12 @@ const AudioScreen = ({ route }) => {
             };
             const updatedFiles = [...downloadedFiles, newDownload];
 
+            console.log("df,,jbnj",updatedFiles)
             // Save the updated files list to AsyncStorage
             await AsyncStorage.setItem('SatyaSadhnaDownload', JSON.stringify(updatedFiles));
 
             setDownloadedFiles(updatedFiles);
+            fetchDownloads();
             Alert.alert('Download complete', 'The file has been downloaded successfully.');
         } catch (error) {
             console.error('Error downloading file:', error);
@@ -162,7 +175,7 @@ const AudioScreen = ({ route }) => {
             if (res.data) {
 
                 setTimeout(() => {
-                    // console.log("data mes >>", res.data)
+                    console.log("data mes >>", res.data)
                     setThumbnail(`${BASE_URL}/${res.data.postDetails.thumbnail}`)
                     setTitle(res.data.postDetails.title)
                     setAudio(`${BASE_URL}/${res.data.postDetails.audioUrl}`)
@@ -171,6 +184,25 @@ const AudioScreen = ({ route }) => {
                     setPostDetails(res.data.postDetails)
                     loadAudio(`${BASE_URL}/${res.data.postDetails.audioUrl}`);
                 }, 500)
+
+                if (download) {
+
+                    // Alert.alert('Want to download the track')
+                    CustomAlerts_Continue(
+                        `Download`,
+                        `Would you like to save this track for offline listening?`,
+                        // `Applying for ${data.jobTitle}`,
+                        // data.jobTitle,
+                        () => {
+                            setTimeout(() => {
+                            // console.log("ef",`${BASE_URL}/${res.data.postDetails.audioUrl}`, `${res.data.postDetails.title}` + '.mp3', id)
+                            downloadAudio(`${BASE_URL}/${res.data.postDetails.audioUrl}`, `${res.data.postDetails.title}` + '.mp3', id)
+                            // OtherDownloads(`${GUEST_URL}/${audio}`, `${postDetails.title} : ${postDetails.type}`)
+                        }, 200)
+                        }
+                    )
+          
+            }
 
             }
             else {
@@ -268,7 +300,7 @@ const AudioScreen = ({ route }) => {
         />
     }
 
-    const circleSize = 12;
+
 
 
     const formatTime = (time) => {
