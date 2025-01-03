@@ -47,9 +47,9 @@ import { TouchableOpacity } from "react-native";
 import QuotesScreen from "./MainScreen/QuotesScreen";
 import TracksAudios from "./MainScreen/TracksAudios";
 import TracksListByCategory from "./MainScreen/TracksListByCategory";
-import Test from "./MainScreen/OtherPages/Test";
-import TestingAudio from "./MainScreen/TestingAudio";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import CourseRegistration2 from "./MainScreen/NewPages/CourseRegistration2";
+import CourseRegistration1 from "./MainScreen/NewPages/CourseRegistration1";
+
 
 
 // SplashScreen.preventAutoHideAsync();
@@ -149,14 +149,14 @@ export default function Screens() {
 
 
 
-const CustomBackButton = () => {
-  const navigation = useNavigation();
-  return (
-    <TouchableOpacity onPress={() =>{console.log("sjdhcg"), navigation.goBack()}} style={{ marginLeft: 10 }}>
-     <BackIcons />
-    </TouchableOpacity>
-  );
-};
+  const CustomBackButton = () => {
+    const navigation = useNavigation();
+    return (
+      <TouchableOpacity onPress={() => { console.log("sjdhcg"), navigation.goBack() }} style={{ marginLeft: 10 }}>
+        <BackIcons />
+      </TouchableOpacity>
+    );
+  };
 
   const customHeaderOptions = ({ navigation }) => ({
     // headerShadowVisible: false,
@@ -183,7 +183,7 @@ const CustomBackButton = () => {
 
     // headerLeft: () => <CustomBackButton/>,
 
-    
+
 
     // headerLeft: () => (
     //   <Pressable onPress={(e) => {
@@ -227,18 +227,23 @@ const CustomBackButton = () => {
                   {/* <Stack.Screen name="TestingAudio" component={TestingAudio} options={{
                     headerShown: false,
                   }} /> */}
+                  {/* <Stack.Screen name="CourseRegistration1"
+                    component={CourseRegistration1}
+                    options={customHeaderOptions}
+
+                  /> */}
+
+                  {/* <Stack.Screen name="CourseRegistration2"
+                    component={CourseRegistration2}
+                    options={customHeaderOptions}
+                  /> */}
                   <Stack.Screen name="BottomTabScreen" component={BottomTabScreen}
-
-
                     options={{
                       headerShown: false,
                     }}
                   />
                   <Stack.Screen name="VideoScreen" component={VideoScreen}
                     options={customHeaderOptions}
-                  // options={{
-                  //   headerShown: false,
-                  // }} 
                   />
                   <Stack.Screen name="AudioScreen" component={AudioScreen}
                     //  options={customHeaderOptions}
@@ -246,17 +251,15 @@ const CustomBackButton = () => {
                       headerShown: false,
                     }}
                   />
-                  <Stack.Screen name="YoutudeScreen" component={YoutudeScreen} />
+                  {/* <Stack.Screen name="YoutudeScreen" component={YoutudeScreen} /> */}
                   <Stack.Screen name="Quotes" component={QuotesScreen}
                     options={customHeaderOptions} />
-
 
                   <Stack.Screen name="TracksAudios" component={TracksAudios}
                     options={customHeaderOptions} />
 
                   <Stack.Screen name="TracksListByCategory" component={TracksListByCategory}
                     options={customHeaderOptions} />
-
 
                   <Stack.Screen name="FormScreen" component={FormScreen}
                     options={{
@@ -269,11 +272,11 @@ const CustomBackButton = () => {
 
 
                   <Stack.Screen name="About_Guruji" component={About_Guruji}
-                    options={customHeaderOptions} 
-                    // options={{
-                    //   headerShown: false,
-                    // }} 
-                    />
+                    options={customHeaderOptions}
+                  // options={{
+                  //   headerShown: false,
+                  // }} 
+                  />
 
                   <Stack.Screen name="About_SatyaSadhana" component={SatyaSadhana}
                     // options={customHeaderOptions} 

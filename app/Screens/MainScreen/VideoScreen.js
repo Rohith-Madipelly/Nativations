@@ -42,6 +42,7 @@ import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CustomAlerts_Continue } from '../../utils/CustomReuseAlerts.js';
+import { SatyaSadhnaDownload } from '../AppContant.js';
 const VideoScreen = ({ route }) => {
   const { id, download } = route.params
 
@@ -216,30 +217,39 @@ const VideoScreen = ({ route }) => {
   };
 
 
-
-  const downloadFile = async (fileUrl, fileName, id) => {
-
+  const downloadFile = async (audioUrl, fileName, id) => {
+    console.log('hgdvjhc')
     try {
       // Check if the file is already downloaded
-      const isAlreadyDownloaded = downloadedFiles.some(file => file.id === id);
-      if (isAlreadyDownloaded) {
-        Alert.alert('Already downloaded', 'This file has already been downloaded.',
-          [
-          { text: 'go to downloads', onPress: () => navigation.navigate('Downloads') },
-          { text: 'OK', onPress: () => { } }
-        ]);
-        return;
-      }
+      const files = await AsyncStorage.getItem(SatyaSadhnaDownload, (error, data) => {
+        var datax = JSON.parse(data)
+        setDownloadedFiles(datax ? datax : []);
 
+        const isAlreadyDownloaded = datax.some(file => file.id === id);
+        if (isAlreadyDownloaded) {
+          Alert.alert('Already downloaded', 'This file has already been downloaded.');
+          return;
+        } else {
+          downloadAudio2(audioUrl, fileName, id)
+        }
+      })
+    }
+    catch (e) {
+      console.log("Error in downloadAudio", e)
+    }
+  }
+
+
+  const downloadAudio2 = async (fileUrl, fileName, id) => {
+
+    try {
       const { status } = await MediaLibrary.requestPermissionsAsync();
       if (status !== 'granted') {
         Alert.alert('Permission denied', 'Cannot download without media library access.');
         return;
       }
 
-
       setDownloadLoading(true);
-
       const fileUri = FileSystem.documentDirectory + fileName;
       const { uri } = await FileSystem.downloadAsync(fileUrl, fileUri);
 
@@ -250,20 +260,30 @@ const VideoScreen = ({ route }) => {
         fileURL: uri,
         fileType: "video", // "audio" or "video"
       };
-
-
-      const filesx = await AsyncStorage.getItem('SatyaSadhnaDownload');
-      var data = JSON.parse(filesx)
-      // const updatedFiles = [...downloadedFiles, newDownload];
-      const updatedFiles = [...data, newDownload];
-
-      // Save the updated files list to AsyncStorage
-      await AsyncStorage.setItem('SatyaSadhnaDownload', JSON.stringify(updatedFiles));
-
-      setDownloadedFiles(updatedFiles);
+      const filesx = await AsyncStorage.getItem(SatyaSadhnaDownload, (e, data) => {
+        console.log("e", e, "data filesx", data)
+        if (data && data != []) {
+          console.log("1")
+          var datax = JSON.parse(data)
+          const updatedFiles = [...datax, newDownload];
+          AsyncStorage.setItem(SatyaSadhnaDownload, JSON.stringify(updatedFiles));
+        }
+        else if (data == []) {
+          console.log("2")
+          const updatedFiles = [newDownload];
+          AsyncStorage.setItem(SatyaSadhnaDownload, JSON.stringify(updatedFiles));
+        }
+        else {
+          console.log("3")
+          console.log("not >>>> downloadedFiles && downloadedFiles.length > 0")
+          const updatedFiles = [newDownload];
+          AsyncStorage.setItem(SatyaSadhnaDownload, JSON.stringify(updatedFiles));
+        }
+      });
+      console.log("agdhfja")
       // Alert.alert('Download complete', `The ${fileType} file has been downloaded successfully.`);
 
-      Alert.alert('Download complete', `The ${fileType} file has been downloaded successfully.`,
+      Alert.alert('Download complete', `The video file has been downloaded successfully.`,
         [
           { text: 'go to downloads', onPress: () => navigation.navigate('Downloads') },
           { text: 'OK', onPress: () => { } }
@@ -306,7 +326,6 @@ const VideoScreen = ({ route }) => {
             // useNativeControls={false}
             resizeMode="contain"
             onPlaybackStatusUpdate={(status) => {
-              console.log("onPlaybackStatusUpdate", status)
               if (status.isLoaded) {
                 setIsVideoLoaded(true)
               }
@@ -351,7 +370,7 @@ const VideoScreen = ({ route }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.button, {}]} onPress={() => {
-              // console.log("whjvfjjhs ....",`${BASE_URL}/${DataPage.videoUrl}`)
+              console.log("whjvfjjhs ....",`${BASE_URL}/${DataPage.videoUrl}`)
               downloadFile(`${BASE_URL}/${DataPage.videoUrl}`, `${DataPage?.title}` + '.mp4', `${DataPage?._id}`)
             }}>
               <Feather name="arrow-down" size={20} color="white" />

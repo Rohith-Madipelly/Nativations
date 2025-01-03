@@ -25,6 +25,7 @@ import NetInfo from '@react-native-community/netinfo';
 import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar.js';
 import GlobalStyles from '../../Components/UI/GlobalStyles.js';
 import { ToasterSender } from '../../utils/Toasters/Toaster.js';
+import axios from 'axios';
 
 
 export default function Login() {
@@ -38,6 +39,7 @@ export default function Login() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+
         const unsubscribe = NetInfo.addEventListener(state => {
             // setIsConnected(state.isConnected);
         });
@@ -47,9 +49,13 @@ export default function Login() {
             unsubscribe();
             // seterrorFormAPI("");
         };
+     
     }, []);
 
 
+
+
+    
 
 
     function onchange(text, field) {

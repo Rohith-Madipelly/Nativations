@@ -24,6 +24,7 @@ import UnMuteIcon from '../../assets/SVGS/MusicPlayer/Player/UnMuteIcon';
 import MuteIcon from '../../assets/SVGS/MusicPlayer/Player/MuteIcon';
 import PauseIcon from '../../assets/SVGS/MusicPlayer/Player/Pause';
 import PlayIcon from '../../assets/SVGS/MusicPlayer/Player/PlayIcon';
+import { SatyaSadhnaDownload } from '../AppContant';
 
 const DownloadFliesList = () => {
     const [sound, setSound] = useState(null);
@@ -41,15 +42,28 @@ const DownloadFliesList = () => {
     const videoRef = useRef(null);
 
     const fetchDownloads = async () => {
-        const files = await AsyncStorage.getItem('SatyaSadhnaDownload');
-        console.log("files", files);
-        setDownloadedFiles(files ? JSON.parse(files) : []);
+        const files = await AsyncStorage.getItem(SatyaSadhnaDownload, (error, data) => {
+            if (error) {
+                console.log("Error ", error)
+            } else {
+                console.log("data...", data)
+                setDownloadedFiles(data ? JSON.parse(data) : []);
+            }
+        });
+        // console.log("downloadedFiles", downloadedFiles)
+
         // setDownloadedFiles(files ? JSON.parse(files) : []);
-      };
+
+        // if (downloadedFiles && downloadedFiles != []) {
+        //     console.log("1234567890 downloadedFiles", downloadedFiles)
+        // } else { 
+        //     console.log("good boy ")
+        // }
+    };
     const DeleteAlert = (item) => {
         Alert.alert(
-            "Delete Video",
-            "Are you sure you want to delete this video?",
+            "Delete file",
+            "Are you sure you want to delete this file?",
             [
                 {
                     text: "Cancel",
@@ -64,15 +78,15 @@ const DownloadFliesList = () => {
 
 
     const deleteAudio = async (id) => {
- 
-        if(songData&&songData.id===id){
+
+        if (songData && songData.id === id) {
             await sound.pauseAsync();
             setIsPlaying(false);
             await sound.unloadAsync();
             setSongData("")
         }
 
-        if(videoData&&videoData?.id===id){
+        if (videoData && videoData?.id === id) {
             // await sound.pauseAsync();
             setIsVideoPlaying(false);
             // await sound.unloadAsync();
@@ -85,39 +99,39 @@ const DownloadFliesList = () => {
                 return;
             }
 
-            console.log("DeleteAudio 1",fileToDelete)
-if(fileToDelete.musicURL){
-            // Delete the file from the file system
-            await FileSystem.deleteAsync(fileToDelete.musicURL);
-}else{
-    
-    await FileSystem.deleteAsync(fileToDelete.fileURL);
-}
+            console.log("DeleteAudio 1", fileToDelete)
+            if (fileToDelete.musicURL) {
+                // Delete the file from the file system
+                await FileSystem.deleteAsync(fileToDelete.musicURL);
+            } else {
+
+                await FileSystem.deleteAsync(fileToDelete.fileURL);
+            }
             console.log("DeleteAudio 2")
             // Update the downloaded files list
-            
+
         } catch (error) {
             console.error('Error deleting file:', error);
         }
-        finally{
+        finally {
             const updatedFiles = downloadedFiles.filter(file => file.id !== id);
 
-            console.log("updatedFiles",updatedFiles)
+            console.log("updatedFiles", updatedFiles)
 
             console.log("DeleteAudio 3")
             // Save the updated list to AsyncStorage
-            await AsyncStorage.setItem('SatyaSadhnaDownload', JSON.stringify(updatedFiles));
+            await AsyncStorage.setItem(SatyaSadhnaDownload, JSON.stringify(updatedFiles));
 
             console.log("DeleteAudio 4")
             setDownloadedFiles(updatedFiles);
-            Alert.alert('File deleted', 'The file has been deleted successfully.');
+            // Alert.alert('File deleted', 'The file has been deleted successfully.');
         }
     };
 
 
 
 
-  
+
 
 
     useFocusEffect(
@@ -145,7 +159,7 @@ if(fileToDelete.musicURL){
 
     const loadAudio = async (audioUrl, local = false) => {
         try {
-      
+
             if (sound) {
                 await sound.unloadAsync(); // Unload any previous sound
             }
@@ -187,9 +201,9 @@ if(fileToDelete.musicURL){
                 await sound.pauseAsync();
                 setIsPlaying(false);
             } else {
-                console.log(status.positionMillis/status.durationMillis>0.998)
+                console.log(status.positionMillis / status.durationMillis > 0.998)
 
-                if(status.positionMillis/status.durationMillis>0.998){
+                if (status.positionMillis / status.durationMillis > 0.998) {
                     await sound.setPositionAsync(0);
                 }
                 await sound.playAsync();
@@ -209,7 +223,7 @@ if(fileToDelete.musicURL){
 
 
 
- 
+
     return (
         <View style={{
             flex: 1,
@@ -294,7 +308,7 @@ if(fileToDelete.musicURL){
                     </View>}
                 </>}
             </View>
-{/* {console.log(videoData?.fileURL)} */}
+            {/* {console.log(videoData?.fileURL)} */}
             {videoData && <View>
                 <Video
                     ref={videoRef}
@@ -330,7 +344,7 @@ if(fileToDelete.musicURL){
                             onPress={() => {
 
                                 if (item.fileType === "video") {
-                                    console.log("kkkk",item)
+                                    console.log("kkkk", item)
                                     setVideoData(item)
                                     setSongData("")
                                     if (isPlaying) {

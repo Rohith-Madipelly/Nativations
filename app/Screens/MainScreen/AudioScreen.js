@@ -35,6 +35,7 @@ import * as MediaLibrary from 'expo-media-library';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { setDownloadList, setToken } from '../../redux/actions/loginAction.jsx';
+import { SatyaSadhnaDownload } from '../AppContant.js';
 const AudioScreen = ({ route }) => {
 
     const { id, download } = route.params
@@ -86,28 +87,50 @@ const AudioScreen = ({ route }) => {
     const [downloadLoading, setDownloadLoading] = useState([]);
 
     const fetchDownloads = async () => {
-        const files = await AsyncStorage.getItem('SatyaSadhnaDownload');
-        console.log("files", files)
+        const files = await AsyncStorage.getItem(SatyaSadhnaDownload, (error, data) => {
+            console.log("Error in fetchDownloads", error)
+            console.log(data)
+
+            console.log("files", data)
+            setDownloadedFiles(data ? JSON.parse(data) : []);
+        });
+        // console.log("files", files)
         setDownloadedFiles(files ? JSON.parse(files) : []);
+
+
     };
 
-    useFocusEffect(
-        useCallback(() => {
-            fetchDownloads();
-        }, [])
-    )
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         fetchDownloads();
+    //     }, [])
+    // )
+
 
     const downloadAudio = async (audioUrl, fileName, id) => {
-
-        setDownloadLoading(true)
         try {
             // Check if the file is already downloaded
-            const isAlreadyDownloaded = downloadedFiles.some(file => file.id === id);
-            if (isAlreadyDownloaded) {
-                Alert.alert('Already downloaded', 'This file has already been downloaded.');
-                return;
-            }
+            const files = await AsyncStorage.getItem(SatyaSadhnaDownload, (error, data) => {
+                var datax = JSON.parse(data)
+                setDownloadedFiles(datax ? datax : []);
 
+                const isAlreadyDownloaded = datax.some(file => file.id === id);
+                if (isAlreadyDownloaded) {
+                    Alert.alert('Already downloaded', 'This file has already been downloaded.');
+                    return;
+                } else {
+                    downloadAudio2(audioUrl, fileName, id)
+                }
+            })
+        }
+        catch (e) {
+            console.log("Error in downloadAudio",e)
+        }
+    }
+
+    const downloadAudio2 = async (audioUrl, fileName, id) => {
+        try {
+            setDownloadLoading(true)
             const { status } = await MediaLibrary.requestPermissionsAsync();
             if (status !== 'granted') {
                 Alert.alert('Permission denied', 'Cannot download without media library access.');
@@ -124,22 +147,32 @@ const AudioScreen = ({ route }) => {
                 musicURL: uri,
                 fileType: 'audio',
             };
-            const filesx = await AsyncStorage.getItem('SatyaSadhnaDownload');
-            var data = JSON.parse(filesx)
-            // const updatedFiles = [...downloadedFiles, newDownload];
-            const updatedFiles = [...data, newDownload];
+
+            await AsyncStorage.getItem(SatyaSadhnaDownload, (e, data) => {
+                console.log("e", e, "data filesx", data)
+                if (data && data != []) {
+                    console.log("1")
+                    var datax = JSON.parse(data)
+                    const updatedFiles = [...datax, newDownload];
+                    AsyncStorage.setItem(SatyaSadhnaDownload, JSON.stringify(updatedFiles));
+                }
+                else if (data == []) {
+                    console.log("2")
+                    const updatedFiles = [newDownload];
+                    AsyncStorage.setItem(SatyaSadhnaDownload, JSON.stringify(updatedFiles));
+                }
+                else {
+                    console.log("3")
+                    const updatedFiles = [newDownload];
+                    AsyncStorage.setItem(SatyaSadhnaDownload, JSON.stringify(updatedFiles));
+                }
+            });
 
 
-            // Save the updated files list to AsyncStorage
-            await AsyncStorage.setItem('SatyaSadhnaDownload', JSON.stringify(updatedFiles));
-
-            setDownloadedFiles(updatedFiles);
-            // ok mean nothing 
-            //go to donewload
             Alert.alert('Download complete', 'The file has been downloaded successfully.',
                 [
-                    { text: 'go to downloads', onPress: () => navigation.navigate('Downloads') },
-                    { text: 'OK', onPress: () => {}}
+                    { text: 'Go to downloads', onPress: () => navigation.navigate('Downloads') },
+                    { text: 'OK', onPress: () => { } }
                 ]);
 
         } catch (error) {
@@ -374,7 +407,7 @@ const AudioScreen = ({ route }) => {
                         justifyContent: 'space-between', marginTop: 10,
                     }}>
                         <TouchableOpacity style={[styles.button, {}]} onPress={toggleMute}>
-                            {isMuted ? <UnMuteIcon /> : <MuteIcon />}
+                            {isMuted ? <MuteIcon /> : <UnMuteIcon />}
                         </TouchableOpacity>
 
                         <TouchableOpacity style={[styles.button, {
