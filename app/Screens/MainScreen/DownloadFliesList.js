@@ -16,7 +16,7 @@ import Metrics from '../../utils/ResposivesUtils/Metrics';
 
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { Audio } from 'expo-av';
 
 import Slider from '@react-native-community/slider';
@@ -25,6 +25,7 @@ import MuteIcon from '../../assets/SVGS/MusicPlayer/Player/MuteIcon';
 import PauseIcon from '../../assets/SVGS/MusicPlayer/Player/Pause';
 import PlayIcon from '../../assets/SVGS/MusicPlayer/Player/PlayIcon';
 import { SatyaSadhnaDownload } from '../AppContant';
+import { useToast } from 'react-native-toast-notifications';
 
 const DownloadFliesList = () => {
     const [sound, setSound] = useState(null);
@@ -40,8 +41,19 @@ const DownloadFliesList = () => {
     const [isVideoPlaying, setIsVideoPlaying] = useState(false);
     const [isVideoLoaded, setIsVideoLoaded] = useState(false)
     const videoRef = useRef(null);
+    const toast = useToast();
 
+
+    const isFocused = useIsFocused();
+    useEffect(() => {
+     
+
+        if(!isFocused && isPlaying){
+            playPauseAudio()
+        }
+    }, [isFocused])
     const fetchDownloads = async () => {
+
         const files = await AsyncStorage.getItem(SatyaSadhnaDownload, (error, data) => {
             if (error) {
                 console.log("Error ", error)
@@ -50,6 +62,8 @@ const DownloadFliesList = () => {
                 setDownloadedFiles(data ? JSON.parse(data) : []);
             }
         });
+
+
         // console.log("downloadedFiles", downloadedFiles)
 
         // setDownloadedFiles(files ? JSON.parse(files) : []);
@@ -125,6 +139,7 @@ const DownloadFliesList = () => {
             console.log("DeleteAudio 4")
             setDownloadedFiles(updatedFiles);
             // Alert.alert('File deleted', 'The file has been deleted successfully.');
+            toast.show("File has been deleted successfully. ")
         }
     };
 

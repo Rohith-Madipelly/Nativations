@@ -36,6 +36,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { setDownloadList, setToken } from '../../redux/actions/loginAction.jsx';
 import { SatyaSadhnaDownload } from '../AppContant.js';
+import { useToast } from 'react-native-toast-notifications';
 const AudioScreen = ({ route }) => {
 
     const { id, download } = route.params
@@ -57,7 +58,7 @@ const AudioScreen = ({ route }) => {
     const navigation = useNavigation();
 
     const [relatedPosts, setRelatedPosts] = useState()
-
+    const toast = useToast();
 
 
     const [title, setTitle] = useState()
@@ -80,52 +81,58 @@ const AudioScreen = ({ route }) => {
 
     useEffect(() => {
         HomeData()
+
+        const datad=null
+        // toast.show("Download Button Checking for is alerdy downloaded or not ")
+
+        console.log("d",JSON.parse(datad))
     }, [id])
 
     const dispatch = useDispatch()
     const [downloadedFiles, setDownloadedFiles] = useState([]);
     const [downloadLoading, setDownloadLoading] = useState([]);
 
-    const fetchDownloads = async () => {
-        const files = await AsyncStorage.getItem(SatyaSadhnaDownload, (error, data) => {
-            console.log("Error in fetchDownloads", error)
-            console.log(data)
+    // const fetchDownloads = async () => {
+    //     const files = await AsyncStorage.getItem(SatyaSadhnaDownload, (error, data) => {
+    //         console.log("Error in fetchDownloads", error)
+    //         console.log(data)
 
-            console.log("files", data)
-            setDownloadedFiles(data ? JSON.parse(data) : []);
-        });
-        // console.log("files", files)
-        setDownloadedFiles(files ? JSON.parse(files) : []);
-
-
-    };
-
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         fetchDownloads();
-    //     }, [])
-    // )
+    //         console.log("files", data)
+    //         setDownloadedFiles(data ? JSON.parse(data) : []);
+    //     });
+    //     // console.log("files", files)
+    //     setDownloadedFiles(files ? JSON.parse(files) : []);
+    // };
 
 
     const downloadAudio = async (audioUrl, fileName, id) => {
+        // toast.show("Download Button Checking for is alerdy downloaded or not ")
         try {
             // Check if the file is already downloaded
             const files = await AsyncStorage.getItem(SatyaSadhnaDownload, (error, data) => {
-                var datax = JSON.parse(data)
-                setDownloadedFiles(datax ? datax : []);
-
-                const isAlreadyDownloaded = datax.some(file => file.id === id);
-                if (isAlreadyDownloaded) {
-                    Alert.alert('Already downloaded', 'This file has already been downloaded.');
-                    return;
+                if (error) {
+                    toast.show("Error in getting Storage Data")
                 } else {
-                    downloadAudio2(audioUrl, fileName, id)
+                    if (data) {
+                        var datax = JSON.parse(data)
+                        const isAlreadyDownloaded = datax.some(datax => datax.id === id);
+                        if (isAlreadyDownloaded) {
+                            Alert.alert('Already downloaded', 'This file has already been downloaded.');
+                            return;
+                        } else {
+                            downloadAudio2(audioUrl, fileName, id)
+                        }
+                    }else{
+                        downloadAudio2(audioUrl, fileName, id)
+                    }
                 }
+
             })
         }
         catch (e) {
-            console.log("Error in downloadAudio",e)
+            console.log("Error in downloadAudio", e)
         }
+        // downloadAudio2(audioUrl, fileName, id)
     }
 
     const downloadAudio2 = async (audioUrl, fileName, id) => {
@@ -188,9 +195,8 @@ const AudioScreen = ({ route }) => {
 
 
     const HomeData = async () => {
-        fetchDownloads()
+
         setSpinnerBool(true)
-        console.log("ajhjh", id)
         try {
             const res = await VideoPageData(tokenn, id)
 

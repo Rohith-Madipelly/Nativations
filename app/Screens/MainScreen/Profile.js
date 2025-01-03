@@ -27,7 +27,9 @@ import GlobalStyles from '../../Components/UI/GlobalStyles';
 import NoInternetImage from '../../assets/SVGS/UIScrees/NoInternetImage';
 import Metrics from '../../utils/ResposivesUtils/Metrics';
 
-
+import Constants from 'expo-constants';
+import { CustomLinking } from '../../utils/CustomLinking';
+import { SERVICE_PROVIDER_WEBSITE } from '../../Enviornment';
 const Profile = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
   const [UserName, setUserName] = useState("")
@@ -210,13 +212,14 @@ const Profile = () => {
   }
 
   return (
-    <View>
+    <View style={{ flex: 1, }}>
       <Spinner
         visible={spinnerBool}
         color={"#5F2404"}
         animation={'fade'}
       />
       <ScrollView style={[{
+        flex: 1,
         // borderTopRightRadius: 25, borderTopLeftRadius: 25,
         backgroundColor: "#FFF"
       }]}
@@ -504,7 +507,37 @@ const Profile = () => {
                 </TouchableOpacity>
               </View>
 
+              <View style={{ marginBottom: 10 }}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => {
+                  //  navigation.navigate("DeleteAccount")
+                  // DeleteAccountPolicy
+                  navigation.navigate("DeleteAccountPolicy")
+                }}>
 
+                  <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
+
+                    <View style={{ display: '', flexDirection: 'row', justifyContent: 'flex-start' }}>
+
+                      <View>
+                        <Image style={{ width: 22, height: 22, }}
+                          source={require("../../../assets/InternalImages/ProfileLogos/trash.png")}
+                          resizeMode={"contain"} />
+                      </View>
+
+                      <View style={{ marginLeft: 14 }}>
+                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Delete Account Policy</Text>
+                      </View>
+                    </View>
+
+                    <View style={{ marginTop: 0 }}>
+                      <Image style={{ width: 22, height: 22 }}
+                        source={require("../../../assets/InternalImages/right.png")}
+                        resizeMode={"contain"} />
+                    </View>
+
+                  </View>
+                </TouchableOpacity>
+              </View>
               {/* Rate & Review tab */}
               <View style={{ marginBottom: 10 }}>
 
@@ -571,33 +604,7 @@ const Profile = () => {
                 </TouchableOpacity>
               </View>
 
-              <View style={{ marginBottom: 10 }}>
-                <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("DeleteAccount") }}>
 
-                  <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
-
-                    <View style={{ display: '', flexDirection: 'row', justifyContent: 'flex-start' }}>
-
-                      <View>
-                        <Image style={{ width: 22, height: 22, }}
-                          source={require("../../../assets/InternalImages/ProfileLogos/trash.png")}
-                          resizeMode={"contain"} />
-                      </View>
-
-                      <View style={{ marginLeft: 14 }}>
-                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Delete Account</Text>
-                      </View>
-                    </View>
-
-                    <View style={{ marginTop: 0 }}>
-                      <Image style={{ width: 22, height: 22 }}
-                        source={require("../../../assets/InternalImages/right.png")}
-                        resizeMode={"contain"} />
-                    </View>
-
-                  </View>
-                </TouchableOpacity>
-              </View>
 
               <View style={{ marginBottom: 10 }}>
                 <TouchableOpacity activeOpacity={0.6} onPress={() => { logoutValidation() }}>
@@ -642,7 +649,28 @@ const Profile = () => {
         {/* <Button title='Log out' onPress={() => { logoutValidation() }}></Button>
         </View> */}
 
+        {/* {console.log("Constants",Constants.AndroidManifest)} */}
 
+        <View style={{ marginRight: 10, marginVertical: 5 }}>
+
+          <Text style={{ color: '#001F2099', textAlign: 'center' }}>
+            Version 2.0.1</Text>
+          <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }} onPress={() => {
+            CustomLinking(SERVICE_PROVIDER_WEBSITE)
+          }}>
+            <MaterialIcons name="copyright" size={15} 
+            // color={THEME_COLOR}
+             />
+            <Text style={{
+              // color: THEME_COLOR,
+              fontWeight: '600', textAlign: 'center', marginVertical: 10, marginLeft: 5, fontSize: 15
+            }}>
+              Analogue IT Solutions
+            </Text>
+          </TouchableOpacity>
+
+
+        </View>
 
       </ScrollView>
 

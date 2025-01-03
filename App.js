@@ -10,6 +10,7 @@ import { Platform } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ToastProvider } from 'react-native-toast-notifications'
+import Metrics from './app/utils/ResposivesUtils/Metrics'
 // Path to the JKS file
 const jksFilePath = Platform.select({
   // ios: `${FileSystem.documentDirectory}/path/to/your/file.jks`,
@@ -61,33 +62,18 @@ export default function App() {
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <ToastProvider
-          // renderType={{
-          //   custom_type: (toast) => (
-          //     <View style={{ padding: 15, backgroundColor: 'grey' }}>
-          //       <Text>{toast.message}</Text>
-          //     </View>
-          //   )
-          // }}
-
-          placement="bottom | top"
-          duration={5000}
-          animationType='slide-in | zoom-in'
-          animationDuration={250}
-          successColor="green"
-          dangerColor="red"
-          // dangerColor="red"
-          warningColor="orange"
-          normalColor="rgba(100, 116, 139, 1)"
-          // icon={<Icon />}
-          // successIcon={<SuccessIcon />}
-          // dangerIcon={<DangerIcon />}
-          // warningIcon={<WarningIcon />}
-          textStyle={{ fontSize: 20 }}
-          offset={50} // offset for both top and bottom toasts
-          offsetTop={30}
-          offsetBottom={160}
-          swipeEnabled={true}
-        // renderToast={(toastOptions) => JSX.Element}
+        placement="bottom"
+        duration={5000}
+        animationType='slide-in'
+        animationDuration={250}
+        successColor="green"
+        dangerColor="red"
+        // dangerColor="red"
+        warningColor="orange"
+        offset={50} // offset for both top and bottom toasts
+        offsetTop={1}
+        offsetBottom={Metrics.rfv(70)}
+        swipeEnabled={true}
         >
           <Provider store={store}>
             <Screen />

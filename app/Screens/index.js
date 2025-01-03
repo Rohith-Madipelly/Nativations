@@ -49,6 +49,7 @@ import TracksAudios from "./MainScreen/TracksAudios";
 import TracksListByCategory from "./MainScreen/TracksListByCategory";
 import CourseRegistration2 from "./MainScreen/NewPages/CourseRegistration2";
 import CourseRegistration1 from "./MainScreen/NewPages/CourseRegistration1";
+import DeleteAccountPolicy from "./MainScreen/OtherPages/DeleteAccountPolicy";
 
 
 
@@ -305,6 +306,11 @@ export default function Screens() {
 
 
                   <Stack.Screen name="Privacy Policy" component={PrivacyPolicy}
+                    options={customHeaderOptions} />
+
+                  {/* DeleteAccountPolicy */}
+
+                  <Stack.Screen name="DeleteAccountPolicy" component={DeleteAccountPolicy}
                     options={customHeaderOptions} />
                 </Stack.Group>
               </>

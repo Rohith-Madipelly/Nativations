@@ -20,7 +20,7 @@ import Metrics from '../../../utils/ResposivesUtils/Metrics';
 
 
 
-const PrivacyPolicy = () => {
+const DeleteAccountPolicy = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
   const [data, setData] = useState("")
   const dispatch = useDispatch();
@@ -145,7 +145,7 @@ const PrivacyPolicy = () => {
                 // backgroundColor:'#D0D0D0',
                 borderRadius:20
               }}
-              source={{ uri: 'https://satyasadhna.com/privacypolicy' }}
+              source={{ uri: 'https://satyasadhna.com/deleteaccount' }}
             />
 
 
@@ -158,7 +158,7 @@ const PrivacyPolicy = () => {
   )
 }
 
-export default PrivacyPolicy;
+export default DeleteAccountPolicy;
 
 const styles = StyleSheet.create({
   container: {

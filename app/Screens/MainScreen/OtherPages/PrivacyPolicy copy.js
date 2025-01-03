@@ -15,8 +15,6 @@ import NetInfo from '@react-native-community/netinfo';
 import OtherComponent from './OtherComponent';
 import { LinearGradient } from 'expo-linear-gradient';
 import CustomStatusBar from '../../../Components/UI/StatusBar/CustomStatusBar';
-import { WebView } from 'react-native-webview';
-import Metrics from '../../../utils/ResposivesUtils/Metrics';
 
 
 
@@ -47,9 +45,9 @@ const PrivacyPolicy = () => {
     console.log("Error in token quotes", err)
   }
 
-  // useEffect(() => {
-  //   ProfileNameKosam()
-  // }, [])
+  useEffect(() => {
+    ProfileNameKosam()
+  }, [])
 
 
   // >>>>>>>>>>>>>>>>>
@@ -118,41 +116,23 @@ const PrivacyPolicy = () => {
     <View style={{ height: '100%' }}>
 
       <CustomStatusBar barStyle="dark-content" backgroundColor="white" />
-      {/* <View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
+      <View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
         <LinearGradient style={{ height: "100%", }} colors={['rgba(20, 0, 255, 0.75)', 'rgba(255, 255, 255, 0.77)', '#FFF']}>
-
+          {/* background */}
         </LinearGradient>
-      </View> */}
-      <View style={{ position: 'relative', top: '2%', backgroundColor: 'pink', height: '100%', borderRadius: 30, overflow: 'scroll', backgroundColor: 'white' }}>
-        {/* <Text style={{ fontWeight: 900, fontSize: 23, marginBottom: 5, marginLeft: 20, marginTop: 20 }}>Privacy Policy</Text> */}
+      </View>
+      <View style={{ position: 'relative', top: '15%', backgroundColor: 'pink', height: '100%', borderRadius: 30, overflow: 'scroll', backgroundColor: 'white' }}>
+        <Text style={{ fontWeight: 900, fontSize: 23, marginBottom: 5, marginLeft: 20, marginTop: 20 }}>Privacy Policy</Text>
 
-        {/* <ScrollView> */}
-          <View style={{ 
-            // margin: 10,
-            // marginTop:15
-            marginBottom:20
-            }}>
+        <ScrollView>
+          <View style={{ margin: 20, marginTop: 10 }}>
 
-            {/* <Text>{data}</Text>
-             */}
-
-
-            <WebView
-              style={{width:'100%',
-                // flex:1,
-                height:200,
-                height:Metrics.height-100,
-                // backgroundColor:'#D0D0D0',
-                borderRadius:20
-              }}
-              source={{ uri: 'https://satyasadhna.com/privacypolicy' }}
-            />
-
-
+            <Text>{data}</Text>
             <View style={{ height: 150 }}>
+
             </View>
           </View>
-        {/* </ScrollView> */}
+        </ScrollView>
       </View>
     </View>
   )
@@ -161,11 +141,7 @@ const PrivacyPolicy = () => {
 export default PrivacyPolicy;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor:'red'
-    // marginTop: Constants.statusBarHeight,
-  },
+
   backgroundContainer: {
     backgroundColor: 'pink',
     height: '100%',
