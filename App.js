@@ -11,11 +11,7 @@ import * as FileSystem from 'expo-file-system';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ToastProvider } from 'react-native-toast-notifications'
 import Metrics from './app/utils/ResposivesUtils/Metrics'
-// Path to the JKS file
-const jksFilePath = Platform.select({
-  // ios: `${FileSystem.documentDirectory}/path/to/your/file.jks`,
-  android: `/vardhaman-satyasadhna-key.keystore`,
-});
+
 
 // Keep the splash screen visible while we fetch resources
 // SplashScreen.preventAutoHideAsync();

@@ -253,6 +253,8 @@ export default function FormScreen() {
     { title: 'no', value: 'no' },
   ];
   // Get the All Courses Avaliable for user
+
+
   const GetData = async () => {
     const res = await GetFormReqs(tokenn)
     try {
@@ -267,10 +269,26 @@ export default function FormScreen() {
     }
   }
   const onRefresh = useCallback(() => {
-    GetFormData()
     GetData()
+    GetFormData()
 }, []);
-
+  // Previews Data of user 
+  const GetFormData = async () => {
+    const res = await GetFormDataSumbited(tokenn)
+    try {
+      if (res) {
+        setUserReviewsData(res.data.userExists)
+      }
+      else {
+      }
+    }
+    catch (error) {
+      setSpinnerbool(false)
+    }
+    finally {
+      setSpinnerbool(false)
+    }
+  }
 
 
   // When user Selects Course Fetch the Course Information
@@ -292,23 +310,7 @@ export default function FormScreen() {
     }
   };
 
-  // Previews Data of user 
-  const GetFormData = async () => {
-    const res = await GetFormDataSumbited(tokenn)
-    try {
-      if (res) {
-        setUserReviewsData(res.data.userExists)
-      }
-      else {
-      }
-    }
-    catch (error) {
-      setSpinnerbool(false)
-    }
-    finally {
-      setSpinnerbool(false)
-    }
-  }
+
 
   useEffect(() => {
     GetFormData()
@@ -361,9 +363,6 @@ export default function FormScreen() {
         reason,
         changeInYourSelf,
       }
-
-
-
       // console.log("dsjbjfjka", oldStudent)
       const knownPerson = {
         personName,
@@ -395,9 +394,6 @@ export default function FormScreen() {
       const courseId = `${courseData._id}`
       const courseName = `${courseData.courseName}`
       const courseDuration = `${courseData.courseDuration}`
-
-
-
 
       const dataEngin = { category, courseId, courseName, courseDuration, from, to, date, firstName, lastName, gender, age, education, martialStatus, guardianName, language: `${otherLanguage ? otherLanguage : language}`, state: `${otherState ? otherState : state}`, mobileNumber, eMail, address, regularMedicine, brief, referenceFrom, oldStudent, docFitnessCertificate, psyschologicalAilment, physicalAilment, professionalDetails, familyPerson, knownPerson }
       setSpinnerbool(true)
@@ -444,18 +440,10 @@ export default function FormScreen() {
       else {
         console.log("Error in Setting up the Request.")
       }
-
-      //   ToasterSender("Error in Setting up the Request.")
-      //   ToasterSender({ Message: error.response.data.message })
-      // ToasterSender({ Message: error })
-
       setSpinnerbool(false)
 
       if (error) {
         console.log(error)
-        // message = error.message;
-        // seterrorFormAPI(message)
-        // "eMail or Password does not match !"
       }
     }
     finally {
@@ -1100,25 +1088,6 @@ export default function FormScreen() {
                 <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
 
 
-                  {/* <CustomTextInput
-      boxWidth={'80%'}
-      placeholder={'Family Person course Done'}
-      label={'Family Person course Done'}
-      name='Family Person course Done'
-      value={values.courseDone}
-      // leftIcon={<FontAwesome name="user" size={20} color="black" />}
-      // bgColor='#e1f3f8'
-      // bgColor="#B1B1B0"
-      onChangeText={(e) => { handleChange("courseDone")(e); seterrorFormAPI(); }}
-      onBlur={handleBlur("courseDone")}
-
-      validate={handleBlur("courseDone")}
-      outlined
-      borderColor={`${(errors.courseDone && touched.courseDone) || (errorFormAPI && errorFormAPI.courseDoneForm) ? "red" : "#ccc"}`}
-      errorMessage={`${(errors.courseDone && touched.courseDone) ? `${errors.courseDone}` : (errorFormAPI && errorFormAPI.courseDoneForm) ? `${errorFormAPI.courseDoneForm}` : ``}`}
-    // errorColor='magenta'
-    /> */}
-
 
         
                   <CustomDropdown
@@ -1319,32 +1288,19 @@ export default function FormScreen() {
 
                   <CustomDropdown
                     boxWidth={'80%'}
-                    // placeholder={'In present'}
                     label={'In present '}
                     name='In present '
-
-
-
-                    // value={values.gender}
-                    // leftIcon={<FontAwesome name="user" size={20} color="black" />}
-                    // bgColor='#e1f3f8'
-                    // bgColor="#B1B1B0"
                     DropDownData={inPresentTwoData}
                     onChange={(e) => { handleChange("inPresentTwo")(e); seterrorFormAPI(); }}
                     onBlur={handleBlur("inPresentTwo")}
-
                     validate={handleBlur("inPresentTwo")}
                     outlined
                     borderColor={`${(errors.inPresentTwo && touched.inPresentTwo) || (errorFormAPI && errorFormAPI.inPresentTwoForm) ? "red" : "#ccc"}`}
                     errorMessage={`${(errors.inPresentTwo && touched.inPresentTwo) ? `${errors.inPresentTwo}` : (errorFormAPI && errorFormAPI.inPresentTwoForm) ? `${errorFormAPI.inPresentTwoForm}` : ``}`}
-                    // errorColor='magenta'
                     value={values.inPresentTwo}
-             
                     onValueChange={(itemValue) => handleChange("inPresentTwo")(itemValue)}
                     containerStyle={{ width: 200 }}
                     labelStyle={{ color: 'blue' }}
-                  // pickerStyle={{ backgroundColor: '#f0f0f0' }}
-                  // error="Please select a gender"
                   />
 
 
@@ -1355,7 +1311,10 @@ export default function FormScreen() {
                 {/* <Text> is present {values.inPresentTwo}</Text> */}
                 {/* <Text> is inPast {values.inPastTwo}</Text> */}
                 {/* <Text style={{ fontWeight: 800, fontSize: 15, marginTop: 5, marginBottom: 5 }}>------- Fitness Certificate -------</Text> */}
-                {values.inPresentTwo === "Yes" || values.inPastTwo === "Yes" ? <CustomDropdown
+               
+               
+               
+                 {values.inPresentTwo === "Yes" || values.inPastTwo === "Yes" ? <CustomDropdown
                   // placeholder={'If yes, kindly bring a fitness certificate from your doctor'}
                   asterisksymbol={true}
                   boxWidth={'80%'}
@@ -1427,6 +1386,8 @@ export default function FormScreen() {
                     errorMessage={`${(errors.medicineDose && touched.medicineDose) ? `${errors.medicineDose}` : (errorFormAPI && errorFormAPI.medicineDoseForm) ? `${errorFormAPI.medicineDoseForm}` : ``}`}
                   // errorColor='magenta'
                   /> : ""}
+
+
 
                 {/* <Text>Family Person Demo_line</Text>  <Text>Family Person end Demo_line</Text> */}
 

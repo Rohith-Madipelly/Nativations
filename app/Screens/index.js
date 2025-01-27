@@ -50,6 +50,8 @@ import TracksListByCategory from "./MainScreen/TracksListByCategory";
 import CourseRegistration2 from "./MainScreen/NewPages/CourseRegistration2";
 import CourseRegistration1 from "./MainScreen/NewPages/CourseRegistration1";
 import DeleteAccountPolicy from "./MainScreen/OtherPages/DeleteAccountPolicy";
+import CourseRegistration3 from "./MainScreen/NewPages/CourseRegistration3";
+import CourseRegistration4 from "./MainScreen/NewPages/CourseRegistration4";
 
 
 
@@ -228,16 +230,24 @@ export default function Screens() {
                   {/* <Stack.Screen name="TestingAudio" component={TestingAudio} options={{
                     headerShown: false,
                   }} /> */}
-                  {/* <Stack.Screen name="CourseRegistration1"
+                  <Stack.Screen name="CourseRegistration1"
                     component={CourseRegistration1}
                     options={customHeaderOptions}
+                  />
 
-                  /> */}
-
-                  {/* <Stack.Screen name="CourseRegistration2"
+                  <Stack.Screen name="CourseRegistration2"
                     component={CourseRegistration2}
                     options={customHeaderOptions}
-                  /> */}
+                  />
+                  <Stack.Screen name="CourseRegistration3"
+                    component={CourseRegistration3}
+                    options={customHeaderOptions}
+                  /> 
+                      <Stack.Screen name="CourseRegistration4"
+                    component={CourseRegistration4}
+                    options={customHeaderOptions}
+                  />
+
                   <Stack.Screen name="BottomTabScreen" component={BottomTabScreen}
                     options={{
                       headerShown: false,
@@ -247,12 +257,10 @@ export default function Screens() {
                     options={customHeaderOptions}
                   />
                   <Stack.Screen name="AudioScreen" component={AudioScreen}
-                    //  options={customHeaderOptions}
                     options={{
                       headerShown: false,
                     }}
                   />
-                  {/* <Stack.Screen name="YoutudeScreen" component={YoutudeScreen} /> */}
                   <Stack.Screen name="Quotes" component={QuotesScreen}
                     options={customHeaderOptions} />
 
@@ -262,56 +270,46 @@ export default function Screens() {
                   <Stack.Screen name="TracksListByCategory" component={TracksListByCategory}
                     options={customHeaderOptions} />
 
+
+
                   <Stack.Screen name="FormScreen" component={FormScreen}
                     options={{
                       headerShown: false,
                     }} />
+
+
                   <Stack.Screen name="Donation" component={Donation}
                     options={customHeaderOptions}
                   />
 
 
 
-                  <Stack.Screen name="About_Guruji" component={About_Guruji}
-                    options={customHeaderOptions}
-                  // options={{
-                  //   headerShown: false,
-                  // }} 
-                  />
 
-                  <Stack.Screen name="About_SatyaSadhana" component={SatyaSadhana}
-                    // options={customHeaderOptions} 
-                    options={{
-                      headerShown: false,
-                    }} />
 
                   <Stack.Screen name="FullProfile" component={UpdateProfile}
                     options={customHeaderOptions} />
 
-                  <Stack.Screen name="DeleteAccount" component={DeleteAccount}
-                    options={customHeaderOptions} />
-
                   <Stack.Screen name="ProfilePassword" component={ChangePassword}
                     options={customHeaderOptions}
-                  // options={{
-                  //   headerShown: false,
-                  // }}
                   />
 
+                  <Stack.Screen name="About_SatyaSadhana" component={SatyaSadhana}
+                    options={customHeaderOptions}
+                  />
+                  <Stack.Screen name="About_Guruji" component={About_Guruji}
+                    options={customHeaderOptions}
+                  />
+                  <Stack.Screen name="Privacy Policy" component={PrivacyPolicy}
+                    options={customHeaderOptions} />
+                  <Stack.Screen name="DeleteAccountPolicy" component={DeleteAccountPolicy}
+                    options={customHeaderOptions} />
+                  {/* <Stack.Screen name="Help" component={Help}
+                    options={customHeaderOptions} />
                   <Stack.Screen name="About" component={About}
                     options={customHeaderOptions} />
 
-                  <Stack.Screen name="Help" component={Help}
-                    options={customHeaderOptions} />
-
-
-                  <Stack.Screen name="Privacy Policy" component={PrivacyPolicy}
-                    options={customHeaderOptions} />
-
-                  {/* DeleteAccountPolicy */}
-
-                  <Stack.Screen name="DeleteAccountPolicy" component={DeleteAccountPolicy}
-                    options={customHeaderOptions} />
+                  <Stack.Screen name="DeleteAccount" component={DeleteAccount}
+                    options={customHeaderOptions} /> */}
                 </Stack.Group>
               </>
             ) : (
