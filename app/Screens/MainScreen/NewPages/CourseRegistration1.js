@@ -17,6 +17,7 @@ import { ImageBackground } from 'expo-image';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CustomFormButton from '../../../Components/UI/Button/CustomFormButton';
 import { useNavigation } from '@react-navigation/native';
+import DisclaimerModel from './DisclaimerModel';
 
 const CourseRegistration1 = () => {
 
@@ -50,7 +51,7 @@ const CourseRegistration1 = () => {
     navigation.setOptions({ title: 'Registration for course' });
   }, [navigation]);
 
-
+  const [modalVisible, setModalVisible] = useState(true);
   return (
     <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 10 }}>
       <CustomStatusBar barStyle="dark-content" backgroundColor="white" />
@@ -66,7 +67,10 @@ const CourseRegistration1 = () => {
       {/* FlatList */}
       <View style={{ flex: 1 }}>
 
-
+        <DisclaimerModel
+          modalVisible={modalVisible}
+          setModalVisible={(e) => { setModalVisible(e) }}
+        />
         <View
         // style={{ flex: 1 }}
         >
@@ -178,13 +182,13 @@ const CourseRegistration1 = () => {
           onPress={() => {
             if (isSelectedCategory == "For old students") {
               if (selectSubCategory) {
-                navigation.navigate("CourseRegistration2", { category: isSelectedCategory,Type:selectSubCategory })
+                navigation.navigate("CourseRegistration2", { category: isSelectedCategory, Type: selectSubCategory })
               }
               else {
                 Alert.alert("Please the type")
               }
             } else {
-              navigation.navigate("CourseRegistration2", { category: isSelectedCategory,Type:"" })
+              navigation.navigate("CourseRegistration2", { category: isSelectedCategory, Type: "" })
             }
           }}
         >

@@ -230,7 +230,18 @@ export default function Screens() {
                   {/* <Stack.Screen name="TestingAudio" component={TestingAudio} options={{
                     headerShown: false,
                   }} /> */}
-                  <Stack.Screen name="CourseRegistration1"
+
+
+                  <Stack.Screen name="BottomTabScreen" component={BottomTabScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+
+
+
+{/* CourseRegistration1 */}
+                  <Stack.Screen name="FormScreen"
                     component={CourseRegistration1}
                     options={customHeaderOptions}
                   />
@@ -242,17 +253,12 @@ export default function Screens() {
                   <Stack.Screen name="CourseRegistration3"
                     component={CourseRegistration3}
                     options={customHeaderOptions}
-                  /> 
-                      <Stack.Screen name="CourseRegistration4"
+                  />
+                  <Stack.Screen name="CourseRegistration4"
                     component={CourseRegistration4}
                     options={customHeaderOptions}
                   />
 
-                  <Stack.Screen name="BottomTabScreen" component={BottomTabScreen}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
                   <Stack.Screen name="VideoScreen" component={VideoScreen}
                     options={customHeaderOptions}
                   />
@@ -272,7 +278,7 @@ export default function Screens() {
 
 
 
-                  <Stack.Screen name="FormScreen" component={FormScreen}
+                  <Stack.Screen name="FormScreenXpage" component={FormScreen}
                     options={{
                       headerShown: false,
                     }} />

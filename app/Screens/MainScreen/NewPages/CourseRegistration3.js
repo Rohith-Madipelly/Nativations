@@ -20,12 +20,9 @@ import { ImageBackground } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
 import { useFormik } from 'formik';
 import { FormData } from '../../../Fomik/schema/FormData';
-import CustomTextInput from '../../../Components/UI/Inputs/CustomTextInput';
 import CustomTextInput2 from '../../../Components/UI/Inputs/CustomTextInput2';
-import CustomDropdown from '../../../Components/UI/Inputs/CustomDropdown';
 import CustomDropdown2 from '../../../Components/UI/Inputs/CustomDropdown2';
-import CustomFormButton from '../../../Components/UI/Button/CustomFormButton';
-import CustomButton from '../../../Components/UI/Button/ButtonC1Cricle';
+
 import CustomDateInput2 from '../../../Components/UI/Inputs/CustomDateInput2';
 import { MaterialIcons } from '@expo/vector-icons';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -37,9 +34,6 @@ const CourseRegistration3 = ({ route }) => {
   const Courses = params?.Courses || 'nan'
   const selectedCourseData = params?.selectedCourseData || 'nan'
   console.log("category Type  CourseRegistration3>", category, Type, Courses, "selectedCourseData", selectedCourseData)
-
-
-  // selectedCourseData:selectedCourseData,category:category,Type:Type,Courses:selectedCourse
 
   const navigation = useNavigation()
   const tokenn = useSelector((state) => state.token)?.replaceAll('"', '');
@@ -62,7 +56,8 @@ const CourseRegistration3 = ({ route }) => {
   } = useFormik({
     initialValues: {
       category: category, Courses: Courses,
-      Type: Type,
+      type: Type,
+
       firstName: "", lastName: "", gender: "", age: "", education: "", martialStatus: "", guardianName: "", language: "", mobileNumber: "", eMail: "", address: "", medicineName: "", medicineDose: "", regularMedicine: "", brief: "", referenceFrom: "",
       oldStuName: "", firstCoursePlace: "", dateFirstCourse: "", dateLastCourse: "", firstAsstTeacher: "", lastCoursePlace: "", lastAsstTeacher: "", courseDetails: "", triedAnyPractise: "", practiseRegularly: "", dailyHours: "", reason: "", changeInYourSelf: "",
       personName: "", personRelation: "", courseDone: "", relation: "", designation: "", companyName: "", companyAddress: "", inPastOne: "", inPresentOne: "", FitnessCertificate: "", inPastTwo: "", inPresentTwo: ""
@@ -218,32 +213,26 @@ const CourseRegistration3 = ({ route }) => {
 
 
 
-  // Shows Alert and Navigates to given page
-  const showAlertAndNavigate = (responseData, toNavigate) => {
-    Alert.alert(
-      'Success',
-      responseData,
-      [
-        {
-          text: 'OK',
-          onPress: () => navigation.navigate(toNavigate),
-        },
-      ],
-      { cancelable: false }
-    );
-  };
 
 
+  const [TodaysDate, setTodaysDate] = useState("")
+  useEffect(() => {
+    const date = new Date();
+
+    const formattedDate = date.toISOString().split('T')[0];
+
+    console.log(formattedDate); // Output: 2025-02-01
+    setTodaysDate(formattedDate)
+
+  }, [])
 
 
   const submitHandler = async (user) => {
-    console.log("Hello")
+    console.log("Hello out formik")
     seterrorFormAPI()
     try {
-console.log("hgdchj",user)
 
-
-      const { category, state, firstName, lastName, gender, age, education, martialStatus, guardianName, language, mobileNumber, eMail, address, medicineName, medicineDose, regularMedicine, brief, referenceFrom,
+      const { category, type, state, otherState, firstName, lastName, gender, age, education, martialStatus, guardianName, language, mobileNumber, eMail, address, medicineName, medicineDose, regularMedicine, brief, referenceFrom,
         oldStuName, firstCoursePlace, dateFirstCourse, dateLastCourse, firstAsstTeacher, lastCoursePlace, lastAsstTeacher, courseDetails, triedAnyPractise, practiseRegularly, dailyHours, reason, changeInYourSelf,
         personName, personRelation, courseDone, FitnessCertificate, relation, designation, companyName, companyAddress, inPastOne, inPresentOne, inPastTwo, inPresentTwo } = user;
 
@@ -262,7 +251,7 @@ console.log("hgdchj",user)
         reason,
         changeInYourSelf,
       }
-      // console.log("dsjbjfjka", oldStudent)
+
       const knownPerson = {
         personName,
         personRelation
@@ -285,10 +274,7 @@ console.log("hgdchj",user)
         inPresentTwo
       }
 
-
-
       const docFitnessCertificate = {
-
         medicineName: `${FitnessCertificate === 'Yes' ? medicineName : "N/A"}`,
         medicineDose: `${FitnessCertificate === 'Yes' ? medicineDose : "N/A"}`,
       }
@@ -297,35 +283,70 @@ console.log("hgdchj",user)
       const courseName = `${selectedCourseData.courseName}`
       const courseDuration = `${selectedCourseData.courseDuration}`
 
-      console.log("Hellooooo")
-      console.log("Hellooooo 2", category, courseId, courseName, courseDuration,
-        //  from,
-        // to, 
-        //  date, 
-        firstName, lastName, gender, age, education, martialStatus, guardianName, mobileNumber, eMail, address, regularMedicine, brief, referenceFrom, oldStudent, docFitnessCertificate, psyschologicalAilment, physicalAilment, professionalDetails, familyPerson, knownPerson)
-      const dataEngin = { category, courseId, courseName, courseDuration, from, to, date, firstName, lastName, gender, age, education, martialStatus, guardianName, language: `${otherLanguage ? otherLanguage : language}`, state: `${otherState ? otherState : state}`, mobileNumber, eMail, address, regularMedicine, brief, referenceFrom, oldStudent, docFitnessCertificate, psyschologicalAilment, physicalAilment, professionalDetails, familyPerson, knownPerson }
-      // setSpinnerbool(true)
 
-      console.log("partdsv")
-      console.log('dataEngin', dataEngin)
-      console.log(">>>>Tester", dataEngin.language)
-      console.log(">>>>Tester.state>>>>>>>>>>>", dataEngin.state)
-      console.log(">>>>Tester regularMedicine", regularMedicine)
-      console.log(">>>>Tester", dataEngin)
-      console.log("asdda")
-      const res = await FormDataApi(dataEngin, tokenn)
+      var DataPage = {
+        courseId: courseId,
+        category: category,
+        type: type || "na",
+        from: selectedCourseData.from,
+        to: selectedCourseData.to,
+        courseName: courseName,
+        courseDuration: courseDuration,
+        language: language,
+        motherTongue: language,
+        state: `${otherState ? otherState : state}`,
+        date: TodaysDate,
+        firstName: firstName,
+        lastName: lastName,
+        gender: gender,
+        age: age,
+        education: education,
+        address: address,
+        guardianName: guardianName,
+        martialStatus: martialStatus,
+        mobileNumber: mobileNumber,
+        eMail: eMail,
+
+        knownPerson,
+
+        familyPerson,
+
+        professionalDetails,
+
+        physicalAilment,
+
+        psyschologicalAilment,
+
+        docFitnessCertificate,
+
+        regularMedicine: regularMedicine,
+        referenceFrom, referenceFrom,
+
+        brief: brief,
+
+        oldStudent
+
+      }
+
+      const res = await FormDataApi(DataPage, tokenn)
       // const res="d"
       if (res) {
         const Message = res.data.message
-        // showAlertAndNavigate(Message, "Home")
+        console.log("......................suff.......", Message)
+        // showAlertAndNavigate(Message, "Home",selectedCourseData)
+
+        navigation.navigate("CourseRegistration4", { selectedCourseData: selectedCourseData, category: category })
+
 
       }
 
     } catch (error) {
       console.log("fs<><><<><><<>", error.response.data.message)
       if (error.response) {
+        Alert.alert(`${error.response.data.message}`)
         if (error.response.status === 400) {
           console.log("Error With 400.")
+
           // showAlertAndNavigate(error.response.data.message, "Home")
         }
         else if (error.response.status === 401) {
@@ -366,8 +387,6 @@ console.log("hgdchj",user)
       handleSubmit();
     } else {
       console.log(Object.values(errors).join(', '))
-      // Display errors in an alert
-      // alert(Object.values(errors).join(', '));
       alert("Please fill in the mandatory fields");
     }
   };
@@ -560,6 +579,7 @@ console.log("hgdchj",user)
               boxWidth={'85%'}
               label={"Gender"}
               placeholder={'Select the gender'}
+              asterisksymbol
               name='gender'
               labelStyle={{
                 color: '#4C5664'
@@ -664,10 +684,11 @@ console.log("hgdchj",user)
               onBlur={handleBlur("state")}
               validate={handleBlur("state")}
               outlined
-              borderColor={`${(errors.state && touched.state) || (errorFormAPI && errorFormAPI.stateForm) ? "red" : "#ccc"}`}
-              errorMessage={`${(errors.state && touched.state) ? `${errors.state}` : (errorFormAPI && errorFormAPI.stateForm) ? `${errorFormAPI.stateForm}` : ``}`}
+              borderColor={`${(errors.state) || (errorFormAPI && errorFormAPI.stateForm) ? "red" : "#ccc"}`}
+              errorMessage={`${(errors.state) ? `${errors.state}` : (errorFormAPI && errorFormAPI.stateForm) ? `${errorFormAPI.stateForm}` : ``}`}
               DropDownArrowColor="#4C5664"
             />
+
 
 
 
@@ -694,11 +715,11 @@ console.log("hgdchj",user)
               onBlur={handleBlur("otherState")}
               validate={handleBlur("otherState")}
               outlined
-              borderColor={`${(errors.otherState && touched.otherState) || (errorFormAPI && errorFormAPI.otherStateForm) ? "red" : "#ccc"}`}
-              errorMessage={`${(errors.otherState && touched.otherState) ? `${errors.otherState}` : (errorFormAPI && errorFormAPI.otherStateForm) ? `${errorFormAPI.otherStateForm}` : ``}`}
+              borderColor={`${(errors.otherState || touched.otherState) || (errorFormAPI && errorFormAPI.otherStateForm) ? "red" : "#ccc"}`}
+              errorMessage={`${(errors.otherState || touched.otherState) ? `${errors.otherState}` : (errorFormAPI && errorFormAPI.otherStateForm) ? `${errorFormAPI.otherStateForm}` : ``}`}
             />)}
 
-
+            {console.log("errors.otherState", errors.otherState)}
             <CustomTextInput2
               boxWidth={'85%'}
               label={'Address'}
@@ -766,6 +787,7 @@ console.log("hgdchj",user)
               label={'Marital status'}
               placeholder={'Select the Martial status'}
               name='martialStatus'
+              asterisksymbol
               labelStyle={{
                 color: '#4C5664'
               }}
@@ -790,6 +812,7 @@ console.log("hgdchj",user)
             <CustomDropdown2
               boxWidth={'85%'}
               label={'Language'}
+              asterisksymbol
               placeholder={'Select the language'}
               name='language'
               labelStyle={{
@@ -884,7 +907,7 @@ console.log("hgdchj",user)
               placeholder={'Is any known person attending the course'}
               name='Is any known person attending the course'
               bgColor={'white'}
-              asterisksymbol={true}
+              // asterisksymbol={true}
               labelStyle={{
                 color: '#4C5664'
               }}
@@ -907,11 +930,12 @@ console.log("hgdchj",user)
               errorMessage={`${(errors.personName && touched.personName) ? `${errors.personName}` : (errorFormAPI && errorFormAPI.personNameForm) ? `${errorFormAPI.personNameForm}` : ``}`}
             />
 
+           
+
             <CustomTextInput2
               boxWidth={'85%'}
               label={'Known person relation'}
               bgColor={'white'}
-              asterisksymbol={true}
               labelStyle={{
                 color: '#4C5664'
               }}
@@ -1083,7 +1107,7 @@ console.log("hgdchj",user)
                 boxWidth={'85%'}
                 label={'In past'}
                 bgColor={'white'}
-                asterisksymbol={true}
+    
                 labelStyle={{
                   color: '#4C5664'
                 }}
@@ -1319,8 +1343,9 @@ console.log("hgdchj",user)
               <CustomDropdown2
                 boxWidth={'85%'}
                 label={'How did you learn about this course'}
-                placeholder={'Select the referenceFrom'}
+                placeholder={'Select'}
                 name='referenceFrom'
+                asterisksymbol
                 labelStyle={{
                   color: '#4C5664'
                 }}
@@ -1372,6 +1397,8 @@ console.log("hgdchj",user)
                 errorMessage={`${(errors.brief && touched.brief) ? `${errors.brief}` : (errorFormAPI && errorFormAPI.briefForm) ? `${errorFormAPI.briefForm}` : ``}`}
               />
 
+              {console.log("errors.brief",errors.brief)}
+
 
               <Text style={{ fontWeight: 800, fontSize: 15, marginTop: 5, marginBottom: 5 }}>--- To be filled in only by old student ---</Text>
               <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
@@ -1382,7 +1409,6 @@ console.log("hgdchj",user)
                   placeholder={'Name of old student'}
                   label={'Name of old student'}
                   bgColor={'white'}
-                  asterisksymbol={true}
                   labelStyle={{
                     color: '#4C5664'
                   }}
@@ -1411,7 +1437,6 @@ console.log("hgdchj",user)
                   label={'First course place'}
 
                   bgColor={'white'}
-                  asterisksymbol={true}
                   labelStyle={{
                     color: '#4C5664'
                   }}
@@ -1440,7 +1465,7 @@ console.log("hgdchj",user)
                   placeholder={'First assist teacher'}
                   label={'First assist teacher'}
                   bgColor={'white'}
-                  asterisksymbol={true}
+              
                   labelStyle={{
                     color: '#4C5664'
                   }}
@@ -1531,7 +1556,7 @@ console.log("hgdchj",user)
 
 
 
-                    minimumDate={values.dateLastCourse || new Date(1900, 10, 20)}
+                    minimumDate={new Date(1900, 10, 20)}
                     maximumDate={new Date(2100, 10, 20)}
                     borderColor={`${(errors.dateLastCourse && touched.dateLastCourse) || (errorFormAPI && errorFormAPI.dateLastCourseForm) ? "red" : "#ccc"}`}
                     errorMessage={`${(errors.dateLastCourse && touched.dateLastCourse) ? `${errors.dateLastCourse}` : (errorFormAPI && errorFormAPI.dateLastCourseForm) ? `${errorFormAPI.dateLastCourseForm}` : ``}`}
@@ -1544,7 +1569,6 @@ console.log("hgdchj",user)
                   placeholder={'Last course place'}
                   label={'Last course place'}
                   bgColor={'white'}
-                  asterisksymbol={true}
                   labelStyle={{
                     color: '#4C5664'
                   }}
@@ -1575,7 +1599,6 @@ console.log("hgdchj",user)
                   placeholder={'Last assist teacher'}
                   label={'Last assist teacher'}
                   bgColor={'white'}
-                  asterisksymbol={true}
                   labelStyle={{
                     color: '#4C5664'
                   }}
@@ -1633,7 +1656,6 @@ console.log("hgdchj",user)
                   label={'Have you tried any practice since the last course?'}
 
                   bgColor={'white'}
-                  asterisksymbol={true}
                   labelStyle={{
                     color: '#4C5664'
                   }}
@@ -1664,7 +1686,7 @@ console.log("hgdchj",user)
 
 
                   label={'Do you practice this technique regularly?'}
-                  placeholder={'Select the practiseRegularly'}
+                  placeholder={'Select'}
                   name='practiseRegularly'
                   labelStyle={{
                     color: '#4C5664'
@@ -1688,13 +1710,12 @@ console.log("hgdchj",user)
                   DropDownArrowColor="#4C5664"
                 />
 
-                {values.practiseRegularly === "yes" || values.practiseRegularly === "Courses" ? (
+                {/* {values.practiseRegularly === "yes" || values.practiseRegularly === "Courses" ? ( */}
                   <>
                     <CustomTextInput2
                       boxWidth={'85%'}
                       placeholder={'How many hours daily? '}
 
-                      asterisksymbol
                       label={'How many hours daily?'}
                       bgColor={'white'}
                       labelStyle={{
@@ -1725,7 +1746,6 @@ console.log("hgdchj",user)
                       boxWidth={'85%'}
 
                       bgColor={'white'}
-                      asterisksymbol={true}
                       labelStyle={{
                         color: '#4C5664'
                       }}
@@ -1757,7 +1777,6 @@ console.log("hgdchj",user)
                       placeholder={'What changes have you noticed in yourself by the practice of meditation?'}
                       label={'What changes have you noticed in yourself by the practice of meditation?'}
                       bgColor={'white'}
-                      asterisksymbol={true}
                       labelStyle={{
                         color: '#4C5664'
                       }}
@@ -1782,16 +1801,16 @@ console.log("hgdchj",user)
                     />
 
                   </>
-                ) : ""}
+                {/* ) : ""} */}
 
               </View>
 
 
-              {/* {errors && (
+              {errors && (
                   <Text style={{ color: 'red' }}>
                     {Object.values(errors).join('\n')}
                   </Text>
-                )} */}
+                )}
               <TouchableOpacity style={{
                 backgroundColor: '#030370', width: '75%',
                 marginTop: 15,
@@ -1809,7 +1828,7 @@ console.log("hgdchj",user)
 
 
 
-              <View style={{ height: 40 }}>
+              <View style={{ height: 70 }}>
 
               </View>
             </View>

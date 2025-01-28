@@ -24,7 +24,7 @@ const CustomTextInput2 = ({
     onChangeText,
     borderColor,
     secure,
-    validate,
+    validate, 
     editable,
     errorMessage,
     errorColor = 'red',

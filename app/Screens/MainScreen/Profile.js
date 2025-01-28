@@ -382,7 +382,7 @@ const Profile = () => {
                       </View>
 
                       <View style={{ marginLeft: 14 }}>
-                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Fill Form</Text>
+                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Register for Course</Text>
                       </View>
                     </View>
 
@@ -618,7 +618,7 @@ const Profile = () => {
 
         <View style={{ marginRight: 10, marginVertical: 5 }}>
           <Text style={{ color: '#001F2099', textAlign: 'center' }}>
-            Version 2.0.1</Text>
+            Version 2.2.0</Text>
           <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }} onPress={() => {
             CustomLinking(SERVICE_PROVIDER_WEBSITE)
           }}>

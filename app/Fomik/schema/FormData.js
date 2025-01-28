@@ -48,7 +48,7 @@ const FormData = Yup.object().shape({
 
 
 
-        Type: Yup.string(),
+        type: Yup.string(),
 
 
     language: Yup.string()
