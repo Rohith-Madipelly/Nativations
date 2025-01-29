@@ -388,7 +388,7 @@ const CourseRegistration3 = ({ route }) => {
     } else {
       console.log(Object.values(errors).join(', '))
       alert("Please fill in the mandatory fields");
-    }
+    } 
   };
 
 
