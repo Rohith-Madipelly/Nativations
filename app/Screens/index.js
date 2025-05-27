@@ -239,7 +239,6 @@ export default function Screens() {
                   />
 
 
-
                   {/* CourseRegistration1 */}
                   <Stack.Screen name="FormScreen"
                     component={CourseRegistration1}
