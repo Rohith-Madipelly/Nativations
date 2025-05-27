@@ -36,7 +36,7 @@ const CourseRegistration1 = () => {
     { title: 'For New Students', value: 'For New Students' },
     { title: 'For old students', value: 'For Old Students' },
     { title: 'For Children/Teens', value: 'For Children/Teens' },
-    { title: 'For Executives', value: 'For Executives' },
+    { title: 'For Executives', value: 'For Executives' },
   ];
 
 

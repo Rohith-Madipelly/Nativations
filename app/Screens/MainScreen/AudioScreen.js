@@ -33,8 +33,6 @@ import Metrics from '../../utils/ResposivesUtils/Metrics.js';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { setDownloadList, setToken } from '../../redux/actions/loginAction.jsx';
 import { SatyaSadhnaDownload } from '../AppContant.js';
 import { useToast } from 'react-native-toast-notifications';
 const AudioScreen = ({ route }) => {

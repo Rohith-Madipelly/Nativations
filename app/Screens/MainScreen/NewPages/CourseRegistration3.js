@@ -338,8 +338,7 @@ const CourseRegistration3 = ({ route }) => {
         console.log("......................suff.......", Message)
         // showAlertAndNavigate(Message, "Home",selectedCourseData)
 
-        navigation.navigate("CourseRegistration4", { selectedCourseData: selectedCourseData, category: category })
-
+        navigation.navigate("CourseRegistration4", { selectedCourseData: selectedCourseData||"", category: category||"" })
 
       }
 
