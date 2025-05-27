@@ -131,12 +131,16 @@ const Home = () => {
     }
   }, [isConnected])
 
+  const [formStatus,setFormStatus]=useState(true)
+
   const HomeData = async () => {
     setSpinnerbool(true)
 
     try {
       const res = await HomePageData(tokenn)
       if (res) {
+        console.log("formStatus",res.data.formStatus)
+        setFormStatus(res.data.formStatus)
         setQuote(res.data.recentQoute.quote)
         setIsData(true)
         setBanners(res.data.banners)
@@ -260,7 +264,7 @@ const Home = () => {
               flexDirection: 'row', justifyContent: 'space-evenly', padding: 5, marginHorizontal: 5, borderRadius: 13, marginTop: 5, gap: 3
             }}>
 
-              <TouchableOpacity style={{ flex: 0.23, }}
+              {!formStatus&&<TouchableOpacity style={{ flex: 0.23, }}
                 onPress={() => {
                   navigation.navigate("FormScreen")
                 }}
@@ -273,7 +277,7 @@ const Home = () => {
                 <View style={{ marginTop: 5 }}>
                   <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Register</Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity>}
 
               <TouchableOpacity style={{ flex: 0.23, }}
                 onPress={() => {

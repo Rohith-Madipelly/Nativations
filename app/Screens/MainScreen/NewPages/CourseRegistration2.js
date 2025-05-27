@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 5,
     paddingLeft: 10,
+    color:"gray"
   },
   sortButtons: {
     flexDirection: 'row',

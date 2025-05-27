@@ -65,6 +65,11 @@ const AudioScreen = ({ route }) => {
     const [audio, setAudio] = useState()
     const [postDetails, setPostDetails] = useState()
 
+    Audio.setAudioModeAsync({
+        staysActiveInBackground: false, // explicitly set this
+        playsInSilentModeIOS: true,
+    });
+
 
     try {
         if (tokenn != null) {
@@ -82,14 +87,12 @@ const AudioScreen = ({ route }) => {
     useEffect(() => {
         HomeData()
 
-        const datad=null
+        const datad = null
         // toast.show("Download Button Checking for is alerdy downloaded or not ")
 
-        console.log("d",JSON.parse(datad))
+        console.log("d", JSON.parse(datad))
     }, [id])
 
-    const dispatch = useDispatch()
-    const [downloadedFiles, setDownloadedFiles] = useState([]);
     const [downloadLoading, setDownloadLoading] = useState([]);
 
     // const fetchDownloads = async () => {
@@ -122,7 +125,7 @@ const AudioScreen = ({ route }) => {
                         } else {
                             downloadAudio2(audioUrl, fileName, id)
                         }
-                    }else{
+                    } else {
                         downloadAudio2(audioUrl, fileName, id)
                     }
                 }
@@ -360,6 +363,7 @@ const AudioScreen = ({ route }) => {
                 visible={spinnerBool || downloadLoading}
                 color={"#5F2404"}
                 animation={'fade'}
+
             />
             <LinearGradient
                 style={{ flex: 1 }}

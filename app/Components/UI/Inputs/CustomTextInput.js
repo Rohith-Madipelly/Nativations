@@ -39,7 +39,7 @@ const CustomTextInput = ({
                 <TextInput
                     placeholder={placeholder ? placeholder : label ? `Enter ${label}` : ''}
                     value={value}
-                    // placeholderTextColor={"#444"}
+                    placeholderTextColor={'#4C5664'}
                     secureTextEntry={secure}
                     autoComplete={autoComplete}
                     keyboardType={keyboardType}
@@ -53,7 +53,7 @@ const CustomTextInput = ({
                     multiline={numLines > 1 ? true : false}
                     numberOfLines={numLines}
                     editable={editable}
-                    style={{ flex: 4 }}
+                    style={{ flex: 4, color: 'black', }}
 
                 />
                 <View style={{ paddingLeft: 5 }}>

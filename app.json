@@ -8,7 +8,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icon.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
@@ -18,7 +18,6 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "vardhaman.satyasadhnaOne",
-      
       "infoPlist": {
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
@@ -43,23 +42,41 @@
     },
     "plugins": [
       "expo-font",
-      "expo-video"
-    ],
-    "doctor": {
-      "reactNativeDirectoryCheck": {
-        "exclude": [
-          "react-native-loading-spinner-overlay",
-          "react-native-snap-carousel",
-          "@reduxjs/toolkit",
-          "doctor",
-          "form-data",
-          "react-native-select-dropdown",
-          "react-native-ytdl",
-          "react-redux",
-          "yup"
-        ],
-        "listUnknownPackages": false
-      }
+      "expo-video",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFFFFF",
+          "image": "./assets/icon.png",
+          "dark": {
+            "image": "./assets/icon.png",
+            "backgroundColor": "#000000"
+          },
+          "imageWidth": 400
+        }
+      ],
+  ],
+  "doctor": {
+    "reactNativeDirectoryCheck": {
+      "exclude": [
+        "react-native-loading-spinner-overlay",
+        "react-native-snap-carousel",
+        "@reduxjs/toolkit",
+        "doctor",
+        "form-data",
+        "react-native-select-dropdown",
+        "react-native-ytdl",
+        "react-redux",
+        "yup"
+      ],
+      "listUnknownPackages": false
     }
   }
+}
 }

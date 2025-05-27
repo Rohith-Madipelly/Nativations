@@ -327,6 +327,9 @@ const CourseRegistration3 = ({ route }) => {
         oldStudent
 
       }
+      setTimeout(() => {
+        console.log("dnvch")
+      }, 200);
 
       const res = await FormDataApi(DataPage, tokenn)
       // const res="d"
@@ -343,7 +346,7 @@ const CourseRegistration3 = ({ route }) => {
     } catch (error) {
       console.log("fs<><><<><><<>", error.response.data.message)
       if (error.response) {
-        Alert.alert(`${error.response.data.message}`)
+        Alert.alert("",`${error.response.data.message}`)
         if (error.response.status === 400) {
           console.log("Error With 400.")
 

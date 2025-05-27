@@ -49,13 +49,13 @@ export default function Login() {
             unsubscribe();
             // seterrorFormAPI("");
         };
-     
+
     }, []);
 
 
 
 
-    
+
 
 
     function onchange(text, field) {
@@ -265,7 +265,7 @@ export default function Login() {
                                                     const trimmedValue = e.trim();
                                                     handleChange("password")(trimmedValue);
                                                     seterrorFormAPI();
-                                                    setShow({ ...setShow, password: false });
+                                                    // setShow({ ...setShow, password: false });
                                                 }}
 
 
@@ -292,7 +292,10 @@ export default function Login() {
                                             </View>
 
                                             <CustomButton
-                                                onPress={handleSubmit}
+                                                onPress={() => {
+                                                    setShow({ ...setShow, password: false });
+                                                    handleSubmit()
+                                                }}
                                                 leftIcon={<Entypo style={styles.icon} name={'login'} size={18} color={'white'} />}
                                                 bgColor={`${!isValid ? "rgba(3, 3, 112, 1)" : "rgba(3, 3, 112, 1)"}`}
 

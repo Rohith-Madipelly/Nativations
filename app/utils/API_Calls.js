@@ -49,12 +49,17 @@ export const CATEGORY_POSTS_API = async (token) => {
 
 // User Form Data API Call 
 export const FormDataApi = async (loginData, token) => {
-console.log("API LEVEL")
-  return await axios.post(`${GUEST_URL}/user/form`, loginData, {
+console.log("API LEVEL",loginData)
+setTimeout(() => {
+  
+}, 200);
+ const res=await axios.post(`${GUEST_URL}/user/form`, loginData, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   });
+  console.log("iuyftdrsdfyguihojjhgfhdgh",res)
+  return res
 };
 
 

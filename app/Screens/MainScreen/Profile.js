@@ -366,7 +366,7 @@ const Profile = () => {
 
               {/* notification tab end */}
 
-              <View style={{ marginBottom: 10 }}>
+              {true&&<View style={{ marginBottom: 10 }}>
 
                 <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("FormScreen") }}>
 
@@ -395,7 +395,7 @@ const Profile = () => {
                   </View>
                 </TouchableOpacity>
 
-              </View>
+              </View>}
 
 
             </View>
