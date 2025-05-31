@@ -1,13 +1,8 @@
-import { View, Text } from 'react-native'
-import React from 'react'
 import Screen from './app/Screens'
 import { store } from './app/redux/store'
 import { Provider } from 'react-redux'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
-
-import { Platform } from 'react-native';
-import * as FileSystem from 'expo-file-system';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ToastProvider } from 'react-native-toast-notifications'
 import Metrics from './app/utils/ResposivesUtils/Metrics'
