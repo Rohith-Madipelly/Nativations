@@ -1,25 +1,19 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
-  Alert,
-  FlatList,
   KeyboardAvoidingView,
   Platform,
-  RefreshControl,
+
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
+
   TouchableOpacity,
   View,
 } from 'react-native';
 import CustomStatusBar from '../../../Components/UI/StatusBar/CustomStatusBar';
 import Metrics from '../../../utils/ResposivesUtils/Metrics';
-import { useSelector } from 'react-redux';
-import { GetFormReqs } from '../../../utils/API_Calls';
 import { ImageBackground } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
-import { useFormik } from 'formik';
-import { FormData } from '../../../Fomik/schema/FormData';
 import { Ionicons } from '@expo/vector-icons';
 
 

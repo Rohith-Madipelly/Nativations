@@ -119,12 +119,22 @@ const FormData = Yup.object().shape({
 
     courseDone: Yup.string().oneOf(["yes", "no"], "Invalid course done yes or no"),
 
-    relation: Yup.string(),
+    // relation: Yup.string(),
+
+       relation: Yup.string()
+        .when(['courseDone'], ([courseDone], schema) => {
+            if (courseDone === "yes")
+                return schema
+                    .required('Family person`s relation is required')
+            return
+        }),
+
+
     designation: Yup.string(),
     companyName: Yup.string(),
     companyAddress: Yup.string(),
     inPastOne: Yup.string(),
-    inPresentOne: Yup.string(),
+    inPresentOne: Yup.string().required('Physical Ailment in present field is required'),
     inPastTwo: Yup.string(),
     inPresentTwo: Yup.string(),
 

@@ -63,7 +63,7 @@ const CourseRegistration3 = ({ route }) => {
     onSubmit: values => {
       {
         console.log("JHevdjhe", values)
-        submitHandler(values)
+        // submitHandler(values)
       }
     },
 
@@ -274,7 +274,6 @@ const CourseRegistration3 = ({ route }) => {
       const docFitnessCertificate = {
         medicineName: `${FitnessCertificate === 'Yes' ? medicineName : "N/A"}`,
         medicineDose: `${FitnessCertificate === 'Yes' ? medicineDose : "N/A"}`,
-        regularMedicine: regularMedicine,
       }
 
       const courseId = `${selectedCourseData._id}`
@@ -317,7 +316,7 @@ const CourseRegistration3 = ({ route }) => {
 
         docFitnessCertificate,
 
-        // regularMedicine: regularMedicine,
+        regularMedicine: regularMedicine,
         referenceFrom, referenceFrom,
 
         brief: brief,
@@ -336,14 +335,14 @@ const CourseRegistration3 = ({ route }) => {
         console.log("......................suff.......", Message)
         // showAlertAndNavigate(Message, "Home",selectedCourseData)
 
-        navigation.navigate("CourseRegistration4", { selectedCourseData: selectedCourseData || "", category: category || "" })
+        navigation.navigate("CourseRegistration4", { selectedCourseData: selectedCourseData||"", category: category||"" })
 
       }
 
     } catch (error) {
       console.log("fs<><><<><><<>", error.response.data.message)
       if (error.response) {
-        Alert.alert("", `${error.response.data.message}`)
+        Alert.alert("",`${error.response.data.message}`)
         if (error.response.status === 400) {
           console.log("Error With 400.")
 
@@ -388,7 +387,7 @@ const CourseRegistration3 = ({ route }) => {
     } else {
       console.log(Object.values(errors).join(', '))
       alert("Please fill in the mandatory fields");
-    }
+    } 
   };
 
 
@@ -630,7 +629,6 @@ const CourseRegistration3 = ({ route }) => {
 
               borderColor={`${(errors.age && touched.age) || (errorFormAPI && errorFormAPI.ageForm) ? "red" : "#ccc"}`}
               errorMessage={`${(errors.age && touched.age) ? `${errors.age}` : (errorFormAPI && errorFormAPI.ageForm) ? `${errorFormAPI.ageForm}` : ``}`}
-
             />
 
             <CustomTextInput2
@@ -716,8 +714,8 @@ const CourseRegistration3 = ({ route }) => {
               onBlur={handleBlur("otherState")}
               validate={handleBlur("otherState")}
               outlined
-              borderColor={`${(errors.otherState && touched.otherState) || (errorFormAPI && errorFormAPI.otherStateForm) ? "red" : "#ccc"}`}
-              errorMessage={`${(errors.otherState && touched.otherState) ? `${errors.otherState}` : (errorFormAPI && errorFormAPI.otherStateForm) ? `${errorFormAPI.otherStateForm}` : ``}`}
+              borderColor={`${(errors.otherState || touched.otherState) || (errorFormAPI && errorFormAPI.otherStateForm) ? "red" : "#ccc"}`}
+              errorMessage={`${(errors.otherState || touched.otherState) ? `${errors.otherState}` : (errorFormAPI && errorFormAPI.otherStateForm) ? `${errorFormAPI.otherStateForm}` : ``}`}
             />)}
 
             {console.log("errors.otherState", errors.otherState)}
@@ -931,7 +929,7 @@ const CourseRegistration3 = ({ route }) => {
               errorMessage={`${(errors.personName && touched.personName) ? `${errors.personName}` : (errorFormAPI && errorFormAPI.personNameForm) ? `${errorFormAPI.personNameForm}` : ``}`}
             />
 
-
+           
 
             <CustomTextInput2
               boxWidth={'85%'}
@@ -1108,7 +1106,7 @@ const CourseRegistration3 = ({ route }) => {
                 boxWidth={'85%'}
                 label={'In past'}
                 bgColor={'white'}
-
+    
                 labelStyle={{
                   color: '#4C5664'
                 }}
@@ -1398,7 +1396,7 @@ const CourseRegistration3 = ({ route }) => {
                 errorMessage={`${(errors.brief && touched.brief) ? `${errors.brief}` : (errorFormAPI && errorFormAPI.briefForm) ? `${errorFormAPI.briefForm}` : ``}`}
               />
 
-              {console.log("errors.brief", errors.brief)}
+              {console.log("errors.brief",errors.brief)}
 
 
               <Text style={{ fontWeight: 800, fontSize: 15, marginTop: 5, marginBottom: 5 }}>--- To be filled in only by old student ---</Text>
@@ -1466,7 +1464,7 @@ const CourseRegistration3 = ({ route }) => {
                   placeholder={'First assist teacher'}
                   label={'First assist teacher'}
                   bgColor={'white'}
-
+              
                   labelStyle={{
                     color: '#4C5664'
                   }}
@@ -1517,9 +1515,7 @@ const CourseRegistration3 = ({ route }) => {
                     }}
                     rightIcon={<MaterialIcons name="date-range" size={20} color="black" />}
                     onChangeText={(e, b, c) => {
-                      console.log("hjgdvjycshvd", e)
                       handleChange("dateFirstCourse")(e);
-                      handleChange("dateLastCourse")("");
                       seterrorFormAPI();
                     }}
                     onBlur={handleBlur("dateFirstCourse")}
@@ -1527,7 +1523,7 @@ const CourseRegistration3 = ({ route }) => {
                     outlined
                     backgroundColor={'white'}
                     minimumDate={new Date(1900, 10, 20)}
-                    maximumDate={new Date()}
+                    maximumDate={new Date(2100, 10, 20)}
                     borderColor={`${(errors.dateFirstCourse && touched.dateFirstCourse) || (errorFormAPI && errorFormAPI.dateFirstCourseForm) ? "red" : "#ccc"}`}
                     errorMessage={`${(errors.dateFirstCourse && touched.dateFirstCourse) ? `${errors.dateFirstCourse}` : (errorFormAPI && errorFormAPI.dateFirstCourseForm) ? `${errorFormAPI.dateFirstCourseForm}` : ``}`}
                   />
@@ -1540,7 +1536,7 @@ const CourseRegistration3 = ({ route }) => {
                     label={'Last course date'}
                     name='Last course date'
                     date='date'
-                    value={values.dateLastCourse || new Date()}
+                    value={values.dateFirstCourse || new Date()}
                     labelStyle={{
                       color: '#4C5664'
                     }}
@@ -1548,30 +1544,10 @@ const CourseRegistration3 = ({ route }) => {
                       color: '#4C5664'
                     }}
                     rightIcon={<MaterialIcons name="date-range" size={20} color="black" />}
-
-
-                    onChangeText={(e) => {
-                      console.log("values?.dateFirstCourse", values?.dateFirstCourse);
-
-                      const dateFirstCourse = new Date(values?.dateFirstCourse);
-                      const dateLastCourse = new Date(e); // <-- Parse user input
-
-                      console.log("dateLastCourse > dateFirstCourse", dateLastCourse, dateFirstCourse);
-                      console.log("dateLastCourse > dateFirstCourse?", dateLastCourse > dateFirstCourse);
-
-                      if (dateLastCourse <= dateFirstCourse) {
-                        Alert.alert(
-                          undefined,
-                          `The last course date cannot be earlier than the first course date (${values?.dateFirstCourse}).`
-                        );
-                        // seterrorFormAPI({ dateLastCourseForm: "Date Error" });
-                      } else {
-                        console.log("Dates are valid.");
-                        // handleChange("dateLastCourse")(e);
-                        seterrorFormAPI(); // clear error
-                      }
+                    onChangeText={(e, b, c) => {
+                      handleChange("dateLastCourse")(e);
+                      seterrorFormAPI();
                     }}
-
                     onBlur={handleBlur("dateLastCourse")}
                     validate={handleBlur("dateLastCourse")}
                     outlined
@@ -1580,7 +1556,7 @@ const CourseRegistration3 = ({ route }) => {
 
 
                     minimumDate={new Date(1900, 10, 20)}
-                    maximumDate={new Date()}
+                    maximumDate={new Date(2100, 10, 20)}
                     borderColor={`${(errors.dateLastCourse && touched.dateLastCourse) || (errorFormAPI && errorFormAPI.dateLastCourseForm) ? "red" : "#ccc"}`}
                     errorMessage={`${(errors.dateLastCourse && touched.dateLastCourse) ? `${errors.dateLastCourse}` : (errorFormAPI && errorFormAPI.dateLastCourseForm) ? `${errorFormAPI.dateLastCourseForm}` : ``}`}
                   />
@@ -1734,106 +1710,106 @@ const CourseRegistration3 = ({ route }) => {
                 />
 
                 {/* {values.practiseRegularly === "yes" || values.practiseRegularly === "Courses" ? ( */}
-                <>
-                  <CustomTextInput2
-                    boxWidth={'85%'}
-                    placeholder={'How many hours daily? '}
+                  <>
+                    <CustomTextInput2
+                      boxWidth={'85%'}
+                      placeholder={'How many hours daily? '}
 
-                    label={'How many hours daily?'}
-                    bgColor={'white'}
-                    labelStyle={{
-                      color: '#4C5664'
-                    }}
-                    InputStyle={{
-                      color: '#4C5664'
-                    }}
+                      label={'How many hours daily?'}
+                      bgColor={'white'}
+                      labelStyle={{
+                        color: '#4C5664'
+                      }}
+                      InputStyle={{
+                        color: '#4C5664'
+                      }}
 
-                    placeholderTextColor={'#4C5664'}
-                    name='dailyHours'
-                    value={values.dailyHours}
-                    onChangeText={(e) => {
-                      handleChange("dailyHours")(e);
-                      seterrorFormAPI();
-                    }}
-                    // leftText={'Accomodate 10 members'}
-                    onBlur={handleBlur("dailyHours")}
-                    validate={handleBlur("dailyHours")}
+                      placeholderTextColor={'#4C5664'}
+                      name='dailyHours'
+                      value={values.dailyHours}
+                      onChangeText={(e) => {
+                        handleChange("dailyHours")(e);
+                        seterrorFormAPI();
+                      }}
+                      // leftText={'Accomodate 10 members'}
+                      onBlur={handleBlur("dailyHours")}
+                      validate={handleBlur("dailyHours")}
 
-                    outlined
+                      outlined
 
-                    borderColor={`${(errors.dailyHours && touched.dailyHours) || (errorFormAPI && errorFormAPI.dailyHoursForm) ? "red" : "#ccc"}`}
-                    errorMessage={`${(errors.dailyHours && touched.dailyHours) ? `${errors.dailyHours}` : (errorFormAPI && errorFormAPI.dailyHoursForm) ? `${errorFormAPI.dailyHoursForm}` : ``}`}
-                  />
+                      borderColor={`${(errors.dailyHours && touched.dailyHours) || (errorFormAPI && errorFormAPI.dailyHoursForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.dailyHours && touched.dailyHours) ? `${errors.dailyHours}` : (errorFormAPI && errorFormAPI.dailyHoursForm) ? `${errorFormAPI.dailyHoursForm}` : ``}`}
+                    />
 
-                  <CustomTextInput2
-                    boxWidth={'85%'}
+                    <CustomTextInput2
+                      boxWidth={'85%'}
 
-                    bgColor={'white'}
-                    labelStyle={{
-                      color: '#4C5664'
-                    }}
-                    InputStyle={{
-                      color: '#4C5664'
-                    }}
-                    placeholder={'If no, What is the reason?'}
+                      bgColor={'white'}
+                      labelStyle={{
+                        color: '#4C5664'
+                      }}
+                      InputStyle={{
+                        color: '#4C5664'
+                      }}
+                      placeholder={'If no, What is the reason?'}
 
-                    label={'If no, What is the reason?'}
-                    placeholderTextColor={'#4C5664'}
-                    name='reason'
-                    value={values.reason}
-                    onChangeText={(e) => {
-                      handleChange("reason")(e);
-                      seterrorFormAPI();
-                    }}
-                    // leftText={'Accomodate 10 members'}
-                    onBlur={handleBlur("reason")}
-                    validate={handleBlur("reason")}
+                      label={'If no, What is the reason?'}
+                      placeholderTextColor={'#4C5664'}
+                      name='reason'
+                      value={values.reason}
+                      onChangeText={(e) => {
+                        handleChange("reason")(e);
+                        seterrorFormAPI();
+                      }}
+                      // leftText={'Accomodate 10 members'}
+                      onBlur={handleBlur("reason")}
+                      validate={handleBlur("reason")}
 
-                    outlined
+                      outlined
 
-                    borderColor={`${(errors.reason && touched.reason) || (errorFormAPI && errorFormAPI.reasonForm) ? "red" : "#ccc"}`}
-                    errorMessage={`${(errors.reason && touched.reason) ? `${errors.reason}` : (errorFormAPI && errorFormAPI.reasonForm) ? `${errorFormAPI.reasonForm}` : ``}`}
-                  />
+                      borderColor={`${(errors.reason && touched.reason) || (errorFormAPI && errorFormAPI.reasonForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.reason && touched.reason) ? `${errors.reason}` : (errorFormAPI && errorFormAPI.reasonForm) ? `${errorFormAPI.reasonForm}` : ``}`}
+                    />
 
-                  <CustomTextInput2
-                    boxWidth={'85%'}
-                    placeholder={'What changes have you noticed in yourself by the practice of meditation?'}
-                    label={'What changes have you noticed in yourself by the practice of meditation?'}
-                    bgColor={'white'}
-                    labelStyle={{
-                      color: '#4C5664'
-                    }}
-                    InputStyle={{
-                      color: '#4C5664'
-                    }}
-                    placeholderTextColor={'#4C5664'}
-                    name='changeInYourSelf'
-                    value={values.changeInYourSelf}
-                    onChangeText={(e) => {
-                      handleChange("changeInYourSelf")(e);
-                      seterrorFormAPI();
-                    }}
-                    // leftText={'Accomodate 10 members'}
-                    onBlur={handleBlur("changeInYourSelf")}
-                    validate={handleBlur("changeInYourSelf")}
+                    <CustomTextInput2
+                      boxWidth={'85%'}
+                      placeholder={'What changes have you noticed in yourself by the practice of meditation?'}
+                      label={'What changes have you noticed in yourself by the practice of meditation?'}
+                      bgColor={'white'}
+                      labelStyle={{
+                        color: '#4C5664'
+                      }}
+                      InputStyle={{
+                        color: '#4C5664'
+                      }}
+                      placeholderTextColor={'#4C5664'}
+                      name='changeInYourSelf'
+                      value={values.changeInYourSelf}
+                      onChangeText={(e) => {
+                        handleChange("changeInYourSelf")(e);
+                        seterrorFormAPI();
+                      }}
+                      // leftText={'Accomodate 10 members'}
+                      onBlur={handleBlur("changeInYourSelf")}
+                      validate={handleBlur("changeInYourSelf")}
 
-                    outlined
+                      outlined
 
-                    borderColor={`${(errors.changeInYourSelf && touched.changeInYourSelf) || (errorFormAPI && errorFormAPI.changeInYourSelfForm) ? "red" : "#ccc"}`}
-                    errorMessage={`${(errors.changeInYourSelf && touched.changeInYourSelf) ? `${errors.changeInYourSelf}` : (errorFormAPI && errorFormAPI.changeInYourSelfForm) ? `${errorFormAPI.changeInYourSelfForm}` : ``}`}
-                  />
+                      borderColor={`${(errors.changeInYourSelf && touched.changeInYourSelf) || (errorFormAPI && errorFormAPI.changeInYourSelfForm) ? "red" : "#ccc"}`}
+                      errorMessage={`${(errors.changeInYourSelf && touched.changeInYourSelf) ? `${errors.changeInYourSelf}` : (errorFormAPI && errorFormAPI.changeInYourSelfForm) ? `${errorFormAPI.changeInYourSelfForm}` : ``}`}
+                    />
 
-                </>
+                  </>
                 {/* ) : ""} */}
 
               </View>
 
 
               {errors && (
-                <Text style={{ color: 'red' }}>
-                  {Object.values(errors).join('\n')}
-                </Text>
-              )}
+                  <Text style={{ color: 'red' }}>
+                    {Object.values(errors).join('\n')}
+                  </Text>
+                )}
               <TouchableOpacity style={{
                 backgroundColor: '#030370', width: '75%',
                 marginTop: 15,
