@@ -11,6 +11,7 @@ import Metrics from './app/utils/ResposivesUtils/Metrics'
 // Keep the splash screen visible while we fetch resources
 // SplashScreen.preventAutoHideAsync();
 export default function App() {
+  //52 git updated
 
   // const [appIsReady, setAppIsReady] = useState(false);
   // useEffect(() => {
