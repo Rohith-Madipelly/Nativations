@@ -10,7 +10,7 @@ import QuoteIcon from '../../assets/SVGS/MusicPlayer/QuoteIcon'
 import SkeletonLoader2 from '../../Components/UI/Loadings/SkeletonLoader'
 import { useNavigation } from '@react-navigation/native'
 
-const QuoteOfDay = ({ Quote ,isQuoteOfDay,bgColor}) => {
+const QuoteOfDay = ({ Quote ,isQuoteOfDay,bgColor,disabled=true}) => {
 
     const navigation=useNavigation()
 
@@ -31,7 +31,9 @@ const QuoteOfDay = ({ Quote ,isQuoteOfDay,bgColor}) => {
     }, [])
     return (
         <>
-            <TouchableOpacity style={{
+            <TouchableOpacity 
+            disabled={disabled}
+            style={{
                 maxHeight: Metrics.height * 0.12,
                 minHeight: 120,
                 backgroundColor: bgColor?bgColor:'rgba(168, 168, 255, 0.30)',

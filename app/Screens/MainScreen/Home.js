@@ -36,6 +36,7 @@ import QuoteIconColorHome from '../../assets/SVGS/Home/QuoteIconColorHome';
 import onShare from '../../utils/ShareBtn';
 import TracksIcons from '../../assets/SVGS/Home/TracksIcons';
 import NoInternetImage from '../../assets/SVGS/UIScrees/NoInternetImage';
+import FloatingPlayer from '../../../FloatingPlayer';
 
 const Home = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
@@ -255,8 +256,6 @@ const Home = () => {
             </TouchableOpacity>
 
 
-
-
             <View style={{
               height: Metrics.rfv(100, 700),
               // maxHeight: Metrics.height * 0.12, 
@@ -340,13 +339,6 @@ const Home = () => {
 
             </View>
 
-            {/* <View>
-  <Text>cdnsvcjh</Text>
-  <Button title='ajs' onPress={()=>{
-     toast.show("Hello World");
-    console.log("c")}}></Button>
-  </View> */}
-
             <View style={{ position: 'relative', marginTop: Metrics.rfv(30) }} onPress={() => { navigation.navigate("About_Guruji") }}>
               <View style={{ flexDirection: 'row', maxHeight: Metrics.height * 0.12, minHeight: 120, backgroundColor: 'rgba(168, 168, 255, 0.19)', padding: 5, marginHorizontal: 10, borderRadius: 13, }}>
                 <View
@@ -404,7 +396,7 @@ const Home = () => {
               NavigationTo(item, download)
             }} />
 
-            <QuoteOfDay Quote={Quote || "If you want peace then calm your desires"} isQuoteOfDay={true} />
+            <QuoteOfDay Quote={Quote || "If you want peace then calm your desires"} isQuoteOfDay={true} disabled={false}/>
             {/* <Snap_Carousel2 BannerData2={meditationTracks} CarouselName={'Meditation Tracks'} /> */}
 
             <View style={{ height: 20 }}>

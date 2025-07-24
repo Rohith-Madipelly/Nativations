@@ -6,6 +6,8 @@ import Toast from 'react-native-toast-message'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ToastProvider } from 'react-native-toast-notifications'
 import Metrics from './app/utils/ResposivesUtils/Metrics'
+import { AudioProvider } from './app/context/AudioProvider'
+import FloatingPlayer from './FloatingPlayer'
 
 
 // Keep the splash screen visible while we fetch resources
@@ -53,22 +55,26 @@ export default function App() {
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <ToastProvider
-        placement="bottom"
-        duration={5000}
-        animationType='slide-in'
-        animationDuration={250}
-        successColor="green"
-        dangerColor="red"
-        // dangerColor="red"
-        warningColor="orange"
-        offset={50} // offset for both top and bottom toasts
-        offsetTop={1}
-        offsetBottom={Metrics.rfv(70)}
-        swipeEnabled={true}
+          placement="bottom"
+          duration={5000}
+          animationType='slide-in'
+          animationDuration={250}
+          successColor="green"
+          dangerColor="red"
+          // dangerColor="red"
+          warningColor="orange"
+          offset={50} // offset for both top and bottom toasts
+          offsetTop={1}
+          offsetBottom={Metrics.rfv(70)}
+          swipeEnabled={true}
         >
+
           <Provider store={store}>
+            <AudioProvider>
             <Screen />
             <Toast />
+      
+          </AudioProvider>
           </Provider>
         </ToastProvider>
       </GestureHandlerRootView>

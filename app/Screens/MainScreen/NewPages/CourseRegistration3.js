@@ -627,7 +627,7 @@ const CourseRegistration3 = ({ route }) => {
               validate={handleBlur("age")}
               keyboardType="numeric"
               outlined
-
+              maxLength={2}
               borderColor={`${(errors.age && touched.age) || (errorFormAPI && errorFormAPI.ageForm) ? "red" : "#ccc"}`}
               errorMessage={`${(errors.age && touched.age) ? `${errors.age}` : (errorFormAPI && errorFormAPI.ageForm) ? `${errorFormAPI.ageForm}` : ``}`}
 
@@ -868,7 +868,7 @@ const CourseRegistration3 = ({ route }) => {
               validate={handleBlur("mobileNumber")}
 
               outlined
-
+              maxLength={10}
               borderColor={`${(errors.mobileNumber && touched.mobileNumber) || (errorFormAPI && errorFormAPI.mobileNumberForm) ? "red" : "#ccc"}`}
               errorMessage={`${(errors.mobileNumber && touched.mobileNumber) ? `${errors.mobileNumber}` : (errorFormAPI && errorFormAPI.mobileNumberForm) ? `${errorFormAPI.mobileNumberForm}` : ``}`}
               keyboardType="number-pad"
@@ -890,7 +890,6 @@ const CourseRegistration3 = ({ route }) => {
               name='eMail'
               value={values.eMail}
               onChangeText={(e) => { const eToLowerCaseText = e.toLowerCase(); handleChange("eMail")(eToLowerCaseText); seterrorFormAPI(); }}
-
               // leftText={'Accomodate 10 members'}
               onBlur={handleBlur("eMail")}
               validate={handleBlur("eMail")}

@@ -30,7 +30,11 @@
         "backgroundColor": "#ffffff"
       },
       "package": "vardhaman.satyasadhnaOne",
-      "versionCode": 7
+      "versionCode": 7,
+      "permissions": [
+        "android.permission.FOREGROUND_SERVICE", 
+        "android.permission.WAKE_LOCK"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -60,23 +64,23 @@
           },
           "imageWidth": 400
         }
-      ],
-  ],
-  "doctor": {
-    "reactNativeDirectoryCheck": {
-      "exclude": [
-        "react-native-loading-spinner-overlay",
-        "react-native-snap-carousel",
-        "@reduxjs/toolkit",
-        "doctor",
-        "form-data",
-        "react-native-select-dropdown",
-        "react-native-ytdl",
-        "react-redux",
-        "yup"
-      ],
-      "listUnknownPackages": false
+      ]
+    ],
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": [
+          "react-native-loading-spinner-overlay",
+          "react-native-snap-carousel",
+          "@reduxjs/toolkit",
+          "doctor",
+          "form-data",
+          "react-native-select-dropdown",
+          "react-native-ytdl",
+          "react-redux",
+          "yup"
+        ],
+        "listUnknownPackages": false
+      }
     }
   }
-}
 }

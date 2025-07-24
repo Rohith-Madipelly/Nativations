@@ -24,26 +24,20 @@ import MuteIcon from '../../assets/SVGS/MusicPlayer/Player/MuteIcon';
 import Metrics from '../../utils/ResposivesUtils/Metrics';
 import { useAudio } from '../../context/AudioProvider';
 
-
 const AudioScreen = ({ route }) => {
     const { id, download } = route.params || {};
     const { width, height } = Dimensions.get('screen');
     const navigation = useNavigation();
     const toast = useToast();
-
-    const { currentTrack, isPlaying, currentTime, totalDuration, togglePlayPause, stopTrack, seekTo, toggleMute, isMuted, toggleLoop, isLooping } = useAudio();
-
-    const [thumbnail, setThumbnail] = useState('');
-    const [title, setTitle] = useState('');
-    const [audioUrl, setAudioUrl] = useState('');
+    const { currentTrack, isPlaying, currentTime, totalDuration, togglePlayPause, stopTrack, seekTo, toggleMute, isMuted } = useAudio();
     const [relatedPosts, setRelatedPosts] = useState([]);
     const [spinnerBool, setSpinnerBool] = useState(true);
     const [downloadLoading, setDownloadLoading] = useState(false);
-    // const [isMuted, setIsMuted] = useState(false);
+    const [isLoadingRelated, setIsLoadingRelated] = useState(true);
 
     const tokenn = useSelector((state) => state.token)?.replaceAll('"', '') || '';
 
-    const HomeData = async () => {
+    const HomeData = async (retries = 3) => {
         if (!id) {
             toast.show('Invalid track ID', { type: 'danger' });
             setSpinnerBool(false);
@@ -54,14 +48,13 @@ const AudioScreen = ({ route }) => {
             const res = await VideoPageData(tokenn, id);
             if (res?.data?.postDetails) {
                 const { postDetails, relatedPosts } = res.data;
-                if (postDetails.thumbnail) {
-                    console.log("Yes Image found")
-                    setThumbnail(`${BASE_URL}/${postDetails.thumbnail}`);
-                }
-
-                setTitle(postDetails.title);
-                setAudioUrl(`${BASE_URL}/${postDetails.audioUrl}`);
                 setRelatedPosts(relatedPosts || []);
+                playTrack({
+                    id,
+                    title: postDetails.title,
+                    audioUrl: `${BASE_URL}/${postDetails.audioUrl}`,
+                    thumbnail: `${BASE_URL}/${postDetails.thumbnail}`,
+                });
                 if (download) {
                     CustomAlerts_Continue(
                         'Download',
@@ -74,9 +67,15 @@ const AudioScreen = ({ route }) => {
             }
         } catch (error) {
             console.error('Error fetching data:', error);
+            if (retries > 0) {
+                toast.show('Retrying...', { type: 'warning' });
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                return HomeData(retries - 1);
+            }
             toast.show('Error fetching track data', { type: 'danger' });
         } finally {
             setSpinnerBool(false);
+            setIsLoadingRelated(false);
         }
     };
 
@@ -107,7 +106,7 @@ const AudioScreen = ({ route }) => {
                 'The file has been downloaded successfully.',
                 [
                     { text: 'Go to downloads', onPress: () => navigation.navigate('Downloads') },
-                    { text: 'OK', onPress: () => { } },
+                    { text: 'OK', onPress: () => {} },
                 ]
             );
         } catch (error) {
@@ -123,14 +122,6 @@ const AudioScreen = ({ route }) => {
         const seconds = Math.floor((time % 60000) / 1000);
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
-
-    // const handleSliderChange = async (value) => {
-    //     if (currentTrack && currentTrack.id === id) {
-    //         const seekPosition = value * totalDuration;
-    //         // Note: Seeking requires direct sound access, which is managed in AudioContext
-    //         // You may need to add a seek function to AudioContext if needed
-    //     }
-    // };
 
     const handleSliderChange = async (value) => {
         if (currentTrack && currentTrack.id === id) {
@@ -163,36 +154,22 @@ const AudioScreen = ({ route }) => {
             >
                 <View style={{ height: 50 }}>
                     <Pressable
-                        style={{ position: 'absolute', top: '15%', left: 10, borderRadius: 50, marginTop: 10, padding: 10 }}
+                        style={{ position: 'absolute', top: '15%', left: 20, borderRadius: 50, marginTop: 10 }}
                         onPress={() => navigation.goBack()}
                     >
                         <Feather name="arrow-left" size={27} color="black" />
                     </Pressable>
-
-                    <TouchableOpacity
-                        style={[styles.button, {
-                            alignSelf: 'flex-end', marginRight: 20, marginTop: 20,
-                            borderRadius: Metrics.rfv(20),
-                            width: Metrics.rfv(40),
-                            height: Metrics.rfv(40),
-                        }]}
-                        onPress={toggleLoop}
-                        accessible={true}
-                        accessibilityLabel={isLooping ? 'Disable loop' : 'Enable loop'}
-                    >{isLooping ? <Feather name="repeat" size={20} color="white" /> : <Feather name="repeat" size={20} color="gray" />}
-                    </TouchableOpacity>
-
                 </View>
                 <View style={{ flex: 1, alignItems: 'center', paddingTop: 10, marginHorizontal: 18 }}>
                     <LoadingImage
-                        source={{ uri: thumbnail }}
-                        style={{ width: '95%', height: height * 0.5, borderRadius: 15 }}
+                        source={{ uri: currentTrack?.thumbnail || '' }}
+                        style={{ width: '90%', height: height * 0.4, borderRadius: 15 }}
                         loaderColor="#4A3AFF"
                         resizeMode="contain"
                     />
                     <View style={{ width: '80%', marginTop: 10, overflow: 'hidden', marginBottom: 10 }}>
                         <Text numberOfLines={2} style={{ alignSelf: 'center', fontSize: 18, color: '#030370' }}>
-                            {title || 'No Title'}
+                            {currentTrack?.title || 'No Title'}
                         </Text>
                     </View>
                     <View style={{ width: '80%', marginTop: 10, marginBottom: 10 }}>
@@ -211,38 +188,35 @@ const AudioScreen = ({ route }) => {
                         </View>
                     </View>
                     <View style={{ width: '70%', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-                        <TouchableOpacity style={styles.button} onPress={() => { toggleMute() }}>
+                        <TouchableOpacity style={styles.button} onPress={toggleMute}>
                             {isMuted ? <MuteIcon /> : <UnMuteIcon />}
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={[styles.button, { borderRadius: Metrics.rfv(30), width: Metrics.rfv(60), height: Metrics.rfv(60) }]}
+                            style={styles.button}
                             onPress={togglePlayPause}
                         >
                             {isPlaying && currentTrack?.id === id ? <PauseIcon /> : <PlayIcon />}
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={() => downloadAudio(audioUrl, `${title}.mp3`, id)}
+                            onPress={() => downloadAudio(currentTrack?.audioUrl, `${currentTrack?.title}.mp3`, id)}
+                            accessible={true}
+                            accessibilityLabel="Download audio"
                         >
                             <Feather name="arrow-down" size={20} color="white" />
                         </TouchableOpacity>
-                        {/* <TouchableOpacity
-                            style={styles.button}
-                            onPress={toggleLoop}
-                            accessible={true}
-                            accessibilityLabel={isLooping ? 'Disable loop' : 'Enable loop'}
-                        >{isLooping ? <Feather name="repeat" size={20} color="white"  /> : <Feather name="repeat" size={20} color="gray" />}
-                        </TouchableOpacity> */}
                     </View>
-                    {/* <View style={{ marginTop: 25 }}>
-                        {relatedPosts?.length > 0 ? (
+                    <View style={{ marginTop: 25 }}>
+                        {isLoadingRelated ? (
+                            <Text>Loading related posts...</Text>
+                        ) : relatedPosts?.length > 0 ? (
                             <Snap_Carousel7 relatedPostsData={relatedPosts} />
                         ) : (
                             <View style={{ margin: 20 }}>
                                 <Text>No Related Posts</Text>
                             </View>
                         )}
-                    </View> */}
+                    </View>
                 </View>
             </LinearGradient>
         </SafeAreaView>
@@ -256,9 +230,9 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: '#030370',
-        borderRadius: Metrics.rfv(25),
-        width: Metrics.rfv(50),
-        height: Metrics.rfv(50),
+        borderRadius: Metrics.rfv(20),
+        width: Metrics.rfv(40),
+        height: Metrics.rfv(40),
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
