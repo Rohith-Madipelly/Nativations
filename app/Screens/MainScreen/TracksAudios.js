@@ -2,6 +2,7 @@ import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react
 import React, { useLayoutEffect } from 'react'
 import Metrics from '../../utils/ResposivesUtils/Metrics'
 import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar'
+import FloatingPlayer from '../../../FloatingPlayer'
 
 const TracksAudios = ({ navigation }) => {
   const bgColor = "rgba(168, 168, 255, 0.30)"
@@ -53,6 +54,8 @@ const TracksAudios = ({ navigation }) => {
           </ImageBackground>
         </TouchableOpacity>
       ))}
+
+                  <FloatingPlayer style={{ bottom: Metrics.rfv(20) }} />
     </View>
   )
 }

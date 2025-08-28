@@ -55,12 +55,15 @@ const Snap_Carousel5 = ({ BannerDataBajana }) => {
               className="space-x-4"
             // contentContainerStyle={{ paddingHorizontal: 10 }}
             >
-
+ 
 
 
               {BannerDataBajana.map(item => (
                 <View key={item.id} style={{ width: 170, paddingHorizontal: 12, marginRight: 0 }}>
-                  <TouchableOpacity onPress={() => { navigation.navigate('VideoScreen', { id: `${item.id}` }); }}>
+                  <TouchableOpacity onPress={() => {
+                     navigation.navigate('VideoScreen', { id: `${item.id}`, selectedVideoData: item, totalVideoData: BannerDataBajana, title:"Pravachan / Event Videos" })
+                    // navigation.navigate('VideoScreen', { id: `${item.id}` });
+                     }}>
                     {/* <Image source={{ uri: `${GUEST_URL}/thumbnail/${item.thumbnail}` }} style={{ width: '100%', height: '100%', borderRadius: 20, backgroundColor: 'red' }} /> */}
 
                     <LoadingImage

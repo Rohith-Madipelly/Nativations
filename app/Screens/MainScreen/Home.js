@@ -8,11 +8,11 @@ import Snap_Carousel3 from '../../Components2/Snap_Carousel3';
 import Snap_Carousel5 from '../../Components2/Snap_Carousel5';
 
 
-import { HomePageData } from '../../utils/API_Calls';
+import { GET_ALL_BHAJANAS, GET_ALL_PRAVACHANS, GET_ALL_UPCOMING_EVENTS, HomePageData } from '../../utils/API_Calls';
 import { useSelector } from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import NetInfo from '@react-native-community/netinfo';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { LogOutHandle123 } from '../../utils/LogOut';
 import { useDispatch } from 'react-redux';
 import { ErrorResPrinter } from '../../utils/ErrorResPrinter';
@@ -46,7 +46,7 @@ const Home = () => {
   const [meditationTracks, setMeditationTracks] = useState()
   const [pravachan, setPravachan] = useState()
   const [previousEvents, setPreviousEvents] = useState()
-  const [bhanaja, setBhanaja] = useState()
+  const [bhanaja, setBhanaja] = useState([])
   const [upComingEvents, setUpComingEvents] = useState()
 
   const [isConnected, setIsConnected] = useState(true);
@@ -63,7 +63,7 @@ const Home = () => {
       // console.log("chgchgcjyhcjhc", item.id)
     }
     else if (item.type == "Audio") {
-      console.log("this is Audio ")
+      console.log("this is Audio ", item.id)
       navigation.navigate('AudioScreen', { id: `${item.id}`, download: download })
     }
     else if (item.type == "Video") {
@@ -132,25 +132,48 @@ const Home = () => {
     }
   }, [isConnected])
 
-  const [formStatus,setFormStatus]=useState(true)
+
+
+  useFocusEffect(
+    useCallback(() => {
+      if (isConnected) {
+
+
+        HomeData()
+      }
+
+    }, [])
+  )
+
+
+  const [formStatus, setFormStatus] = useState(true)
 
   const HomeData = async () => {
     setSpinnerbool(true)
 
     try {
       const res = await HomePageData(tokenn)
+
       if (res) {
-        console.log("formStatus",res.data.formStatus)
         setFormStatus(res.data.formStatus)
         setQuote(res.data.recentQoute.quote)
         setIsData(true)
-        setBanners(res.data.banners)
         setMeditationTracks(res.data.meditationTracks)
-        setPravachan(res.data.pravachan)
-        setPreviousEvents(res.data.previousEvents)
-        setBhanaja(res.data.bhanaja)
-        setUpComingEvents(res.data.upComingEvents)
 
+      }
+      const res2 = await GET_ALL_PRAVACHANS(tokenn)
+
+      if (res2.data) {
+        setPravachan(res2.data.allPravachans)
+      }
+      const res3 = await GET_ALL_BHAJANAS(tokenn)
+      if (res3.data) {
+        setBhanaja(res3.data.allBhajanas)
+      }
+
+      const res4 = await GET_ALL_UPCOMING_EVENTS(tokenn)
+      if (res4.data) {
+        setUpComingEvents(res4.data.allUpcomingEvents)
       }
       else {
         console.log(">>> 123")
@@ -158,6 +181,7 @@ const Home = () => {
 
 
     } catch (error) {
+      console.error(error.response)
       setIsData(false)
       // console.log(">>>>>>>.", error)
       // Alert.alert(`Something Went Wrong ${error.code} `)
@@ -232,7 +256,7 @@ const Home = () => {
 
 
           {isData ? <View >
-            <View style={{ height: 20 }}>
+            <View style={{ height: 10 }}>
             </View>
 
             {/* About Satya sadhna */}
@@ -255,15 +279,13 @@ const Home = () => {
               </ImageBackground>
             </TouchableOpacity>
 
-
             <View style={{
               height: Metrics.rfv(100, 700),
-              // maxHeight: Metrics.height * 0.12, 
-              // minHeight: Metrics.rfv(100,700),
               flexDirection: 'row', justifyContent: 'space-evenly', padding: 5, marginHorizontal: 5, borderRadius: 13, marginTop: 5, gap: 3
             }}>
 
-              {!formStatus&&<TouchableOpacity style={{ flex: 0.23, }}
+              {/* {!formStatus &&  */}
+              <TouchableOpacity style={{ flex: 0.23, }}
                 onPress={() => {
                   navigation.navigate("FormScreen")
                 }}
@@ -276,7 +298,8 @@ const Home = () => {
                 <View style={{ marginTop: 5 }}>
                   <Text style={{ textAlign: 'center', fontFamily: 'Gabarito-VariableFont', color: '#030370', fontSize: Metrics.rfv(12) }}>Register</Text>
                 </View>
-              </TouchableOpacity>}
+              </TouchableOpacity>
+              {/* } */}
 
               <TouchableOpacity style={{ flex: 0.23, }}
                 onPress={() => {
@@ -366,37 +389,12 @@ const Home = () => {
               </View>
             </View>
 
-            {/* <View style={{ position: 'relative',marginTop:2 }}>
-
-              <View style={{ maxHeight: Metrics.height * 0.12, minHeight:  Metrics.height * 0.12, backgroundColor: 'rgba(168, 168, 255, 0.19)', padding: 10, marginHorizontal: 10, borderRadius: 13, marginTop: 10 }}>
-                <View style={{ flexDirection: 'row' }}>
-                  <View style={{ width: '60%', backgroundColor: 'red' }}>
-                    <Text>shdvhjvc</Text>
-                  </View>
-
-                </View>
-
-              </View>
-
-              <View style={{ width: '40%', justifyContent: 'center', alignItems: 'center',position:'absolute',top:-10,bottom:5 ,right:5}}>
-               
-
-                <LoadingImage
-                  source={require("../../assets/image/Home/AboutImage.png")}
-       
-                  style={{  height: '105%' }}
-                  loaderColor="#ff0000" 
-                
-                />
-              </View>
-            </View> */}
-
             <MusicList Data={meditationTracks} ClickAction={(item, download) => {
               console.log("Helo", item);
               NavigationTo(item, download)
             }} />
 
-            <QuoteOfDay Quote={Quote || "If you want peace then calm your desires"} isQuoteOfDay={true} disabled={false}/>
+            <QuoteOfDay Quote={Quote || "If you want peace then calm your desires"} isQuoteOfDay={true} disabled={false} />
             {/* <Snap_Carousel2 BannerData2={meditationTracks} CarouselName={'Meditation Tracks'} /> */}
 
             <View style={{ height: 20 }}>
@@ -408,7 +406,8 @@ const Home = () => {
 
             {/* <Snap_Carousel3 BannerDataPravachan={pravachan} /> */}
 
-            <Snap_Carousel2 BannerData2={previousEvents} CarouselName={'Pravachan / Event Videos'} />
+            <Snap_Carousel2 BannerData2={pravachan} CarouselName={'Pravachan / Event Videos'} />
+            {/* <Snap_Carousel2 BannerData2={bhanaja} CarouselName={'Pravachan / Event Videos'} /> */}
 
 
 
@@ -433,7 +432,7 @@ const Home = () => {
         )}
 
 
-        <View style={{ height: 70 }}>
+        <View style={{ height: 140 }}>
           <Text></Text>
         </View>
       </ScrollView>

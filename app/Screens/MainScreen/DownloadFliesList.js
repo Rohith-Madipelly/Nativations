@@ -17,9 +17,15 @@ import PlayIcon from '../../assets/SVGS/MusicPlayer/Player/PlayIcon';
 import { SatyaSadhnaDownload } from '../AppContant';
 import { useToast } from 'react-native-toast-notifications';
 import { useAudio } from '../../context/AudioProvider';
+import { BASE_URL } from '../../Enviornment';
+import { useVideoPlayer, VideoView } from 'expo-video';
+import { useEvent } from 'expo';
+
+import * as FileSystem from 'expo-file-system';
+import * as MediaLibrary from 'expo-media-library';
 
 const DownloadFliesList = () => {
-    const { playTrack, togglePlayPause, currentTrack, isPlaying, currentTime, totalDuration, isMuted, toggleMute,path } = useAudio();
+    const { playTrack, togglePlayPause, currentTrack, isPlaying, currentTime, totalDuration, isMuted, toggleMute,path,stopTrack } = useAudio();
     const [downloadedFiles, setDownloadedFiles] = useState([]);
     const [videoData, setVideoData] = useState(null);
     const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -38,13 +44,30 @@ const DownloadFliesList = () => {
         }
     };
 
+
+      const player = useVideoPlayer(
+        videoData ? `${videoData.fileURL}` : null,
+        player => {
+          player.loop = true;
+          // player.play();
+        }
+      );
+    
+      const { isPlayingx } = useEvent(player, 'playingChange', { isPlaying: player?.playing });
+    
+    
+
     const DeleteAlert = (item) => {
+        console.log(item)
         Alert.alert(
             'Delete file',
             'Are you sure you want to delete this file?',
             [
                 { text: 'Cancel', style: 'cancel' },
-                { text: 'OK', onPress: () => deleteAudio(item.id) },
+                { text: 'OK', onPress: () => 
+                    // console.log("Hello heooo")
+                    deleteAudio(item)
+                 },
             ],
             { cancelable: false }
         );
@@ -53,6 +76,7 @@ const DownloadFliesList = () => {
     const deleteAudio = async (id) => {
         if (currentTrack?.id === id) {
             await togglePlayPause(); // Pause if the current track is being deleted
+            await stopTrack()
         }
         if (videoData?.id === id) {
             setIsVideoPlaying(false);
@@ -100,9 +124,12 @@ const DownloadFliesList = () => {
     return (
         <View style={{ flex: 1, backgroundColor: 'white' }}>
             <CustomStatusBar barStyle="dark-content" backgroundColor={GlobalStyles.CustomStatusBarMainColor} />
-            <View style={{ paddingHorizontal: 18 }}>
+            <View style={{ 
+                // paddingHorizontal: 18
+
+             }}>
                 {currentTrack && currentTrack.fileType === 'audio' ? (
-                    <View style={{ backgroundColor: '#EEEEFF', padding: 10, borderRadius: 15 }}>
+                    <View style={{ backgroundColor: '#EEEEFF', padding: 10, borderRadius: 15,marginHorizontal:18 }}>
                         <View>
                             {isPlaying ? (
                                 <Image
@@ -145,8 +172,14 @@ const DownloadFliesList = () => {
                     </View>
                 ) : null}
                 {videoData && (
-                    <View>
-                        <Video
+                    <View style={{}}>
+                            <VideoView
+                                    style={styles.video}
+                                    player={player}
+                                    allowsFullscreen
+                                  // allowsPictureInPicture
+                                  />
+                        {/* <Video
                             ref={videoRef}
                             source={{ uri: videoData.fileURL }}
                             style={styles.video}
@@ -159,12 +192,12 @@ const DownloadFliesList = () => {
                                 }
                                 setIsVideoPlaying(status.isPlaying);
                             }}
-                        />
-                        {!isVideoLoaded && (
+                        /> */}
+                        {/* {!isVideoLoaded && (
                             <View style={[styles.video, { position: 'absolute', top: 0, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }]}>
                                 <Text style={{ color: 'white' }}>Loading...</Text>
                             </View>
-                        )}
+                        )} */}
                     </View>
                 )}
             </View>
@@ -177,11 +210,21 @@ const DownloadFliesList = () => {
                         <TouchableOpacity
                             onPress={() => {
                                 if (item.fileType === 'video') {
+
+                                    stopTrack()
                                     setVideoData(item);
-                                    setCurrentTrack(null);
-                                    if (isPlaying) {
-                                        togglePlayPause();
-                                    }
+                                    //    playTrack({
+                                    //     id: item.id,
+                                    //     title: item.name,
+                                    //     audioUrl: item.musicURL,
+                                    //     fileType: 'audio',
+                                    //     // downloaded:true,
+                                        
+                                    // });
+                                    // setCurrentTrack(null);
+                                    // if (isPlaying) {
+                                    //     togglePlayPause();
+                                    // }
                                 } else {
                                     playTrack({
                                         id: item.id,

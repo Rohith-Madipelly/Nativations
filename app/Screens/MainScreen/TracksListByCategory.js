@@ -8,7 +8,7 @@ import Metrics from '../../utils/ResposivesUtils/Metrics';
 import SkeletonLoader2 from '../../Components/UI/Loadings/SkeletonLoader';
 import { useSelector } from 'react-redux';
 import { ServerTokenError_Logout, ServerError } from '../../utils/ServerError';
-import { CATEGORY_POSTS_API } from '../../utils/API_Calls';
+import { CATEGORY_POSTS_API, GET_TRACK_BY_CATEGORY } from '../../utils/API_Calls';
 import NoTrackAvailable from '../../assets/SVGS/UIScrees/NoTrackAvailable';
 import CustomStatusBar from '../../Components/UI/StatusBar/CustomStatusBar';
 import { BASE_URL } from '../../Enviornment';
@@ -23,6 +23,7 @@ const TracksListByCategory = ({ navigation, route }) => {
     const [loadingList, setLoadingList] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [trackListData, setTrackListData] = useState([]);
+    const [categoryUrl, setCategoryUrl] = useState("");
     const tokenn = useSelector((state) => state.token)?.replaceAll('"', '') || '';
 
     useLayoutEffect(() => {
@@ -31,24 +32,26 @@ const TracksListByCategory = ({ navigation, route }) => {
         });
     }, [navigation, Category]);
 
-    const getAllCategory = async () => {
+    const getAllCategory = async (categoryX) => {
         try {
             setTrackListData([]);
-            setLoadingList(true);
-            const res = await CATEGORY_POSTS_API(tokenn);
+            setLoadingList(true)
+
+
+            const res = await GET_TRACK_BY_CATEGORY(tokenn, categoryX)
+            // const res12 = await CATEGORY_POSTS_API(tokenn,);
             if (res?.data) {
                 const categoryKey = Category?.trim();
                 if (categoryKey === "For Children's") {
-                    console.log("Testing ...",res.data.allChildrenPosts)
-                    setTrackListData(res.data.allChildrenPosts || []);
+                    console.log("sjhdvjhcs", res.data.allChildrenTracks)
+                    setTrackListData(res.data.allChildrenTracks || []);
                 } else if (categoryKey === "For New Sadhak") {
-                    setTrackListData(res.data.allNewSadhakPosts || []);
+                    setTrackListData(res.data.allNewSadhakTracks || []);
                 } else {
-                    setTrackListData(res.data.allOldSadhakPosts || []);
+                    setTrackListData(res.data.allOldSadhakTracks || []);
                 }
             }
         } catch (error) {
-            console.error("Error in getAllCategory:", error);
             if (error.response) {
                 if (error.response.status === 401) {
                     Alert.alert("No Quotes are available right now...!");
@@ -102,10 +105,23 @@ const TracksListByCategory = ({ navigation, route }) => {
             navigation.navigate('YouTubeScreen', { id: item.id || item._id, download });
         }
     };
-
+    const categoryKey = Category?.trim();
     useEffect(() => {
-        getAllCategory();
-    }, []);
+        const categoryKey = Category?.trim();
+        if (categoryKey == "For Children's") {
+            getAllCategory('childrentracks');
+        } else if (categoryKey == "For New Sadhak") {
+            getAllCategory('newsadhaktracks');
+        } else if (categoryKey == "For Old Sadhak") {
+            getAllCategory('oldsadhaktracks');
+        } else {
+            console.log("ERROR IN categoryKey")
+        }
+
+    }, [categoryKey]);
+
+
+
 
     useEffect(() => {
         if (!trackListData || trackListData.length <= 0) {
@@ -154,8 +170,8 @@ const TracksListByCategory = ({ navigation, route }) => {
                         }}
                     >
                         <View style={{ width: '10%', marginVertical: 4 }}>
-                            
-                                         <MusicIcon />
+
+                            <MusicIcon />
                         </View>
                         <View style={{ alignItems: 'flex-start', gap: 2, width: '70%' }}>
                             <Text
@@ -175,7 +191,7 @@ const TracksListByCategory = ({ navigation, route }) => {
                                 style={{ padding: 10, paddingLeft: 30 }}
                                 onPress={() => ClickAction(item, false)}
                             >
-                                {item._id === currentTrack?.id && isPlaying ? <PauseIcon2/> : <Play_Circle />}
+                                {item._id === currentTrack?.id && isPlaying ? <PauseIcon2 /> : <Play_Circle />}
                             </TouchableOpacity>
                             <TouchableOpacity style={{ padding: 1 }} onPress={() => ClickAction(item, true)}>
                                 <DownloadIcon />
@@ -194,6 +210,10 @@ const TracksListByCategory = ({ navigation, route }) => {
                         </View>
                     )
                 }
+                ListFooterComponent={(
+                    <View style={{ height: 200 }}>
+                    </View>
+                )}
             />
             <FloatingPlayer style={{ bottom: Metrics.rfv(20) }} />
         </View>

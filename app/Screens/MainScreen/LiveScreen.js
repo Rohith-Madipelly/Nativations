@@ -173,12 +173,12 @@ const LiveScreen = () => {
 
   return (
     <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-        />
-      }
+      // refreshControl={
+      //   <RefreshControl
+      //     refreshing={refreshing}
+      //     onRefresh={onRefresh}
+      //   />
+      // }
     >
       <Spinner
         visible={spinnerBool}
@@ -186,47 +186,57 @@ const LiveScreen = () => {
         animation={'fade'}
       />
       <CustomStatusBar barStyle="dark-content" backgroundColor={GlobalStyles.CustomStatusBarMainColor} />
-      {!livePage ? <View style={{ backgroundColor: 'black', height: 202, justifyContent: 'center', alignItems: 'center', margin: 5, marginTop: 10 }}>
-        <Text style={{ color: 'white', fontSize: 25 }}>Live Screen</Text>
-        <Text style={{ color: 'white' }}>Currently live was ended or not avaliable </Text>
 
-      </View> : <View style={{ width: '100%' }}>
-        <View style={{ flex: 1 }}>
-          {/* <Text>{height}</Text> */}
-
-          <YoutubePlayer
-            height={
-              height >= 1000 ? height * 0.44 : height * 0.28}
-            play={playing}
-            // videoId={ScreenData.VideoID} yUNu2bMUEfg
-            // videoId={VideoID || "Wr4iJon5zC8"}
-            videoId={VideoID || "Wr4iJon5zC8"}
-            onChangeState={onStateChange}
-            showinfo={true}
-            controls={1}
-            onReady={(e) => { console.log("Jhgfc", e) }}
-            style={{}}
-            contentScale={0.9}
-          />
+      {!livePage ? (
+        <View style={{ backgroundColor: 'black', height: 202, justifyContent: 'center', alignItems: 'center', margin: 5, marginTop: 10 }}>
+          <Text style={{ color: 'white', fontSize: 25 }}>Live Screen</Text>
+          <Text style={{ color: 'white' }}>Currently live was ended or not available</Text>
         </View>
-        <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ width: '50%' }}>
-
-            <CustomButton
-              onPress={togglePlaying}
-              styleData={{ paddingHorizontal: 10, marginVertical: 5 }}>
-              {playing ? "pause" : "Watch Live"}
-            </CustomButton>
+      ) : (
+        <View style={{ width: '100%' }}>
+          <View style={{ flex: 1 }}>
+            <YoutubePlayer
+              height={height >= 1000 ? height * 0.44 : height * 0.28}
+              play={playing}
+              videoId={VideoID || "Wr4iJon5zC8"}
+              onChangeState={onStateChange}
+              showinfo={true}
+              controls={1}
+              onReady={(e) => { console.log("Jhgfc", e) }}
+              contentScale={0.9}
+            />
           </View>
 
-          <Text style={{ width: "90%", fontSize: 20, fontWeight: 700 }} >{livePage.title}</Text>
-          <Text style={{ width: "90%" }} numberOfLines={6}><Text style={{ fontWeight: 600 }}>Description : </Text>{livePage.description}</Text>
+          <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' ,flex:1}}>
+            <View style={{ width: '50%' }}>
+              <CustomButton
+                onPress={togglePlaying}
+                styleData={{ paddingHorizontal: 10, marginVertical: 5 }}
+              >
+                {playing ? "Pause" : "Watch Live"}
+              </CustomButton>
+            </View>
 
+            <Text style={{ width: "90%", fontSize: 20, fontWeight: '700' }}>{livePage.title}</Text>
+
+            <View style={{
+              width: "90%",
+              height: 260, // Set fixed height for scrollable description
+              // marginVertical: 10
+            }}>
+              <ScrollView>
+                <Text>
+                  <Text style={{ fontWeight: '600' }}>Description: </Text>
+                  {livePage.description}
+                </Text>
+              </ScrollView>
+            </View>
+          </View>
         </View>
-
-      </View>}
+      )}
     </ScrollView>
   )
+
 }
 
 export default LiveScreen

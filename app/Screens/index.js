@@ -163,13 +163,10 @@ export default function Screens() {
 
   const customHeaderOptions = ({ navigation }) => ({
     // headerShadowVisible: false,
-    // headerTitle: 'Hello Rohith',
     headerStyle: {
       backgroundColor: 'white',
       borderBottomWidth: 4,
-
     },
-
 
     headerTintColor: '#030370',
     headerTitleAlign: 'center',
@@ -177,25 +174,11 @@ export default function Screens() {
       fontFamily: 'Gabarito-VariableFont',
       fontSize: 20,
       fontWeight: '600',
-
       // fontWeight: 'bold',
+      flex: 1, // ✅ Helps title take more space
+      textAlign: 'center', // ✅ Center text in that space
     },
     headerBackTitleVisible: false,
-
-
-
-    // headerLeft: () => <CustomBackButton/>,
-
-
-
-    // headerLeft: () => (
-    //   <Pressable onPress={(e) => {
-    //     console.log("jhagfcvhj")
-    //     navigation.goBack()}} style={{ marginLeft: 5, padding: 10, }}>
-    //     <BackIcons />
-    //   </Pressable>
-    // ),
-
   });
 
 

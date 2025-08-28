@@ -54,7 +54,7 @@ const CourseRegistration4 = ({ route }) => {
 
 
 
-          <Text style={[styles.bold, { color: 'rgba(3, 3, 112, 1)', paddingHorizontal: 15, marginTop: 40 ,textAlign:'center',fontSize:20}]}>Registration Successful</Text>
+          <Text style={[styles.bold, { color: 'rgba(3, 3, 112, 1)', paddingHorizontal: 15, marginTop: 40, textAlign: 'center', fontSize: 20 }]}>Registration Successful</Text>
           <Text style={[styles.bold, { color: 'rgba(3, 3, 112, 1)', paddingHorizontal: 15, marginTop: 40 }]}>Registered Course Details</Text>
           <View
             style={[styles.courseContainer, { borderWidth: 1, borderColor: 'rgba(3, 3, 112, 1)', }]}
@@ -91,19 +91,19 @@ const CourseRegistration4 = ({ route }) => {
 
           <View style={{
             height: Metrics.rfv(100),
-            justifyContent:'center',
-            alignItems:'center'
+            justifyContent: 'center',
+            alignItems: 'center'
           }}>
 
             <TouchableOpacity
-            // onPress={()=>{navigation.navigate("BottomTabScreen",screen:"Home")}}
-            onPress={() => navigation.navigate("BottomTabScreen", { screen: "Home" })}
-style={{justifyContent:'center',alignItems:'center'}}
+              // onPress={()=>{navigation.navigate("BottomTabScreen",screen:"Home")}}
+              onPress={() => navigation.navigate("BottomTabScreen", { screen: "Home" })}
+              style={{ justifyContent: 'center', alignItems: 'center' }}
             >
               <Text style={[styles.bold, { color: 'rgb(107, 107, 172)', paddingHorizontal: 15, marginTop: 10, textAlign: 'center' }]}>
                 Back to home
               </Text>
-                <Ionicons name="return-down-back-sharp" size={24} color="rgb(107, 107, 172)" />
+              <Ionicons name="return-down-back-sharp" size={24} color="rgb(107, 107, 172)" />
             </TouchableOpacity>
           </View>
 

@@ -18,7 +18,7 @@ const getAPIBaseUrl = () => {
 
 //Home Page api 
 export const HomePageData = async (token) => {
-  // console.log("api data", token)
+  console.log("api data", token)
   return await axios.get(`${GUEST_URL}/user/home`, {
     headers: {
       'Authorization': `Bearer ${token}`
@@ -26,6 +26,44 @@ export const HomePageData = async (token) => {
   });
 };
 
+
+
+//NEW 
+export const GET_ALL_PRAVACHANS = async (token) => {
+  return await axios.get(`${GUEST_URL}/user/pravachans`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+}
+
+//New
+export const GET_ALL_BHAJANAS = async (token) => {
+  return await axios.get(`${GUEST_URL}/user/bhajanas`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+}
+
+//New
+export const GET_ALL_UPCOMING_EVENTS = async (token) => {
+  return await axios.get(`${GUEST_URL}/user/upcomingevents`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+}
+
+//New
+export const GET_TRACK_BY_CATEGORY = async (token,category) => {
+  console.log("category>>>",category)
+  return await axios.get(`${GUEST_URL}/user/${category}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+}
 
 // ALL_QUOTES_API
 export const ALL_QUOTES_API = async (token) => {
@@ -49,16 +87,16 @@ export const CATEGORY_POSTS_API = async (token) => {
 
 // User Form Data API Call 
 export const FormDataApi = async (loginData, token) => {
-console.log("API LEVEL",loginData)
-setTimeout(() => {
-  
-}, 200);
- const res=await axios.post(`${GUEST_URL}/user/form`, loginData, {
+  console.log("API LEVEL", loginData)
+  setTimeout(() => {
+
+  }, 200);
+  const res = await axios.post(`${GUEST_URL}/user/form`, loginData, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   });
-  console.log("iuyftdrsdfyguihojjhgfhdgh",res)
+  console.log("iuyftdrsdfyguihojjhgfhdgh", res)
   return res
 };
 
@@ -133,7 +171,7 @@ export const UserVerifyOtp = async (email, userOtp) => {
 
 // User Forgot OTP verifyotp API Call 
 export const ForgotApiPassRest = async (email, password) => {
-console.log(">>>>>>>>>>",email, password)
+  console.log(">>>>>>>>>>", email, password)
   const ReqData = {
     email: email,
     password: password

@@ -16,15 +16,18 @@
       }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "android": {
+        "buildType": "aab"
+      }
     }
   },
   "submit": {
     "production": {
-      "ios":{
-        "appleId":"kushlayatan.rahul@gmail.com",
-        "ascAppId":"6633435695",
-        "appleTeamId":"PNUF99XR6F"
+      "ios": {
+        "appleId": "kushlayatan.rahul@gmail.com",
+        "ascAppId": "6633435695",
+        "appleTeamId": "PNUF99XR6F"
       }
     }
   }

@@ -8,6 +8,7 @@ const LoadingImage = ({ source, style, loaderColor = '#0000ff', ...props }) => {
   useEffect(()=>{
     setImageUri(source)
   },[source])
+
   return (
     <View style={[styles.container, style]}>
       {loading && <ActivityIndicator style={styles.loader} size="large" color={loaderColor} />}

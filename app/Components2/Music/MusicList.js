@@ -9,10 +9,11 @@ import PauseIcon from '../../assets/SVGS/MusicPlayer/Player/Pause'; // Import Pa
 import SkeletonLoader2 from '../../Components/UI/Loadings/SkeletonLoader';
 import { useNavigation } from '@react-navigation/native';
 import { useAudio } from '../../context/AudioProvider';
+import { BASE_URL } from '../../Enviornment';
 
 const MusicList = ({ Data, ClickAction }) => {
     const navigation = useNavigation();
-    const { currentTrack, isPlaying, togglePlayPause } = useAudio();
+    const { currentTrack, isPlaying, togglePlayPause, playTrack } = useAudio();
     const [loadingList, setLoadingList] = useState(true);
     const [visibleItems, setVisibleItems] = useState(3);
 
@@ -40,12 +41,18 @@ const MusicList = ({ Data, ClickAction }) => {
     }, [Data]);
 
     const handleClickAction = (item, download) => {
-        console.log("testing",item)
+        console.log("testing", item)
         if (item.type === "Audio") {
             if (item.id === currentTrack?.id && isPlaying) {
                 togglePlayPause();
             } else {
-                ClickAction(item, download);
+                // ClickAction(item, download);
+                playTrack({
+                    id: item.id,
+                    title: item.title,
+                    audioUrl: `${BASE_URL}/${item.audioUrl}`,
+                    thumbnail: `${BASE_URL}/${item.thumbnail}`,
+                });
             }
             navigation.navigate('AudioScreen', { id: item.id, download });
         } else {

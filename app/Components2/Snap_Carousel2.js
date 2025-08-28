@@ -6,7 +6,7 @@ import Carousel from 'react-native-reanimated-carousel';
 import { Dimensions } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from '@react-navigation/native';
-import { GUEST_URL } from '../Enviornment';
+import { BASE_URL, GUEST_URL } from '../Enviornment';
 import LoadingImage from '../Components/ImageConatiners/LoadingImage';
 
 
@@ -15,14 +15,9 @@ const Snap_Carousel2 = ({ BannerData2, CarouselName }) => {
     const carouselRef = useRef(null);
     const navigation = useNavigation();
 
-
-
-
-
-
-
-
     const RenderItem = ({ item, index }) => {
+
+        console.log("item", item?.thumbnail)
         const Navigationn = () => {
             if (item.type == "Youtube" || item.type == undefined) {
                 navigation.navigate('YoutudeScreen', { id: `${item.id}` })
@@ -34,16 +29,22 @@ const Snap_Carousel2 = ({ BannerData2, CarouselName }) => {
             }
             else if (item.type == "Video") {
                 // console.log("video")
-                navigation.navigate('VideoScreen', { id: `${item.id}` })
+                navigation.navigate('VideoScreen', { id: `${item.id}`, selectedVideoData: item, totalVideoData: BannerData2, title:"Pravachan / Event Videos" })
             }
         }
 
+
+        console.log("item", item.thumbnail)
+
+
+        let videoURL = `${BASE_URL}/${item.thumbnail}`
         return (
-            <Pressable onPress={() => { Navigationn() }} styles={{ }}>
-          
-                <View style={{width:'100%',height:'100%',alignSelf:'center'}} >
+            <Pressable onPress={() => { Navigationn() }} styles={{}}>
+
+                <View style={{ width: '100%', height: '100%', alignSelf: 'center' }} >
                     <LoadingImage
-                        source={{ uri: `${GUEST_URL}/${item.thumbnail}` }}
+                        // source={{ uri: `${GUEST_URL}/${item.thumbnail}` }}
+                        source={{ uri: videoURL }}
                         //   style={{ width: '100%', height: 240, }}
                         style={{ width: '100%', height: '100%', borderRadius: 20 }}
                         loaderColor="#ff0000" // Optional: change loader color
@@ -62,7 +63,7 @@ const Snap_Carousel2 = ({ BannerData2, CarouselName }) => {
         carouselRef.current.prev();
     }
 
-    
+
 
     return (
         <View style={{ marginTop: 10, marginTop: 15 }}>
@@ -71,9 +72,9 @@ const Snap_Carousel2 = ({ BannerData2, CarouselName }) => {
                 <Text style={[styles.Heading_U3, {}]}>{CarouselName}</Text>
             </View>
 
-            {!BannerData2.length == 0 ? <View style={{ marginTop: 10,flexDirection: 'row',alignSelf:'center'}}>
+            {!BannerData2.length == 0 ? <View style={{ marginTop: 10, flexDirection: 'row', alignSelf: 'center' }}>
 
-                <TouchableOpacity onPress={goToPrev} style={{ width: 35,height:height*0.20,justifyContent:'center',alignItems:'center'}}>
+                <TouchableOpacity onPress={goToPrev} style={{ width: 35, height: height * 0.20, justifyContent: 'center', alignItems: 'center' }}>
                     <MaterialCommunityIcons name="arrow-left-drop-circle" size={30} color="black" />
                 </TouchableOpacity>
 
@@ -84,16 +85,16 @@ const Snap_Carousel2 = ({ BannerData2, CarouselName }) => {
                     ref={carouselRef}
                     loop={true}
                     // ref={carouselRef}
-                    width={width-80}
-                    height={height*0.20}
+                    width={width - 80}
+                    height={height * 0.20}
                     // autoPlay={true}
-                    
+
                     data={BannerData2}
                     scrollAnimationDuration={4000}
                     renderItem={RenderItem}
                 />
 
-                <TouchableOpacity onPress={goToNext} style={{ width: 35,height:height*0.20,justifyContent:'center',alignItems:'center'}}>
+                <TouchableOpacity onPress={goToNext} style={{ width: 35, height: height * 0.20, justifyContent: 'center', alignItems: 'center' }}>
                     <MaterialCommunityIcons name="arrow-right-drop-circle" size={30} color="black" />
                 </TouchableOpacity>
 

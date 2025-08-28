@@ -1,13 +1,12 @@
 
 // export const GUEST_URL="http://16.170.162.36:8001"
 
-
-// // export const GUEST_URL="http://www.satyasadhna.com:8001"
 export const GUEST_URL="https://www.satyasadhna.com"
 export const BASE_URL = "https://www.satyasadhna.com"
 
-// export const GUEST_URL="http://192.168.1.3:8001"
-// export const BASE_URL = "http://192.168.1.3:8001"
+
+// export const GUEST_URL="http://192.168.29.75:8001"
+// export const BASE_URL = "http://192.168.29.75:8001"
 
 
 
