@@ -16,6 +16,8 @@ export const AudioProvider = ({ children }) => {
     const [isMuted, setIsMuted] = useState(false);
     const [isLooping, setIsLooping] = useState(false); // Looping disabled by default
 
+
+
     const configureAudioMode = async () => {
         try {
             await Audio.setAudioModeAsync({
@@ -52,7 +54,7 @@ export const AudioProvider = ({ children }) => {
                 setSound(null);
                 setIsPlaying(false);
             }
-
+console.log("Copy link",track.audioUrl)
             await configureAudioMode(); // Ensure audio mode is set before playing
             const { sound: newSound, status } = await Audio.Sound.createAsync(
                 { uri: track.audioUrl },

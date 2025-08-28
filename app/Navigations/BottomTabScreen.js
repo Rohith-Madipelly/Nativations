@@ -71,13 +71,11 @@ const BottomTabScreen = ({ route }) => {
         tabBarStyle: {
           flex: Platform.OS === "ios" ? 0.07 : 0.100,
           backgroundColor: '#EEEEFF',
-
         },
 
         tabBarItemStyle: {
           width: 120, // Customize the width of each tab
           // backgroundColor:"red",
-
         },
         // tabBarBackground: () => (
         //   <BlurView tint="light" intensity={100} style={StyleSheet.absoluteFill} />

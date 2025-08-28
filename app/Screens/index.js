@@ -52,9 +52,6 @@ import CourseRegistration1 from "./MainScreen/NewPages/CourseRegistration1";
 import DeleteAccountPolicy from "./MainScreen/OtherPages/DeleteAccountPolicy";
 import CourseRegistration3 from "./MainScreen/NewPages/CourseRegistration3";
 import CourseRegistration4 from "./MainScreen/NewPages/CourseRegistration4";
-
-
-
 // SplashScreen.preventAutoHideAsync();
 export default function Screens() {
   const [user, setUser] = useState()
